@@ -123,12 +123,14 @@ gpio_drv_ioctl(struct inode *inode, struct file *file, unsigned int cmd, unsigne
 #ifdef _DEBUG            
             printk("%s: lan_if_name[%d] = %s\n", __FUNCTION__, index, lan_if_name[index]);
 #endif
+            break;
         case IOCTL_WAN_VLAN_ID:
             index = arg >> 16;
-            sprintf(wan_if_name[index], "vlan%d", arg & 0x0000ffff);
+            sprintf(wan_if_name[index], "eth%d", arg & 0x0000ffff);
 #ifdef _DEBUG            
             printk("%s: wan_if_name[%d] = %s\n", __FUNCTION__, index, wan_if_name[index]);
 #endif 
+            break;
        default:
             break;
     }

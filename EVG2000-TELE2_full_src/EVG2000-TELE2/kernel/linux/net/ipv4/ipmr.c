@@ -468,7 +468,7 @@ static int vif_add(struct vifctl *vifc, int mrtsock)
 #if defined(CONFIG_MIPS_BRCM)
 static struct mfc_cache *ipmr_cache_find(__u32 origin, __u32 mcastgrp,unsigned int ifindex)
 {
-	int line=0;//MFC_HASH(mcastgrp,origin,ifindex);
+	int line=MFC_HASH(mcastgrp,origin,ifindex);
 	struct mfc_cache *c;
 
 	for (c=mfc_cache_array[line]; c; c = c->next) {
@@ -477,7 +477,7 @@ static struct mfc_cache *ipmr_cache_find(__u32 origin, __u32 mcastgrp,unsigned i
 	}
 
         if(c == NULL) {
-            line = 0;//MFC_HASH(mcastgrp,htonl(0x00000000), ifindex);
+            line = MFC_HASH(mcastgrp,htonl(0x00000000), ifindex);
             for (c=mfc_cache_array[line]; c; c = c->next) {
 		if ( c->mfc_mcastgrp==mcastgrp)
 			break;
@@ -488,11 +488,11 @@ static struct mfc_cache *ipmr_cache_find(__u32 origin, __u32 mcastgrp,unsigned i
 #else
 static struct mfc_cache *ipmr_cache_find(__be32 origin, __be32 mcastgrp)
 {
-	int line=0;//MFC_HASH(mcastgrp,origin);
+	int line=MFC_HASH(mcastgrp,origin);
 	struct mfc_cache *c;
 
 	for (c=mfc_cache_array[line]; c; c = c->next) {
-		if (c->mfc_mcastgrp==mcastgrp)
+		if (c->mfc_origin==origin && c->mfc_mcastgrp==mcastgrp)
 			break;
 	}
          
@@ -652,17 +652,9 @@ ipmr_cache_unresolved(vifi_t vifi, struct sk_buff *skb)
 
 	spin_lock_bh(&mfc_unres_lock);
 	for (c=mfc_unres_queue; c; c=c->next) {
-        /* Foxconn add start by Lewis Min, 08/30/2008 */
-        /* Don't match the source IP address */
-        #ifdef IGMP_PROXY
-		if (c->mfc_mcastgrp == skb->nh.iph->daddr )
-			break; 
-        #else
 		if (c->mfc_mcastgrp == skb->nh.iph->daddr &&
 		    c->mfc_origin == skb->nh.iph->saddr)
 			break;
-        #endif
-        /* Foxconn add end by Lewis Min, 08/30/2008 */
 	}
 
 	if (c == NULL) {
@@ -731,21 +723,14 @@ static int ipmr_mfc_delete(struct mfcctl *mfc)
 	struct mfc_cache *c, **cp;
 
 #if defined(CONFIG_MIPS_BRCM)	
-	line=0;//MFC_HASH(mfc->mfcc_mcastgrp.s_addr, mfc->mfcc_origin.s_addr,mfc->mfcc_parent);
+	line=MFC_HASH(mfc->mfcc_mcastgrp.s_addr, mfc->mfcc_origin.s_addr,mfc->mfcc_parent);
 #else	
-	line=0;//MFC_HASH(mfc->mfcc_mcastgrp.s_addr, mfc->mfcc_origin.s_addr);
+	line=MFC_HASH(mfc->mfcc_mcastgrp.s_addr, mfc->mfcc_origin.s_addr);
 #endif	
 
 	for (cp=&mfc_cache_array[line]; (c=*cp) != NULL; cp = &c->next) {
-        /* Foxconn add start by Lewis Min, 08/30/2008 */
-        /* Don't match the source IP address */
-        #ifdef IGMP_PROXY
-		if (c->mfc_mcastgrp == mfc->mfcc_mcastgrp.s_addr) 
-        #else
 		if (c->mfc_origin == mfc->mfcc_origin.s_addr &&
-		    c->mfc_mcastgrp == mfc->mfcc_mcastgrp.s_addr) 
-        #endif        /* Foxconn add end by Lewis Min, 08/30/2008 */        
-             {
+		    c->mfc_mcastgrp == mfc->mfcc_mcastgrp.s_addr) {
 			write_lock_bh(&mrt_lock);
 			*cp = c->next;
 			write_unlock_bh(&mrt_lock);
@@ -766,27 +751,16 @@ static int ipmr_mfc_add(struct mfcctl *mfc, int mrtsock)
 	struct mfc_cache *uc, *c, **cp;
 
 #if defined(CONFIG_MIPS_BRCM)	
-	line=0;//MFC_HASH(mfc->mfcc_mcastgrp.s_addr, mfc->mfcc_origin.s_addr,mfc->mfcc_parent);
+	line=MFC_HASH(mfc->mfcc_mcastgrp.s_addr, mfc->mfcc_origin.s_addr,mfc->mfcc_parent);
 #else	
-	line=0;//MFC_HASH(mfc->mfcc_mcastgrp.s_addr, mfc->mfcc_origin.s_addr);
+	line=MFC_HASH(mfc->mfcc_mcastgrp.s_addr, mfc->mfcc_origin.s_addr);
 #endif	
 
 	for (cp=&mfc_cache_array[line]; (c=*cp) != NULL; cp = &c->next) {
-
-        /* Foxconn add start by Lewis Min, 08/30/2008 */
-        /* Don't match the source IP address */
-        #ifdef IGMP_PROXY
-		if (c->mfc_mcastgrp == mfc->mfcc_mcastgrp.s_addr)
-		{
-			break;
-		}
-        #else
 		if (c->mfc_origin == mfc->mfcc_origin.s_addr &&
 		    c->mfc_mcastgrp == mfc->mfcc_mcastgrp.s_addr)
 			break;
-        #endif
-        /* Foxconn add end by Lewis Min, 08/30/2008 */
-        }
+	}
 
 	if (c != NULL) {
 		write_lock_bh(&mrt_lock);
@@ -1277,7 +1251,7 @@ static void ipmr_queue_xmit(struct sk_buff *skb, struct mfc_cache *c, int vifi)
 	dst_release(skb->dst);
 	skb->dst = &rt->u.dst;
 	iph = skb->nh.iph;
-	
+	ip_decrease_ttl(iph);
 
 	/* FIXME: forward and output firewalls used to be called here.
 	 * What do we do with netfilter? -- RR */
@@ -1377,8 +1351,8 @@ static int ip_mr_forward(struct sk_buff *skb, struct mfc_cache *cache, int local
 	 *	Forward the frame
 	 */
 	for (ct = cache->mfc_un.res.maxvif-1; ct >= cache->mfc_un.res.minvif; ct--) {
-		if (skb->nh.iph->ttl >= cache->mfc_un.res.ttls[ct]) {/* Foxconn modify by lewis min, 01/31/2008, Change > to >= for ttl velue */
-                    if (psend != -1) {
+		if (skb->nh.iph->ttl > cache->mfc_un.res.ttls[ct]) {
+			if (psend != -1) {
 				struct sk_buff *skb2 = skb_clone(skb, GFP_ATOMIC);
 				if (skb2)
 					ipmr_queue_xmit(skb2, cache, psend);

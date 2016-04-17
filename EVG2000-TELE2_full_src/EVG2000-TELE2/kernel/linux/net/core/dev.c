@@ -1419,8 +1419,6 @@ int dev_queue_xmit(struct sk_buff *skb)
 	struct net_device *dev = skb->dev;
 	struct Qdisc *q;
 	int rc = -ENOMEM;
-	unsigned short proto;   /* Foxconn added , 09/02/2009 */
-	unsigned short vid;     /* Foxconn added , 09/02/2009 */
 
 	/* GSO will handle the following emulations directly. */
 	if (netif_needs_gso(dev, skb))
@@ -1477,22 +1475,8 @@ gso:
 	if (q->enqueue) {
 		/* Grab device queue */
 		spin_lock(&dev->queue_lock);
-		
-		proto = *(unsigned short *)(skb->data + ETH_ALEN + ETH_ALEN);   /* Foxconn added , 09/02/2009 */
-		
 		q = dev->qdisc;
-		
-		/* Foxconn added start , 09/02/2009 */
-		if ( htons(proto) == ETH_P_8021Q )
-		{
-		    vid = *(unsigned short *)(skb->data + ETH_ALEN + ETH_ALEN + 2);
-		    //printk("<0>""%s%d vid=0x%x skb->priority=0x%x\n", __FUNCTION__, __LINE__, vid, skb->priority);
-		}
-		/* Foxconn added end , 09/02/2009 */
-			
-		if ( (q->enqueue) && ( htons(vid) != 0xffb) ) /* Filter out LAN , Foxconn added , 09/02/2009 */
-		//if (q->enqueue) 
-		{
+		if (q->enqueue) {
 			rc = q->enqueue(skb, q);
 			qdisc_run(dev);
 			spin_unlock(&dev->queue_lock);

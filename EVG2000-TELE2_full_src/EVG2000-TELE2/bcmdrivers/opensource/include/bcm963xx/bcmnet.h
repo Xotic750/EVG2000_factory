@@ -59,6 +59,7 @@ extern "C" {
 #define ESW_TYPE_BCM5325E                   2
 #define ESW_TYPE_BCM5325F                   3
 #define ESW_TYPE_BCM5397                    4
+#define ESW_TYPE_BCM53115                   5
 
 /*
  * Ioctl definitions.

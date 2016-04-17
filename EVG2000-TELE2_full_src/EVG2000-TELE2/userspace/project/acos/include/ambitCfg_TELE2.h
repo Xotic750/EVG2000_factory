@@ -41,9 +41,9 @@
 
 /*formal version control*/
 #define AMBIT_HARDWARE_VERSION     "U12H154T00"
-#define AMBIT_SOFTWARE_VERSION     "V2.2.0.15"  
+#define AMBIT_SOFTWARE_VERSION     "V2.2.0.32"  
 #if (WLAN_REGION == WW_VERSION)
-#define AMBIT_UI_VERSION           "2.2.15"   
+#define AMBIT_UI_VERSION           "2.2.32" 
 #elif (WLAN_REGION == NA_VERSION)
 #define AMBIT_UI_VERSION           "0.1.9NA"
 #else
@@ -69,7 +69,7 @@
  ***
  ****************************************************************************/
 
-#define ETHERNET_NAME_NUM   "eth5"
+#define ETHERNET_NAME_NUM   "eth0"
 #define WLAN_IF_NAME_NUM    "wl0"       /* Mulitple BSSID #1 == Primary SSID */
 #define WLAN_BSS1_NAME_NUM  "wl0.1"     /* Multiple BSSID #2 */
 #define WLAN_BSS2_NAME_NUM  "wl0.2"     /* Multiple BSSID #3 */

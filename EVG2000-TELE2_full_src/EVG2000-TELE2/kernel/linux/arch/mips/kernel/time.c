@@ -36,6 +36,7 @@
 /* Foxconn added start pling 08/04/2008 */
 #include <linux/netdevice.h>
 
+#define LED_BLINK_RATE_FAST     50
 #define LED_BLINK_RATE_NORMAL   20
 #define LED_BLINK_RATE_WPS      50
 #define LED_BLINK_RATE_VOIP     50
@@ -282,9 +283,9 @@ static int lan_led_normal_blink(void)
     
 
     interrupt_count++;
-    if (interrupt_count == LED_BLINK_RATE_NORMAL/2)
+    if (interrupt_count == LED_BLINK_RATE_FAST/2)
         led_output(GPIO_LAN_LED, LED_ON);
-    if (interrupt_count < LED_BLINK_RATE_NORMAL)
+    if (interrupt_count < LED_BLINK_RATE_FAST)
         return 0;
  
     interrupt_count = 0;
@@ -298,25 +299,29 @@ static int lan_led_normal_blink(void)
     }
     else 
     {
-        lan_dev = dev_get_by_name(lan_if_name[0]);
+        //lan_dev = dev_get_by_name(lan_if_name[0]);
+        lan_dev = dev_get_by_name("eth1");
         if(lan_dev)
         {
             lan_1_dev_stats = lan_dev->get_stats(lan_dev);
             dev_put(lan_dev);
         }
-        lan_dev = dev_get_by_name(lan_if_name[1]);
+        //lan_dev = dev_get_by_name(lan_if_name[1]);
+        lan_dev = dev_get_by_name("eth2");
         if(lan_dev)
         {
             lan_2_dev_stats = lan_dev->get_stats(lan_dev);
             dev_put(lan_dev);
         }
-        lan_dev = dev_get_by_name(lan_if_name[2]);
+        //lan_dev = dev_get_by_name(lan_if_name[2]);
+        lan_dev = dev_get_by_name("eth3");
         if(lan_dev)
         {
             lan_3_dev_stats = lan_dev->get_stats(lan_dev);
             dev_put(lan_dev);
         }
-        lan_dev = dev_get_by_name(lan_if_name[3]);
+        //lan_dev = dev_get_by_name(lan_if_name[3]);
+        lan_dev = dev_get_by_name("eth4");
         if(lan_dev)
         {
             lan_4_dev_stats = lan_dev->get_stats(lan_dev);
@@ -347,104 +352,36 @@ static int wan_led_normal_blink(void)
 {
     static struct net_device *wan_dev = NULL;
     static struct net_device_stats *wan_1_dev_stats = NULL;
-    static struct net_device_stats *wan_2_dev_stats = NULL;
-    static struct net_device_stats *wan_3_dev_stats = NULL;
-    static struct net_device_stats *wan_4_dev_stats = NULL;
-    static struct net_device_stats *wan_5_dev_stats = NULL;
-    static struct net_device_stats *wan_6_dev_stats = NULL;
-    static struct net_device_stats *wan_7_dev_stats = NULL;
-    static struct net_device_stats *wan_8_dev_stats = NULL;
 
     static int interrupt_count = 0;
     static int pkt_cnt_old = 0;
     int    pkt_cnt = 0;
 
-
     interrupt_count++;
-    if (interrupt_count == LED_BLINK_RATE_NORMAL/2)
+    if (interrupt_count == LED_BLINK_RATE_FAST/2)
         led_output(GPIO_WAN_LED, WAN_LED_ON);
-    if (interrupt_count < LED_BLINK_RATE_NORMAL)
+    if (interrupt_count < LED_BLINK_RATE_FAST)
         return 0;
 
     interrupt_count = 0;
 
-    if (wan_1_dev_stats && wan_2_dev_stats && wan_3_dev_stats && wan_4_dev_stats
-        && wan_5_dev_stats && wan_6_dev_stats && wan_7_dev_stats && wan_8_dev_stats)
+    if (wan_1_dev_stats)
     {
-        pkt_cnt = wan_1_dev_stats->tx_packets + wan_1_dev_stats->rx_packets
-                + wan_2_dev_stats->tx_packets + wan_2_dev_stats->rx_packets
-                + wan_3_dev_stats->tx_packets + wan_3_dev_stats->rx_packets
-                + wan_4_dev_stats->tx_packets + wan_4_dev_stats->rx_packets
-                + wan_5_dev_stats->tx_packets + wan_5_dev_stats->rx_packets
-                + wan_6_dev_stats->tx_packets + wan_6_dev_stats->rx_packets
-                + wan_7_dev_stats->tx_packets + wan_7_dev_stats->rx_packets
-                + wan_8_dev_stats->tx_packets + wan_8_dev_stats->rx_packets;
+        pkt_cnt = wan_1_dev_stats->tx_packets + wan_1_dev_stats->rx_packets;
     }
     else 
     {
-        wan_dev = dev_get_by_name(wan_if_name[0]);
+        //wan_dev = dev_get_by_name(wan_if_name[0]);
+        wan_dev = dev_get_by_name("eth0");
         if(wan_dev)
         {
             wan_1_dev_stats = wan_dev->get_stats(wan_dev);
             dev_put(wan_dev);
         }
-        wan_dev = dev_get_by_name(wan_if_name[1]);
-        if(wan_dev)
-        {
-            wan_2_dev_stats = wan_dev->get_stats(wan_dev);
-            dev_put(wan_dev);
-        }
-        wan_dev = dev_get_by_name(wan_if_name[2]);
-        if(wan_dev)
-        {
-            wan_3_dev_stats = wan_dev->get_stats(wan_dev);
-            dev_put(wan_dev);
-        }
-        wan_dev = dev_get_by_name(wan_if_name[3]);
-        if(wan_dev)
-        {
-            wan_4_dev_stats = wan_dev->get_stats(wan_dev);
-            dev_put(wan_dev);
-        }
         
-        
-        wan_dev = dev_get_by_name(wan_if_name[4]);
-        if(wan_dev)
+        if (wan_1_dev_stats)
         {
-            wan_5_dev_stats = wan_dev->get_stats(wan_dev);
-            dev_put(wan_dev);
-        }
-        wan_dev = dev_get_by_name(wan_if_name[5]);
-        if(wan_dev)
-        {
-            wan_6_dev_stats = wan_dev->get_stats(wan_dev);
-            dev_put(wan_dev);
-        }
-        wan_dev = dev_get_by_name(wan_if_name[6]);
-        if(wan_dev)
-        {
-            wan_7_dev_stats = wan_dev->get_stats(wan_dev);
-            dev_put(wan_dev);
-        }
-        wan_dev = dev_get_by_name(wan_if_name[7]);
-        if(wan_dev)
-        {
-            wan_8_dev_stats = wan_dev->get_stats(wan_dev);
-            dev_put(wan_dev);
-        }
-        
-        if (wan_1_dev_stats && wan_2_dev_stats && wan_3_dev_stats && wan_4_dev_stats
-            && wan_5_dev_stats && wan_6_dev_stats && wan_7_dev_stats && wan_8_dev_stats)
-        {
-        
-            pkt_cnt = wan_1_dev_stats->tx_packets + wan_1_dev_stats->rx_packets
-                    + wan_2_dev_stats->tx_packets + wan_2_dev_stats->rx_packets
-                    + wan_3_dev_stats->tx_packets + wan_3_dev_stats->rx_packets
-                    + wan_4_dev_stats->tx_packets + wan_4_dev_stats->rx_packets
-                    + wan_5_dev_stats->tx_packets + wan_5_dev_stats->rx_packets
-                    + wan_6_dev_stats->tx_packets + wan_6_dev_stats->rx_packets
-                    + wan_7_dev_stats->tx_packets + wan_7_dev_stats->rx_packets
-                    + wan_8_dev_stats->tx_packets + wan_8_dev_stats->rx_packets;
+            pkt_cnt = wan_1_dev_stats->tx_packets + wan_1_dev_stats->rx_packets;
         }
 
     }

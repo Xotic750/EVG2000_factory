@@ -64,6 +64,7 @@ alias symbol:mspi6368Open endpointdd
 alias symbol:mspi6368Open endpointdd
 alias symbol:mspi6368Open endpointdd
 alias symbol:mspi6368Open endpointdd
+alias symbol:pktCmfSW53115 pktcmf
 alias symbol:mspi6368Close endpointdd
 alias symbol:mspi6368Close endpointdd
 alias symbol:mspi6368Close endpointdd
@@ -88,8 +89,6 @@ alias symbol:ethsw_switch_manage_port_power_mode bcm_enet
 alias symbol:pktCmfSarPortEnable pktcmf
 alias symbol:TP0halResetEntry dspdd
 alias symbol:pktCmfDslDiags pktcmf
-alias symbol:ipt_unregister_table ip_tables
-alias symbol:ipt_register_table ip_tables
 alias symbol:fc_bind_cmf pktflow
 alias symbol:fc_flush pktflow
 alias symbol:fcache_defer pktflow
@@ -177,4 +176,3 @@ alias symbol:mspi6368Deinit endpointdd
 alias symbol:mspi6368Deinit endpointdd
 alias symbol:mspi6368Deinit endpointdd
 alias symbol:fc_bind_blog pktflow
-alias symbol:ipt_do_table ip_tables

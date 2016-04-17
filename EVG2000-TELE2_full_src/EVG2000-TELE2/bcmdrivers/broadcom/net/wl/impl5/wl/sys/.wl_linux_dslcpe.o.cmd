@@ -1,9 +1,9 @@
-cmd_/home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/wl/sys/wl_linux_dslcpe.o := /opt/toolchains/uclibc-crosstools-gcc-4.2.3-3/usr/bin/mips-linux-uclibc-gcc -Wp,-MD,/home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/wl/sys/.wl_linux_dslcpe.o.d  -nostdinc -isystem /opt/toolchains/uclibc-crosstools-gcc-4.2.3-3/usr/bin/../lib/gcc/mips-linux-uclibc/4.2.3/include -D__KERNEL__ -Iinclude  -include include/linux/autoconf.h -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -O2  -mabi=32 -G 0 -mno-abicalls -fno-pic -pipe -msoft-float -ffreestanding  -march=mips32 -Wa,-mips32 -Wa,--trap -Iinclude/asm-mips/mach-bcm963xx -Iinclude/asm-mips/mach-generic -fomit-frame-pointer  -fno-stack-protector -Wdeclaration-after-statement -Wno-pointer-sign -DDSLCPE_WLAN_VERSION=\"cpe4.402.0\" -DDSLCPE_DELAY -I/home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/include -I/home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/shared -I/home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/wl/sys -I/home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/emf/emf -I/home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/emf/igs -I/home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/router/shared -I/home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/router/emf/emf -I/home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/router/emf/igs -I/home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/include/emf/emf -I/home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/include/emf/igs -I/home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/opensource/include/bcm963xx -I/home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/include/bcm963xx -I/home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/shared/opensource/include/bcm963xx -I/home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/shared/broadcom/include/bcm963xx -I/home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/shared/opensource/boardparms/bcm963xx -DIL_BIGENDIAN -DBCMDRIVER -DDSLCPE_DGASP -DDSLCPE_WOMBO -DDSLCPE -DDSLCPE_SCBLIST -DD11CONF=0x00011b00 -DACONF=0 -DGCONF=0x00000080 -DNCONF=0x00000005f -DLPCONF=0 -DWLC_LOW -DWLC_HIGH -DAP -DMBSS -DWME_PER_AC_TX_PARAMS -DWME_PER_AC_TUNING -DRXCHAIN_PWRSAVE -DWMF -DWLLED -DWME -DWLAFTERBURNER -DCRAM -DWL11N -DWL11H -DWL11D -DWLCNT -DWLCHANIM -DDELTASTATS -DWLCNTSCB -DWLCOEX -DBCMWPA2 -DBCMCCMP -DBCMDMA64 -DWLAMSDU -DWLAMSDU_SWDEAGG -DWLAMPDU -DWLTINYDUMP -DWLTEST -DDSLCPE_BLOG  -DMODULE -mlong-calls -D"KBUILD_STR(s)=\#s" -D"KBUILD_BASENAME=KBUILD_STR(wl_linux_dslcpe)"  -D"KBUILD_MODNAME=KBUILD_STR(wl)" -c -o /home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/wl/sys/wl_linux_dslcpe.o /home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/wl/sys/wl_linux_dslcpe.c
+cmd_/home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/wl/sys/wl_linux_dslcpe.o := /opt/toolchains/uclibc-crosstools-gcc-4.2.3-3/usr/bin/mips-linux-uclibc-gcc -Wp,-MD,/home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/wl/sys/.wl_linux_dslcpe.o.d  -nostdinc -isystem /opt/toolchains/uclibc-crosstools-gcc-4.2.3-3/usr/bin/../lib/gcc/mips-linux-uclibc/4.2.3/include -D__KERNEL__ -Iinclude  -include include/linux/autoconf.h -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -O2  -mabi=32 -G 0 -mno-abicalls -fno-pic -pipe -msoft-float -ffreestanding  -march=mips32 -Wa,-mips32 -Wa,--trap -Iinclude/asm-mips/mach-bcm963xx -Iinclude/asm-mips/mach-generic -fomit-frame-pointer  -fno-stack-protector -Wdeclaration-after-statement -Wno-pointer-sign -DDSLCPE_WLAN_VERSION=\"cpe4.402.0\" -DDSLCPE_DELAY -I/home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include -I/home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/shared -I/home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/wl/sys -I/home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/emf/emf -I/home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/emf/igs -I/home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/router/shared -I/home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/router/emf/emf -I/home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/router/emf/igs -I/home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/emf/emf -I/home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/emf/igs -I/home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/opensource/include/bcm963xx -I/home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/include/bcm963xx -I/home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/shared/opensource/include/bcm963xx -I/home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/shared/broadcom/include/bcm963xx -I/home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/shared/opensource/boardparms/bcm963xx -DIL_BIGENDIAN -DBCMDRIVER -DDSLCPE_DGASP -DDSLCPE_WOMBO -DDSLCPE -DDSLCPE_SCBLIST -DD11CONF=0x00011b00 -DACONF=0 -DGCONF=0x00000080 -DNCONF=0x00000005f -DLPCONF=0 -DWLC_LOW -DWLC_HIGH -DAP -DMBSS -DWME_PER_AC_TX_PARAMS -DWME_PER_AC_TUNING -DRXCHAIN_PWRSAVE -DWMF -DWLLED -DWME -DWLAFTERBURNER -DCRAM -DWL11N -DWL11H -DWL11D -DWLCNT -DWLCHANIM -DDELTASTATS -DWLCNTSCB -DWLCOEX -DBCMWPA2 -DBCMCCMP -DBCMDMA64 -DWLAMSDU -DWLAMSDU_SWDEAGG -DWLAMPDU -DWLTINYDUMP -DWLTEST -DDSLCPE_BLOG  -DMODULE -mlong-calls -D"KBUILD_STR(s)=\#s" -D"KBUILD_BASENAME=KBUILD_STR(wl_linux_dslcpe)"  -D"KBUILD_MODNAME=KBUILD_STR(wl)" -c -o /home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/wl/sys/wl_linux_dslcpe.o /home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/wl/sys/wl_linux_dslcpe.c
 
-deps_/home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/wl/sys/wl_linux_dslcpe.o := \
-  /home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/wl/sys/wl_linux_dslcpe.c \
+deps_/home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/wl/sys/wl_linux_dslcpe.o := \
+  /home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/wl/sys/wl_linux_dslcpe.c \
     $(wildcard include/config/pci.h) \
-  /home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/include/typedefs.h \
+  /home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/typedefs.h \
   include/linux/version.h \
   include/linux/types.h \
     $(wildcard include/config/uid16.h) \
@@ -23,8 +23,8 @@ deps_/home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bc
     $(wildcard include/config/highmem.h) \
     $(wildcard include/config/64bit/phys/addr.h) \
     $(wildcard include/config/64bit.h) \
-  /home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/include/bcmdefs.h \
-  /home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/include/linuxver.h \
+  /home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/bcmdefs.h \
+  /home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/linuxver.h \
     $(wildcard include/config/net/radio.h) \
     $(wildcard include/config/wireless/ext.h) \
     $(wildcard include/config/pcmcia.h) \
@@ -496,33 +496,33 @@ deps_/home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bc
   include/linux/dmaengine.h \
     $(wildcard include/config/dma/engine.h) \
   include/linux/if_packet.h \
-  /home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/include/osl.h \
-  /home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/include/linux_osl.h \
+  /home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/osl.h \
+  /home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/linux_osl.h \
   include/asm/paccess.h \
-  /home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/include/linux_osl_dslcpe.h \
-  /home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/wl/sys/wlc_cfg.h \
-  /home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/wl/sys/wlconf.h \
-  /home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/include/wlioctl.h \
+  /home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/linux_osl_dslcpe.h \
+  /home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/wl/sys/wlc_cfg.h \
+  /home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/wl/sys/wlconf.h \
+  /home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/wlioctl.h \
     $(wildcard include/config/item.h) \
     $(wildcard include/config/usbrndis/retail.h) \
-  /home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/include/proto/ethernet.h \
-  /home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/include/proto/bcmeth.h \
-  /home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/include/proto/bcmevent.h \
-  /home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/include/proto/802.11.h \
-  /home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/include/proto/wpa.h \
-  /home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/include/bcmwifi.h \
-  /home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/wl/sys/wl_linux_dslcpe.h \
-  /home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/include/bcmutils.h \
-  /home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/opensource/include/bcm963xx/bcmnet.h \
+  /home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/proto/ethernet.h \
+  /home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/proto/bcmeth.h \
+  /home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/proto/bcmevent.h \
+  /home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/proto/802.11.h \
+  /home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/proto/wpa.h \
+  /home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/bcmwifi.h \
+  /home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/wl/sys/wl_linux_dslcpe.h \
+  /home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/bcmutils.h \
+  /home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/opensource/include/bcm963xx/bcmnet.h \
     $(wildcard include/config/igmp/snooping//.h) \
-  /home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/wl/sys/wlc_pub.h \
-  /home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/wl/sys/wl_linux.h \
-  /home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/include/bcmendian.h \
-  /home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/include/bcmdevs.h \
-  /home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/include/bcm963xx/bcm_map.h \
+  /home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/wl/sys/wlc_pub.h \
+  /home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/wl/sys/wl_linux.h \
+  /home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/bcmendian.h \
+  /home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/bcmdevs.h \
+  /home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/include/bcm963xx/bcm_map.h \
     $(wildcard include/config/bcm96338.h) \
     $(wildcard include/config/bcm96348.h) \
-  /home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/shared/broadcom/include/bcm963xx/6368_map.h \
+  /home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/shared/broadcom/include/bcm963xx/6368_map.h \
     $(wildcard include/config/master/en.h) \
     $(wildcard include/config/flowc/ch1/en.h) \
     $(wildcard include/config/flowc/ch3/en.h) \
@@ -535,15 +535,15 @@ deps_/home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bc
     $(wildcard include/config/timer.h) \
     $(wildcard include/config/timer/retry/mask.h) \
     $(wildcard include/config/timer/trdy/mask.h) \
-  /home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/opensource/include/bcm963xx/bcmtypes.h \
-  /home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/shared/broadcom/include/bcm963xx/6368_common.h \
-  /home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/shared/opensource/include/bcm963xx/6368_intr.h \
-  /home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/opensource/include/bcm963xx/bcm_intr.h \
-  /home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/shared/opensource/include/bcm963xx/6368_intr.h \
-  /home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/opensource/include/bcm963xx/board.h \
-  /home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/shared/opensource/include/bcm963xx/bcm_hwdefs.h \
+  /home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/opensource/include/bcm963xx/bcmtypes.h \
+  /home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/shared/broadcom/include/bcm963xx/6368_common.h \
+  /home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/shared/opensource/include/bcm963xx/6368_intr.h \
+  /home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/opensource/include/bcm963xx/bcm_intr.h \
+  /home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/shared/opensource/include/bcm963xx/6368_intr.h \
+  /home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/opensource/include/bcm963xx/board.h \
+  /home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/shared/opensource/include/bcm963xx/bcm_hwdefs.h \
     $(wildcard include/config/brcm/ikos.h) \
-  /home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/shared/opensource/include/bcm963xx/boardparms.h \
+  /home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/shared/opensource/include/bcm963xx/boardparms.h \
     $(wildcard include/config/mdio.h) \
     $(wildcard include/config/mdio/pseudo/phy.h) \
     $(wildcard include/config/spi/ssb/0.h) \
@@ -552,6 +552,6 @@ deps_/home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bc
     $(wildcard include/config/spi/ssb/3.h) \
     $(wildcard include/config/mmap.h) \
 
-/home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/wl/sys/wl_linux_dslcpe.o: $(deps_/home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/wl/sys/wl_linux_dslcpe.o)
+/home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/wl/sys/wl_linux_dslcpe.o: $(deps_/home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/wl/sys/wl_linux_dslcpe.o)
 
-$(deps_/home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/wl/sys/wl_linux_dslcpe.o):
+$(deps_/home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/wl/sys/wl_linux_dslcpe.o):

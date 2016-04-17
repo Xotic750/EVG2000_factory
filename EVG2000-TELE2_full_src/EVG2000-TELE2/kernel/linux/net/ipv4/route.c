@@ -1625,10 +1625,7 @@ static int ip_route_input_mc(struct sk_buff *skb, __be32 daddr, __be32 saddr,
 			goto e_inval;
 		spec_dst = inet_select_addr(dev, 0, RT_SCOPE_LINK);
 	} else if (fib_validate_source(saddr, 0, tos, 0,
-    /* Foxconn Add Start : Steve Hsieh : 07/12/2006 @lan2lan_lnx {*/ 
-    					dev, &spec_dst, &itag,skb) < 0)
-					//dev, &spec_dst, &itag) < 0)
-       /* Foxconn Add End : Steve Hsieh : 07/12/2006 @lan2lan_lnx }*/
+					dev, &spec_dst, &itag) < 0)
 		goto e_inval;
 
 	rth = dst_alloc(&ipv4_dst_ops);
@@ -1741,10 +1738,7 @@ static inline int __mkroute_input(struct sk_buff *skb,
 
 
 	err = fib_validate_source(saddr, daddr, tos, FIB_RES_OIF(*res),
-	/* Foxconn Add Start : Steve Hsieh : 07/12/2006 @lan2lan_lnx {*/ 
-	              in_dev->dev, &spec_dst, &itag, skb);
-				  //in_dev->dev, &spec_dst, &itag);
-	/* Foxconn Add End : Steve Hsieh : 07/12/2006 @lan2lan_lnx {*/ 
+				  in_dev->dev, &spec_dst, &itag);
 	if (err < 0) {
 		ip_handle_martian_source(in_dev->dev, in_dev, skb, daddr,
 					 saddr);
@@ -1974,10 +1968,7 @@ static int ip_route_input_slow(struct sk_buff *skb, __be32 daddr, __be32 saddr,
 		int result;
 		result = fib_validate_source(saddr, daddr, tos,
 					     loopback_dev.ifindex,
-/* Foxconn Add Start : Steve Hsieh : 07/12/2006 @lan2lan_lnx {*/   					     
-					     dev, &spec_dst, &itag, skb);
-					     //dev, &spec_dst, &itag);
-/* Foxconn Add End : Steve Hsieh : 07/12/2006 @lan2lan_lnx {*/   					     
+					     dev, &spec_dst, &itag);
 		if (result < 0)
 			goto martian_source;
 		if (result)
@@ -2011,10 +2002,7 @@ brd_input:
 		spec_dst = inet_select_addr(dev, 0, RT_SCOPE_LINK);
 	else {
 		err = fib_validate_source(saddr, 0, tos, 0, dev, &spec_dst,
-/* Foxconn Add Start : Steve Hsieh : 07/12/2006 @lan2lan_lnx {*/   		
-					  &itag, skb);
-					  //&itag);
-/* Foxconn Add End : Steve Hsieh : 07/12/2006 @lan2lan_lnx {*/   					  
+					  &itag);
 		if (err < 0)
 			goto martian_source;
 		if (err)

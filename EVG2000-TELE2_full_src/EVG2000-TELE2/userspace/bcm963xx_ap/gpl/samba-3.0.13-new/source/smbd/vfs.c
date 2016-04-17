@@ -595,12 +595,8 @@ int vfs_set_filelen(files_struct *fsp, SMB_OFF_T len)
 	release_level_2_oplocks_on_change(fsp);
 	DEBUG(10,("vfs_set_filelen: ftruncate %s to len %.0f\n", fsp->fsp_name, (double)len));
 	flush_write_cache(fsp, SIZECHANGE_FLUSH);
-    /* foxconn modified start , 04/01/2009 */
-//	if ((ret = SMB_VFS_FTRUNCATE(fsp, fsp->fd, len)) != -1)
-//		set_filelen_write_cache(fsp, len);
-
-    ret = 0;
-    /* foxconn modified end , 04/01/2009 */
+	if ((ret = SMB_VFS_FTRUNCATE(fsp, fsp->fd, len)) != -1)
+		set_filelen_write_cache(fsp, len);
 
 	return ret;
 }

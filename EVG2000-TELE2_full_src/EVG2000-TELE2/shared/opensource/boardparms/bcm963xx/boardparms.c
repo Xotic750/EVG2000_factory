@@ -1602,9 +1602,13 @@ static BOARD_PARAMETERS g_bcm96369pvg =
       0x0,                                  /* ucPhyAddress */
       BP_NOT_DEFINED,                       /* usGpioPhyReset */
       BP_NOT_DEFINED,                       /* usGpioPhyLinkSpeed */
-      BP_ENET_CONFIG_MMAP,                  /* usConfigType */
-      BP_NOT_DEFINED,                       /* usReverseMii */
-      {0x3f, {0x01, 0x02, 0x03, 0x04, 0x12, 0x11, 0x00, 0x00}}},  /* sw */
+      BP_ENET_CONFIG_MDIO_PSEUDO_PHY,       /* usConfigType */
+      BP_ENET_RGMII2,                        /* usReverseMii */
+      {0x5f, {0x00, 0x01, 0x02, 0x03, 0x18, 0x00, 0x00, 0x00}}},  /* sw */
+
+//      BP_ENET_CONFIG_MMAP,                  /* usConfigType */
+//      BP_NOT_DEFINED,                       /* usReverseMii */
+//      {0x3f, {0x01, 0x02, 0x03, 0x04, 0x12, 0x11, 0x00, 0x00}}},  /* sw */
      {BP_ENET_NO_PHY}},                     /* ucPhyType */
     {{BP_VOIP_MIPS,                         /* ucDspType */
       -1,                                   /* ucDspAddress */

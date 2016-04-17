@@ -34,6 +34,7 @@ SUBDIRS += zebra
 
 #water, 05/22/2008, @samba
 ifeq ($(SAMBA_ENABLE_FLAG),y)
+#SUBDIRS	+= samba-3.3.4
 SUBDIRS	+= samba-3.0.13-new
 SUBDIRS	+= bftpd-1.6.6-new
 endif

@@ -41,7 +41,7 @@
 #include <net/ip.h>
 #include <net/netfilter/nf_conntrack.h>
 #include <net/netfilter/nf_conntrack_helper.h>
-#include <linux/spinlock.h>
+#include "../bridge/br_private.h"
 
 #ifdef CC_CONFIG_BLOG_COLOR
 #define COLOR(clr_code)     clr_code
@@ -91,7 +91,6 @@
  */
 blog_refresh_t blog_refresh_fn;
 struct sk_buff * nfskb_p = (struct sk_buff*) NULL;
-spinlock_t blog_lock;
 
 /*----- Constant string representation of enums for print -----*/
 const char * strBlogAction[] =
@@ -320,14 +319,13 @@ static uint32_t blog_construct( uint32_t num )
     for ( i = 0; i < num; i++ )
         list_p[i].blog_p = &list_p[i+1];
 
-    local_irq_disable();
+    local_bh_disable();
     list_p[num-1].blog_p = blog_list_gp; /* chain last Blog_t object */
     blog_list_gp = list_p;  /* Head of list */
-    local_irq_enable();
+    local_bh_enable();
 
     BLOG_DBG( blog_cnt_free += num; );
 
-    spin_lock_init(&blog_lock);
     return num;
 }
 
@@ -362,7 +360,6 @@ static Blog_t * blog_get( void )
 {
     register Blog_t * blog_p;
 
-    spin_lock_bh(&blog_lock);
     if ( blog_list_gp == BLOG_NULL )
     {
 #ifdef SUPPORT_BLOG_EXTEND
@@ -370,14 +367,12 @@ static Blog_t * blog_get( void )
           || (blog_construct( BLOG_EXTEND_SIZE ) != BLOG_EXTEND_SIZE) )
         {
             blog_print( "WARNING: free list exhausted" );
-            spin_unlock_bh(&blog_lock);
             return BLOG_NULL;
         }
 #else
         if ( blog_construct( BLOG_EXTEND_SIZE ) == 0 )
         {
             blog_print( "WARNING: out of memory" );
-            spin_unlock_bh(&blog_lock);
             return BLOG_NULL;
         }
 #endif
@@ -388,14 +383,12 @@ static Blog_t * blog_get( void )
             blog_cnt_hwm = blog_cnt_used;
         );
 
-    local_irq_disable();
+    local_bh_disable();
     blog_p = blog_list_gp;
     blog_list_gp = blog_list_gp->blog_p;
-    local_irq_enable();
+    local_bh_enable();
 
     blog_clr( blog_p );     /* quickly clear the contents */
-
-    spin_unlock_bh(&blog_lock);
 
     return blog_p;
 }
@@ -410,16 +403,13 @@ static Blog_t * blog_get( void )
  */
 void blog_put( Blog_t * blog_p )
 {
-    spin_lock_bh(&blog_lock);
-
     blog_assertv( (blog_p != BLOG_NULL) );
     BLOG_DBG( blog_cnt_used--; blog_cnt_free++; );
     blog_clr( blog_p );
-    local_irq_disable();
+    local_bh_disable();
     blog_p->blog_p = blog_list_gp;
     blog_list_gp = blog_p;  /* link into free pool */
-    local_irq_enable();
-    spin_unlock_bh(&blog_lock);
+    local_bh_enable();
 }
 
 /*
@@ -710,9 +700,9 @@ void blog_stop( struct net_bridge_fdb_entry * fdb_p, struct nf_conn * ct_p )
     {
         blog_print("blog_stop: fdb_p<0x%08x> ct_p<0x%08x>", (int)fdb_p, (int)ct_p );
 
-        local_irq_disable();
+        local_bh_disable();
         blog_xx_hook_g( fdb_p, ct_p );
-        local_irq_enable();
+        local_bh_enable();
     }
 }
 
@@ -729,7 +719,9 @@ void blog_time( Blog_t * blog_p, uint32_t jiffies )
 {
     if ( blog_refresh_fn  && (blog_p->rx.ct_p != (struct nf_conn *)NULL) )
     {
+#ifdef CONFIG_NETFILTER 
         nfskb_p->nfct = (struct nf_conntrack *)blog_p->rx.ct_p;
+#endif
         (*blog_refresh_fn)( blog_p->rx.ct_p, 0, nfskb_p, jiffies, 0 );
     }
 }
@@ -1116,7 +1108,7 @@ void blog_l2_dump( BlogHeader_t * bHdr_p)
                                      + sizeof(uint16_t);        break;
             case VLAN_8021Q : length = sizeof(struct vlan_hdr); break;
             case ETH_802x   : length = sizeof(struct ethhdr);   break;
-            case BCM_SWC    : length = sizeof(struct bcmhdr);   break;
+            case BCM_SWC    : length = sizeof(struct bcmhdr_53115);   break;
 
             case WLAN_HDR   :
             case USB_CDC11  :

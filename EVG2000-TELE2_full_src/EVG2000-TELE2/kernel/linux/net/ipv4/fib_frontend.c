@@ -179,11 +179,8 @@ unsigned inet_addr_type(__be32 addr)
    - check, that packet arrived from expected physical interface.
  */
 
-/* Foxconn Add Start : Steve Hsieh : 07/12/2006 @lan2lan_lnx {*/ 
 int fib_validate_source(__be32 src, __be32 dst, u8 tos, int oif,
-            struct net_device *dev, __be32 *spec_dst, u32 *itag, struct sk_buff *skb)
-			//struct net_device *dev, __be32 *spec_dst, u32 *itag)
-/* Foxconn Add Start : Steve Hsieh : 07/12/2006 @lan2lan_lnx }*/ 				
+			struct net_device *dev, __be32 *spec_dst, u32 *itag)
 {
 	struct in_device *in_dev;
 	struct flowi fl = { .nl_u = { .ip4_u =
@@ -210,13 +207,7 @@ int fib_validate_source(__be32 src, __be32 dst, u8 tos, int oif,
 	if (fib_lookup(&fl, &res))
 		goto last_resort;
 	if (res.type != RTN_UNICAST)
-/* Foxconn Add Start : Steve Hsieh : 07/12/2006 @lan2lan_lnx {*/               
-        {   
-            if (!(skb->cb[sizeof(skb->cb)-2] & 0x01)) //pass the lan2lan packet
-		    goto e_inval_res;
-        }
-            //goto e_inval_res; //old code
-/* Foxconn Add End : Steve Hsieh : 07/12/2006 @lan2lan_lnx }*/         
+		goto e_inval_res;
 	*spec_dst = FIB_RES_PREFSRC(res);
 	fib_combine_itag(itag, &res);
 #ifdef CONFIG_IP_ROUTE_MULTIPATH

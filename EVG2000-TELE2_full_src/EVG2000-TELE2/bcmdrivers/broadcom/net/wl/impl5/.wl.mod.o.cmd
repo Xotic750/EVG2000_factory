@@ -1,7 +1,7 @@
-cmd_/home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/wl.mod.o := /opt/toolchains/uclibc-crosstools-gcc-4.2.3-3/usr/bin/mips-linux-uclibc-gcc -Wp,-MD,/home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/.wl.mod.o.d  -nostdinc -isystem /opt/toolchains/uclibc-crosstools-gcc-4.2.3-3/usr/bin/../lib/gcc/mips-linux-uclibc/4.2.3/include -D__KERNEL__ -Iinclude  -include include/linux/autoconf.h -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -O2  -mabi=32 -G 0 -mno-abicalls -fno-pic -pipe -msoft-float -ffreestanding  -march=mips32 -Wa,-mips32 -Wa,--trap -Iinclude/asm-mips/mach-bcm963xx -Iinclude/asm-mips/mach-generic -fomit-frame-pointer  -fno-stack-protector -Wdeclaration-after-statement -Wno-pointer-sign    -D"KBUILD_STR(s)=\#s" -D"KBUILD_BASENAME=KBUILD_STR(wl.mod)"  -D"KBUILD_MODNAME=KBUILD_STR(wl)" -DMODULE -mlong-calls -c -o /home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/wl.mod.o /home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/wl.mod.c
+cmd_/home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/wl.mod.o := /opt/toolchains/uclibc-crosstools-gcc-4.2.3-3/usr/bin/mips-linux-uclibc-gcc -Wp,-MD,/home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/.wl.mod.o.d  -nostdinc -isystem /opt/toolchains/uclibc-crosstools-gcc-4.2.3-3/usr/bin/../lib/gcc/mips-linux-uclibc/4.2.3/include -D__KERNEL__ -Iinclude  -include include/linux/autoconf.h -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -O2  -mabi=32 -G 0 -mno-abicalls -fno-pic -pipe -msoft-float -ffreestanding  -march=mips32 -Wa,-mips32 -Wa,--trap -Iinclude/asm-mips/mach-bcm963xx -Iinclude/asm-mips/mach-generic -fomit-frame-pointer  -fno-stack-protector -Wdeclaration-after-statement -Wno-pointer-sign    -D"KBUILD_STR(s)=\#s" -D"KBUILD_BASENAME=KBUILD_STR(wl.mod)"  -D"KBUILD_MODNAME=KBUILD_STR(wl)" -DMODULE -mlong-calls -c -o /home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/wl.mod.o /home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/wl.mod.c
 
-deps_/home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/wl.mod.o := \
-  /home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/wl.mod.c \
+deps_/home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/wl.mod.o := \
+  /home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/wl.mod.c \
     $(wildcard include/config/module/unload.h) \
   include/linux/module.h \
     $(wildcard include/config/modules.h) \
@@ -268,6 +268,6 @@ deps_/home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bc
   include/linux/vermagic.h \
   include/linux/utsrelease.h \
 
-/home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/wl.mod.o: $(deps_/home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/wl.mod.o)
+/home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/wl.mod.o: $(deps_/home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/wl.mod.o)
 
-$(deps_/home/eric/U12H154_Tele2/Tele2_phase2/EVG2000/bcmdrivers/broadcom/net/wl/bcm96368/wl.mod.o):
+$(deps_/home/eric/U12H154_Tele2/Tele2_phase2/53115/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/wl.mod.o):

@@ -27,6 +27,10 @@ ifeq ($(FW_TYPE),SINGTEL)
 CFLAGS	+= -DSingTel
 endif
 
+ifeq ($(FW_TYPE),TELE2)
+CFLAGS += -DSUPPORT_TR111
+endif
+
 CFLAGS	+= -DDNSMASQ_FOR_MULTIPLE_LAN_WAN -DBSP_4_X_X -I$(BRCMDRIVERS_DIR)/opensource/include/bcm963xx
 
 export CFLAGS

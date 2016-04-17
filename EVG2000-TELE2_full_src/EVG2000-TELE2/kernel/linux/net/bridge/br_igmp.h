@@ -24,6 +24,17 @@ union ip_array {
 #define IGMPV3_GRP_REC_SIZE(x)  (sizeof(struct igmpv3_grec) + \
                        (sizeof(struct in_addr) * ((struct igmpv3_grec *)x)->grec_nsrcs))
 
+/* foxconn added start */
+
+struct net_bridge_port_array_s
+{
+    struct net_bridge_port g_port;
+    unsigned int lan_src_ip;
+};
+
+typedef struct net_bridge_port_array_s net_bridge_port_array_t;
+/* foxconn added end */
+
 struct net_bridge_mc_src_entry
 {
 	struct in_addr		src;

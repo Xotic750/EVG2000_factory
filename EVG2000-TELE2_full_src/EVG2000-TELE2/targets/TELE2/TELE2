@@ -215,9 +215,9 @@ BUILD_LIBCREDUCTION=y
 #
 # Debug selection
 #
-# BRCM_KERNEL_DEBUG is not set
+BRCM_KERNEL_DEBUG=y
 # JTAG_KERNEL_DEBUG is not set
-# ENABLE_PRINTK_AND_BUG is not set
+ENABLE_PRINTK_AND_BUG=y
 # BUILD_GDBSERVER is not set
 # BRCM_KERNEL_VMTOOLS is not set
 # BRCM_KERNEL_CSTAT is not set

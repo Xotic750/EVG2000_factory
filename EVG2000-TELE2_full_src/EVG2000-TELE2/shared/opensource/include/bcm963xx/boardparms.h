@@ -58,6 +58,10 @@ extern "C" {
 /* Values for EthernetMacInfo Reverse MII. */
 #define BP_ENET_NO_REVERSE_MII                  0
 #define BP_ENET_REVERSE_MII                     1
+#define BP_ENET_GMII1                           1
+#define BP_ENET_RGMII1                          2
+#define BP_ENET_GMII2                           3
+#define BP_ENET_RGMII2                          4
 
 /* Values for VoIPDSPInfo DSPType. */
 #define BP_VOIP_NO_DSP                          0

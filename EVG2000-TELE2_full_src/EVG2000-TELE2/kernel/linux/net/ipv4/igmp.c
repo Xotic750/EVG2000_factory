@@ -738,15 +738,14 @@ static void igmp_timer_expire(unsigned long data)
 	}
 	im->reporter = 1;
 	spin_unlock(&im->lock);
-#ifndef IGMP_PROXY 	/* Foxconn mark by Lewis Min, 08/30/2008 
-	                Mark it in order not to let kernel send igmp packets automatically */
+
 	if (IGMP_V1_SEEN(in_dev))
 		igmp_send_report(in_dev, im, IGMP_HOST_MEMBERSHIP_REPORT);
 	else if (IGMP_V2_SEEN(in_dev))
 		igmp_send_report(in_dev, im, IGMPV2_HOST_MEMBERSHIP_REPORT);
 	else
 		igmp_send_report(in_dev, im, IGMPV3_HOST_MEMBERSHIP_REPORT);
-#endif
+
 	ip_ma_put(im);
 }
 
@@ -1153,11 +1152,8 @@ static void igmp_group_dropped(struct ip_mc_list *im)
 		if (IGMP_V1_SEEN(in_dev))
 			goto done;
 		if (IGMP_V2_SEEN(in_dev)) {
-#ifndef IGMP_PROXY  /* Foxconn mark start by Lewis Min, 08/30/2008 */
-	                /* Mark it in order not to let kernel send igmp packets automatically */		    
 			if (reporter)
 				igmp_send_report(in_dev, im, IGMP_HOST_LEAVE_MESSAGE);
-#endif				
 			goto done;
 		}
 		/* IGMPv3 */

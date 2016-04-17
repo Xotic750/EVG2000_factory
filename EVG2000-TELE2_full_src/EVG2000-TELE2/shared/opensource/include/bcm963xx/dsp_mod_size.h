@@ -28,7 +28,7 @@
  * Defines representing the memory chunks allocated for the DSP module. These defines will be set during
  * the build process.
  */
-#define DSP_CORE_SIZE 868272
+#define DSP_CORE_SIZE 935136
 #define DSP_INIT_SIZE 0
 
 #endif /* _DSP_MOD_SIZE_H */

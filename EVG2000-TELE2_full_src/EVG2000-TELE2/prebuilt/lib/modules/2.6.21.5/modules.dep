@@ -1,6 +1,3 @@
-/lib/modules/2.6.21.5/kernel/net/ipv4/netfilter/ip_queue.ko:
-/lib/modules/2.6.21.5/kernel/net/ipv4/netfilter/ip_tables.ko:
-/lib/modules/2.6.21.5/kernel/net/ipv4/netfilter/iptable_filter.ko: /lib/modules/2.6.21.5/kernel/net/ipv4/netfilter/ip_tables.ko
 /lib/modules/2.6.21.5/kernel/net/xfrm/xfrm_user.ko:
 /lib/modules/2.6.21.5/extra/endpointdd.ko: /lib/modules/2.6.21.5/extra/dspdd.ko
 /lib/modules/2.6.21.5/extra/acos_nat.ko:

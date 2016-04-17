@@ -107,6 +107,7 @@
 #define TYPE_ETH_P_8021Q            0x8100  /* VLAN in Ethernet */
 #define TYPE_ETH_P_PPP_SES          0x8864  /* PPPoE in Ethernet */
 #define TYPE_ETH_P_BCM              0x8874  /* BCM Switch Hdr */
+#define TYPE_ETH_P_BCM_TX           0x2000  /* BCM 53115 BCM tag Hdr */
 
 #undef  BLOG_DECL
 #define BLOG_DECL(x)                x,
@@ -155,6 +156,7 @@ typedef enum {
 #define BLOG_ENCAP_MAX              6       /* Maximum number of L2 encaps */
 #define BLOG_HDRSZ_MAX              32      /* Maximum size of L2 encaps */
 
+#define SUPPORT_BLOG_EXTEND					/* limit the max blogs */
 /* Maximum 400 blogs Ucast+Mcast */
 #define BLOG_EXTEND_SIZE            25      /* Number of Blog_t per extension */
 #define BLOG_EXTEND_MAX             16      /* Maximum extensions allowed */
@@ -174,6 +176,10 @@ struct bcmhdr {
     uint16_t h_proto;
 } __attribute__((packed));
 
+struct bcmhdr_53115 {
+    uint16_t brcm_tag;
+    uint16_t h_proto;
+} __attribute__((packed));
 
 extern const uint8_t rfc2684HdrLength[];
 extern const uint8_t rfc2684HdrData[][16];
