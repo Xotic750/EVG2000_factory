@@ -1,8 +1,8 @@
 ========================================
  EVG2000 Build Instructions
 
- Version: 1.0
- Date   : May 28 2010
+ Version: 1.1
+ Date   : May 20 2011
 ======================================== 
 
 Note: 
@@ -27,13 +27,30 @@ Note:
 1. Put the file "EVG2000-TELE2_src.tar" into a directory of your choice.
    Unzip and untar it with the following command:
         
-        tar xvfj EVG2000-TELE2_src.tar.bz2
+        tar xvf EVG2000-TELE2_src.tar
 
-2. Run the following commands to build image
+2. Let's call your EVG2000 root dir
+
+      EVG2000DIR=${your_path}/EVG2000-TELE2
+
+   In ${EVG2000DIR}/hostTools/fakeroot/fakeroot, replace the following lines:
+
+      PREFIX=/home/...
+      BINDIR=/home/...
+      PATHS=/home/...
+
+   with
+
+      EVG2000DIR=${your_path}/EVG2000-TELE2
+      PREFIX=${EVG2000DIR}/hostTools/fakeroot
+      BINDIR=${EVG2000DIR}/hostTools/fakeroot
+      PATHS=${EVG2000DIR}/hostTools/fakeroot/.libs:/lib:/usr/lib
+
+3. Run the following commands to build image
 
         cd EVG2000-TELE2
         make PROFILE=TELE2
 
-3. The final firmware is located in targets/TELE2.
+4. The final firmware is located in targets/TELE2.
    The filename is EVG2000-<build date time>.chk, or kernel_rootfs_image.chk
 

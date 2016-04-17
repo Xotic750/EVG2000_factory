@@ -588,10 +588,10 @@ int reply_ntcreate_and_X(connection_struct *conn,
 	   reply bits separately. */
 	int oplock_request = 0;
 	int fmode=0,rmode=0;
-    /* Foxconn modified start pling 11/25/2009 */
+    /* Fiji modified start pling 11/25/2009 */
 	//SMB_OFF_T file_len = 0;
 	SMB_BIG_UINT file_len = 0;
-    /* Foxconn modified end pling 11/25/2009 */
+    /* Fiji modified end pling 11/25/2009 */
 	SMB_STRUCT_STAT sbuf;
 	int smb_action = 0;
 	BOOL bad_path = False;
@@ -916,10 +916,10 @@ create_options = 0x%x root_dir_fid = 0x%x\n", flags, desired_access, file_attrib
 		
 	restore_case_semantics(conn, file_attributes);
 		
-    /* Foxconn modified start pling 11/25/2009 */
+    /* Fiji modified start pling 11/25/2009 */
 	//file_len = sbuf.st_size;
 	file_len = get_real_file_size(&sbuf);
-    /* Foxconn modified end pling 11/25/2009 */
+    /* Fiji modified end pling 11/25/2009 */
 	fmode = dos_mode(conn,fname,&sbuf);
 	if(fmode == 0)
 		fmode = FILE_ATTRIBUTE_NORMAL;
@@ -1018,17 +1018,17 @@ create_options = 0x%x root_dir_fid = 0x%x\n", flags, desired_access, file_attrib
 	p += 8;
 	SIVAL(p,0,fmode); /* File Attributes. */
 	p += 4;
-    /* Foxconn modified start pling 11/25/2009 */
+    /* Fiji modified start pling 11/25/2009 */
     /* Use 64 bit file size to support large files */
 	//SOFF_T(p, 0, get_allocation_size(conn,fsp,&sbuf));
 	SOFF64_T(p, 0, get_allocation_size(conn,fsp,&sbuf));
-    /* Foxconn modified end pling 11/25/2009 */
+    /* Fiji modified end pling 11/25/2009 */
 	p += 8;
-    /* Foxconn modified start pling 11/25/2009 */
+    /* Fiji modified start pling 11/25/2009 */
     /* Use 64 bit file size to support large files */
 	//SOFF_T(p,0,file_len);
     SOFF64_T(p,0,file_len);
-    /* Foxconn modified end pling 11/25/2009 */
+    /* Fiji modified end pling 11/25/2009 */
 	p += 8;
 	if (flags & EXTENDED_RESPONSE_REQUIRED)
 		SSVAL(p,2,0x7);

@@ -94,10 +94,10 @@ static char *RemoteHost;
 /* what port to log to? */
 static int RemotePort = 514;
 
-/* Foxconn add Start : Silver : 04/14/2006 , @dyn_log {*/
+/* Fiji add Start : Silver : 04/14/2006 , @dyn_log {*/
 /* Broadcast? */
 static int trueFlag = 0, all_flag=0;
-/* Foxconn add Start : Silver : 04/14/2006 , @dyn_log {*/
+/* Fiji add Start : Silver : 04/14/2006 , @dyn_log {*/
 
 /* To remote log or not to remote log, that is the question. */
 static int doRemoteLog = FALSE;
@@ -455,7 +455,7 @@ static void logMessage(int pri, char *msg)
 		/* if we have a valid socket, send the message */
 		if (-1 != remotefd) {
 			now = 1;
-			/* foxconn modified start, wenchia, 08/22/2007 */
+			/* fiji modified start, wenchia, 08/22/2007 */
 			//snprintf(line, sizeof(line), "<%d> %s", pri, msg);
             if (all_flag)
 			{
@@ -473,7 +473,7 @@ static void logMessage(int pri, char *msg)
 			        goto skip_sendto;
 			    }
 		    }
-			/* foxconn modified end, wenchia, 08/22/2007 */
+			/* fiji modified end, wenchia, 08/22/2007 */
 			
 		retry:
 			/* send message to remote logger */
@@ -492,7 +492,7 @@ static void logMessage(int pri, char *msg)
 //	if (local_logging == TRUE)
         /* bug fix ; circular_logging should do too; it only checked
 		 *            -L local logging.   */
-skip_sendto: /* foxconn added, wenchia, 08/22/2007 */
+skip_sendto: /* fiji added, wenchia, 08/22/2007 */
 	if (((local_logging == TRUE) || (circular_logging)) && localLog) {
 #endif
         //		/* now spew out the message to wherever it is supposed to go */
@@ -599,7 +599,7 @@ static void init_RemoteLog(void)
 	remoteaddr.sin_addr = *(struct in_addr *) *(xgethostbyname(RemoteHost))->h_addr_list;
 	remoteaddr.sin_port = htons(RemotePort);
 	
-	/* foxconn add start, wenchia, 08/22/2007 */
+	/* fiji add start, wenchia, 08/22/2007 */
 	if( trueFlag == 1 )
 	{
         /* Set the socket to permit multicasts on the local LAN */
@@ -607,7 +607,7 @@ static void init_RemoteLog(void)
             printf("setsockopt error");
         }
     }
-    /* foxconn add end, wenchia, 08/22/2007 */
+    /* fiji add end, wenchia, 08/22/2007 */
 }
 #endif
 
@@ -753,10 +753,10 @@ extern int syslogd_main(int argc, char **argv)
 	while ((opt = getopt(argc, argv, "m:nO:s:b:R:LC::")) > 0) {
 	*/
 	/* brcm, l - local log level, r - remote log level */
-	/*foxconn modified start, water, 06/20/2008*/
+	/*fiji modified start, water, 06/20/2008*/
 	//while ((opt = getopt(argc, argv, "m:nO:s:Sb:R:l:r:LC")) > 0) {
 	while ((opt = getopt(argc, argv, "m:nO:s:Sb:BAR:l:r:LC")) > 0) {
-	/*foxconn modified end, water, 06/20/2008*/
+	/*fiji modified end, water, 06/20/2008*/
 /*BRCM end*/
 		switch (opt) {
 		case 'm':
@@ -786,14 +786,14 @@ extern int syslogd_main(int argc, char **argv)
 			}
 			doRemoteLog = TRUE;
 			break;
-		/* foxconn add start, wenchia, 08/22/2007 */
+		/* fiji add start, wenchia, 08/22/2007 */
         case 'B':
 			trueFlag = 1;
 			break;
         case 'A':
 			all_flag = 1;
 			break;
-        /* foxconn add end, wenchia, 08/22/2007 */
+        /* fiji add end, wenchia, 08/22/2007 */
 		case 'L':
 			local_logging = TRUE;
 			break;

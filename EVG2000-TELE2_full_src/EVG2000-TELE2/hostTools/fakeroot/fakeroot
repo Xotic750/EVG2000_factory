@@ -15,12 +15,12 @@ EOF
 }
 
 # strip /bin/fakeroot to find install prefix
-PREFIX=/home/...
-BINDIR=/home/...
+PREFIX=/disk2/eric/U12H154_Tele2/Telenor/GPL/EVG2000-53115/hostTools/fakeroot
+BINDIR=/disk2/eric/U12H154_Tele2/Telenor/GPL/EVG2000-53115/hostTools/fakeroot
     
 USEABSLIBPATH=0
 LIB=libfakeroot.so
-PATHS=/home/...
+PATHS=/disk2/eric/U12H154_Tele2/Telenor/GPL/EVG2000-53115/hostTools/fakeroot/.libs:/lib:/usr/lib
 FAKED=${BINDIR}/faked
 
 FAKED_MODE="unknown-is-root"

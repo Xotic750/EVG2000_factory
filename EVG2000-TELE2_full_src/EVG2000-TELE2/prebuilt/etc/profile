@@ -49,10 +49,10 @@ if [ "$firsttime" = "/var/udhcpd/udhcpd.lease*" ]; then
  test -e /lib/modules/$KERNELVER/extra/bcmgpon.ko && insmod /etc/gpon/modules/gpio.ko
  test -e /lib/modules/$KERNELVER/extra/pwrmngtd.ko && insmod /lib/modules/$KERNELVER/extra/pwrmngtd.ko
  #smd
-# Foxconn Add : Steve Hsieh : ADSL_porting 
+# Fiji Add : Steve Hsieh : ADSL_porting 
  insmod /lib/modules/$KERNELVER/extra/acos_nat.ko
- insmod /lib/modules/2.6.21.5/kernel/net/ipv4/ubd/ubdPktPrcs.ko
-# Foxconn Add : Steve Hsieh : ADSL_porting  
+# insmod /lib/modules/2.6.21.5/kernel/net/ipv4/ubd/ubdPktPrcs.ko
+# Fiji Add : Steve Hsieh : ADSL_porting  
 # cfm
 param init
 acos_init

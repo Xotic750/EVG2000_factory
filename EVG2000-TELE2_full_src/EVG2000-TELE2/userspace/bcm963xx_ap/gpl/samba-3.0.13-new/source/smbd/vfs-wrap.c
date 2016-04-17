@@ -213,12 +213,12 @@ ssize_t vfswrap_read(vfs_handle_struct *handle, files_struct *fsp, int fd, void 
 	return result;
 }
 
-/* Foxconn modified start pling 11/18/2009 */
+/* Fiji modified start pling 11/18/2009 */
 //ssize_t vfswrap_pread(vfs_handle_struct *handle, files_struct *fsp, int fd, void *data,
 //			size_t n, SMB_OFF_T offset)
 ssize_t vfswrap_pread(vfs_handle_struct *handle, files_struct *fsp, int fd, void *data,
 			size_t n, SMB_BIG_UINT offset)
-/* Foxconn modified end pling 11/18/2009 */
+/* Fiji modified end pling 11/18/2009 */
 {
 	ssize_t result;
 
@@ -271,12 +271,12 @@ ssize_t vfswrap_write(vfs_handle_struct *handle, files_struct *fsp, int fd, cons
 	return result;
 }
 
-/* Foxconn modified start pling 11/18/2009 */
+/* Fiji modified start pling 11/18/2009 */
 //ssize_t vfswrap_pwrite(vfs_handle_struct *handle, files_struct *fsp, int fd, const void *data,
 //			size_t n, SMB_OFF_T offset)
 ssize_t vfswrap_pwrite(vfs_handle_struct *handle, files_struct *fsp, int fd, const void *data,
 			size_t n, SMB_BIG_UINT offset)
-/* Foxconn modified end pling 11/18/2009 */
+/* Fiji modified end pling 11/18/2009 */
 {
 	ssize_t result;
 
@@ -314,10 +314,10 @@ ssize_t vfswrap_pwrite(vfs_handle_struct *handle, files_struct *fsp, int fd, con
 	return result;
 }
 
-/* Foxconn modified start pling 11/18/2009 */
+/* Fiji modified start pling 11/18/2009 */
 //SMB_OFF_T vfswrap_lseek(vfs_handle_struct *handle, files_struct *fsp, int filedes, SMB_OFF_T offset, int whence)
 SMB_BIG_UINT vfswrap_lseek(vfs_handle_struct *handle, files_struct *fsp, int filedes, SMB_BIG_UINT offset, int whence)
-/* Foxconn modified end pling 11/18/2009 */
+/* Fiji modified end pling 11/18/2009 */
 {
 	//SMB_OFF_T result = 0;
 	SMB_BIG_UINT result = 0;

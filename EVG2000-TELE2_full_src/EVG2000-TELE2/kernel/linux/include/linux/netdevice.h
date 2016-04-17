@@ -533,14 +533,14 @@ struct net_device
 	/* space for optional statistics and wireless sysfs groups */
 	struct attribute_group  *sysfs_groups[3];
 	
-    /* foxconn wklin added start, 11/06/2008 */
+    /* fiji wklin added start, 11/06/2008 */
     #define acos_flags  unused_alignment_fixer
     #define NETIF_ACOSFLAGS_NATHOOK    1      /* an acos nat enabled if */
     #define NETIF_ACOSFLAGS_WANHOOK    2      /* an acos nat enabled if */
     #define NETIF_ACOSFLAGS_LANHOOK    4      /* an acos nat enabled if */
     #define NETIF_ACOSFLAGS_PPPOE      8      /* wan protocol - pppoe */
     #define NETIF_ACOSFLAGS_PPTP       16     /* wan protocol - pptp */
-    /* foxconn wklin added end, 11/06/2008 */
+    /* fiji wklin added end, 11/06/2008 */
     unsigned  unused_alignment_fixer;
 };
 #define to_net_dev(d) container_of(d, struct net_device, dev)

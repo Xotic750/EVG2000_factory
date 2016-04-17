@@ -41,9 +41,9 @@
 
 /*formal version control*/
 #define AMBIT_HARDWARE_VERSION     "U12H154T00"
-#define AMBIT_SOFTWARE_VERSION     "V2.2.0.36"  
+#define AMBIT_SOFTWARE_VERSION     "V2.2.1.64"  
 #if (WLAN_REGION == WW_VERSION)
-#define AMBIT_UI_VERSION           "2.2.36"  
+#define AMBIT_UI_VERSION           "2.2.64"  
 #elif (WLAN_REGION == NA_VERSION)
 #define AMBIT_UI_VERSION           "0.1.9NA"
 #else
@@ -65,7 +65,7 @@
 /****************************************************************************
  ***
  ***        put AMBIT features here!!!
- ***
+ *** 
  ***
  ****************************************************************************/
 
@@ -117,7 +117,7 @@
 
 /* wklin added start, 11/22/2006 */
 /* The following definition is used in acosNvramConfig.c and acosNvramConfig.h
- * to distingiush between Foxconn's and Broadcom's implementation.
+ * to distingiush between Fiji's and Broadcom's implementation.
  */
 #define BRCM_NVRAM          /* use broadcom nvram instead of ours */
 

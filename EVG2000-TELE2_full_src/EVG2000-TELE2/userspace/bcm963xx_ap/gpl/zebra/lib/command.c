@@ -431,7 +431,7 @@ to64(char *s, long v, int n)
     }
 }
 
-/* foxconn modified start, wenchia, 2006/06/02 */
+/* fiji modified start, wenchia, 2006/06/02 */
 /* Do not support password encryption */
 /* Remove the following code */
 /*
@@ -450,7 +450,7 @@ char *zencrypt (char *passwd)
   return crypt (passwd, salt);
 }
 */
-/* foxconn modified end, wenchia, 2006/06/02 */
+/* fiji modified end, wenchia, 2006/06/02 */
 
 /* This function write configuration of this host. */
 int
@@ -2506,7 +2506,7 @@ DEFUN (config_password, password_cmd,
     XFREE (0, host.password);
   host.password = NULL;
 
-  /* foxconn modified start, wenchia, 2006/06/02 */
+  /* fiji modified start, wenchia, 2006/06/02 */
   /* Do not support password encryption */
   host.encrypt = 0;
   /* Remove the following code */
@@ -2519,7 +2519,7 @@ DEFUN (config_password, password_cmd,
     }
   else
   */
-  /* foxconn modified end, wenchia, 2006/06/02 */
+  /* fiji modified end, wenchia, 2006/06/02 */
     host.password = XSTRDUP (0, argv[0]);
 
   return CMD_SUCCESS;
@@ -2580,7 +2580,7 @@ DEFUN (config_enable_password, enable_password_cmd,
   host.enable = NULL;
 
   /* Plain password input. */
-  /* foxconn modified start, wenchia, 2006/06/02 */
+  /* fiji modified start, wenchia, 2006/06/02 */
   /* Do not support password encryption */
   host.encrypt = 0;
   /* Remove the following code */
@@ -2593,7 +2593,7 @@ DEFUN (config_enable_password, enable_password_cmd,
     }
   else
   */
-  /* foxconn modified end, wenchia, 2006/06/02 */
+  /* fiji modified end, wenchia, 2006/06/02 */
     host.enable = XSTRDUP (0, argv[0]);
 
   return CMD_SUCCESS;
@@ -2630,7 +2630,7 @@ DEFUN (service_password_encrypt,
        "Set up miscellaneous service\n"
        "Enable encrypted passwords\n")
 {
-  /* foxconn modified start, wenchia, 2006/06/02 */
+  /* fiji modified start, wenchia, 2006/06/02 */
   /* Do not support password encryption */
   host.encrypt = 0;
   /* Remove the following code */
@@ -2653,7 +2653,7 @@ DEFUN (service_password_encrypt,
       host.enable_encrypt = XSTRDUP (0, zencrypt (host.enable));
     }
   */
-  /* foxconn modified end, wenchia, 2006/06/02 */
+  /* fiji modified end, wenchia, 2006/06/02 */
   
   return CMD_SUCCESS;
 }

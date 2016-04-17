@@ -19,7 +19,7 @@
 #include "leases.h"
 
 /* on these functions, make sure you datatype matches */
-/* foxconn modified start, wenchia, 06/25/2007 */
+/* fiji modified start, wenchia, 06/25/2007 */
 /* fix alignment issue in DG834GUv5 */
 /* original code*/
 /*
@@ -52,7 +52,7 @@ static int read_ip(char *line, void *arg)
         memcpy((char*)arg, (char*)&addr, sizeof(struct in_addr));
 	return retval;
 }
-/* foxconn modified end, wenchia, 06/25/2007 */
+/* fiji modified end, wenchia, 06/25/2007 */
 
 
 static int read_str(char *line, void *arg)
@@ -191,7 +191,7 @@ static struct config_keyword keywords[] = {
 	{"sname",	read_str, &(server_config.sname),	""},
 	{"boot_file",	read_str, &(server_config.boot_file),	""},
 #ifdef TI_ALICE
-	{"IPTV service",	read_str, &(server_config.IPTV_service),	"Dyn_Portmapping"},/* Foxconn added , Lewis, 2008/9/19, @Lan host identification */
+	{"IPTV service",	read_str, &(server_config.IPTV_service),	"Dyn_Portmapping"},/* Fiji added , Lewis, 2008/9/19, @Lan host identification */
 #endif
     /* pling added start 11/13/2008, for TR111 */
 #if (defined SUPPORT_TR111)
@@ -200,7 +200,7 @@ static struct config_keyword keywords[] = {
     {"product_class", read_str, &(server_config.product_class), "DSL Voice Modem"},
 #endif
     /* pling added end 11/13/2008 */
-    /* Foxconn added start , 08/05/2009 */
+    /* Fiji added start , 08/05/2009 */
 #if defined(SingTel)
     {"other_start",	read_ip,  &(server_config.other_start),	    "192.168.1.1"},
     {"other_end",	read_ip,  &(server_config.other_end),		"192.168.1.190"},
@@ -211,7 +211,7 @@ static struct config_keyword keywords[] = {
     {"xbox_start",	read_ip,  &(server_config.xbox_start),	    "192.168.1.204"},
     {"xbox_end",	read_ip,  &(server_config.xbox_end),		"192.168.1.211"},
 #endif
-    /* Foxconn added end , 08/05/2009 */
+    /* Fiji added end , 08/05/2009 */
 	/*ADDME: static lease */
 	{"",		NULL, 	  NULL,				""}
 };
@@ -279,7 +279,14 @@ void write_leases(void)
 		if (leases[i].yiaddr != 0) {
 			if (server_config.remaining) {
 				if (lease_expired(&(leases[i])))
+				{
+#if defined(U12H154_TELE2)
+                    struct in_addr addr;
+                    addr.s_addr = leases[i].yiaddr;
+                    del_stb_list(inet_ntoa(addr));
+#endif
 					lease_time = 0;
+				}
 				else lease_time = leases[i].expires - curr;
 			} else lease_time = leases[i].expires;
 			lease_time = htonl(lease_time);

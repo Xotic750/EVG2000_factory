@@ -1,1 +1,0 @@
-cmd_/home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/built-in.o :=  rm -f /home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/built-in.o; /opt/toolchains/uclibc-crosstools-gcc-4.2.3-3/usr/bin/mips-linux-uclibc-ar rcs /home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/built-in.o

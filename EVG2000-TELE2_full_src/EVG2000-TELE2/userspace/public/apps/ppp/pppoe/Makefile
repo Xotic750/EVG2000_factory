@@ -87,7 +87,7 @@ endif
 
 CFLAGS= $(COPTS) $(COMPILE_FLAGS) $(INCLUDE_DIRS)
 
-## Foxconn added for random holdoff mechanism
+## Fiji added for random holdoff mechanism
 CFLAGS += -DPPPOE_RANDOM_HOLDOFF
 
 ifdef CHAPMS

@@ -27,7 +27,7 @@ LOGINUTILS-y:=
 LOGINUTILS-$(CONFIG_ADDGROUP)	+= addgroup.o
 LOGINUTILS-$(CONFIG_ADDUSER)	+= adduser.o
 LOGINUTILS-$(CONFIG_GETTY)	+= getty.o
-#LOGINUTILS-$(CONFIG_LOGIN)	+= login.o, Foxconn modified, water, 06/10/2008, @telnetd
+#LOGINUTILS-$(CONFIG_LOGIN)	+= login.o, Fiji modified, water, 06/10/2008, @telnetd
 LOGINUTILS-$(CONFIG_PASSWD)	+= passwd.o
 LOGINUTILS-$(CONFIG_SU)		+= su.o
 LOGINUTILS-$(CONFIG_SULOGIN)	+= sulogin.o
@@ -38,7 +38,7 @@ LOGINUTILS-$(CONFIG_DELGROUP)	+= delgroup.o
 libraries-y+=$(LOGINUTILS_DIR)$(LOGINUTILS_AR)
 
 needcrypt-y:=
-#needcrypt-$(CONFIG_LOGIN)	:= y, Foxconn modified, water, 06/10/2008, @telnetd
+#needcrypt-$(CONFIG_LOGIN)	:= y, Fiji modified, water, 06/10/2008, @telnetd
 needcrypt-$(CONFIG_PASSWD)	:= y
 needcrypt-$(CONFIG_SU)		:= y
 needcrypt-$(CONFIG_SULOGIN)	:= y

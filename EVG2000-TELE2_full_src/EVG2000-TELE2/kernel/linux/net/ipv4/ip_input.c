@@ -155,7 +155,7 @@
 
 DEFINE_SNMP_STAT(struct ipstats_mib, ip_statistics) __read_mostly;
 
-/* Foxconn added start , 09/04/2009 */
+/* Fiji added start , 09/04/2009 */
 int (*ip_pre_insert_hook)(struct sk_buff *skb); 
 
 void insert_func_to_IP_PRE_ROUTE(void *FUNC)
@@ -167,7 +167,7 @@ void remove_func_to_IP_PRE_ROUTE(void *FUNC)
 {
     ip_pre_insert_hook= NULL;
 }
-/* Foxconn added end , 09/04/2009 */
+/* Fiji added end , 09/04/2009 */
 
 /*
  *	Process Router Attention IP option
@@ -502,5 +502,5 @@ out:
 }
 
 EXPORT_SYMBOL(ip_statistics);
-EXPORT_SYMBOL(insert_func_to_IP_PRE_ROUTE); /* foxconn added */
-EXPORT_SYMBOL(remove_func_to_IP_PRE_ROUTE); /* foxconn added */
+EXPORT_SYMBOL(insert_func_to_IP_PRE_ROUTE); /* fiji added */
+EXPORT_SYMBOL(remove_func_to_IP_PRE_ROUTE); /* fiji added */

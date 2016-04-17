@@ -1,0 +1,213 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<META http-equiv="Pragma" CONTENT="no-cache">
+<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">	
+<meta HTTP-EQUIV="Expires" CONTENT="Mon, 06 Jan 1990 00:00:01 GMT"> 
+<meta name="description" content="DVG834">
+
+<title>TR069 Settings</title>
+<link rel="stylesheet" href="form.css">
+<script language="javascript" type="text/javascript" src="utility.js"></script>
+<script language="javascript" type="text/javascript" src="linux.js"></script>
+<script language="javascript" type="text/javascript" src="func.js"></script>
+<script language="javascript" type="text/javascript">
+<!-- Start Script
+function frmLoad(){
+      var cf = document.forms[0];
+      
+      if ( cf.enblInform.value == "1" ){  
+          cf.inform[1].checked = true;
+      }else{    
+          cf.inform[0].checked = true;   
+      }       
+	  if ( cf.enblNoneConnReqAuth.value == "1"){
+         cf.connReqAuth.checked = true;
+      }else{
+         cf.connReqAuth.checked = false;
+      }
+         connAuthChange();      
+}
+
+
+function connAuthChange(){
+   	var cf = document.forms[0];	
+	var dflag = !cf.connReqAuth.checked;
+	
+    	cf.connReqUser.disabled  = dflag;
+        cf.connReqPwd.disabled  = dflag;
+}
+
+function stdel(){
+    if (confirm("If you really would liked to delete , please click 'OK'." +
+              "\nClick  'Cancel' to prevent the deletion.") !=true){
+              return false;
+    }
+    return true;
+}
+
+function btnCancel(){
+    var cf = document.forms[0];
+    cf.inform[0].checked = false;
+    cf.inform[1].checked = false;
+    cf.informInterval.value = "";
+    cf.acsURL.value = "";
+    cf.acsUser.value = "";
+    cf.acsPwd.value = "";
+    cf.connReqAuth.checked = false;
+    cf.connReqUser.value = "";
+    cf.connReqPwd.value = "";
+    }
+
+function btnApply() {
+    var cf = document.forms[0];
+
+    if (cf.inform[0].checked){
+       cf.enblInform.value = 0;
+    }else{ 
+       cf.enblInform.value = 1;
+    }
+    if (cf.connReqAuth.checked){
+        cf.enblNoneConnReqAuth.value = 1;
+    }else{
+        cf.enblNoneConnReqAuth.value = 0
+    }
+    
+   with ( document.forms[0] ) {
+      if (acsURL.value == '') {
+         alert('ACS URL is required.');
+         return false;
+      }
+	  if (informInterval.value == '') {
+         alert('Inform Interval is required.');
+         return false;
+      }
+      if (connReqAuth.checked == true){
+          if (connReqUser.value == '') {
+    	      alert('Connection Request User Name is required.');
+              return false;
+          }
+      }
+      if ( cf.inform[1].checked == true ) {
+		 var interval = parseInt(informInterval.value); 
+		 if(isNaN(interval)){
+			alert("Time Interval is invalid, input integers.");
+			return false;
+		 }
+      } 
+      
+      if (acsURL.value.length > 256) {
+         alert('The length of ACS URL is too long [1-256].');
+         return false;
+      }
+      
+      if (acsUser.value.length > 256) {
+         alert('The length of ACS user name  is too long [0-256].');
+         return false;
+      }
+     
+      if (acsPwd.value.length > 256) {
+         alert('The length of sysName is too long [0-256].');
+         return false;
+      }
+     
+      if (connReqAuth.checked == true)
+      {
+	     if (connReqUser.value.length > 256) {
+         alert('The length of connection request user name is too long [0-256].');
+         return false;
+      	 }
+     
+      	if (connReqPwd.value.length > 256) {
+         alert('The length of connection request password is too long [0-256].');
+         return false;
+      	}
+	  }
+  }
+return true;
+}
+
+//-->
+</script>
+</head>
+
+<body bgcolor="#ffffff" onload="frmLoad();loadhelp('TR069_tr069');dataToVisible(document.forms[0]);document.forms[0].elements[0].focus();">
+<form name="formname" action="tr069.cgi" method="post">
+<table border="0" cellpadding="0" cellspacing="3" width="100%">
+<tr>
+	<td colspan="2"><h1>TR-069 Configuration</h1></td>
+</tr>
+<tr>
+  <td colspan="2" background="liteblue.gif" height="12">&nbsp; </td>
+</tr>
+
+<tr>
+	<td colspan="2" nowrap><h3>TR-069 Client Configuration</h3></a></td>
+</tr>
+<tr>
+
+   <td nowrap width="50%" ><a href="javascript:loadhelp('TR069_tr069','informstatus')" tabindex="-1">Inform Status:</a></td>
+   <td nowrap align="right"><input name='inform' type='radio'>Disable&nbsp;&nbsp;<input name='inform' checked type='radio'>Enable</td>
+
+</tr>
+<tr>
+	<td nowrap width="50%"><a href="javascript:loadhelp('TR069_tr069','informinterval')" tabindex="-1">Inform Interval:</a></td>
+    <td nowrap align="right"><input type="text" name="informInterval" size="24" maxlength="256" value="<% tr069_cgi_get_param("tr069InformInterval"); %>"></td>
+</tr>
+
+<tr>
+	<td nowrap width="50%"><a href="javascript:loadhelp('TR069_tr069','acsurl')" tabindex="-1">ACS URL:</a></td>
+    <td nowrap align="right"><input type="text" name="acsURL" size="24" maxlength="256" value="<% tr069_cgi_get_param("tr069AcsURL"); %>"></td>
+</tr>
+<tr>
+	<td nowrap width="50%"><a href="javascript:loadhelp('TR069_tr069','acsuser')" tabindex="-1">ACS Username:</a></td>
+    <td nowrap align="right"><input type="text" name="acsUser" size="24" maxlength="256" value="<% tr069_cgi_get_param("tr069AcsUser"); %>"></td>
+</tr>
+<tr>
+	<td nowrap width="50%"><a href="javascript:loadhelp('TR069_tr069','acspwd')" tabindex="-1">ACS Password:</a></td>
+    <td nowrap align="right"><input type="password" name="acsPwd" size="24" maxlength="256" value="<% tr069_cgi_get_param("tr069AcsPwd"); %>"></td>
+</tr>
+<tr>
+   <td colspan="2" background="liteblue.gif" height="12">&nbsp; </td>
+</tr>
+<tr>
+	<td colspan="2" nowrap><input type='checkbox' name='connReqAuth' size="24" maxlength="256" onClick="connAuthChange()"><b>Connection Request Authentication</b>
+	</td>
+</tr>
+
+
+
+<tr>
+	<td width="50%" align="left">Connection Request User Name:</td>
+	<td width="50%" align="right"><input type='text' name='connReqUser' size="24" maxlength="256" value="<% tr069_cgi_get_param("tr069ConnReqUser"); %>"></td>
+</tr>
+<tr>
+	<td width="50%" align="left" nowrap>Connection Request Password:</td>
+ <td width="50%" align="right"><input type='password' name='connReqPwd' size="24" maxlength="256" value="<% tr069_cgi_get_param("tr069ConnReqPwd"); %>"></td>
+</tr>
+
+<tr>
+  <td colspan="2" background="liteblue.gif" height="12">&nbsp; </td>
+</tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="3" width="100%">
+
+<tr>
+<td colspan="2" align="center">
+<input type="submit" name="apply" value="Apply" onClick="return btnApply()">
+<input type="button" name="Cancel" value="Cancel" onClick="btnCancel()">
+</td>
+</tr>
+
+</table>
+<INPUT name=enblInform type=hidden value="<% tr069_cgi_get_param("tr069InformEnable"); %>">
+<INPUT name=enblNoneConnReqAuth type=hidden value="<% tr069_cgi_get_param("tr069NoneConnReqAuth"); %>">
+
+</form>
+<p>
+</p>
+</body>
+</html>

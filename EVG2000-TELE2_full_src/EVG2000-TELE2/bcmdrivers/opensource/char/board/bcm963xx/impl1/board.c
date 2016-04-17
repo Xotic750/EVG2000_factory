@@ -141,7 +141,7 @@ extern void kerSysLedRegisterHandler( BOARD_LED_NAME ledName,
     HANDLE_LED_FUNC ledHwFunc, int ledFailType );
 
 typedef void gpioFn(int gpio, int state);
-extern gpioFn *gpioFnPtr; /* foxconn added */
+extern gpioFn *gpioFnPtr; /* fiji added */
 
 /* Prototypes. */
 static void set_mac_info( void );
@@ -408,14 +408,14 @@ static int __init brcm_board_init( void )
         }
     }
     
-    /* Foxconn modified for UART1 support */
+    /* Fiji modified for UART1 support */
     GPIO->GPIOBaseMode |= 0x2b01;
     GPIO->GPIODir  |= (1 << 31); /* UART1 output pin */
     GPIO->GPIOMode &= ~(GPIO_MODE_SPI_SSN5|GPIO_MODE_SPI_SSN4);
 printk("\n===>brcm_board_init: GPIO->GPIOBaseMode=0x%x\n", GPIO->GPIOBaseMode);
 printk("\n===>brcm_board_init: GPIO->GPIOMode=0x%x\n", GPIO->GPIOMode);
 
-    gpioFnPtr = &SetGpio;   /* foxconn */
+    gpioFnPtr = &SetGpio;   /* fiji */
 
     add_proc_files();
     return ret;
@@ -1463,7 +1463,7 @@ static int board_ioctl( struct inode *inode, struct file *flip,
                 ret = -EFAULT;
             break;
             
-        /* Foxconn add start, Jasmine yang, 05/21/2007 */
+        /* Fiji add start, Jasmine yang, 05/21/2007 */
         case BOARD_IOCTL_SET_BASE_MAC_ADDRESS:
         {
             NVRAM_DATA nvramData;
@@ -1480,7 +1480,7 @@ static int board_ioctl( struct inode *inode, struct file *flip,
                 ret = -EFAULT;
             break;
         }
-        /* Foxconn add end, Jasmine yang, 05/21/2007 */
+        /* Fiji add end, Jasmine yang, 05/21/2007 */
 
         case BOARD_IOCTL_GET_CHIP_ID:
             ctrlParms.result = (int) (PERF->RevID & 0xFFFF0000) >> 16;
@@ -1715,7 +1715,7 @@ static int board_ioctl( struct inode *inode, struct file *flip,
             }
             break;
             
-        /* Foxconn Add Start   : Silver : 2006/06/20  @reset {*/    
+        /* Fiji Add Start   : Silver : 2006/06/20  @reset {*/    
         case BOARD_IOCTL_GET_GPIO:
             if (copy_from_user((void*)&ctrlParms, (void*)arg, sizeof(ctrlParms)) == 0) {
                 //ctrlParms.result = GetGpio(ctrlParms.strLen, ctrlParms.offset);
@@ -1727,7 +1727,7 @@ static int board_ioctl( struct inode *inode, struct file *flip,
                 ret = -EFAULT;  
             }            
             break;
-        /* Foxconn Add End   : Silver : 2006/06/20  @reset }*/
+        /* Fiji Add End   : Silver : 2006/06/20  @reset }*/
     
         default:
             ret = -EINVAL;
@@ -2135,7 +2135,7 @@ static int ConfigCs (BOARD_IOCTL_PARMS *parms)
     return( retv );
 }
 
-/* Foxconn Add Start   : Silver : 2006/06/20  @reset {*/
+/* Fiji Add Start   : Silver : 2006/06/20  @reset {*/
 int GetGpio(int gpio_bit)
 {
     unsigned long gpio_mask = GPIO_NUM_TO_MASK(gpio_bit);
@@ -2153,7 +2153,7 @@ int GetGpio(int gpio_bit)
     else
         return 0; /* Low */
 }
-/* Foxconn Add End   : Silver : 2006/06/20  @reset }*/
+/* Fiji Add End   : Silver : 2006/06/20  @reset }*/
 
 void SetGpio(int gpio, GPIO_STATE_t state)
 {

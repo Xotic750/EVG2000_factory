@@ -66,21 +66,21 @@ EXEEXT =
 OBJEXT = o
 PATH_SEPARATOR = :
 AMTAR = ${SHELL} /home/fred/0117/ap61/gpl/zebra-0.93a/missing --run tar
-#Foxconn start mark by fred 20060226
+#Fiji start mark by fred 20060226
 #AR = ar
 #AWK = gawk
 BGPD = 
 #CC = gcc
 #CPP = gcc -E
-#Foxconn end
+#Fiji end
 CURSES = 
 DEPDIR = .deps
 IF_METHOD = if_netlink.o
 IF_PROC = if_proc.o
 INCLUDES = 
-#Foxconn start mark by fred 20060226
+#Fiji start mark by fred 20060226
 #INSTALL_STRIP_PROGRAM = ${SHELL} $(install_sh) -c -s
-#Foxconn end
+#Fiji end
 IPFORWARD = ipforward_proc.o
 KERNEL_METHOD = 
 LIBPAM = 
@@ -96,7 +96,7 @@ RIPD = ripd
 RIPNGD = 
 RTREAD_METHOD = rtread_netlink.o
 RT_METHOD = rt_netlink.o
-#Foxconn mark by fred 20060221
+#Fiji mark by fred 20060221
 #STRIP = 
 VERSION = 0.93a
 VTYSH = 
@@ -105,7 +105,7 @@ am__include = include
 am__quote = 
 install_sh = /home/fred/0117/ap61/gpl/zebra-0.93a/install-sh
 
-#Foxconn modify by fred 20060221
+#Fiji modify by fred 20060221
 #SUBDIRS = lib zebra  ripd     doc
 SUBDIRS = lib zebra  ripd
 
@@ -129,7 +129,7 @@ DIST_COMMON = README AUTHORS COPYING COPYING.LIB ChangeLog INSTALL \
 	depcomp install-sh missing mkinstalldirs
 DIST_SUBDIRS = $(SUBDIRS)
 
-#Foxconn start modify by fred 20060221
+#Fiji start modify by fred 20060221
 #all: config.h
 #	$(MAKE) $(AM_MAKEFLAGS) all-recursive
 
@@ -150,12 +150,12 @@ zebra/zebra.a:
 	$(MAKE) $(AM_MAKEFLAGS) -C zebra $(BUILD_ZEBRA)
 ripd/ripd.a:
 	$(MAKE) $(AM_MAKEFLAGS) -C ripd $(BUILD_ZEBRA)
-#foxconn end
+#fiji end
 
 .SUFFIXES:
 
 am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log
-# Foxconn removed start pling 04/20/2006 
+# Fiji removed start pling 04/20/2006 
 #$(srcdir)/Makefile.in:  Makefile.am  $(top_srcdir)/configure.in $(ACLOCAL_M4)
 #	cd $(top_srcdir) && \
 #	  $(AUTOMAKE) --foreign  Makefile
@@ -183,7 +183,7 @@ am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log
 #$(srcdir)/config.h.in:  $(top_srcdir)/configure.in $(ACLOCAL_M4) $(top_srcdir)/acconfig.h
 #	cd $(top_srcdir) && $(AUTOHEADER)
 #	touch $(srcdir)/config.h.in
-# Foxconn removed end pling 04/20/2006 
+# Fiji removed end pling 04/20/2006 
 
 distclean-hdr:
 	-rm -f config.h stamp-h1
@@ -419,7 +419,7 @@ distclean-generic:
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
-#Foxconn mark by fred 20060221
+#Fiji mark by fred 20060221
 #clean: clean-recursive
 
 clean-am: clean-generic mostlyclean-am

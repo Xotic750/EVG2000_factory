@@ -222,7 +222,7 @@ usage(char const *argv0)
     exit(EXIT_SUCCESS);
 }
 
-/*foxconn add start, water, 10/12/2008, @packet statistics*/
+/*fiji add start, water, 10/12/2008, @packet statistics*/
 extern char wanPortMac[20];
 extern unsigned int rxRelay;
 extern unsigned int rxByte;
@@ -241,7 +241,7 @@ void sigusr1_handler(int sig)
         fclose(fp);
     }
 }
-/*foxconn add start, water, 10/12/2008*/
+/*fiji add start, water, 10/12/2008*/
 
 /**********************************************************************
 *%FUNCTION: main
@@ -264,7 +264,7 @@ main(int argc, char *argv[])
     struct sigaction sa;
     int beDaemon = 1;
     openlog("pppoe-relay", LOG_PID, LOG_DAEMON);
-    printf("Zz start the relay!![fun=%s,%d],\n",__FUNCTION__,__LINE__);/*Foxconn modify,Zz Shan 01/03/2008*/
+    printf("Zz start the relay!![fun=%s,%d],\n",__FUNCTION__,__LINE__);/*Fiji modify,Zz Shan 01/03/2008*/
     while((opt = getopt(argc, argv, "hC:S:B:n:i:F")) != -1) {
 	switch(opt) {
 	case 'h':
@@ -334,7 +334,7 @@ main(int argc, char *argv[])
 
     /* Allocate memory for sessions, etc. */
     initRelay(nsess);
-    printf("Zz [fun=%s,%d],initial!\n",__FUNCTION__,__LINE__);/*Foxconn modify,Zz Shan 01/03/2008*/
+    printf("Zz [fun=%s,%d],initial!\n",__FUNCTION__,__LINE__);/*Fiji modify,Zz Shan 01/03/2008*/
     /* Daemonize -- UNIX Network Programming, Vol. 1, Stevens */
     if (beDaemon) {
 	int i;
@@ -368,9 +368,9 @@ main(int argc, char *argv[])
     /* Kick off SIGALRM if there is an idle timeout */
     if (IdleTimeout) alarm(1);
     
-    /*foxconn add start, water, 10/12/2008, @packet statistics*/
+    /*fiji add start, water, 10/12/2008, @packet statistics*/
     signal(SIGUSR1, sigusr1_handler);
-    /*foxconn add end, water, 10/12/2008*/
+    /*fiji add end, water, 10/12/2008*/
     
     /* Enter the relay loop */
     relayLoop();
@@ -779,7 +779,7 @@ relayLoop()
     int sock;
     struct timeval *timeout;
     
-    printf("Zz [fun=%s,%d],in relayloop!\n",__FUNCTION__,__LINE__);/*Foxconn modify,Zz Shan 01/03/2008*/
+    printf("Zz [fun=%s,%d],in relayloop!\n",__FUNCTION__,__LINE__);/*Fiji modify,Zz Shan 01/03/2008*/
     printf("Zz [fun=%s,%d],NumInterfaces=%d\n",__FUNCTION__,__LINE__,NumInterfaces);/*Zz*/
     /* Build the select set */
     FD_ZERO(&readable);
@@ -802,9 +802,9 @@ relayLoop()
     for(;;) {
 	readableCopy = readable;
 	for(;;) {
-	    r = select(maxFD, &readableCopy, NULL, NULL, NULL);/*Foxconn modify,Zz Shan 01/03/2008*/
+	    r = select(maxFD, &readableCopy, NULL, NULL, NULL);/*Fiji modify,Zz Shan 01/03/2008*/
 	    if (r >= 0 || errno != EINTR) break;
-	}/*Foxconn modify,Zz Shan 01/03/2008*/
+	}/*Fiji modify,Zz Shan 01/03/2008*/
 	if (r < 0) {
 	    RELAY_DEBUG("[fun=%s,%d], select (relayLoop), r=%d, errno=%d, eintr=%d\n",
 	    __FUNCTION__,__LINE__, r, errno, EINTR);
@@ -854,7 +854,7 @@ relayGotDiscoveryPacket(PPPoEInterface const *iface)
     PPPoEPacket packet;
     int size;
 
-    RELAY_DEBUG("Zz [fun=%s,%d],got discovery\n",__FUNCTION__,__LINE__);/*Foxconn modify,Zz Shan 01/03/2008*/
+    RELAY_DEBUG("Zz [fun=%s,%d],got discovery\n",__FUNCTION__,__LINE__);/*Fiji modify,Zz Shan 01/03/2008*/
     if (receivePacket(iface->discoverySock, &packet, &size) < 0) {
 	RELAY_DEBUG("Zz [fun=%s,%d],receive error!\n",__FUNCTION__,__LINE__);/*Zz*/
 	return;
@@ -878,7 +878,7 @@ relayGotDiscoveryPacket(PPPoEInterface const *iface)
 	size = ntohs(packet.length) + HDR_SIZE;
     }
 
-    RELAY_DEBUG("Zz [fun=%s,%d],packet.code:0x%x\n",__FUNCTION__,__LINE__,packet.code);/*Foxconn modify,Zz Shan 01/03/2008*/
+    RELAY_DEBUG("Zz [fun=%s,%d],packet.code:0x%x\n",__FUNCTION__,__LINE__,packet.code);/*Fiji modify,Zz Shan 01/03/2008*/
     switch(packet.code) {
     case CODE_PADT:
 	relayHandlePADT(iface, &packet, size);
@@ -918,7 +918,7 @@ relayGotSessionPacket(PPPoEInterface const *iface)
     SessionHash *sh;
     PPPoESession *ses;
 
-    RELAY_DEBUG("Zz [fun=%s,%d],got session\n",__FUNCTION__,__LINE__);/*Foxconn modify,Zz Shan 01/03/2008*/
+    RELAY_DEBUG("Zz [fun=%s,%d],got session\n",__FUNCTION__,__LINE__);/*Fiji modify,Zz Shan 01/03/2008*/
     if (receivePacket(iface->sessionSock, &packet, &size) < 0) {
 	RELAY_DEBUG("Zz [fun=%s,%d],receive error!\n",__FUNCTION__,__LINE__);/*Zz*/
 	return;
@@ -999,7 +999,7 @@ relayHandlePADT(PPPoEInterface const *iface,
     SessionHash *sh;
     PPPoESession *ses;
 
-    RELAY_DEBUG("Zz [fun=%s,%d],\n",__FUNCTION__,__LINE__);/*Foxconn modify,Zz Shan 01/03/2008*/
+    RELAY_DEBUG("Zz [fun=%s,%d],\n",__FUNCTION__,__LINE__);/*Fiji modify,Zz Shan 01/03/2008*/
     sh = findSession(packet->ethHdr.h_source, packet->session);
     if (!sh) {
 	return;
@@ -1037,7 +1037,7 @@ relayHandlePADI(PPPoEInterface const *iface,
 
     int ifIndex;
 
-    RELAY_DEBUG("Zz [fun=%s,%d],\n",__FUNCTION__,__LINE__);/*Foxconn modify,Zz Shan 01/03/2008*/
+    RELAY_DEBUG("Zz [fun=%s,%d],\n",__FUNCTION__,__LINE__);/*Fiji modify,Zz Shan 01/03/2008*/
     /* Can a client legally be behind this interface? */
     if (!iface->clientOK) {
 	syslog(LOG_ERR,
@@ -1107,7 +1107,7 @@ relayHandlePADI(PPPoEInterface const *iface,
 	if (!Interfaces[i].acOK) continue;
 	memcpy(packet->ethHdr.h_source, Interfaces[i].mac, ETH_ALEN);
 	RELAY_DEBUG("Zz [fun=%s,%d],mac[%d]=%02x:%02x:%02x:%02x:%02x:%02x\n",__FUNCTION__,__LINE__,i,Interfaces[i].mac[0],Interfaces[i].mac[1],Interfaces[i].mac[2],Interfaces[i].mac[3],Interfaces[i].mac[4],Interfaces[i].mac[5]);/*Zz*/
-	/*foxconn add start, water, 10/22/2008, @packet statistics*/
+	/*fiji add start, water, 10/22/2008, @packet statistics*/
 	sprintf(wanPortMac, "%02x:%02x:%02x:%02x:%02x:%02x", 
                     	Interfaces[i].mac[0],
                     	Interfaces[i].mac[1],
@@ -1115,7 +1115,7 @@ relayHandlePADI(PPPoEInterface const *iface,
                     	Interfaces[i].mac[3],
                     	Interfaces[i].mac[4],
                     	Interfaces[i].mac[5]    );
-    /*foxconn add end, water, 10/22/2008*/
+    /*fiji add end, water, 10/22/2008*/
 	sendPacket(NULL, Interfaces[i].discoverySock, packet, size);
 	RELAY_DEBUG("Zz [fun=%s,%d],\n",__FUNCTION__,__LINE__);/*Zz*/
     }
@@ -1142,7 +1142,7 @@ relayHandlePADO(PPPoEInterface const *iface,
     int ifIndex;
     int acIndex;
 
-    RELAY_DEBUG("Zz [fun=%s,%d],\n",__FUNCTION__,__LINE__);/*Foxconn modify,Zz Shan 01/03/2008*/
+    RELAY_DEBUG("Zz [fun=%s,%d],\n",__FUNCTION__,__LINE__);/*Fiji modify,Zz Shan 01/03/2008*/
     /* Can a server legally be behind this interface? */
     if (!iface->acOK) {
 	syslog(LOG_ERR,
@@ -1259,7 +1259,7 @@ relayHandlePADR(PPPoEInterface const *iface,
     int ifIndex;
     int cliIndex;
     
-    RELAY_DEBUG("Zz [fun=%s,%d],\n",__FUNCTION__,__LINE__);/*Foxconn modify,Zz Shan 01/03/2008*/
+    RELAY_DEBUG("Zz [fun=%s,%d],\n",__FUNCTION__,__LINE__);/*Fiji modify,Zz Shan 01/03/2008*/
     /* Can a client legally be behind this interface? */
     if (!iface->clientOK) {
 	RELAY_DEBUG("PADR packet from %02x:%02x:%02x:%02x:%02x:%02x on interface %s not permitted",
@@ -1377,7 +1377,7 @@ relayHandlePADS(PPPoEInterface const *iface,
     PPPoESession *ses = NULL;
     SessionHash *sh;
 
-    RELAY_DEBUG("Zz [fun=%s,%d],\n",__FUNCTION__,__LINE__);/*Foxconn modify,Zz Shan 01/03/2008*/
+    RELAY_DEBUG("Zz [fun=%s,%d],\n",__FUNCTION__,__LINE__);/*Fiji modify,Zz Shan 01/03/2008*/
     /* Can a server legally be behind this interface? */
     if (!iface->acOK) {
 	syslog(LOG_ERR,

@@ -31,7 +31,83 @@
 #include "options.h"
 #include "leases.h"
 
-/* Foxconn added Start, Silver, 2007/5/7, @TR111 */
+////
+#define cprintf(fmt, args...) do { \
+	FILE *fp = fopen("/dev/console", "w"); \
+	if (fp) { \
+		fprintf(fp, fmt , ## args); \
+		fclose(fp); \
+	} \
+} while (0)
+
+#if defined(U12H154_TELE2)
+#define STB_LISG        "/tmp/stb_list"
+#define STB_LISG_TMP    "/tmp/stb_list_tmp"
+
+void add_stb_list(char *stb_ip)
+{
+    FILE *fp=0;
+    
+    if ( (fp = fopen(STB_LISG, "a+")) != NULL )
+    {
+        char buf[16]="";
+        
+        while( fgets(buf, 16, fp) )
+        {
+            cprintf("List %s\n", buf);
+            if (strstr(buf, stb_ip) )
+            {
+                cprintf("STB %s is already in the list\n", stb_ip);
+                fclose(fp);
+                return;
+            }
+            memset(buf, 0, 16);
+        }
+        cprintf("Add STB %s to list\n", stb_ip);
+        fprintf(fp, "%s\n", stb_ip);
+        fclose(fp);
+    }
+}
+
+void del_stb_list(char *stb_ip)
+{
+    FILE *fp=0, *fp2=0;
+    
+    //cprintf("check STB lease %s\n", stb_ip);
+    
+    if ( (fp = fopen(STB_LISG, "r+")) != NULL )
+    {
+        char buf[16]="";
+     
+        if ( (fp2 = fopen(STB_LISG_TMP, "a+")) != NULL ) 
+        {
+            char cmd[64];
+            while( fgets(buf, 16, fp) )
+            {
+                //cprintf("List %s\n", buf);
+                if ( strstr(buf, stb_ip) || strlen(buf) < 6)
+                {
+                    cprintf("lease expired, remove STB %s from the list\n", stb_ip);
+                    continue;
+                }
+                if ( strlen(buf) > 6 ) /* workaround */
+                    fprintf(fp2, "%s", buf);
+            }
+            fclose(fp);
+            fclose(fp2);
+            sprintf(cmd, "rm -f %s", STB_LISG);
+            system(cmd);
+            sprintf(cmd, "cp %s %s", STB_LISG_TMP, STB_LISG);
+            system(cmd);
+            sprintf(cmd, "rm -f %s", STB_LISG_TMP);
+            system(cmd);
+        }
+    }
+}
+
+#endif
+
+/* Fiji added Start, Silver, 2007/5/7, @TR111 */
 #if (defined SUPPORT_TR111)
 #define TR111_code                      125
 #define DeviceManufacurerOUI_code      	1
@@ -116,8 +192,8 @@ int getTR111Param(unsigned char *tr111)
 	unsigned char length, subLen;
     char command[64];
     
-    //length = *(tr111-1);
-    length = *(tr111+4);
+    length = *(tr111-1);
+    //length = *(tr111+4);
     index += 5;
 
     if(length != 0)
@@ -132,7 +208,7 @@ int getTR111Param(unsigned char *tr111)
     		TR111Temp[index2++]=':';
     	}
     	else
-    		printf("Tr111 error\n");
+    		cprintf("Tr111 error\n");
     }
     if(index < length)
     {
@@ -146,7 +222,7 @@ int getTR111Param(unsigned char *tr111)
     		TR111Temp[index2++]=':';
     	}
     	else
-    		printf("Tr111 error\n");
+    		cprintf("Tr111 error\n");
     }
     if(index < length)
     {
@@ -160,17 +236,17 @@ int getTR111Param(unsigned char *tr111)
     		TR111Temp[index2++]='\0';
     	}
     	else
-    		printf("Tr111 error\n");
+    		cprintf("Tr111 error\n");
     }
-    
+cprintf("%s(%d) TR111Temp=(%s) deviceNum=%d\n", __FUNCTION__, __LINE__, TR111Temp, deviceNum);
     if(	deviceNum == 0 )
     {
     	memcpy( TR111Device, TR111Temp, index2);
     }
     else
     {
-	if( strstr( TR111Device, TR111Temp ) )
-		return 0;	
+	    if( strstr( TR111Device, TR111Temp ) )
+		    return 0;	
     	strcat( TR111Device, " " );
     	strcat( TR111Device, TR111Temp );
     }
@@ -179,16 +255,16 @@ int getTR111Param(unsigned char *tr111)
     /* pling modified start: Don't use acosNvramConfig_set */
     //acosNvramConfig_set("TR111_num", itoa(deviceNum));
     //acosNvramConfig_set("TR111_tab", TR111Device);
-    sprintf(command, "param set TR111_num %d", deviceNum);
+    sprintf(command, "param set TR111_num=%d", deviceNum);
     system(command);
-    sprintf(command, "param set TR111_tab %s", TR111Device);
+    sprintf(command, "param set TR111_tab='%s'", TR111Device);
     system(command);
     /* pling modified end: Don't use acosNvramConfig_set */
 
 	return 1;
 }
 #endif  /* SUPPORT_TR111 */
-/* Foxconn added End, Silver, 2007/5/7, @TR111 */
+/* Fiji added End, Silver, 2007/5/7, @TR111 */
     
 
 /* send a packet to giaddr using the kernel ip stack */
@@ -414,6 +490,54 @@ static int agApiLogPointGet(int *pLogPoint)
 }
 #endif
 
+#if defined(U12H154_TELE2)
+#include <fcntl.h> /* open */
+#include <sys/ioctl.h> /* ioctl */
+
+#define MAJOR_NUM 100
+#define AG_MAX_ARG_CNT        32
+#define AG_MAX_ARG_LEN    100 
+#define IOCTL_AG_RULE_ADD2  _IOR(MAJOR_NUM, 40, char *) /*add a rule and return rule id*/
+
+typedef struct agIoctlParamPack
+{ 
+    int         argc;
+    char*       argv[AG_MAX_ARG_CNT];
+} T_agIoctlParam;   
+
+static int agApi_natRuleAdd2(char *szLanIP)
+{
+	int ret_val=0, file_desc, i;
+	T_agIoctlParam	ioctlParam;
+	
+	file_desc = open("/dev/acos_nat_cli", O_RDWR);
+	if (file_desc < 0) 
+	{
+		return 0;
+	}
+	
+	memset(&ioctlParam,0,sizeof(T_agIoctlParam));
+	
+	ioctlParam.argc = 6;
+    ioctlParam.argv[0] = "ruleadd";
+    ioctlParam.argv[1] = "8080";
+    ioctlParam.argv[2] = "8080";
+    ioctlParam.argv[3] = szLanIP;
+    ioctlParam.argv[4] = "8080";
+    ioctlParam.argv[5] = "tcp";
+	
+	ret_val = ioctl(file_desc,IOCTL_AG_RULE_ADD2,&ioctlParam);
+
+	close(file_desc);
+	/* Fiji modify start, Vanessa Kuo, 12/19/2006, @R2_sec1.8 */
+	if (ret_val <= -1)
+		return ioctlParam.argc;
+	else
+    return ret_val;
+	/* Fiji modify end, Vanessa Kuo, 12/19/2006, @R2_sec1.8 */
+}
+#endif
+
 int sendACK(struct dhcpMessage *oldpacket, u_int32_t yiaddr)
 {
 	struct dhcpMessage packet;
@@ -450,16 +574,16 @@ int sendACK(struct dhcpMessage *oldpacket, u_int32_t yiaddr)
 			add_option_string(packet.options, curr->data);
 		curr = curr->next;
 	}
-/* Foxconn added start, Lewis, 2008/9/19, @Lan host identification */
+/* Fiji added start, Lewis, 2008/9/19, @Lan host identification */
 #ifdef TI_ALICE
     add_hostname_option(packet.options, server_config.hostname);
 #endif
-/* Foxconn added end, Lewis, 2008/9/19, @Lan host identification */
-/* Foxconn added Start, Silver, 2007/5/7, @TR111 */
+/* Fiji added end, Lewis, 2008/9/19, @Lan host identification */
+/* Fiji added Start, Silver, 2007/5/7, @TR111 */
 #if (defined SUPPORT_TR111)
     add_option_string(packet.options, TR111Frame);
 #endif
-/* Foxconn added End, Silver, 2007/5/7, @TR111 */
+/* Fiji added End, Silver, 2007/5/7, @TR111 */
 
 	add_bootp_options(&packet);
 
@@ -471,6 +595,33 @@ int sendACK(struct dhcpMessage *oldpacket, u_int32_t yiaddr)
 
 	add_lease(packet.chaddr, packet.yiaddr, lease_time_align);
 	
+
+#if defined(U12H154_TELE2)
+    {
+        char *dhcpvendor;
+        dhcpvendor = get_option(oldpacket, DHCP_VENDOR);
+
+        if (dhcpvendor) 
+        {
+            char lan[24]="";
+            int bytes = dhcpvendor[-1];
+            if (bytes >= 64)
+               bytes = 63;
+            dhcpvendor[bytes]='\0';
+            client_ip = (unsigned char *)&packet.yiaddr;                  
+	        sprintf(lan, "%d.%d.%d.%d",*client_ip, *(client_ip+1), *(client_ip+2), *(client_ip+3));
+
+            if ( strcmp(dhcpvendor, "Telenor_VIP2853") == 0 )
+            {
+                cprintf("Add rule map.\n");
+                agApi_natRuleAdd2(lan); 
+                add_stb_list(lan); /* add STB to a file */
+            }
+            cprintf("\n dhcpvendor (%s) lan=(%s)",dhcpvendor, lan);
+        } 
+    }
+#endif
+
 
 	client_mac = (unsigned char *)packet.chaddr;
 	client_ip = (unsigned char *)&packet.yiaddr;
@@ -517,11 +668,11 @@ int send_inform(struct dhcpMessage *oldpacket)
 		curr = curr->next;
 	}
 
-/* Foxconn added Start, Silver, 2007/5/7, @TR111 */
+/* Fiji added Start, Silver, 2007/5/7, @TR111 */
 #if (defined SUPPORT_TR111)
     add_option_string(packet.options, TR111Frame);
 #endif
-/* Foxconn added End, Silver, 2007/5/7, @TR111 */
+/* Fiji added End, Silver, 2007/5/7, @TR111 */
 
 	add_bootp_options(&packet);
 

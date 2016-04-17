@@ -49,7 +49,7 @@
 #ifdef BSP_4_X_X
 #include <board.h>
 #else
-#include "board_api.h"/*foxconn add, water, 06/25/2008, @wandetect, from brcm*/
+#include "board_api.h"/*fiji add, water, 06/25/2008, @wandetect, from brcm*/
 #endif
 
 
@@ -68,10 +68,10 @@ static int listen_mode;
 
 #define DEFAULT_SCRIPT	"/usr/share/udhcpc/default.script"
 
-/*foxconn add start, water, 06/25/2008, @wandetect, from brcm*/
+/*fiji add start, water, 06/25/2008, @wandetect, from brcm*/
 char session_path[64];
 static char status_path[128]="";
-/*foxconn add end, water, 06/25/2008, @wandetect, from brcm*/
+/*fiji add end, water, 06/25/2008, @wandetect, from brcm*/
 
 struct client_config_t client_config = {
 	/* Default options. */
@@ -88,7 +88,7 @@ struct client_config_t client_config = {
 	arp: "\0\0\0\0\0\0",		/* appease gcc-3.0 */
 };
 
-/*foxconn add start, water, 06/25/2008, @wandetect, from brcm*/
+/*fiji add start, water, 06/25/2008, @wandetect, from brcm*/
 void setStatus(int status) {
     char cmd[128] = "";
     int f;
@@ -102,7 +102,7 @@ void setStatus(int status) {
         close(f);
     }
 }
-/*foxconn add end, water, 06/25/2008, @wandetect, from brcm*/
+/*fiji add end, water, 06/25/2008, @wandetect, from brcm*/
 
 #ifndef BB_VER
 static void show_usage(void)
@@ -327,9 +327,9 @@ int main(int argc, char *argv[])
 		}
 	}
     
-    /*foxconn add start, water, 06/25/2008, @wandetect, from brcm*/
+    /*fiji add start, water, 06/25/2008, @wandetect, from brcm*/
     sprintf(status_path, "%s/%s/%s", _PATH_WAN_DIR, session_path, _PATH_MSG);
-    /*foxconn add end, water, 06/25/2008, @wandetect, from brcm*/
+    /*fiji add end, water, 06/25/2008, @wandetect, from brcm*/
     
 	OPEN_LOG("udhcpc");
 	LOG(LOG_INFO, "udhcp client (v%s) started", VERSION);
@@ -368,7 +368,7 @@ int main(int argc, char *argv[])
 	change_mode(LISTEN_RAW);
     
     
-	setStatus(0);/*foxconn add, water, 06/25/2008, @wandetect, from brcm*/
+	setStatus(0);/*fiji add, water, 06/25/2008, @wandetect, from brcm*/
     
 	for (;;) {
 
@@ -407,7 +407,7 @@ int main(int argc, char *argv[])
 			/* timeout dropped to zero */
 			switch (state) {
 			case INIT_SELECTING:                
-                setStatus(0);/*foxconn add, water, 06/25/2008, @wandetect, from brcm*/
+                setStatus(0);/*fiji add, water, 06/25/2008, @wandetect, from brcm*/
 				if (packet_num < 3) {
 					if (packet_num == 0)
 						xid = random_xid();
@@ -437,11 +437,11 @@ int main(int argc, char *argv[])
 					if (state == RENEW_REQUESTED)
 						send_renew(xid, server_addr, requested_ip); /* unicast */
 					else 
-					/*foxconn add start, water, 07/10/2008*/
+					/*fiji add start, water, 07/10/2008*/
 					{
 					    //Sending DHCP Request, so wan protocal is dhcp doubtless.
 					    setStatus(1);
-					/*foxconn add end, water, 07/10/2008*/
+					/*fiji add end, water, 07/10/2008*/
 					    send_selecting(xid, server_addr, requested_ip); /* broadcast */
 					}
 					
@@ -539,7 +539,7 @@ int main(int argc, char *argv[])
 					} else {
 						DEBUG(LOG_ERR, "No server ID in message");
 					}
-                    /* Foxconn added Start, Silver, 2009/3/24, @OPT43 */
+                    /* Fiji added Start, Silver, 2009/3/24, @OPT43 */
                     #if (defined TELE2)
 					if ((temp = get_option(&packet, DHCP_TR069_URL))) {
 					    char    tr069url[128];
@@ -556,7 +556,7 @@ int main(int argc, char *argv[])
 						printf("No DHCP_TR069_URL in message");
 					}
 					#endif
-                    /* Foxconn added End, Silver, 2009/3/24, @OPT43 */
+                    /* Fiji added End, Silver, 2009/3/24, @OPT43 */
 				}
 				break;
 			case RENEW_REQUESTED:
@@ -607,7 +607,7 @@ int main(int argc, char *argv[])
 						exit_client(0);
 					if (!client_config.foreground)
 						background();
-                    setStatus(1);/*foxconn add, water, 06/25/2008, @wandetect, from brcm*/
+                    setStatus(1);/*fiji add, water, 06/25/2008, @wandetect, from brcm*/
 
 				} else if (*message == DHCPNAK) {
 					/* return to init state */
@@ -620,7 +620,7 @@ int main(int argc, char *argv[])
 					requested_ip = 0;
 					packet_num = 0;
 					change_mode(LISTEN_RAW);
-                    setStatus(0);/*foxconn add, water, 06/25/2008, @wandetect, from brcm*/
+                    setStatus(0);/*fiji add, water, 06/25/2008, @wandetect, from brcm*/
 					sleep(3); /* avoid excessive network traffic */
 				}
 				break;

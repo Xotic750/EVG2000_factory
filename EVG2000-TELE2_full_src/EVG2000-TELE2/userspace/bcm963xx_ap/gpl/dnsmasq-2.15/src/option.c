@@ -432,9 +432,9 @@ struct daemon *read_opts (int argc, char **argv)
 		   "interface=" to disable all interfaces except loop. */
 		new->name = safe_string_alloc(optarg);
 		new->isloop = new->used = 0;
-        /* Foxconn removed pling start 06/27/2008, what is this 'if' for? */
+        /* Fiji removed pling start 06/27/2008, what is this 'if' for? */
 		//if (strchr(optarg, ':'))
-        /* Foxconn removed pling end 06/27/2008 */
+        /* Fiji removed pling end 06/27/2008 */
 		  daemon->options |= OPT_NOWILD;
 		break;
 	      }

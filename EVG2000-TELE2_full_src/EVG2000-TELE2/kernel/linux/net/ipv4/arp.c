@@ -832,7 +832,7 @@ static int arp_process(struct sk_buff *skb)
 		goto out;
 	}
 	
-    /* foxconn bob added sart, 12/30/2008, portign from 614v8 */
+    /* fiji bob added sart, 12/30/2008, portign from 614v8 */
 #define ATTADEV
 #ifdef ATTADEV
     if ((arp->ar_op == htons(ARPOP_REQUEST) || arp->ar_op == htons(ARPOP_REPLY))
@@ -842,7 +842,7 @@ static int arp_process(struct sk_buff *skb)
         attadev_update(sip, sha);
     }
 #endif
-    /* foxconn bob added end, 12/30/2008 */
+    /* fiji bob added end, 12/30/2008 */
 
 	if (arp->ar_op == htons(ARPOP_REQUEST) &&
 	    ip_route_input(skb, tip, sip, 0, dev) == 0) {
@@ -1451,7 +1451,7 @@ EXPORT_SYMBOL(arp_tbl);
 EXPORT_SYMBOL(clip_tbl_hook);
 #endif
 
-/* foxconn wklin added start, 02/06/2007 */
+/* fiji wklin added start, 02/06/2007 */
 #ifdef ATTADEV
 #define FLAG_VALID 1
 #define FLAG_INVALID 0
@@ -1563,7 +1563,7 @@ static int attadev_update(u32 sip, char *sha) {
             break;
         } 
         i++;
-        if (i >= MAX_ATTADEV_ENTRY) /* foxconn wklin modified, 08/01/2007 */
+        if (i >= MAX_ATTADEV_ENTRY) /* fiji wklin modified, 08/01/2007 */
             i = 0;
         if (i == hash_id) {
             /* printk("attadev table is full\n"); */
@@ -1574,4 +1574,4 @@ static int attadev_update(u32 sip, char *sha) {
     return 0;
 }
 #endif
-/* foxconn wklin added end, 02/06/2007 */
+/* fiji wklin added end, 02/06/2007 */

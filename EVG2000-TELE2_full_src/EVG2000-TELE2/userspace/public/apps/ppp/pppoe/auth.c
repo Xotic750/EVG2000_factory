@@ -206,7 +206,7 @@ static int  set_noauth_addr __P((char **));
 static void check_access __P((FILE *, char *));
 static int  wordlist_count __P((struct wordlist *));
 
-extern char idle_timed_out[2]; /* Foxconn added pling 07/15/2008 */
+extern char idle_timed_out[2]; /* Fiji added pling 07/15/2008 */
 
 /*
  * Authentication-related options.
@@ -802,10 +802,10 @@ check_idle(arg)
 	/* link is idle: shut it down. */
 	notice("Terminating connection due to lack of activity.");
 
-    /* Foxconn added start pling 07/15/2008 */
+    /* Fiji added start pling 07/15/2008 */
     script_setenv("IDLE_TIMEOUT", "timeout", 0);
     idle_timed_out[0] = '1';
-    /* Foxconn added end pling 07/15/2008 */
+    /* Fiji added end pling 07/15/2008 */
 
 	lcp_close(0, "Link inactive");
 	need_holdoff = 0;

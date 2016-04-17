@@ -1146,7 +1146,7 @@ reclassify:
 
 	for ( ; tp; tp = tp->next) {
 		if ((tp->protocol == protocol ||
-			tp->protocol == __constant_htons(ETH_P_ALL) || protocol == __constant_htons(ETH_P_8021Q) ) &&   /* Foxconn modified , 09/02/2009 */
+			tp->protocol == __constant_htons(ETH_P_ALL) || protocol == __constant_htons(ETH_P_8021Q) ) &&   /* Fiji modified , 09/02/2009 */
 			(err = tp->classify(skb, tp, res)) >= 0) {
 #ifdef CONFIG_NET_CLS_ACT
 			if ( TC_ACT_RECLASSIFY == err) {

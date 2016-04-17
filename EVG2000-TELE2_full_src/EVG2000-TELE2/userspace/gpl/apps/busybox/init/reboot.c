@@ -33,7 +33,7 @@ extern int reboot_main(int argc, char **argv)
 {
 	char *delay; /* delay in seconds before rebooting */
 
-    /* Foxconn added start, by EricHuang, 08/27/2008 */
+    /* Fiji added start, by EricHuang, 08/27/2008 */
     FILE *fp = NULL;
     char line[256];
     int  pid;
@@ -53,7 +53,7 @@ extern int reboot_main(int argc, char **argv)
         fclose (fp);
         fp = NULL;
     }
-    /* Foxconn added end, by EricHuang, 08/27/2008 */
+    /* Fiji added end, by EricHuang, 08/27/2008 */
 
 	if(bb_getopt_ulflags(argc, argv, "d:", &delay)) {
 		sleep(atoi(delay));

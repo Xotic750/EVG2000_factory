@@ -66,13 +66,13 @@ EXEEXT =
 OBJEXT = o
 PATH_SEPARATOR = :
 AMTAR = ${SHELL} /home/fred/0117/ap61/gpl/zebra-0.93a/missing --run tar
-#Foxconn start mark by fred 20060221
+#Fiji start mark by fred 20060221
 #AR = ar
 #AWK = gawk
 BGPD = 
 #CC = gcc
 #CPP = gcc -E
-#Foxconn end
+#Fiji end
 CURSES = 
 DEPDIR = .deps
 IF_METHOD = if_netlink.o
@@ -90,13 +90,13 @@ OSPF6D =
 OSPFD = 
 OTHER_METHOD = 
 PACKAGE = zebra
-#Foxconn mark by fred 20060221
+#Fiji mark by fred 20060221
 #RANLIB = ranlib
 RIPD = ripd
 RIPNGD = 
 RTREAD_METHOD = rtread_netlink.o
 RT_METHOD = rt_netlink.o
-#Foxconn mark by fred 20060221
+#Fiji mark by fred 20060221
 #STRIP = 
 VERSION = 0.93a
 VTYSH = 
@@ -175,7 +175,7 @@ COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-#Foxconn modify by fred 20060221
+#Fiji modify by fred 20060221
 #CFLAGS = -g -O2 -Wall
 CFLAGS= -s -Os -fomit-frame-pointer
 DIST_SOURCES = $(libzebra_a_SOURCES)
@@ -188,13 +188,13 @@ all: all-am
 
 .SUFFIXES:
 .SUFFIXES: .c .o .obj
-# Foxconn removed start pling 04/20/2006 
+# Fiji removed start pling 04/20/2006 
 #$(srcdir)/Makefile.in:  Makefile.am  $(top_srcdir)/configure.in $(ACLOCAL_M4)
 #	cd $(top_srcdir) && \
 #	  $(AUTOMAKE) --foreign  lib/Makefile
 #Makefile:  $(srcdir)/Makefile.in  $(top_builddir)/config.status
 #	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)
-# Foxconn removed end pling 04/20/2006 
+# Fiji removed end pling 04/20/2006 
 
 clean-noinstLIBRARIES:
 	-test -z "$(noinst_LIBRARIES)" || rm -f $(noinst_LIBRARIES)

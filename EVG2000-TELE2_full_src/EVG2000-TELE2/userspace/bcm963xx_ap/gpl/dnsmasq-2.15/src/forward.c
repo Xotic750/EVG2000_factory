@@ -22,7 +22,7 @@ static struct frec *lookup_frec_by_sender(unsigned short id,
 					  union mysockaddr *addr);
 static unsigned short get_id(void);
 
-    /* Foxconn added start , 08/08/2009 */
+    /* Fiji added start , 08/08/2009 */
 #if defined(SingTel)
 
 #define DEFAULT_DATA_IFACE      "vlan10"
@@ -151,9 +151,9 @@ int reload_forward_db(void)
     return 0;
 }
 #endif
-    /* Foxconn added end , 08/08/2009 */
+    /* Fiji added end , 08/08/2009 */
 
-/* Foxconn added start pling 10/31/2008, forwarding database */
+/* Fiji added start pling 10/31/2008, forwarding database */
 #if (defined DNSMASQ_FOR_MULTIPLE_PPPOE_SESSION)
 #define DEFAULT_PPP_MNGT_IFACE      "ppp_0_8_35_1"
 #define DEFAULT_PPP_DATA_IFACE      "ppp_2_8_35_1"
@@ -234,7 +234,7 @@ int reload_forward_db(void)
     return 0;
 }
 #endif  /* DNSMASQ_FOR_MULTIPLE_PPPOE_SESSION */
-/* Foxconn added end pling 10/31/2008 */
+/* Fiji added end pling 10/31/2008 */
 
 /* May be called more than once. */
 void forward_init(int first)
@@ -431,7 +431,7 @@ static void forward_query(struct daemon *daemon, int udpfd, union mysockaddr *ud
   /* may be  recursion not speced or no servers available. */
     if (!header->rd || !daemon->servers)
         forward = NULL;
-    else if ( forward || (forward = lookup_frec_by_sender(ntohs(header->id), udpaddr))) /* Foxconn modified by EricHuang, 01/02/2008 */
+    else if ( forward || (forward = lookup_frec_by_sender(ntohs(header->id), udpaddr))) /* Fiji modified by EricHuang, 01/02/2008 */
     {
         /* retry on existing query, send to all available servers  */
         domain = forward->sentto->domain;
@@ -457,16 +457,16 @@ static void forward_query(struct daemon *daemon, int udpfd, union mysockaddr *ud
         if (forward)
         {
           
-          /* Foxconn moved start by EricHuang, 01/02/2008 */
+          /* Fiji moved start by EricHuang, 01/02/2008 */
           forward->source = *udpaddr;
           forward->dest = *dst_addr;
           forward->iface = dst_iface;
           forward->new_id = get_id();
           forward->fd = udpfd;
           forward->orig_id = ntohs(header->id);
-          forward->forwardall = 0;              /* Foxconn added by EricHuang, 01/02/2007 */
+          forward->forwardall = 0;              /* Fiji added by EricHuang, 01/02/2007 */
           header->id = htons(forward->new_id);
-          /* Foxconn moved start by EricHuang, 01/02/2008 */
+          /* Fiji moved start by EricHuang, 01/02/2008 */
             
           /* In strict_order mode, or when using domain specific servers
              always try servers in the order specified in resolv.conf,
@@ -501,7 +501,7 @@ static void forward_query(struct daemon *daemon, int udpfd, union mysockaddr *ud
       struct server *firstsentto = start;
       int forwarded = 0;
 
-    /* foxconn added start, 08/08/2009 */
+    /* fiji added start, 08/08/2009 */
 #if defined(SingTel)
         char *forward_iface = "vlan10";
         int  i, notfound=1;
@@ -557,9 +557,9 @@ static void forward_query(struct daemon *daemon, int udpfd, union mysockaddr *ud
         }
 
 #endif
-    /* foxconn added end, 08/08/2009 */
+    /* fiji added end, 08/08/2009 */
 
-        /* Foxconn added start pling 10/30/2008 */
+        /* Fiji added start pling 10/30/2008 */
 #if (defined DNSMASQ_FOR_MULTIPLE_PPPOE_SESSION)
         /* Look for the correct DNS server to forward the query.
          * Default is forward to data session.
@@ -577,11 +577,11 @@ static void forward_query(struct daemon *daemon, int udpfd, union mysockaddr *ud
             }
         }
 #endif
-        /* Foxconn added end pling 10/30/2008 */
+        /* Fiji added end pling 10/30/2008 */
 
     while (1)
 	{ 
-    /* Foxconn added start pling 10/30/2008 */
+    /* Fiji added start pling 10/30/2008 */
 #if (defined DNSMASQ_FOR_MULTIPLE_PPPOE_SESSION)
         if (forward_iface && 
             strcmp(start->interface, forward_iface) != 0)
@@ -591,9 +591,9 @@ static void forward_query(struct daemon *daemon, int udpfd, union mysockaddr *ud
             goto next_server;
         }
 #endif
-      /* Foxconn added end pling 10/31/2008 */
+      /* Fiji added end pling 10/31/2008 */
 
-    /* foxconn added start, 08/08/2009 */
+    /* fiji added start, 08/08/2009 */
 #if defined(SingTel)
         if (forward_iface && 
             strcmp(start->interface, forward_iface) != 0)
@@ -603,7 +603,7 @@ static void forward_query(struct daemon *daemon, int udpfd, union mysockaddr *ud
             goto next_server;
         }
 #endif
-    /* foxconn added end, 08/08/2009 */
+    /* fiji added end, 08/08/2009 */
 
 	  /* only send to servers dealing with our domain.
 	     domain may be NULL, in which case server->domain 
@@ -630,10 +630,10 @@ static void forward_query(struct daemon *daemon, int udpfd, union mysockaddr *ud
     		  forwarded = 1;
     		  forward->sentto = start;
     		  //if (!forwardall) 
-    		  if (!forward->forwardall)     /* Foxconn modified by EricHuang, 01/02/2008 */
+    		  if (!forward->forwardall)     /* Fiji modified by EricHuang, 01/02/2008 */
     		    break;
     		  
-    		  forward->forwardall++;    /* Foxconn added by EricHuang, 01/02/2008 */
+    		  forward->forwardall++;    /* Fiji added by EricHuang, 01/02/2008 */
     		}
 	    } 
 	  
@@ -695,7 +695,7 @@ static int process_reply(struct daemon *daemon, HEADER *header, time_t now,
 #else
       strcpy(addrbuff, inet_ntoa(serveraddr->in.sin_addr));
 #endif
-#ifdef USE_SYSLOG /* foxconn wklin added, 08/13/2007 */
+#ifdef USE_SYSLOG /* fiji wklin added, 08/13/2007 */
       syslog(LOG_WARNING, "nameserver %s refused to do a recursive query", addrbuff);
 #endif
       return 0;
@@ -769,11 +769,11 @@ void reply_query(struct serverfd *sfd, struct daemon *daemon, time_t now)
 #endif
   
     header = (HEADER *)daemon->packet;
-    forward = lookup_frec(ntohs(header->id)); /* Foxconn added by EricHuang, 01/02/2008 */
+    forward = lookup_frec(ntohs(header->id)); /* Fiji added by EricHuang, 01/02/2008 */
 
     if (n >= (int)sizeof(HEADER) && header->qr && forward)
     {
-        /* Foxconn added start by EricHuang, 01/02/2008 */
+        /* Fiji added start by EricHuang, 01/02/2008 */
         struct server *server = forward->sentto;
         
         if ((header->rcode == SERVFAIL || header->rcode == REFUSED) && forward->forwardall == 0)
@@ -796,7 +796,7 @@ void reply_query(struct serverfd *sfd, struct daemon *daemon, time_t now)
                return;
             }
         }
-        /* Foxconn added end by EricHuang, 01/02/2008 */
+        /* Fiji added end by EricHuang, 01/02/2008 */
      
         
         /* find good server by address if possible, otherwise assume the last one we sent to */ 
@@ -1004,7 +1004,7 @@ void receive_query(struct listener *listen, struct daemon *daemon, time_t now)
     send_from(listen->fd, daemon->options & OPT_NOWILD, (char *)header, m, &source_addr, &dst_addr, if_index);
   else
     forward_query(daemon, listen->fd, &source_addr, &dst_addr, if_index,
-		  header, n, now, NULL); /* Foxconn modified by EricHuang, 01/02/2008 */
+		  header, n, now, NULL); /* Fiji modified by EricHuang, 01/02/2008 */
 }
 
 static int read_write(int fd, char *packet, int size, int rw)
@@ -1229,7 +1229,7 @@ static struct frec *get_new_frec(time_t now)
       if (!warntime || difftime(now, warntime) > LOGRATE)
 	{
 	  warntime = now;
-#ifdef USE_SYSLOG /* foxconn wklin added, 08/13/2007 */
+#ifdef USE_SYSLOG /* fiji wklin added, 08/13/2007 */
 	  syslog(LOG_WARNING, "forwarding table overflow: check for server loops.");
 #endif
 	}

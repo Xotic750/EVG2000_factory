@@ -53,5 +53,5 @@ ifeq ($(CONFIG_NET),y)
 obj-$(CONFIG_SYSCTL)		+= sysctl_net.o
 endif
 
-# Foxconn added
+# Fiji added
 CFLAGS	+= -DIGMP_PROXY
