@@ -278,7 +278,7 @@ SMB_BIG_UINT get_real_file_size(struct stat *st)
     if (st->st_blocks >= 8388608L)
     {
         order = st->st_blocks / 8388608L;  // order = # of 4GB
-        file_size_64 = 0x100000000ULL * order + (unsigned long)(st->st_size);
+        file_size_64 = 0x100000000 * order + (unsigned long)(st->st_size);
     }
     else
         file_size_64 = st->st_size & 0xFFFFFFFF;
@@ -314,7 +314,10 @@ SMB_BIG_UINT sys_lseek(int fd, SMB_BIG_UINT offset, int whence)
 #if defined(HAVE_EXPLICIT_LARGEFILE_SUPPORT) && defined(HAVE_OFF64_T) && defined(HAVE_LSEEK64)
 	return lseek64(fd, offset, whence);
 #else
+    /* Foxconn modified start pling 11/19/2009 */
+	//return lseek(fd, offset, whence);
 	return lseek64(fd, offset, whence);
+    /* Foxconn modified end pling 11/19/2009 */
 #endif
 }
 

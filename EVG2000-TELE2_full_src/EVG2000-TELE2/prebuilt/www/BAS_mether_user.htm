@@ -1,0 +1,611 @@
+<html>
+<head>
+<% meta_get(); %>
+<title>Ethernet</title>
+<link rel="stylesheet" href="form.css">
+<STYLE TYPE="text/javascript">
+	classes.num.all.fontFamily = "Courier";
+	classes.num.all.fontSize = "10pt" ;
+</style>
+<% script_get(); %>
+<script language="javascript" type="text/javascript">
+var DisableFixedIP = false;
+var DisableFixedDNS = false;
+var DisableFixedMAC = false;
+all_wan_proto      = new Array(8);
+all_wan_ipaddr     = new Array(8);
+all_wan_netmask    = new Array(8);
+all_wan_gateway    = new Array(8);
+all_wan_dns_sel    = new Array(8);
+all_wan_dns1_pri   = new Array(8);
+all_wan_dns1_sec   = new Array(8);
+all_wan_hwaddr_sel = new Array(8);
+all_wan_hwaddr_def = new Array(8);
+all_wan_hwaddr2    = new Array(8);
+all_wan_hwaddr_pc  = new Array(1);
+all_wan_nat        = new Array(8);
+all_system_name    = new Array(8);
+all_domain_name    = new Array(8);
+all_wan_ip_static  = new Array(8);
+all_vlan_id        = new Array(8);
+all_vlan_pri       = new Array(8);
+all_wan_enable= new Array(8);
+
+function loadMultiWanInfo()
+{
+    var cf = document.forms[0];
+    cf.adslChoice.selectedIndex = cf.nowchoice.value;
+    
+    all_wan_proto[0] = "<% nvram_get("wan0_proto"); %>";
+    all_wan_proto[1] = "<% nvram_get("wan1_proto"); %>";
+    all_wan_proto[2] = "<% nvram_get("wan2_proto"); %>";
+    all_wan_proto[3] = "<% nvram_get("wan3_proto"); %>";
+    all_wan_proto[4] = "<% nvram_get("wan4_proto"); %>";
+    all_wan_proto[5] = "<% nvram_get("wan5_proto"); %>";
+    all_wan_proto[6] = "<% nvram_get("wan6_proto"); %>";
+    all_wan_proto[7] = "<% nvram_get("wan7_proto"); %>";
+    
+    all_wan_ip_static[0] = "<% nvram_get("ipsrv0_static"); %>";
+    all_wan_ip_static[1] = "<% nvram_get("ipsrv1_static"); %>";
+    all_wan_ip_static[2] = "<% nvram_get("ipsrv2_static"); %>";
+    all_wan_ip_static[3] = "<% nvram_get("ipsrv3_static"); %>";
+    all_wan_ip_static[4] = "<% nvram_get("ipsrv4_static"); %>";
+    all_wan_ip_static[5] = "<% nvram_get("ipsrv5_static"); %>";
+    all_wan_ip_static[6] = "<% nvram_get("ipsrv6_static"); %>";
+    all_wan_ip_static[7] = "<% nvram_get("ipsrv7_static"); %>";
+    
+    all_wan_dns1_pri[0] = "<% nvram_list("wan0_dns1", 0); %>";
+    all_wan_dns1_pri[1] = "<% nvram_list("wan1_dns1", 0); %>";
+    all_wan_dns1_pri[2] = "<% nvram_list("wan2_dns1", 0); %>";
+    all_wan_dns1_pri[3] = "<% nvram_list("wan3_dns1", 0); %>";
+    all_wan_dns1_pri[4] = "<% nvram_list("wan4_dns1", 0); %>";
+    all_wan_dns1_pri[5] = "<% nvram_list("wan5_dns1", 0); %>";
+    all_wan_dns1_pri[6] = "<% nvram_list("wan6_dns1", 0); %>";
+    all_wan_dns1_pri[7] = "<% nvram_list("wan7_dns1", 0); %>";
+
+    all_wan_dns1_sec[0] = "<% nvram_list("wan0_dns1", 1); %>";
+    all_wan_dns1_sec[1] = "<% nvram_list("wan1_dns1", 1); %>";
+    all_wan_dns1_sec[2] = "<% nvram_list("wan2_dns1", 1); %>";
+    all_wan_dns1_sec[3] = "<% nvram_list("wan3_dns1", 1); %>";
+    all_wan_dns1_sec[4] = "<% nvram_list("wan4_dns1", 1); %>";
+    all_wan_dns1_sec[5] = "<% nvram_list("wan5_dns1", 1); %>";
+    all_wan_dns1_sec[6] = "<% nvram_list("wan6_dns1", 1); %>";
+    all_wan_dns1_sec[7] = "<% nvram_list("wan7_dns1", 1); %>";
+    
+    all_wan_dns_sel[0] = "<% nvram_get("wan0_dns_sel"); %>";
+    all_wan_dns_sel[1] = "<% nvram_get("wan1_dns_sel"); %>";
+    all_wan_dns_sel[2] = "<% nvram_get("wan2_dns_sel"); %>";
+    all_wan_dns_sel[3] = "<% nvram_get("wan3_dns_sel"); %>";
+    all_wan_dns_sel[4] = "<% nvram_get("wan4_dns_sel"); %>";
+    all_wan_dns_sel[5] = "<% nvram_get("wan5_dns_sel"); %>";
+    all_wan_dns_sel[6] = "<% nvram_get("wan6_dns_sel"); %>";
+    all_wan_dns_sel[7] = "<% nvram_get("wan7_dns_sel"); %>";
+    
+    all_wan_ipaddr[0] = "<% nvram_get("ipsrv0_ip_addr"); %>";
+    all_wan_ipaddr[1] = "<% nvram_get("ipsrv1_ip_addr"); %>";
+    all_wan_ipaddr[2] = "<% nvram_get("ipsrv2_ip_addr"); %>";
+    all_wan_ipaddr[3] = "<% nvram_get("ipsrv3_ip_addr"); %>";
+    all_wan_ipaddr[4] = "<% nvram_get("ipsrv4_ip_addr"); %>";
+    all_wan_ipaddr[5] = "<% nvram_get("ipsrv5_ip_addr"); %>";
+    all_wan_ipaddr[6] = "<% nvram_get("ipsrv6_ip_addr"); %>";
+    all_wan_ipaddr[7] = "<% nvram_get("ipsrv7_ip_addr"); %>";
+    
+    all_wan_netmask[0] = "<% nvram_get("ipsrv0_ip_mask"); %>";
+    all_wan_netmask[1] = "<% nvram_get("ipsrv1_ip_mask"); %>";
+    all_wan_netmask[2] = "<% nvram_get("ipsrv2_ip_mask"); %>";
+    all_wan_netmask[3] = "<% nvram_get("ipsrv3_ip_mask"); %>";
+    all_wan_netmask[4] = "<% nvram_get("ipsrv4_ip_mask"); %>";
+    all_wan_netmask[5] = "<% nvram_get("ipsrv5_ip_mask"); %>";
+    all_wan_netmask[6] = "<% nvram_get("ipsrv6_ip_mask"); %>";
+    all_wan_netmask[7] = "<% nvram_get("ipsrv7_ip_mask"); %>";
+    
+    all_wan_gateway[0] = "<% nvram_get("ipsrv0_ip_gateway"); %>";
+    all_wan_gateway[1] = "<% nvram_get("ipsrv1_ip_gateway"); %>";
+    all_wan_gateway[2] = "<% nvram_get("ipsrv2_ip_gateway"); %>";
+    all_wan_gateway[3] = "<% nvram_get("ipsrv3_ip_gateway"); %>";
+    all_wan_gateway[4] = "<% nvram_get("ipsrv4_ip_gateway"); %>";
+    all_wan_gateway[5] = "<% nvram_get("ipsrv5_ip_gateway"); %>";
+    all_wan_gateway[6] = "<% nvram_get("ipsrv6_ip_gateway"); %>";
+    all_wan_gateway[7] = "<% nvram_get("ipsrv7_ip_gateway"); %>";
+    
+    all_system_name[0] = "<% nvram_get("system_name_0"); %>";
+    all_system_name[1] = "<% nvram_get("system_name_1"); %>";
+    all_system_name[2] = "<% nvram_get("system_name_2"); %>";
+    all_system_name[3] = "<% nvram_get("system_name_3"); %>";
+    all_system_name[4] = "<% nvram_get("system_name_4"); %>";
+    all_system_name[5] = "<% nvram_get("system_name_5"); %>";
+    all_system_name[6] = "<% nvram_get("system_name_6"); %>";
+    all_system_name[7] = "<% nvram_get("system_name_7"); %>";
+    
+    all_domain_name[0] = "<% nvram_get("domain_name_0"); %>";
+    all_domain_name[1] = "<% nvram_get("domain_name_1"); %>";
+    all_domain_name[2] = "<% nvram_get("domain_name_2"); %>";
+    all_domain_name[3] = "<% nvram_get("domain_name_3"); %>";
+    all_domain_name[4] = "<% nvram_get("domain_name_4"); %>";
+    all_domain_name[5] = "<% nvram_get("domain_name_5"); %>";
+    all_domain_name[6] = "<% nvram_get("domain_name_6"); %>";
+    all_domain_name[7] = "<% nvram_get("domain_name_7"); %>";
+    
+    all_wan_hwaddr_sel[0] = "<% nvram_get("wan0_hwaddr_sel"); %>";
+    all_wan_hwaddr_sel[1] = "<% nvram_get("wan1_hwaddr_sel"); %>";
+    all_wan_hwaddr_sel[2] = "<% nvram_get("wan2_hwaddr_sel"); %>";
+    all_wan_hwaddr_sel[3] = "<% nvram_get("wan3_hwaddr_sel"); %>";
+    all_wan_hwaddr_sel[4] = "<% nvram_get("wan4_hwaddr_sel"); %>";
+    all_wan_hwaddr_sel[5] = "<% nvram_get("wan5_hwaddr_sel"); %>";
+    all_wan_hwaddr_sel[6] = "<% nvram_get("wan6_hwaddr_sel"); %>";
+    all_wan_hwaddr_sel[7] = "<% nvram_get("wan7_hwaddr_sel"); %>";
+    
+    all_wan_hwaddr_def[0] = "<% nvram_get("wan0_hwaddr_def"); %>";
+    all_wan_hwaddr_def[1] = "<% nvram_get("wan1_hwaddr_def"); %>";
+    all_wan_hwaddr_def[2] = "<% nvram_get("wan2_hwaddr_def"); %>";
+    all_wan_hwaddr_def[3] = "<% nvram_get("wan3_hwaddr_def"); %>";
+    all_wan_hwaddr_def[4] = "<% nvram_get("wan4_hwaddr_def"); %>";
+    all_wan_hwaddr_def[5] = "<% nvram_get("wan5_hwaddr_def"); %>";
+    all_wan_hwaddr_def[6] = "<% nvram_get("wan6_hwaddr_def"); %>";
+    all_wan_hwaddr_def[7] = "<% nvram_get("wan7_hwaddr_def"); %>";
+    
+    all_wan_hwaddr2[0] = "<% nvram_get("wan0_hwaddr2"); %>";
+    all_wan_hwaddr2[1] = "<% nvram_get("wan1_hwaddr2"); %>";
+    all_wan_hwaddr2[2] = "<% nvram_get("wan2_hwaddr2"); %>";
+    all_wan_hwaddr2[3] = "<% nvram_get("wan3_hwaddr2"); %>";
+    all_wan_hwaddr2[4] = "<% nvram_get("wan4_hwaddr2"); %>";
+    all_wan_hwaddr2[5] = "<% nvram_get("wan5_hwaddr2"); %>";
+    all_wan_hwaddr2[6] = "<% nvram_get("wan6_hwaddr2"); %>";
+    all_wan_hwaddr2[7] = "<% nvram_get("wan7_hwaddr2"); %>";
+    
+    all_wan_hwaddr_pc[0] = "<% basic_cgi_get_param("pcmac"); %>";
+    
+    all_vlan_id[0] = "<% nvram_get("wan0_vlan_id"); %>";
+    all_vlan_id[1] = "<% nvram_get("wan1_vlan_id"); %>";
+    all_vlan_id[2] = "<% nvram_get("wan2_vlan_id"); %>";
+    all_vlan_id[3] = "<% nvram_get("wan3_vlan_id"); %>";
+    all_vlan_id[4] = "<% nvram_get("wan4_vlan_id"); %>";
+    all_vlan_id[5] = "<% nvram_get("wan5_vlan_id"); %>";
+    all_vlan_id[6] = "<% nvram_get("wan6_vlan_id"); %>";
+    all_vlan_id[7] = "<% nvram_get("wan7_vlan_id"); %>";
+
+    all_vlan_pri[0] = "<% nvram_get("wan0_vlan_pri"); %>";
+    all_vlan_pri[1] = "<% nvram_get("wan1_vlan_pri"); %>";
+    all_vlan_pri[2] = "<% nvram_get("wan2_vlan_pri"); %>";
+    all_vlan_pri[3] = "<% nvram_get("wan3_vlan_pri"); %>";
+    all_vlan_pri[4] = "<% nvram_get("wan4_vlan_pri"); %>";
+    all_vlan_pri[5] = "<% nvram_get("wan5_vlan_pri"); %>";
+    all_vlan_pri[6] = "<% nvram_get("wan6_vlan_pri"); %>";
+    all_vlan_pri[7] = "<% nvram_get("wan7_vlan_pri"); %>";
+
+    
+    all_wan_enable[0] = "<% nvram_get("wan0_enable"); %>";
+    all_wan_enable[1] = "<% nvram_get("wan1_enable"); %>";
+    all_wan_enable[2] = "<% nvram_get("wan2_enable"); %>";
+    all_wan_enable[3] = "<% nvram_get("wan3_enable"); %>";
+    all_wan_enable[4] = "<% nvram_get("wan4_enable"); %>";
+    all_wan_enable[5] = "<% nvram_get("wan5_enable"); %>";
+    all_wan_enable[6] = "<% nvram_get("wan6_enable"); %>";
+    all_wan_enable[7] = "<% nvram_get("wan7_enable"); %>";
+}
+
+function loadcheck()
+{
+	loadhelp('BAS_mether');
+	if(isIE()){
+		document.formname.system_name.size="24";
+		document.formname.domain_name.size="24";
+	}
+	setIP();
+	setDNS();
+	setMAC();
+}
+
+function setIP()
+{
+	var cf = document.forms[0];
+	var dflag = cf.WANAssign[0].checked;
+	if(cf.WANAssign[0].checked)
+	{
+	setDisabled(dflag,cf.WPethr1,cf.WPethr2,cf.WPethr3,cf.WPethr4,cf.WMask1,cf.WMask2,cf.WMask3,cf.WMask4,cf.WGateway1,cf.WGateway2,cf.WGateway3,cf.WGateway4);
+	}
+	
+	if (cf.WANAssign[1].checked)
+	{
+	setDisabled(0,cf.WPethr1,cf.WPethr2,cf.WPethr3,cf.WPethr4,cf.WMask1,cf.WMask2,cf.WMask3,cf.WMask4,cf.WGateway1,cf.WGateway2,cf.WGateway3,cf.WGateway4);	
+	}	
+
+	if (cf.WANAssign[1].checked)
+	{
+	    cf.DNSAssign[1].checked = true;
+	    setDNS();
+	}
+	DisableFixedIP = dflag;
+}
+
+function setDNS()
+{
+	var cf = document.forms[0];
+	var dflag = cf.DNSAssign[0].checked;
+
+	setDisabled(dflag,cf.DAddr1,cf.DAddr2,cf.DAddr3,cf.DAddr4,cf.PDAddr1,cf.PDAddr2,cf.PDAddr3,cf.PDAddr4);
+	DisableFixedDNS = dflag;
+}
+
+function setMAC()
+{
+	var cf = document.forms[0];
+	
+	var index = cf.adslChoice.selectedIndex;
+
+	if (cf.MACAssign[0].checked)
+	    cf.Spoofmac.value = all_wan_hwaddr_def[index];
+	else if(cf.MACAssign[1].checked)
+	    cf.Spoofmac.value = all_wan_hwaddr_pc[0];
+	else if (cf.MACAssign[2].checked)
+	    cf.Spoofmac.value = all_wan_hwaddr2[index];
+	    
+	if (cf.MACAssign[2].checked)
+		cf.Spoofmac.disabled = false;
+	else
+		cf.Spoofmac.disabled = true;
+	DisableFixedMAC = cf.Spoofmac.disabled;
+}
+
+function goTestApply()
+{
+	var winoptions = "width=640,height=480,menubar=yes,toolbar=yes,status=yes,location=yes,resizable=yes";
+	if(document.forms[0].runtest.value == "yes")
+		openDataSubWin('BAS_wtest_d.htm',winoptions);
+}
+
+function setCfgChanged()
+{
+    var cf = document.forms[0];
+    
+    cf.cfgChanged.value='1';
+}
+
+function checkData()
+{   
+    var cf = document.forms[0];
+    var msg = "";
+	var w_ipaddr = (cf.WPethr1.value << 24) | (cf.WPethr2.value << 16) | (cf.WPethr3.value << 8)| (cf.WPethr4.value);
+	var w_netmask = (cf.WMask1.value<< 24) | (cf.WMask2.value<< 16) | (cf.WMask3.value<< 8)| (cf.WMask4.value);
+	   
+    if (cf.system_name.value.match( /[^\x20-\x7E]/ ))
+    {
+		alert("Character is not allowed.");
+		return false;
+	}
+	
+    if (cf.domain_name.value.match( /[^\x20-\x7E]/ ))
+    {
+		alert("Character is not allowed.");
+		return false;
+	}
+
+	if(cf.WANAssign[1].checked)
+	{
+		if(checkIP(cf.WPethr1,cf.WPethr2,cf.WPethr3,cf.WPethr4,254)||(parseInt(cf.WPethr4.value)==0))
+			msg+= "Invalid IP Address, please enter again!\n";
+		if(checkIP(cf.WMask1,cf.WMask2,cf.WMask3,cf.WMask4,255))
+			msg+= "Invalid Subnet Mask, please enter again!\n";
+		if(checkIP(cf.WGateway1,cf.WGateway2,cf.WGateway3,cf.WGateway4,254)||(parseInt(cf.WGateway4.value)==0))
+			msg+= "Invalid Gateway IP Address, please enter again!\n";
+	}
+
+	if(cf.DNSAssign[1].checked)
+	{
+		if(checkIP(cf.DAddr1,cf.DAddr2,cf.DAddr3,cf.DAddr4,254)||(parseInt(cf.DAddr4.value)==0))
+			msg+= "Invalid Primary DNS Address, please enter again!\n";
+		if(cf.PDAddr1.value.length>0 || cf.PDAddr2.value.length>0 || cf.PDAddr3.value.length>0 || cf.PDAddr4.value.length>0)
+			if(checkIP(cf.PDAddr1,cf.PDAddr2,cf.PDAddr3,cf.PDAddr4,254)||(parseInt(cf.PDAddr4.value)==0))
+				msg+= "Invalid Secondary DNS Address, please enter again!\n";
+	}
+	
+	if( checkMacStr(cf.Spoofmac) )
+	    msg+= "Invalid MAC address.\n";
+           
+    var index = cf.adslChoice.selectedIndex;
+    if(cf.wan_vlan_enable.value >0 && all_wan_enable[index]>0)
+    {
+        if(cf.vlan_id.value>4090||cf.vlan_id.value<1)
+            msg += "Invalid VLAN Id!\n";
+        if(cf.vlan_pri.value>7||cf.vlan_pri.value<0)
+            msg += "Invalid Priority!\n";
+	}
+	if (msg.length > 1)
+	{
+		alert(msg);
+		return false;
+	}
+	if (!isValidStr(cf.system_name.value) || !isValidStr(cf.domain_name.value))
+	{
+		if (!confirm("The Account Name or Domain Name contains illegal characters. This may cause the system to behave unexpectedly. Do you want to continue?"))
+			return false;
+	}
+    cf.wan_ipaddr.value = cf.WPethr1.value+'.'+cf.WPethr2.value+'.'+cf.WPethr3.value+'.'+cf.WPethr4.value;
+	cf.wan_netmask.value = cf.WMask1.value+'.'+cf.WMask2.value+'.'+cf.WMask3.value+'.'+cf.WMask4.value;
+	cf.wan_gateway.value = cf.WGateway1.value+'.'+cf.WGateway2.value+'.'+cf.WGateway3.value+'.'+cf.WGateway4.value;
+
+    cf.wan_dns1_pri.value = cf.DAddr1.value+'.'+cf.DAddr2.value+'.'+cf.DAddr3.value+'.'+cf.DAddr4.value;
+	cf.wan_dns1_sec.value = cf.PDAddr1.value+'.'+cf.PDAddr2.value+'.'+cf.PDAddr3.value+'.'+cf.PDAddr4.value;
+	cf.wan_hwaddr2.value = cf.Spoofmac.value.toUpperCase;
+    
+    cf.nowchoice.value = -1;
+	         
+    return true;
+}
+
+function checkTest()
+{
+    var cf = document.forms[0];
+    var ret = checkData();
+    var winoptions = "width=640,height=480,menubar=yes,toolbar=yes,status=yes,location=yes,resizable=yes";
+	if ( ret == true)
+	{
+    	if (cf.cfgChanged.value == '0')
+    	{
+    	    var tmpstr = "ether_m.cgi?nowchoice=100" + "&nowproto=0";
+    		location.href = tmpstr;
+    	}
+    	else
+    	{
+        	cf.testpressed.value = '1';
+            cf.nowchoice.value = -1;
+            document.formname.submit();
+        }
+    }
+}
+
+function isValidStr(str)
+{
+	for (i=0; i<str.length; i++)
+	{
+		var c = str.substring(i, i+1);
+		if (c < '!' || c > '~')
+			return false;
+	}
+	return true;
+}
+function resetPvc()
+{
+    window.location.href="BAS_mether.htm";
+}
+
+function loadSettings(index)
+{
+    var cf = document.forms[0];
+    
+    if (index == 100)
+        index = eval(cf.nowchoice.value);        
+
+    load_waninfo(index);
+    setIP();
+	setDNS();
+    setMAC();
+}
+function load_waninfo(index)
+{
+	var cf = document.forms[0];
+	var wan_proto = all_wan_proto[index];
+	var wan_dns1_pri;
+	var wan_dns1_sec;
+	var tmp;
+	
+	var wan_ipaddr = all_wan_ipaddr[index].split(".");
+	var wan_netmask = all_wan_netmask[index].split(".");
+	var wan_gateway = all_wan_gateway[index].split(".");
+	var wan_dns_sel = all_wan_dns_sel[index];
+
+	if ( all_wan_dns1_pri[index].length!=0 )
+	{
+	    wan_dns1_pri = all_wan_dns1_pri[index].split(".");
+	    cf.DAddr1.value = wan_dns1_pri[0];
+		cf.DAddr2.value = wan_dns1_pri[1];
+		cf.DAddr3.value = wan_dns1_pri[2];
+		cf.DAddr4.value = wan_dns1_pri[3];
+	}
+	
+	if ( all_wan_dns1_sec[index].length!=0 )
+	{
+        wan_dns1_sec = all_wan_dns1_sec[index].split(".");
+        cf.PDAddr1.value = wan_dns1_sec[0];
+		cf.PDAddr2.value = wan_dns1_sec[1];
+		cf.PDAddr3.value = wan_dns1_sec[2];
+		cf.PDAddr4.value = wan_dns1_sec[3];
+	}
+	var wan_hwaddr_sel = all_wan_hwaddr_sel[index];
+
+    if (all_wan_ip_static[index] == "1")
+		cf.WANAssign[1].checked = true;
+	else
+		cf.WANAssign[0].checked = true;
+		
+	cf.WPethr1.value = wan_ipaddr[0];
+	cf.WPethr2.value = wan_ipaddr[1];
+	cf.WPethr3.value = wan_ipaddr[2];
+	cf.WPethr4.value = wan_ipaddr[3];
+	cf.WMask1.value = wan_netmask[0];
+	cf.WMask2.value = wan_netmask[1];
+	cf.WMask3.value = wan_netmask[2];
+	cf.WMask4.value = wan_netmask[3];
+	cf.WGateway1.value = wan_gateway[0];
+	cf.WGateway2.value = wan_gateway[1];
+	cf.WGateway3.value = wan_gateway[2];
+	cf.WGateway4.value = wan_gateway[3];
+
+	cf.DNSAssign[wan_dns_sel].checked = true;
+	
+    if (wan_hwaddr_sel == 0)
+        cf.Spoofmac.value = all_wan_hwaddr_def[index];
+    else if (wan_hwaddr_sel == 2)
+        cf.Spoofmac.value = all_wan_hwaddr2[index];
+    
+	cf.MACAssign[wan_hwaddr_sel].checked = true;
+
+    if(cf.wan_vlan_enable.value >0 )
+    {
+        if( all_wan_enable[index]>0)
+        {
+            cf.vlan_id.value=all_vlan_id[index];
+            cf.vlan_pri.value=all_vlan_pri[index];
+            cf.vlanEnable[0].checked = true;
+        }else
+            cf.vlanEnable[1].checked = true;
+    }
+}
+//-->
+</script>
+<title>Basic Settings</title>
+</head>
+
+<body bgcolor="#ffffff" onload="loadMultiWanInfo();loadSettings(100);loadcheck();goTestApply();">
+<form name="formname" method="POST" action="ether_m.cgi">
+<table border="0" cellpadding="0" cellspacing="3" width="100%">
+<tr>
+    <td colspan="2"><h1>Basic Settings</h1></td>
+</tr>
+<tr>
+ <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+<tr>
+	<td nowrap><a href="javascript:loadhelp('BAS_mether','accountname')" tabindex="-1"><b>Account Name</b></a> &nbsp;(If Required)</td>
+	<td align="right"><input type="text" name="system_name" value="<% nvram_get("system_name_0"); %>" maxlength="60" size="15" value="" onChange="setCfgChanged()"></td>
+</tr>
+<tr>
+	<td nowrap><a href="javascript:loadhelp('BAS_mether','Domain')" tabindex="-1"><b>Domain Name</b></a> &nbsp;(If Required)</td>
+	<td align="right"><input type="text" name="domain_name" value="<% nvram_get("domain_name_0"); %>" maxlength="60" size="15" value="" onChange="setCfgChanged()"></td>
+</tr>
+<tr>
+ <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+<tr>
+	<td colspan="2" nowrap><a href="javascript:loadhelp('BAS_mether','InternetIP')" tabindex="-1"><b>Internet IP Address</b></a></td>
+</tr>
+<tr>
+	<td colspan="2" nowrap><input type="radio" name="WANAssign" value="dhcp" onClick="setIP()" onChange="setCfgChanged()">Get Dynamically From ISP</td>
+</tr>
+<tr>
+	<td colspan="2" nowrap><input type="radio" name="WANAssign" value="static" onClick="setIP()" onChange="setCfgChanged()">Use Static IP Address</td>
+</tr>
+<tr>
+	<td nowrap><img src="spacer.gif" width="20" height="12" border="0">IP Address</td>
+	<td nowrap align="right" class="num">
+	    <input type="text" name="WPethr1" class="num" size="4" maxlength="3" onFocus="if(DisableFixedIP) this.blur()" onChange="setCfgChanged()">.
+	    <input type="text" name="WPethr2" class="num" size="4" maxlength="3" onFocus="if(DisableFixedIP) this.blur()" onChange="setCfgChanged()">.
+	    <input type="text" name="WPethr3" class="num" size="4" maxlength="3" onFocus="if(DisableFixedIP) this.blur()" onChange="setCfgChanged()">.
+	    <input type="text" name="WPethr4" class="num" size="4" maxlength="3" onFocus="if(DisableFixedIP) this.blur()" onChange="setCfgChanged()"></td>
+</tr>
+<tr>
+	<td nowrap><img src="spacer.gif" width="20" height="12" border="0">IP Subnet Mask</td>
+	<td align="right" class="num">
+	    <input type="text" name="WMask1" class="num" size="4" maxlength="3" onFocus="if(DisableFixedIP) this.blur()" onChange="setCfgChanged()">.
+	    <input type="text" name="WMask2" class="num" size="4" maxlength="3" onFocus="if(DisableFixedIP) this.blur()" onChange="setCfgChanged()">.
+	    <input type="text" name="WMask3" class="num" size="4" maxlength="3" onFocus="if(DisableFixedIP) this.blur()" onChange="setCfgChanged()">.
+	    <input type="text" name="WMask4" class="num" size="4" maxlength="3" onFocus="if(DisableFixedIP) this.blur()" onChange="setCfgChanged()"></td>
+</tr>
+<tr>
+	<td nowrap><img src="spacer.gif" width="20" height="12" border="0">Gateway IP Address</td>
+	<td align="right" class="num">
+	    <input type="text" name="WGateway1" class="num" size="4" maxlength="3" onFocus="if(DisableFixedIP) this.blur()" onChange="setCfgChanged()">.
+	    <input type="text" name="WGateway2" class="num" size="4" maxlength="3" onFocus="if(DisableFixedIP) this.blur()" onChange="setCfgChanged()">.
+	    <input type="text" name="WGateway3" class="num" size="4" maxlength="3" onFocus="if(DisableFixedIP) this.blur()" onChange="setCfgChanged()">.
+	    <input type="text" name="WGateway4" class="num" size="4" maxlength="3" onFocus="if(DisableFixedIP) this.blur()" onChange="setCfgChanged()"></td>
+</tr>
+
+<tr>
+ <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+<tr>
+	<td nowrap colspan="2"><a href="javascript:loadhelp('BAS_mether','DNSaddress')" tabindex="-1"><b>Domain Name Server (DNS) Address </b></a></td>
+</tr>
+<tr>
+	<td colspan="2" nowrap><input type="radio" name="DNSAssign" value="0" onClick="setDNS()" onChange="setCfgChanged()">Get Automatically From ISP</td>
+</tr>
+<tr>
+	<td colspan="2" nowrap><input type="radio" name="DNSAssign" value="1" onClick="setDNS()" onChange="setCfgChanged()">Use These DNS Servers</td>
+</tr>
+<tr>
+	<td nowrap><img src="spacer.gif" width="20" height="12" border="0">Primary DNS</td>
+	<td nowrap align="right" class="num">
+	    <input type="text" name="DAddr1" class="num" size="4" maxlength="3" onFocus="if(DisableFixedDNS) this.blur()" onChange="setCfgChanged()">.
+	    <input type="text" name="DAddr2" class="num" size="4" maxlength="3" onFocus="if(DisableFixedDNS) this.blur()" onChange="setCfgChanged()">.
+	    <input type="text" name="DAddr3" class="num" size="4" maxlength="3" onFocus="if(DisableFixedDNS) this.blur()" onChange="setCfgChanged()">.
+	    <input type="text" name="DAddr4" class="num" size="4" maxlength="3" onFocus="if(DisableFixedDNS) this.blur()" onChange="setCfgChanged()"></td>
+</tr>
+<tr>
+	<td nowrap><img src="spacer.gif" width="20" height="12" border="0">Secondary DNS</td>
+	<td nowrap align="right" class="num">
+	    <input type="text" name="PDAddr1" class="num" size="4" maxlength="3" onFocus="if(DisableFixedDNS) this.blur()" onChange="setCfgChanged()">.
+	    <input type="text" name="PDAddr2" class="num" size="4" maxlength="3" onFocus="if(DisableFixedDNS) this.blur()" onChange="setCfgChanged()">.
+	    <input type="text" name="PDAddr3" class="num" size="4" maxlength="3" onFocus="if(DisableFixedDNS) this.blur()" onChange="setCfgChanged()">.
+	    <input type="text" name="PDAddr4" class="num" size="4" maxlength="3" onFocus="if(DisableFixedDNS) this.blur()" onChange="setCfgChanged()"></td>
+</tr>
+<tr>
+ <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+<tr>
+	<td nowrap colspan="2"><a href="javascript:loadhelp('BAS_mether','localaddress')" tabindex="-1"><b>Router MAC Address</b></a></td>
+</tr>
+<tr>
+	<td nowrap colspan="2"><input type="radio" name="MACAssign" value="0" onClick="setMAC()" onChange="setCfgChanged()">Use Default Address</td>
+</tr>
+<tr>
+	<td nowrap colspan="2"><input type="radio" name="MACAssign" value="1" onClick="setMAC()" onChange="setCfgChanged()">Use Computer MAC Address</td>
+</tr>
+<tr>
+	<td nowrap align="left"><input type="radio" name="MACAssign" value="2" onClick="setMAC()" onChange="setCfgChanged()">Use This MAC Address</td>
+	<td nowrap align="right" class="num"><input type="text" class="num" name="Spoofmac" size="17" maxlength="17" value="" onFocus="if(DisableFixedMAC) this.blur()" onChange="setCfgChanged()">
+	</td>
+</tr>
+
+<tr><td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td></tr>
+<tr>
+<td colspan="2" align="center"><div ID="pppoebuttons" onmouseover="loadhelp('BAS_mether','buttons')">
+    <input type="SUBMIT" name="save" value="Apply" onClick="return checkData()">
+    <input type="RESET" name="Cancel" value="Cancel" onClick="resetPvc();"> 
+    <input type="button" name="Test" value="Test" onClick="checkTest()">
+</td>
+</tr>
+</table>
+  <INPUT name=nowchoice type=hidden value= "<% nvram_get("nowchoice"); %>">
+  <INPUT name=wan_ipaddr type=hidden value= "">
+  <INPUT name=wan_netmask type=hidden value= "">
+  <INPUT name=wan_gateway type=hidden value= "">
+  <INPUT name=wanA_ipaddr type=hidden value= "">
+  <INPUT name=wanA_netmask type=hidden value= "">
+  <INPUT name=wanA_gateway type=hidden value= "">
+  <INPUT name=wan_dns1_pri type=hidden value= "">
+  <INPUT name=wan_dns1_sec type=hidden value= "">
+  <INPUT name=wan_hwaddr2 type=hidden value= "">
+
+  <input type="hidden" name="cfgChanged" value="0">
+  <input type="hidden" name="testpressed" value="0">
+  <input type="hidden" name="runtest" value="<% basic_cgi_get_param("runtest"); %>">
+
+  <INPUT name=wan0_dial type=hidden value= "<% adsl_dial_flag(0); %>">
+  <INPUT name=wan1_dial type=hidden value= "<% adsl_dial_flag(1); %>">
+  <INPUT name=wan2_dial type=hidden value= "<% adsl_dial_flag(2); %>">
+  <INPUT name=wan3_dial type=hidden value= "<% adsl_dial_flag(3); %>">
+  <INPUT name=wan4_dial type=hidden value= "<% adsl_dial_flag(4); %>">
+  <INPUT name=wan5_dial type=hidden value= "<% adsl_dial_flag(5); %>">
+  <INPUT name=wan6_dial type=hidden value= "<% adsl_dial_flag(6); %>">
+  <INPUT name=wan7_dial type=hidden value= "<% adsl_dial_flag(7); %>">
+<% vlan_cgi_show_item_begin("markstart"); %>
+    <input type="hidden" name="adslChoice" value="<% nvram_get("nowchoice"); %>">
+<% vlan_cgi_show_item_begin("markend"); %>
+  <input type="hidden" name="wan_vlan_enable" value="<% nvram_get("wan_vlan_enable"); %>">
+  <input type="hidden" name="WAPethr1" value="">
+  <input type="hidden" name="WAPethr2" value="">
+  <input type="hidden" name="WAPethr3" value="">
+  <input type="hidden" name="WAPethr4" value="">
+  <input type="hidden" name="WAMask1" value="">
+  <input type="hidden" name="WAMask2" value="">
+  <input type="hidden" name="WAMask3" value="">
+  <input type="hidden" name="WAMask4" value="">
+  <input type="hidden" name="WAGateway1" value="">
+  <input type="hidden" name="WAGateway2" value="">
+  <input type="hidden" name="WAGateway3" value="">
+  <input type="hidden" name="WAGateway4" value=""> 
+</form>
+<p>
+</p>
+</body>
+</html>

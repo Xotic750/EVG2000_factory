@@ -2262,9 +2262,11 @@ static struct fuse *mount_fuse(char *parsed_options)
 	
 	if (fuse_opt_add_arg(&args, "") == -1)
 		goto err;
-    /* foxconn wklin modified, 12/17/2009, add direct_io for NTFS write
-     * throughput improvement */
-	if (fuse_opt_add_arg(&args, "-ouse_ino,direct_io,kernel_cache,attr_timeout=0") == -1)
+    /* Foxconn modified start pling 12/23/2009 */
+    /* Use direct_io to improve NTFS write performance */
+	//if (fuse_opt_add_arg(&args, "-ouse_ino,kernel_cache,attr_timeout=0") == -1)
+	if (fuse_opt_add_arg(&args, "-ouse_ino,kernel_cache,attr_timeout=0,direct_io") == -1)
+    /* Foxconn modified end pling 12/23/2009 */
 		goto err;
 	if (ctx->debug)
 		if (fuse_opt_add_arg(&args, "-odebug") == -1)

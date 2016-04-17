@@ -16,7 +16,8 @@
    only important messages. This gives *much* smaller binaries
 */
 #ifndef MAX_DEBUG_LEVEL
-#define MAX_DEBUG_LEVEL -1 /* 1000 */ /* foxconn wklin modified to remove the messages */
+//#define MAX_DEBUG_LEVEL 1000
+#define MAX_DEBUG_LEVEL -1/*foxconn modified, water, 09/23/2009*/
 #endif
 
 /* This defines the section name in the configuration file that will contain */

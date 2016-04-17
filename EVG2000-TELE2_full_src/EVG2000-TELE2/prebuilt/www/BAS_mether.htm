@@ -337,9 +337,6 @@ function checkData()
 	
 	if( checkMacStr(cf.Spoofmac) )
 	    msg+= "Invalid MAC address.\n";
-	
-    if (duplicatepvcChk(vpi,vci))
-        msg += "duplicate PVC found!\n";	    
             
     var index = cf.adslChoice.selectedIndex;
     if(cf.wan_vlan_enable.value >0 && all_wan_enable[index]>0)
@@ -426,83 +423,10 @@ function ChangeAdslChoice()
 function loadSettings(index)
 {
     var cf = document.forms[0];
-    var multiplex;
-    var vpi;
-    var vci;
     
     if (index == 100)
         index = eval(cf.nowchoice.value);        
-    switch(index)
-    {
-        case 0:
-            vpi=cf.atm0_vpi.value;
-            vci=cf.atm0_vci.value;
-            multiplex=cf.atm0_encap.value;
-            break;
-        case 1:
-            vpi=cf.atm1_vpi.value;
-            vci=cf.atm1_vci.value;
-            multiplex=cf.atm1_encap.value;        
-            break;
-        case 2:
-            vpi=cf.atm2_vpi.value;
-            vci=cf.atm2_vci.value;
-            multiplex=cf.atm2_encap.value;        
-            break;
-        case 3:
-            vpi=cf.atm3_vpi.value;
-            vci=cf.atm3_vci.value;
-            multiplex=cf.atm3_encap.value;        
-            break;
-        case 4:
-            vpi=cf.atm4_vpi.value;
-            vci=cf.atm4_vci.value;
-            multiplex=cf.atm4_encap.value;        
-            break;
-        case 5:
-            vpi=cf.atm5_vpi.value;
-            vci=cf.atm5_vci.value;
-            multiplex=cf.atm5_encap.value;        
-            break;
-        case 6:
-            vpi=cf.atm6_vpi.value;
-            vci=cf.atm6_vci.value;
-            multiplex=cf.atm6_encap.value;        
-            break;
-        case 7:
-            vpi=cf.atm7_vpi.value;
-            vci=cf.atm7_vci.value;
-            multiplex=cf.atm7_encap.value;        
-            break;
-        default:
-            alert("should not be here");
-            break;                                                                                
-    }
-    var tmpvarhave = "<% basic_cgi_get_param("havetmpvar"); %>";
-    var tmpmux = "<% basic_cgi_get_param("tmpmux"); %>";
-    var tmpvpi = "<% basic_cgi_get_param("tmpvpi"); %>";
-    var tmpvci = "<% basic_cgi_get_param("tmpvci"); %>";
-    
-    if (tmpvarhave == 1)
-    {
-        if (multiplex != tmpmux)
-            cf.cfgChanged.value='1';
-        if (vpi != tmpvpi)
-            cf.cfgChanged.value='1';
-        if (vci != tmpvci)
-            cf.cfgChanged.value='1';
-        
-        multiplex = tmpmux;
-        vpi = tmpvpi;
-        vci = tmpvci;
-    }
-    
-    if (multiplex == "LLC")
- 	    cf.dsl_multiplex.selectedIndex = 0;
-    else 
-	    cf.dsl_multiplex.selectedIndex = 1;
-    cf.dsl_vpi.value=vpi;
-    cf.dsl_vci.value=vci;
+
     load_waninfo(index);
     setIP();
 	setDNS();
@@ -647,28 +571,6 @@ function doTypeChange3(newIndex)
     }    
 }
 
-function duplicatepvcChk(vpi, vci)
-{
-    var cf = document.forms[0];
-    var index = cf.adslChoice.selectedIndex;
-    if (( index != 0) && (vpi == cf.atm0_vpi.value) && (vci == cf.atm0_vci.value) && (cf.wan0_dial.value == "1"))
-        return true;
-    if ((index != 1) && (vpi == cf.atm1_vpi.value) && (vci == cf.atm1_vci.value) && (cf.wan1_dial.value == "1"))
-        return true;
-    if ((index != 2) && (vpi == cf.atm2_vpi.value) && (vci == cf.atm2_vci.value) && (cf.wan2_dial.value == "1"))
-        return true;
-    if ((index != 3) && (vpi == cf.atm3_vpi.value) && (vci == cf.atm3_vci.value) && (cf.wan3_dial.value == "1"))
-        return true;
-    if ((index != 4) && (vpi == cf.atm4_vpi.value) && (vci == cf.atm4_vci.value) && (cf.wan4_dial.value == "1"))
-        return true;
-    if ((index != 5) && (vpi == cf.atm5_vpi.value) && (vci == cf.atm5_vci.value) && (cf.wan5_dial.value == "1"))
-        return true;
-    if ((index != 6) && (vpi == cf.atm6_vpi.value) && (vci == cf.atm6_vci.value) && (cf.wan6_dial.value == "1"))
-        return true;
-    if ((index != 7) && (vpi == cf.atm7_vpi.value) && (vci == cf.atm7_vci.value) && (cf.wan7_dial.value == "1"))
-        return true;
-    return false;
-}
 //-->
 </script>
 <title>Basic Settings</title>
@@ -856,38 +758,6 @@ function duplicatepvcChk(vpi, vci)
   <INPUT name=wan_dns1_pri type=hidden value= "">
   <INPUT name=wan_dns1_sec type=hidden value= "">
   <INPUT name=wan_hwaddr2 type=hidden value= "">
-  <INPUT name=atm0_vpi type=hidden value= "<% nvram_get("atmVcc0_vpi"); %>">
-  <INPUT name=atm0_vci type=hidden value= "<% nvram_get("atmVcc0_vci"); %>">
-  <INPUT name=atm0_multiplex type=hidden value= "<% nvram_get("atmVcc0_multiplex"); %>">
-  <INPUT name=atm0_encap type=hidden value= "<% nvram_get("atmVcc0_encap"); %>">  
-  <INPUT name=atm1_vpi type=hidden value= "<% nvram_get("atmVcc1_vpi"); %>">
-  <INPUT name=atm1_vci type=hidden value= "<% nvram_get("atmVcc1_vci"); %>">
-  <INPUT name=atm1_multiplex type=hidden value= "<% nvram_get("atmVcc1_multiplex"); %>">
-  <INPUT name=atm1_encap type=hidden value= "<% nvram_get("atmVcc1_encap"); %>">
-  <INPUT name=atm2_vpi type=hidden value= "<% nvram_get("atmVcc2_vpi"); %>">
-  <INPUT name=atm2_vci type=hidden value= "<% nvram_get("atmVcc2_vci"); %>">
-  <INPUT name=atm2_multiplex type=hidden value= "<% nvram_get("atmVcc2_multiplex"); %>">
-  <INPUT name=atm2_encap type=hidden value= "<% nvram_get("atmVcc2_encap"); %>">  
-  <INPUT name=atm3_vpi type=hidden value= "<% nvram_get("atmVcc3_vpi"); %>">
-  <INPUT name=atm3_vci type=hidden value= "<% nvram_get("atmVcc3_vci"); %>">
-  <INPUT name=atm3_multiplex type=hidden value= "<% nvram_get("atmVcc3_multiplex"); %>">
-  <INPUT name=atm3_encap type=hidden value= "<% nvram_get("atmVcc3_encap"); %>">  
-  <INPUT name=atm4_vpi type=hidden value= "<% nvram_get("atmVcc4_vpi"); %>">
-  <INPUT name=atm4_vci type=hidden value= "<% nvram_get("atmVcc4_vci"); %>">
-  <INPUT name=atm4_multiplex type=hidden value= "<% nvram_get("atmVcc4_multiplex"); %>">
-  <INPUT name=atm4_encap type=hidden value= "<% nvram_get("atmVcc4_encap"); %>">  
-  <INPUT name=atm5_vpi type=hidden value= "<% nvram_get("atmVcc5_vpi"); %>">
-  <INPUT name=atm5_vci type=hidden value= "<% nvram_get("atmVcc5_vci"); %>">
-  <INPUT name=atm5_multiplex type=hidden value= "<% nvram_get("atmVcc5_multiplex"); %>">
-  <INPUT name=atm5_encap type=hidden value= "<% nvram_get("atmVcc5_encap"); %>">  
-  <INPUT name=atm6_vpi type=hidden value= "<% nvram_get("atmVcc6_vpi"); %>">
-  <INPUT name=atm6_vci type=hidden value= "<% nvram_get("atmVcc6_vci"); %>">
-  <INPUT name=atm6_multiplex type=hidden value= "<% nvram_get("atmVcc6_multiplex"); %>">
-  <INPUT name=atm6_encap type=hidden value= "<% nvram_get("atmVcc6_encap"); %>">  
-  <INPUT name=atm7_vpi type=hidden value= "<% nvram_get("atmVcc7_vpi"); %>">
-  <INPUT name=atm7_vci type=hidden value= "<% nvram_get("atmVcc7_vci"); %>">
-  <INPUT name=atm7_multiplex type=hidden value= "<% nvram_get("atmVcc7_multiplex"); %>">
-  <INPUT name=atm7_encap type=hidden value= "<% nvram_get("atmVcc7_encap"); %>">
   <input type="hidden" name="cfgChanged" value="0">
   <input type="hidden" name="testpressed" value="0">
   <input type="hidden" name="runtest" value="<% basic_cgi_get_param("runtest"); %>">
