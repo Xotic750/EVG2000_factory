@@ -212,7 +212,7 @@ TARGET_FS = $(TARGETS_DIR)/$(PROFILE)/fs
 PROFILE_DIR = $(TARGETS_DIR)/$(PROFILE)
 INSTALL_DIR=$(PROFILE_DIR)/fs.install
 
-#Fiji add, Jasmine, 06/06/2007
+#Foxconn add, Jasmine, 06/06/2007
 export INSTALL_DIR
 ifndef FW_TYPE
 FW_TYPE = WW

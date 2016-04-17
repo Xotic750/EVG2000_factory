@@ -96,7 +96,7 @@ struct
   { ZEBRA_ROUTE_BGP,     "B", "bgp"}
 };
 
-/* fiji added start by EricHuang, 11/05/2007 */
+/* foxconn added start by EricHuang, 11/05/2007 */
 #ifndef U12H072
 #define max_fox_rt_info     32
 
@@ -170,7 +170,7 @@ void fox_get_rtinfo()
         fclose(fp);
 }
 #endif
-/* fiji added end by EricHuang, 11/05/2007 */
+/* foxconn added end by EricHuang, 11/05/2007 */
 
 
 /* Utility function to set boradcast option to the socket. */
@@ -1349,12 +1349,12 @@ rip_send_packet (caddr_t buf, int size, struct sockaddr_in *to,
       rip_interface_multicast_set (sock, ifp);
     }
 
-  /* fiji wklin added start, 04/14/2007 */
+  /* foxconn wklin added start, 04/14/2007 */
   {
     int ttl = 1;
     setsockopt (sock, IPPROTO_IP, IP_TTL, (void *) &ttl, sizeof (int));
   }
-  /* fiji wklin added end, 04/14/2007 */
+  /* foxconn wklin added end, 04/14/2007 */
   ret = sendto (sock, buf, size, 0, (struct sockaddr *)&sin,
 		sizeof (struct sockaddr_in));
 
@@ -2028,11 +2028,11 @@ rip_write_rte (int num, struct stream *s, struct prefix_ipv4 *p,
   struct in_addr mask;
   struct rip_interface *ri;
   
-     /* fiji added start by EricHuang, 11/07/2007 */
+     /* foxconn added start by EricHuang, 11/07/2007 */
 #ifndef U12H072
   int i=0;
 #endif
-    /* fiji added end by EricHuang, 11/07/2007 */
+    /* foxconn added end by EricHuang, 11/07/2007 */
 
   /* RIP packet header. */
   if (num == 0)
@@ -2089,7 +2089,7 @@ rip_write_rte (int num, struct stream *s, struct prefix_ipv4 *p,
 #endif /* FOX_AUTH_SUPPORT */
     }
 
-    /* fiji added start by EricHuang, 11/07/2007 */
+    /* foxconn added start by EricHuang, 11/07/2007 */
     /* replace metric value here */
 #ifndef U12H072
     for (i=0; i<max_fox_rt_info; i++)
@@ -2107,7 +2107,7 @@ rip_write_rte (int num, struct stream *s, struct prefix_ipv4 *p,
         }
     }
 #endif
-    /* fiji added end by EricHuang, 11/07/2007 */
+    /* foxconn added end by EricHuang, 11/07/2007 */
 
   /* Write routing table entry. */
   if (version == RIPv1)
@@ -3862,9 +3862,9 @@ rip_init ()
   /* Distance control. */
   rip_distance_table = route_table_init ();
   
-     /*fiji added start by EricHuang, 11/05/2007 */
+     /*foxconn added start by EricHuang, 11/05/2007 */
 #ifndef U12H072
   fox_get_rtinfo();
 #endif
-     /*fiji added end by EricHuang, 11/05/2007 */
+     /*foxconn added end by EricHuang, 11/05/2007 */
 }

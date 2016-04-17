@@ -26,7 +26,7 @@
 #include <netinet/in.h>
 
 /* get this before config.h too. */
-#ifdef USE_SYSLOG /* fiji wklin added, 08/13/2007 */
+#ifdef USE_SYSLOG /* foxconn wklin added, 08/13/2007 */
 #include <syslog.h>
 #endif
 #include <arpa/nameser.h>
@@ -193,14 +193,14 @@ struct serverfd {
   union mysockaddr source_addr;
   struct serverfd *next;
 #if (defined DNSMASQ_FOR_MULTIPLE_LAN_WAN)
-  char interface[IF_NAMESIZE+1];    /* Fiji added pling 06/27/2008, for i/f binding */
+  char interface[IF_NAMESIZE+1];    /* Foxconn added pling 06/27/2008, for i/f binding */
 #endif
 };
 
 struct server {
   union mysockaddr addr, source_addr;
 #if (defined DNSMASQ_FOR_MULTIPLE_LAN_WAN)
-  char interface[IF_NAMESIZE+1];    /* Fiji added pling 06/27/2008, for i/f binding */
+  char interface[IF_NAMESIZE+1];    /* Foxconn added pling 06/27/2008, for i/f binding */
 #endif
   struct serverfd *sfd; /* non-NULL if this server has its own fd bound to
 			   a source port */
@@ -242,7 +242,7 @@ struct frec {
   unsigned int iface;
   unsigned short orig_id, new_id;
   int fd;
-  int forwardall;   /* Fiji added by EricHuang, 01/02/2008 */
+  int forwardall;   /* Foxconn added by EricHuang, 01/02/2008 */
   time_t time;
   struct frec *next;
 };
@@ -437,13 +437,13 @@ void receive_query(struct listener *listen, struct daemon *daemon, time_t now);
 char *tcp_request(struct daemon *daemon, int confd, time_t now);
 
 /* network.c */
-/* Fiji modified start pling 06/27/2008 */
+/* Foxconn modified start pling 06/27/2008 */
 #if (defined DNSMASQ_FOR_MULTIPLE_LAN_WAN)
 struct serverfd *allocate_sfd(union mysockaddr *addr, struct serverfd **sfds, char *interface);
 #else
 struct serverfd *allocate_sfd(union mysockaddr *addr, struct serverfd **sfds);
 #endif
-/* Fiji modified end pling 06/27/2008 */
+/* Foxconn modified end pling 06/27/2008 */
 void reload_servers(char *fname, struct daemon *daemon);
 void check_servers(struct daemon *daemon, struct irec *interfaces);
 struct irec *enumerate_interfaces(struct daemon *daemon);
@@ -489,7 +489,7 @@ int icmp_ping(struct daemon *daemon, struct in_addr addr);
 void load_dhcp(char *file, char *suffix, time_t now, char *hostname);
 #endif
 
-/* Fiji added start pling 10/31/2008 */
+/* Foxconn added start pling 10/31/2008 */
 #if (defined DNSMASQ_FOR_MULTIPLE_PPPOE_SESSION) || (defined SingTel)
 struct fwd_db
 {
@@ -501,4 +501,4 @@ struct fwd_db
 };
 int reload_forward_db(void);
 #endif  /* DNSMASQ_FOR_MULTIPLE_PPPOE_SESSION */
-/* Fiji added end pling 10/31/2008 */
+/* Foxconn added end pling 10/31/2008 */

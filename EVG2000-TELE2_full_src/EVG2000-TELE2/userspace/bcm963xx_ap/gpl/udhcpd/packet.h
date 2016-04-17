@@ -29,7 +29,7 @@ struct udp_dhcp_packet {
 	struct dhcpMessage data;
 };
 
-/* fiji wklin added start, 10/03/2007 */
+/* foxconn wklin added start, 10/03/2007 */
 /* for dhcp servers sending packet > 567 */
 struct udp_dhcp_packet_rcv {
 	struct iphdr ip;
@@ -37,7 +37,7 @@ struct udp_dhcp_packet_rcv {
 	struct dhcpMessage data;
 	u_int8_t pad[6];
 };
-/* fiji wklin added end, 10/03/2007 */
+/* foxconn wklin added end, 10/03/2007 */
 void init_header(struct dhcpMessage *packet, char type);
 int get_packet(struct dhcpMessage *packet, int fd);
 u_int16_t checksum(void *addr, int count);

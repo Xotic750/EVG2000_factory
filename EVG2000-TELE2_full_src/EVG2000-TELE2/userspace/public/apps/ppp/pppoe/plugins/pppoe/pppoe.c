@@ -135,10 +135,10 @@ static int connect_pppoe_ses(void)
 	    return 0;
 	else
 	{
-		    /* fiji modified start Bob 12/02/2008, to prevent pppd terminating */
+		    /* foxconn modified start Bob 12/02/2008, to prevent pppd terminating */
 	    //poe_fatal(ses,"Failed to negotiate PPPoE connection: %d %m",errno,errno);
 	    poe_error(ses,"Failed to negotiate PPPoE connection: %d %m",errno,errno);
-	    /* fiji modified end Bob 12/02/2008, to prevent pppd terminating */
+	    /* foxconn modified end Bob 12/02/2008, to prevent pppd terminating */
 	}
     	    
     }
@@ -156,10 +156,10 @@ static int connect_pppoe_ses(void)
 
 
     if( err < 0 ){
-    /* fiji modified start Bob 12/02/2008, to prevent pppd terminating */
+    /* foxconn modified start Bob 12/02/2008, to prevent pppd terminating */
 	//poe_fatal(ses,"Failed to connect PPPoE socket: %d %m",errno,errno);
 	poe_error(ses,"Failed to connect PPPoE socket: %d %m",errno,errno);
-	/* fiji modified end Bob 12/02/2008, to prevent pppd terminating */
+	/* foxconn modified end Bob 12/02/2008, to prevent pppd terminating */
 	return err;
     }
 #if 0

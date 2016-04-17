@@ -31,7 +31,7 @@
 #include "options.h"
 #include "leases.h"
 
-/* Fiji added Start, Silver, 2007/5/7, @TR111 */
+/* Foxconn added Start, Silver, 2007/5/7, @TR111 */
 #if (defined SUPPORT_TR111)
 #define TR111_code                      125
 #define DeviceManufacurerOUI_code      	1
@@ -188,7 +188,7 @@ int getTR111Param(unsigned char *tr111)
 	return 1;
 }
 #endif  /* SUPPORT_TR111 */
-/* Fiji added End, Silver, 2007/5/7, @TR111 */
+/* Foxconn added End, Silver, 2007/5/7, @TR111 */
     
 
 /* send a packet to giaddr using the kernel ip stack */
@@ -450,16 +450,16 @@ int sendACK(struct dhcpMessage *oldpacket, u_int32_t yiaddr)
 			add_option_string(packet.options, curr->data);
 		curr = curr->next;
 	}
-/* Fiji added start, Lewis, 2008/9/19, @Lan host identification */
+/* Foxconn added start, Lewis, 2008/9/19, @Lan host identification */
 #ifdef TI_ALICE
     add_hostname_option(packet.options, server_config.hostname);
 #endif
-/* Fiji added end, Lewis, 2008/9/19, @Lan host identification */
-/* Fiji added Start, Silver, 2007/5/7, @TR111 */
+/* Foxconn added end, Lewis, 2008/9/19, @Lan host identification */
+/* Foxconn added Start, Silver, 2007/5/7, @TR111 */
 #if (defined SUPPORT_TR111)
     add_option_string(packet.options, TR111Frame);
 #endif
-/* Fiji added End, Silver, 2007/5/7, @TR111 */
+/* Foxconn added End, Silver, 2007/5/7, @TR111 */
 
 	add_bootp_options(&packet);
 
@@ -517,11 +517,11 @@ int send_inform(struct dhcpMessage *oldpacket)
 		curr = curr->next;
 	}
 
-/* Fiji added Start, Silver, 2007/5/7, @TR111 */
+/* Foxconn added Start, Silver, 2007/5/7, @TR111 */
 #if (defined SUPPORT_TR111)
     add_option_string(packet.options, TR111Frame);
 #endif
-/* Fiji added End, Silver, 2007/5/7, @TR111 */
+/* Foxconn added End, Silver, 2007/5/7, @TR111 */
 
 	add_bootp_options(&packet);
 

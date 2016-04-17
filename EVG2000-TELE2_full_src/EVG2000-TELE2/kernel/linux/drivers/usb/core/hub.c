@@ -1202,12 +1202,12 @@ void usb_disconnect(struct usb_device **pdev)
 	usb_set_device_state(udev, USB_STATE_NOTATTACHED);
 	dev_info (&udev->dev, "USB disconnect, address %d\n", udev->devnum);
 
-    /* fiji added start Bob, 12/04/2008 */	
+    /* foxconn added start Bob, 12/04/2008 */	
 	if(udev->dev.bus_id[2] == '1')
 	    usb_1_led_state=0;
 	else if(udev->dev.bus_id[2] == '2')
 	    usb_2_led_state=0;
-	/* fiji added end Bob, 12/04/2008 */
+	/* foxconn added end Bob, 12/04/2008 */
 	    
     //for USB automount
 #ifdef CONFIG_HOTPLUG
@@ -2206,12 +2206,12 @@ hub_port_init (struct usb_hub *hub, struct usb_device *udev, int port1,
 	default: 		speed = "?";	break;
 	}
 	
-    /* fiji added start Bob, 12/04/2008 */
+    /* foxconn added start Bob, 12/04/2008 */
 	if(udev->dev.bus_id[2] == '1')
 	    usb_1_led_state=1;
 	else if(udev->dev.bus_id[2] == '2')
 	    usb_2_led_state=1;
-    /* fiji added start Bob, 12/04/2008 */
+    /* foxconn added start Bob, 12/04/2008 */
 	
 	dev_info (&udev->dev,
 		  "%s %s speed %sUSB device using %s and address %d\n",

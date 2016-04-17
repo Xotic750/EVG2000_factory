@@ -36,8 +36,8 @@ int add_option_string(unsigned char *optionptr, unsigned char *string);
 int add_simple_option(unsigned char *optionptr, unsigned char code, u_int32_t data);
 struct option_set *find_option(struct option_set *opt_list, char code);
 void attach_option(struct option_set **opt_list, struct dhcp_option *option, char *buffer, int length);
-/*fiji add start, water, 06/25/2008, @wandetect, from brcm*/
+/*foxconn add start, water, 06/25/2008, @wandetect, from brcm*/
 #define _PATH_WAN_DIR	"/proc/var/fyi/wan"
 #define _PATH_MSG	"daemonstatus"
-/*fiji add end, water, 06/25/2008, @wandetect, from brcm*/
+/*foxconn add end, water, 06/25/2008, @wandetect, from brcm*/
 #endif

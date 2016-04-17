@@ -141,7 +141,7 @@ struct irec *enumerate_interfaces(struct daemon *daemon)
       if (ioctl(fd, SIOCGIFFLAGS, ifr) < 0)
 	die("ioctl error getting interface flags: %m", NULL);
 
-    /* Fiji modified start pling 06/27/2008 */
+    /* Foxconn modified start pling 06/27/2008 */
 #if (!defined DNSMASQ_FOR_MULTIPLE_LAN_WAN)
       /* If we are restricting the set of interfaces to use, make
 	 sure that loopback interfaces are in that set. */
@@ -164,7 +164,7 @@ struct irec *enumerate_interfaces(struct daemon *daemon)
 	    }
 	}
 #endif
-    /* Fiji modified end pling 06/27/2008 */
+    /* Foxconn modified end pling 06/27/2008 */
 
       iface = add_iface(daemon, iface, ifr->ifr_name, &addr);
 
@@ -386,13 +386,13 @@ struct listener *create_bound_listeners(struct irec *interfaces, int port)
   return listeners;
 }
 
-/* Fiji modified start pling 06/27/2008 */
+/* Foxconn modified start pling 06/27/2008 */
 #if (defined DNSMASQ_FOR_MULTIPLE_LAN_WAN)
 struct serverfd *allocate_sfd(union mysockaddr *addr, struct serverfd **sfds, char *interface)
 #else
 struct serverfd *allocate_sfd(union mysockaddr *addr, struct serverfd **sfds)
 #endif
-/* Fiji modified end pling 06/27/2008 */
+/* Foxconn modified end pling 06/27/2008 */
 {
   struct serverfd *sfd;
   
@@ -426,13 +426,13 @@ struct serverfd *allocate_sfd(union mysockaddr *addr, struct serverfd **sfds)
       return NULL;
     }
 
-  /* Fiji added start pling 06/27/2008 */
+  /* Foxconn added start pling 06/27/2008 */
 #if (defined DNSMASQ_FOR_MULTIPLE_LAN_WAN)
   if (strlen(interface))
       if (setsockopt(sfd->fd, SOL_SOCKET, SO_BINDTODEVICE, interface, strlen(interface)+1) == -1)
           perror(setsockopt);
 #endif
-  /* Fiji added end pling 06/27/2008 */
+  /* Foxconn added end pling 06/27/2008 */
 
   sfd->source_addr = *addr;
 #if (defined DNSMASQ_FOR_MULTIPLE_LAN_WAN)
@@ -482,7 +482,7 @@ void check_servers(struct daemon *daemon, struct irec *interfaces)
 	      break;
 	  if (iface)
 	    {
-#ifdef USE_SYSLOG /* fiji wklin added, 08/13/2007 */
+#ifdef USE_SYSLOG /* foxconn wklin added, 08/13/2007 */
 	      syslog(LOG_WARNING, "ignoring nameserver %s - local interface", addrbuff);
 #endif
 	      free(new);
@@ -490,15 +490,15 @@ void check_servers(struct daemon *daemon, struct irec *interfaces)
 	    }
 	  
 	  /* Do we need a socket set? */
-      /* Fiji modified start pling 06/27/2008 */
+      /* Foxconn modified start pling 06/27/2008 */
 #if (defined DNSMASQ_FOR_MULTIPLE_LAN_WAN)
 	  if (!new->sfd && !(new->sfd = allocate_sfd(&new->source_addr, &daemon->sfds, new->interface)))
 #else
 	  if (!new->sfd && !(new->sfd = allocate_sfd(&new->source_addr, &daemon->sfds)))
 #endif
-      /* Fiji modified end pling 06/27/2008 */
+      /* Foxconn modified end pling 06/27/2008 */
 	    {
-#ifdef USE_SYSLOG /* fiji wklin added, 08/13/2007 */
+#ifdef USE_SYSLOG /* foxconn wklin added, 08/13/2007 */
 	      syslog(LOG_WARNING, 
 		     "ignoring nameserver %s - cannot make/bind socket: %m", addrbuff);
 #endif
@@ -519,7 +519,7 @@ void check_servers(struct daemon *daemon, struct irec *interfaces)
 	  else
 	    s1 = "unqualified", s2 = "domains";
 	  
-#ifdef USE_SYSLOG /* fiji wklin added, 08/13/2007 */
+#ifdef USE_SYSLOG /* foxconn wklin added, 08/13/2007 */
 	  if (new->flags & SERV_NO_ADDR)
 	    syslog(LOG_INFO, "using local addresses only for %s %s", s1, s2);
 	  else if (!(new->flags & SERV_LITERAL_ADDRESS))
@@ -527,7 +527,7 @@ void check_servers(struct daemon *daemon, struct irec *interfaces)
                 s1, s2, new->interface);
 #endif
 	}
-#ifdef USE_SYSLOG /* fiji wklin added, 08/13/2007 */
+#ifdef USE_SYSLOG /* foxconn wklin added, 08/13/2007 */
       else
 	syslog(LOG_INFO, "using nameserver %s#%d for %s", addrbuff, port,
             new->interface); 
@@ -568,13 +568,13 @@ void reload_servers(char *fname, struct daemon *daemon)
   f = fopen(fname, "r");
   if (!f)
     {
-#ifdef USE_SYSLOG /* fiji wklin added, 08/13/2007 */
+#ifdef USE_SYSLOG /* foxconn wklin added, 08/13/2007 */
       syslog(LOG_ERR, "failed to read %s: %m", fname);
 #endif
     }
   else
     {
-#ifdef USE_SYSLOG /* fiji wklin added, 08/13/2007 */
+#ifdef USE_SYSLOG /* foxconn wklin added, 08/13/2007 */
       syslog(LOG_INFO, "reading %s", fname);
 #endif
       while ((line = fgets(daemon->namebuff, MAXDNAME, f)))
@@ -588,7 +588,7 @@ void reload_servers(char *fname, struct daemon *daemon)
 	  if (!(token = strtok(NULL, " \t\n\r")))
 	    continue;
 	  
-      /* Fiji added start pling 06/27/2008 */
+      /* Foxconn added start pling 06/27/2008 */
       /* Optional support the format 1.2.3.4@eth1 for interface binding */
 #if (defined DNSMASQ_FOR_MULTIPLE_LAN_WAN)
       char ifname[IF_NAMESIZE+1];
@@ -600,7 +600,7 @@ void reload_servers(char *fname, struct daemon *daemon)
          strcpy(ifname, temp+1);
       }
 #endif
-      /* Fiji added end pling 06/27/2008 */
+      /* Foxconn added end pling 06/27/2008 */
       
 #ifdef HAVE_IPV6
           if (inet_pton(AF_INET, token, &addr.in.sin_addr))
@@ -647,7 +647,7 @@ void reload_servers(char *fname, struct daemon *daemon)
 	  serv->addr = addr;
 	  serv->source_addr = source_addr;
 #if (defined DNSMASQ_FOR_MULTIPLE_LAN_WAN)
-      strcpy(serv->interface, ifname);      /* Fiji added pling 06/27/2008 */
+      strcpy(serv->interface, ifname);      /* Foxconn added pling 06/27/2008 */
 #endif
 	  serv->domain = NULL;
 	  serv->sfd = NULL;

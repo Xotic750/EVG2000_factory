@@ -310,14 +310,14 @@ static long do_sys_ftruncate(unsigned int fd, loff_t length, int small)
 
 	error = -EINVAL;
 
-    /* Fiji removed start pling 12/04/2009 */
+    /* Foxconn removed start pling 12/04/2009 */
     /* Remove large file limitation */
 #if 0
 	/* Cannot ftruncate over 2^31 bytes without large file support */
 	if (small && length > MAX_NON_LFS)
 		goto out_putf;
 #endif
-    /* Fiji removed end pling 12/04/2009 */
+    /* Foxconn removed end pling 12/04/2009 */
 
 	error = -EPERM;
 	if (IS_APPEND(inode))
@@ -1107,7 +1107,7 @@ asmlinkage long sys_vhangup(void)
  */
 int generic_file_open(struct inode * inode, struct file * filp)
 {
-    /* Fiji removed start pling 06/12/2009 */
+    /* Foxconn removed start pling 06/12/2009 */
     /* remove "big file" limitation */
 #if 0
     

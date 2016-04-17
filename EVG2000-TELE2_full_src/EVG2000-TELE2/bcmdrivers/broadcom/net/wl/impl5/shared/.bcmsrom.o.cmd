@@ -1,8 +1,8 @@
-cmd_/home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/shared/bcmsrom.o := /opt/toolchains/uclibc-crosstools-gcc-4.2.3-3/usr/bin/mips-linux-uclibc-gcc -Wp,-MD,/home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/shared/.bcmsrom.o.d  -nostdinc -isystem /opt/toolchains/uclibc-crosstools-gcc-4.2.3-3/usr/bin/../lib/gcc/mips-linux-uclibc/4.2.3/include -D__KERNEL__ -Iinclude  -include include/linux/autoconf.h -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -O2  -mabi=32 -G 0 -mno-abicalls -fno-pic -pipe -msoft-float -ffreestanding  -march=mips32 -Wa,-mips32 -Wa,--trap -Iinclude/asm-mips/mach-bcm963xx -Iinclude/asm-mips/mach-generic -fomit-frame-pointer  -fno-stack-protector -Wdeclaration-after-statement -Wno-pointer-sign -DDSLCPE_WLAN_VERSION=\"cpe4.402.0\" -DDSLCPE_DELAY -I/home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include -I/home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/shared -I/home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/wl/sys -I/home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/emf/emf -I/home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/emf/igs -I/home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/router/shared -I/home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/router/emf/emf -I/home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/router/emf/igs -I/home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/emf/emf -I/home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/emf/igs -I/home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/opensource/include/bcm963xx -I/home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/include/bcm963xx -I/home/eric/U12H154_Optus/Motive/EVG2000-53115/shared/opensource/include/bcm963xx -I/home/eric/U12H154_Optus/Motive/EVG2000-53115/shared/broadcom/include/bcm963xx -I/home/eric/U12H154_Optus/Motive/EVG2000-53115/shared/opensource/boardparms/bcm963xx -DIL_BIGENDIAN -DBCMDRIVER -DDSLCPE_DGASP -DDSLCPE_WOMBO -DDSLCPE -DDSLCPE_SCBLIST -DD11CONF=0x00011b00 -DACONF=0 -DGCONF=0x00000080 -DNCONF=0x00000005f -DLPCONF=0 -DWLC_LOW -DWLC_HIGH -DAP -DMBSS -DWME_PER_AC_TX_PARAMS -DWME_PER_AC_TUNING -DRXCHAIN_PWRSAVE -DWMF -DWLLED -DWME -DWLAFTERBURNER -DCRAM -DWL11N -DWL11H -DWL11D -DWLCNT -DWLCHANIM -DDELTASTATS -DWLCNTSCB -DWLCOEX -DBCMWPA2 -DBCMCCMP -DBCMDMA64 -DWLAMSDU -DWLAMSDU_SWDEAGG -DWLAMPDU -DWLTINYDUMP -DWLTEST -DDSLCPE_BLOG  -DMODULE -mlong-calls -D"KBUILD_STR(s)=\#s" -D"KBUILD_BASENAME=KBUILD_STR(bcmsrom)"  -D"KBUILD_MODNAME=KBUILD_STR(wl)" -c -o /home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/shared/bcmsrom.o /home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/shared/bcmsrom.c
+cmd_/home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/shared/bcmsrom.o := /opt/toolchains/uclibc-crosstools-gcc-4.2.3-3/usr/bin/mips-linux-uclibc-gcc -Wp,-MD,/home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/shared/.bcmsrom.o.d  -nostdinc -isystem /opt/toolchains/uclibc-crosstools-gcc-4.2.3-3/usr/bin/../lib/gcc/mips-linux-uclibc/4.2.3/include -D__KERNEL__ -Iinclude  -include include/linux/autoconf.h -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -O2  -mabi=32 -G 0 -mno-abicalls -fno-pic -pipe -msoft-float -ffreestanding  -march=mips32 -Wa,-mips32 -Wa,--trap -Iinclude/asm-mips/mach-bcm963xx -Iinclude/asm-mips/mach-generic -fomit-frame-pointer  -fno-stack-protector -Wdeclaration-after-statement -Wno-pointer-sign -DDSLCPE_WLAN_VERSION=\"cpe4.402.0\" -DDSLCPE_DELAY -I/home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/include -I/home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/shared -I/home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/wl/sys -I/home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/emf/emf -I/home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/emf/igs -I/home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/router/shared -I/home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/router/emf/emf -I/home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/router/emf/igs -I/home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/include/emf/emf -I/home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/include/emf/igs -I/home/antony/EVG2000-TELSTRA/bcmdrivers/opensource/include/bcm963xx -I/home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/include/bcm963xx -I/home/antony/EVG2000-TELSTRA/shared/opensource/include/bcm963xx -I/home/antony/EVG2000-TELSTRA/shared/broadcom/include/bcm963xx -I/home/antony/EVG2000-TELSTRA/shared/opensource/boardparms/bcm963xx -DIL_BIGENDIAN -DBCMDRIVER -DDSLCPE_DGASP -DDSLCPE_WOMBO -DDSLCPE -DDSLCPE_SCBLIST -DD11CONF=0x00011b00 -DACONF=0 -DGCONF=0x00000080 -DNCONF=0x00000005f -DLPCONF=0 -DWLC_LOW -DWLC_HIGH -DAP -DMBSS -DWME_PER_AC_TX_PARAMS -DWME_PER_AC_TUNING -DRXCHAIN_PWRSAVE -DWMF -DWLLED -DWME -DWLAFTERBURNER -DCRAM -DWL11N -DWL11H -DWL11D -DWLCNT -DWLCHANIM -DDELTASTATS -DWLCNTSCB -DWLCOEX -DBCMWPA2 -DBCMCCMP -DBCMDMA64 -DWLAMSDU -DWLAMSDU_SWDEAGG -DWLAMPDU -DWLTINYDUMP -DWLTEST -DDSLCPE_BLOG  -DMODULE -mlong-calls -D"KBUILD_STR(s)=\#s" -D"KBUILD_BASENAME=KBUILD_STR(bcmsrom)"  -D"KBUILD_MODNAME=KBUILD_STR(wl)" -c -o /home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/shared/bcmsrom.o /home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/shared/bcmsrom.c
 
-deps_/home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/shared/bcmsrom.o := \
-  /home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/shared/bcmsrom.c \
-  /home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/typedefs.h \
+deps_/home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/shared/bcmsrom.o := \
+  /home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/shared/bcmsrom.c \
+  /home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/include/typedefs.h \
   include/linux/version.h \
   include/linux/types.h \
     $(wildcard include/config/uid16.h) \
@@ -22,9 +22,9 @@ deps_/home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bc
     $(wildcard include/config/highmem.h) \
     $(wildcard include/config/64bit/phys/addr.h) \
     $(wildcard include/config/64bit.h) \
-  /home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/bcmdefs.h \
-  /home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/osl.h \
-  /home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/linux_osl.h \
+  /home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/include/bcmdefs.h \
+  /home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/include/osl.h \
+  /home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/include/linux_osl.h \
   include/linux/kernel.h \
     $(wildcard include/config/preempt/voluntary.h) \
     $(wildcard include/config/debug/spinlock/sleep.h) \
@@ -127,7 +127,7 @@ deps_/home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bc
   include/linux/errno.h \
   include/asm/errno.h \
   include/asm-generic/errno-base.h \
-  /home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/linuxver.h \
+  /home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/include/linuxver.h \
     $(wildcard include/config/net/radio.h) \
     $(wildcard include/config/wireless/ext.h) \
     $(wildcard include/config/pcmcia.h) \
@@ -499,42 +499,42 @@ deps_/home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bc
   include/linux/dmaengine.h \
     $(wildcard include/config/dma/engine.h) \
   include/linux/if_packet.h \
-  /home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/linux_osl_dslcpe.h \
-  /home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/bcmutils.h \
-  /home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/opensource/include/bcm963xx/bcmnet.h \
+  /home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/include/linux_osl_dslcpe.h \
+  /home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/include/bcmutils.h \
+  /home/antony/EVG2000-TELSTRA/bcmdrivers/opensource/include/bcm963xx/bcmnet.h \
     $(wildcard include/config/igmp/snooping//.h) \
-  /home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/hndsoc.h \
-  /home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/sbconfig.h \
+  /home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/include/hndsoc.h \
+  /home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/include/sbconfig.h \
     $(wildcard include/config/h.h) \
-  /home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/aidmp.h \
-  /home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/sbchipc.h \
-  /home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/bcmdevs.h \
-  /home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/bcmendian.h \
-  /home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/sbpcmcia.h \
-  /home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/pcicfg.h \
+  /home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/include/aidmp.h \
+  /home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/include/sbchipc.h \
+  /home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/include/bcmdevs.h \
+  /home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/include/bcmendian.h \
+  /home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/include/sbpcmcia.h \
+  /home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/include/pcicfg.h \
     $(wildcard include/config/addr.h) \
     $(wildcard include/config/bus.h) \
     $(wildcard include/config/slot.h) \
     $(wildcard include/config/fun.h) \
     $(wildcard include/config/off.h) \
-  /home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/siutils.h \
-  /home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/bcmsrom_fmt.h \
-  /home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/bcmsrom.h \
-  /home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/bcmsrom_fmt.h \
-  /home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/bcmsrom_tbl.h \
-  /home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/sbpcmcia.h \
-  /home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/wlioctl.h \
+  /home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/include/siutils.h \
+  /home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/include/bcmsrom_fmt.h \
+  /home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/include/bcmsrom.h \
+  /home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/include/bcmsrom_fmt.h \
+  /home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/include/bcmsrom_tbl.h \
+  /home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/include/sbpcmcia.h \
+  /home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/include/wlioctl.h \
     $(wildcard include/config/item.h) \
     $(wildcard include/config/usbrndis/retail.h) \
-  /home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/proto/ethernet.h \
-  /home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/proto/bcmeth.h \
-  /home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/proto/bcmevent.h \
-  /home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/proto/802.11.h \
-  /home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/proto/wpa.h \
-  /home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/bcmwifi.h \
-  /home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/bcmnvram.h \
-  /home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/include/bcmotp.h \
+  /home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/include/proto/ethernet.h \
+  /home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/include/proto/bcmeth.h \
+  /home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/include/proto/bcmevent.h \
+  /home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/include/proto/802.11.h \
+  /home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/include/proto/wpa.h \
+  /home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/include/bcmwifi.h \
+  /home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/include/bcmnvram.h \
+  /home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/include/bcmotp.h \
 
-/home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/shared/bcmsrom.o: $(deps_/home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/shared/bcmsrom.o)
+/home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/shared/bcmsrom.o: $(deps_/home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/shared/bcmsrom.o)
 
-$(deps_/home/eric/U12H154_Optus/Motive/EVG2000-53115/bcmdrivers/broadcom/net/wl/bcm96368/shared/bcmsrom.o):
+$(deps_/home/antony/EVG2000-TELSTRA/bcmdrivers/broadcom/net/wl/bcm96368/shared/bcmsrom.o):

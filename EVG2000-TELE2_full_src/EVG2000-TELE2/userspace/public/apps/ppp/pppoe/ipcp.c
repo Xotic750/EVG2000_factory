@@ -277,7 +277,7 @@ static char dns_ip[64]="";
 // brcm2
 int redisconn=0;
 
-char idle_timed_out[2] = "0"; /* Fiji added pling 07/15/2008 */
+char idle_timed_out[2] = "0"; /* Foxconn added pling 07/15/2008 */
 
 /*
  * Make a string representation of a network IP address.
@@ -675,12 +675,12 @@ ipcp_resetci(f)
 	wo->accept_remote = 1;
     wo->req_dns1 = usepeerdns;	/* Request DNS addresses from the peer */
     wo->req_dns2 = usepeerdns;
-    /* Fiji added start pling 09/19/2008, for WINS */
+    /* Foxconn added start pling 09/19/2008, for WINS */
 #if (defined PPPOE_REQUEST_WINS)
     wo->req_wins1 = usepeerwins;
     wo->req_wins2 = usepeerwins;
 #endif
-    /* Fiji added end pling 09/19/2008 */
+    /* Foxconn added end pling 09/19/2008 */
     *go = *wo;
     if (!ask_for_local)
 	go->ouraddr = 0;
@@ -726,12 +726,12 @@ ipcp_cilen(f)
 
     return (LENCIADDR(go->neg_addr, go->old_addrs) +
 	    LENCIVJ(go->neg_vj, go->old_vj) +
-        /* Fiji added start pling 09/19/2008, for WINS */
+        /* Foxconn added start pling 09/19/2008, for WINS */
 #if (defined PPPOE_REQUEST_WINS)
 	    LENCIDNS(go->req_wins1) +
 	    LENCIDNS(go->req_wins2) +
 #endif
-        /* Fiji added end pling 09/19/2008 */
+        /* Foxconn added end pling 09/19/2008 */
 	    LENCIDNS(go->req_dns1) +
 	    LENCIDNS(go->req_dns2)) ;
 }
@@ -807,12 +807,12 @@ ipcp_addci(f, ucp, lenp)
 
     ADDCIDNS(CI_MS_DNS2, go->req_dns2, go->dnsaddr[1]);
 
-    /* Fiji added start pling 09/19/2008, for WINS */
+    /* Foxconn added start pling 09/19/2008, for WINS */
 #if (defined PPPOE_REQUEST_WINS)
     ADDCIDNS(CI_MS_WINS1, go->req_wins1, go->winsaddr[0]);
     ADDCIDNS(CI_MS_WINS2, go->req_wins2, go->winsaddr[1]);
 #endif
-    /* Fiji added end pling 09/19/2008 */
+    /* Foxconn added end pling 09/19/2008 */
 
 
     *lenp -= len;
@@ -915,12 +915,12 @@ ipcp_ackci(f, p, len)
 
     ACKCIDNS(CI_MS_DNS2, go->req_dns2, go->dnsaddr[1]);
 
-    /* Fiji added start pling 09/19/2008, for WINS */
+    /* Foxconn added start pling 09/19/2008, for WINS */
 #if (defined PPPOE_REQUEST_WINS)
     ACKCIDNS(CI_MS_WINS1, go->req_wins1, go->winsaddr[0]);
     ACKCIDNS(CI_MS_WINS2, go->req_wins2, go->winsaddr[1]);
 #endif
-    /* Fiji added end pling 09/19/2008 */
+    /* Foxconn added end pling 09/19/2008 */
 
     /*
      * If there are any remaining CIs, then this packet is bad.
@@ -1060,7 +1060,7 @@ ipcp_nakci(f, p, len)
 	    try.dnsaddr[1] = cidnsaddr;
 	    );
 
-    /* Fiji added start pling 09/19/2008, for WINS */
+    /* Foxconn added start pling 09/19/2008, for WINS */
 #if (defined PPPOE_REQUEST_WINS)
     NAKCIDNS(CI_MS_WINS1, req_wins1,
 	    try.winsaddr[0] = cidnsaddr;
@@ -1070,7 +1070,7 @@ ipcp_nakci(f, p, len)
 	    try.winsaddr[1] = cidnsaddr;
 	    );
 #endif
-    /* Fiji added end pling 09/19/2008 */
+    /* Foxconn added end pling 09/19/2008 */
 
     /*
      * There may be remaining CIs, if the peer is requesting negotiation
@@ -1239,13 +1239,13 @@ ipcp_rejci(f, p, len)
 
     REJCIDNS(CI_MS_DNS2, req_dns2, go->dnsaddr[1]);
 
-    /* Fiji added start pling 09/19/2008, for WINS */
+    /* Foxconn added start pling 09/19/2008, for WINS */
 #if (defined PPPOE_REQUEST_WINS)
     REJCIDNS(CI_MS_WINS1, req_wins1, go->winsaddr[0]);
 
     REJCIDNS(CI_MS_WINS2, req_wins2, go->winsaddr[1]);
 #endif
-    /* Fiji added end pling 09/19/2008 */
+    /* Foxconn added end pling 09/19/2008 */
 
     /*
      * If there are any remaining CIs, then this packet is bad.
@@ -1634,10 +1634,10 @@ ip_demand_conf(u)
     sprintf (pingCmd, "echo %s >/var/ppp/dod.ppp_%s", ip_ntoa (wo->hisaddr),
              req_name);
     system (pingCmd);
-    /* Fiji modified start pling 12/02/2008 */
+    /* Foxconn modified start pling 12/02/2008 */
     //sprintf (pingCmd, "route add default dev ppp_%s 2>/dev/null", req_name);
     sprintf (pingCmd, "route add default dev ppp0 2>/dev/null");
-    /* Fiji modified start pling 12/02/2008 */
+    /* Foxconn modified start pling 12/02/2008 */
     system (pingCmd);
     
     return 1;
@@ -1693,7 +1693,7 @@ static void config_save()
     if (strlen(session_path) > 0)
 	sprintf(path, "%s/%s/%s", _PATH_WAN_DIR, session_path, _PATH_MASK);
     file_save (path, subnet_ip, 0);     
-/* Fiji remove, Jaasmine Yang, 07/24/2007 */
+/* Foxconn remove, Jaasmine Yang, 07/24/2007 */
 #if 0
     sprintf(cmd, "mkdir -p %s", _PATH_SYS_DIR);
     system(cmd);
@@ -1723,12 +1723,12 @@ ipcp_up(f)
     ipcp_options *go = &ipcp_gotoptions[f->unit];
     ipcp_options *wo = &ipcp_wantoptions[f->unit];
 
-/* Fiji add start, Jasmine Yang, 12/28/2007 */
+/* Foxconn add start, Jasmine Yang, 12/28/2007 */
     FILE *fp;
     struct sysinfo info;
     char tmp[128] = "";
 
-/* Fiji add end, Jasmine Yang, 12/28/2007 */
+/* Foxconn add end, Jasmine Yang, 12/28/2007 */
     IPCPDEBUG(("ipcp: up"));
 
     char interface_name[MAXPATHLEN + 4] = { "ppp_" };   
@@ -1893,7 +1893,7 @@ ipcp_up(f)
 // brcm
     printf ("PPP: %s Connection Up.\n", req_name);
 /* Foxcon start add by fred 05/12/2006 @ppp_uptime{*/
-/* Fiji add end, Jasmine Yang, 12/28/2007 */
+/* Foxconn add end, Jasmine Yang, 12/28/2007 */
 /*
     FILE *fp;
     struct sysinfo info;
@@ -1934,7 +1934,7 @@ ipcp_up(f)
 #if 0
     strcat (interface_name, req_name);
 
-    /* Fiji Add Start : Steve Hsieh : 03/16/2006 @ADSL_porting { */
+    /* Foxconn Add Start : Steve Hsieh : 03/16/2006 @ADSL_porting { */
     //start_nat();
 
     /* Hook NAT */
@@ -1944,14 +1944,14 @@ ipcp_up(f)
     //agApi_natHook("ppp_8_35_1");
     agApi_natHook (interface_name);     //modify by fred 20060410
 
-    /* *** Fiji Add Start : Steve Hsieh : 01/24/2006 @conn_recovery *** { */
+    /* *** Foxconn Add Start : Steve Hsieh : 01/24/2006 @conn_recovery *** { */
     // acosNat_DoConnRecovery();
-    /* *** Fiji Add End  : Steve Hsieh : 01/24/2006 @conn_recovery *** } */
+    /* *** Foxconn Add End  : Steve Hsieh : 01/24/2006 @conn_recovery *** } */
 
     agApi_natEnable ();
     printf ("bring up NAT\n");
 
-    /* Fiji Add Start : Steve Hsieh : 03/16/2006 @ADSL_porting } */
+    /* Foxconn Add Start : Steve Hsieh : 03/16/2006 @ADSL_porting } */
 #endif
 
     //create_msg(BCM_PPPOE_CLIENT_STATE_UP);    //bob removed
@@ -2096,10 +2096,10 @@ ipcp_script_done(arg)
 	}
 	break;
     }
-    /* Fiji added start pling 07/15/2008 */
+    /* Foxconn added start pling 07/15/2008 */
     script_unsetenv("IDLE_TIMEOUT");    
     idle_timed_out[0] = '0';
-    /* Fiji added end pling 07/15/2008 */
+    /* Foxconn added end pling 07/15/2008 */
 }
 
 
@@ -2129,7 +2129,7 @@ ipcp_script(script)
     argv[1] = ifname;
     argv[2] = devnam;
 
-    /* Fiji modified start pling 09/19/2008 */
+    /* Foxconn modified start pling 09/19/2008 */
     /* Argv[3] (speed) is not used in current ip-up script.
      * So we use it to store WINS address.
      */
@@ -2144,7 +2144,7 @@ ipcp_script(script)
 #else
     argv[3] = strspeed;
 #endif
-    /* Fiji modified end pling 09/19/2008 */
+    /* Foxconn modified end pling 09/19/2008 */
 
     argv[4] = strlocal;
     argv[5] = strremote;
@@ -2163,7 +2163,7 @@ ipcp_script(script)
     }
     else
     {
-        argv[6] = idle_timed_out;       /* Fiji modified pling 07/15/2008 */
+        argv[6] = idle_timed_out;       /* Foxconn modified pling 07/15/2008 */
         argv[7] = NULL;
     }
     
@@ -2180,7 +2180,7 @@ create_resolv(peerdns1, peerdns2)
     FILE *f;
 
     // brcm
-    /* Fiji modify start, Jaasmine Yang, 07/24/2007 */
+    /* Foxconn modify start, Jaasmine Yang, 07/24/2007 */
 #if 0
     if ((f = fopen(_PATH_RESOLV, "r")) > 0) {
 	// the file already exists.
@@ -2188,7 +2188,7 @@ create_resolv(peerdns1, peerdns2)
 	return;
     }
 #endif
-    /* Fiji modify end, Jaasmine Yang, 07/24/2007 */
+    /* Foxconn modify end, Jaasmine Yang, 07/24/2007 */
     f = fopen(_PATH_RESOLV, "w");
     if (f == NULL) {
 	error("Failed to create %s: %m", _PATH_RESOLV);

@@ -27,7 +27,7 @@ SUBDIRS += udhcpd
 SUBDIRS += dnsmasq-2.15
 SUBDIRS += zebra
 
-# Fiji removed by Jenny Zhao, 05/21/2009 @USB NEW SPEC 
+# Foxconn removed by Jenny Zhao, 05/21/2009 @USB NEW SPEC 
 #ifneq ($(AUTOMOUNT_FLAG),y)
 #SUBDIRS += automount
 #endif

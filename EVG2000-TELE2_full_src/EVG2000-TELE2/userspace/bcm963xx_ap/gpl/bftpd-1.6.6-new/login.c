@@ -284,8 +284,8 @@ int bftpd_login (char *password)
     char *file_auth;            /* if used, points to file used to auth users */
     char *home_directory = NULL;        /* retrieved from auth_file */
     char *anonymous = NULL;
-    char chfolder [256]=""; /* Fiji add, Jasmine Yang, 09/12/2007 */
-    char tmpBuf[256] = "";/*fiji, water, 11/07/2008*/
+    char chfolder [256]=""; /* Foxconn add, Jasmine Yang, 09/12/2007 */
+    char tmpBuf[256] = "";/*foxconn, water, 11/07/2008*/
 
     P1MSG("%s(%d)\r\n", __FUNCTION__, __LINE__);
     str[0] = '\0';              /* avoid garbage in str */
@@ -383,10 +383,10 @@ int bftpd_login (char *password)
     if (!file_auth[0])
     {
 #ifndef NO_GETPWNAM
-/* Fiji add start, Jasmine Yang, 09/12/2007 */
+/* Foxconn add start, Jasmine Yang, 09/12/2007 */
         //if (checkuser () || checkshell ()) 
         if (checkuser ())
-/* Fiji add end, Jasmine Yang, 09/12/2007 */        	
+/* Foxconn add end, Jasmine Yang, 09/12/2007 */        	
         {
             control_printf (SL_FAILURE, "421 Login incorrect.");
             //printf ("%s(%d)\r\n", __FUNCTION__, __LINE__);
@@ -418,7 +418,7 @@ int bftpd_login (char *password)
             strcpy (str, "%h");
         P1MSG("userinfo.pw_name=%s,userinfo.pw_dir=%s\r\n",  userinfo.pw_name, userinfo.pw_dir);
         replace (str, "%u", userinfo.pw_name);
-        strcpy(tmpBuf, userinfo.pw_dir);/*fiji, water, 11/07/2008*/
+        strcpy(tmpBuf, userinfo.pw_dir);/*foxconn, water, 11/07/2008*/
         replace (str, "%h", userinfo.pw_dir);
         if (!strcasecmp (config_getoption ("RESOLVE_UIDS"), "yes"))
         {
@@ -428,20 +428,20 @@ int bftpd_login (char *password)
 
         setgid (userinfo.pw_gid);
         initgroups (userinfo.pw_name, userinfo.pw_gid);
-        /* Fiji add start, Jasmine Yang, 09/12/2007 */
+        /* Foxconn add start, Jasmine Yang, 09/12/2007 */
         scanPartitons(); //zzz, get first partition, 12/11/2007
         /* Make sure the login folder is user's account name */
 
-        /* Fiji Add Start : Steve Hsieh : 01/22/2008, @ftpRW {*/
+        /* Foxconn Add Start : Steve Hsieh : 01/22/2008, @ftpRW {*/
         /* -- should use shared dir in usb_setting page as root dir --*/
         
-        /*fiji modified start, water, 11/07/2008, 
+        /*foxconn modified start, water, 11/07/2008, 
           I think it isn't a good solution, need further implement later*/
         //sprintf (chfolder, "%s/%s", mount_path, userinfo.pw_name);
         sprintf (chfolder, "%s%s", mount_path, tmpBuf);
-        /*fiji modified end, water, 11/07/2008, it isn't a good solution, need further implement*/
+        /*foxconn modified end, water, 11/07/2008, it isn't a good solution, need further implement*/
         
-        /* Fiji Add End : Steve Hsieh : 01/22/2008, @ftpRW }*/
+        /* Foxconn Add End : Steve Hsieh : 01/22/2008, @ftpRW }*/
         
         //water add temporarily, no usb now, it will be removed soon, @debug 05/30/2008
         //sprintf (chfolder, "/tmp");
@@ -486,13 +486,13 @@ int bftpd_login (char *password)
             }
         }
         
-        /* Fiji modified start pling 05/14/2009 */
+        /* Foxconn modified start pling 05/14/2009 */
         /* Change rootdir to "/tmp" */
         //strcpy(str,chfolder );
         strcpy(str, "/tmp" );
-        /* Fiji modified end pling 05/14/2009 */
+        /* Foxconn modified end pling 05/14/2009 */
 
-        /* Fiji add end, Jasmine Yang, 09/12/2007 */
+        /* Foxconn add end, Jasmine Yang, 09/12/2007 */
         if (strcasecmp (config_getoption ("DO_CHROOT"), "no"))
         {
             bftpd_log("change for ROOTDIR [%s]\n",chfolder);
@@ -627,7 +627,7 @@ int checkpass_pwd (char *password)
 #ifdef HAVE_SHADOW_H
     struct spwd *shd;
 #endif
-/* Fiji add start, Jasmine Yang, 09/12/2007 */
+/* Foxconn add start, Jasmine Yang, 09/12/2007 */
     //if (strcmp(userinfo.pw_passwd, (char *) crypt(password, userinfo.pw_passwd))) {
     
     P1MSG("%s(%d)userinfo.pw_passwd=%s , password=%s \r\n", __FUNCTION__,
@@ -635,7 +635,7 @@ int checkpass_pwd (char *password)
 
     if (strcmp (userinfo.pw_passwd, password))
     {
-/* Fiji add end, Jasmine Yang, 09/12/2007 */
+/* Foxconn add end, Jasmine Yang, 09/12/2007 */
 #ifdef HAVE_SHADOW_H
         if (!(shd = getspnam (user)))
             return 1;

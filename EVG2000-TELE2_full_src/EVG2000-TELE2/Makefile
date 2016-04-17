@@ -38,14 +38,14 @@ all_postcheck1: sanity_check \
 BUILD_DIR = $(shell pwd)
 include $(BUILD_DIR)/make.common
 
-#Fiji added start
+#Foxconn added start
 USERAPPS_DIR = $(BUILD_DIR)/userspace
 export USERAPPS_DIR
 ACOSTOPDIR=$(USERAPPS_DIR)/bcm963xx_ap/acos
 export ACOSTOPDIR
 GPLTOPDIR=$(USERAPPS_DIR)/bcm963xx_ap/gpl
 export GPLTOPDIR
-#Fiji added end
+#Foxconn added end
 
 
 
@@ -123,7 +123,7 @@ userspace: sanity_check create_install data-model gpl
 	$(MAKE) -C userspace
 
 
-# Fiji Add start : Steve Hsieh : @ADSL_porting, 03/08/2006
+# Foxconn Add start : Steve Hsieh : @ADSL_porting, 03/08/2006
 acos_link:
 	cd userspace/project/acos/include; rm -f ambitCfg.h; ln -s ambitCfg_$(FW_TYPE).h ambitCfg.h
 	cd $(USERAPPS_DIR)/bcm963xx_ap/acos/acos_nat && ln -sf Makefile.evg834noud Makefile
@@ -138,7 +138,7 @@ gpl:
 	$(MAKE) -C $(USERAPPS_DIR)/bcm963xx_ap/gpl install
 
 
-# Fiji Add start : Steve Hsieh : @ADSL_porting, 03/08/2006
+# Foxconn Add start : Steve Hsieh : @ADSL_porting, 03/08/2006
 
 
 
@@ -663,18 +663,18 @@ ifneq ($(strip $(BRCM_KERNEL_ROOTFS)),nfs)
 	$(HOSTTOOLS_DIR)/addvtoken $(FLASH_IMAGE_NAME) $(FLASH_IMAGE_NAME).w
 	@mkdir -p $(IMAGES_DIR)
 	
-#Fiji add by fred 05/11/2006 add .chk	
+#Foxconn add by fred 05/11/2006 add .chk	
 	@cp $(PROFILE_DIR)/$(FS_KERNEL_IMAGE_NAME) $(IMAGES_DIR)/$(FS_KERNEL_IMAGE_NAME)_$(BRCM_RELEASETAG)-$(shell date '+%y%m%d_%H%M').chk	
 #	@cp $(PROFILE_DIR)/$(FS_KERNEL_IMAGE_NAME) $(IMAGES_DIR)/$(FS_KERNEL_IMAGE_NAME)_$(BRCM_RELEASETAG)-$(shell date '+%y%m%d_%H%M')
 	
-# Fiji added start 07/25/2008
+# Foxconn added start 07/25/2008
 # Create .chk files for Web UI upgrade
 	cd $(PROFILE_DIR) && touch rootfs && \
 	$(HOSTTOOLS_DIR)/packet -k $(FS_KERNEL_IMAGE_NAME) -f rootfs -b compatible.txt -oall kernel_rootfs_image \
 			-i ../../userspace/project/acos/include/ambitCfg.h && \
 	rm -f rootfs _*.chk && \
 	cp kernel_rootfs_image.chk EVG2000_`date +%m%d%H%M`.chk
-# Fiji added end 07/25/2008
+# Foxconn added end 07/25/2008
 	
 	@echo
 	@echo -e "Done! Image $(PROFILE) has been built in $(IMAGES_DIR)."
@@ -690,7 +690,7 @@ else
 endif
 
 
-# Fiji added start pling 06/20/2008, for RAMDISK support
+# Foxconn added start pling 06/20/2008, for RAMDISK support
 pre_install_rootfs:
 	#rm -f $(KERNEL_DIR)/arch/mips/ramdisk/rootfs.img
 	#touch $(KERNEL_DIR)/arch/mips/ramdisk/rootfs.img
@@ -706,7 +706,7 @@ ramdisk: pre_install_rootfs all
 	cp $(KERNEL_DIR)/vmlinux . ; \
 	$(STRIP) --remove-section=.note --remove-section=.comment vmlinux;
 	@echo "RAM disk image created successfully!"
-# Fiji added end pling 06/20/2008, for RAMDISK support
+# Foxconn added end pling 06/20/2008, for RAMDISK support
 
 ###########################################
 #
@@ -723,7 +723,7 @@ ramdisk: pre_install_rootfs all
 #$(patsubst %, _dir_%, $(SUBDIRS)) :
 #	$(MAKE) -C $(patsubst _dir_%, %, $@) $(TGT)
 
-# Fiji Add Start : Steve Hsieh : @ADSL_porting 03/10/2006
+# Foxconn Add Start : Steve Hsieh : @ADSL_porting 03/10/2006
 # @add acos_clean
 #clean: target_clean userspace_clean kernel_clean hosttools_clean voice_clean xchange_clean wlan_clean
 clean: gpl_clean target_clean userspace_clean kernel_clean hosttools_clean voice_clean xchange_clean wlan_clean
@@ -836,12 +836,12 @@ wlan_clean:
 	for x in $$files; do\
 		rm -rf $$x;\
 	done
-# Fiji Add Start : Steve hsieh : @ADSL_porting 03/10/2006
+# Foxconn Add Start : Steve hsieh : @ADSL_porting 03/10/2006
 acos_clean:
 	$(MAKE) -C $(USERAPPS_DIR)/bcm963xx_ap/acos clean 
 gpl_clean:
 	$(MAKE) -C $(USERAPPS_DIR)/bcm963xx_ap/gpl clean 
-# Fiji Add End : Steve hsieh : @ADSL_porting 03/10/2006
+# Foxconn Add End : Steve hsieh : @ADSL_porting 03/10/2006
 
 ###########################################
 #

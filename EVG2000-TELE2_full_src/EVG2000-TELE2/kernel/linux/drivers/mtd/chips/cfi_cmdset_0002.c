@@ -518,7 +518,7 @@ static int get_chip(struct map_info *map, struct flchip *chip, unsigned long adr
 	case FL_JEDEC_QUERY:
 		return 0;
 
-#if 0 /* fiji wklin removed, 09/08/2008 , using default */
+#if 0 /* foxconn wklin removed, 09/08/2008 , using default */
 	case FL_ERASING:
 		if (mode == FL_WRITING) /* FIXME: Erase-suspend-program appears broken. */
 			goto sleep;

@@ -183,7 +183,7 @@ void command_user(char *username)
 {
 	char *alias;
 	
-	/* Fiji addedd start pling 06/10/2009*/
+	/* Foxconn addedd start pling 06/10/2009*/
 	/* If all shared folders are 'All - no password',
 	 * then no need to login for "FTP".
 	 * Also, take care of duplicate login.
@@ -201,7 +201,7 @@ void command_user(char *username)
 		}
 	}
 	else
-	/* Fiji added end pling 06/10/2009*/
+	/* Foxconn added end pling 06/10/2009*/
 	if (state) {
 		control_printf(SL_FAILURE, "503 Username already given.");
 		return;
@@ -562,7 +562,7 @@ void do_stor(char *filename, int flags)
 	fd = open(mapped, O_RDONLY);
 	if (fd >= 0)  /* file exists */
 	{
-        /* Fiji added start pling 06/25/2009 */
+        /* Foxconn added start pling 06/25/2009 */
         /* Try to lock this file for write access.
          * If failed, don't allow write.
          */
@@ -583,7 +583,7 @@ void do_stor(char *filename, int flags)
 	    		return;
             }
         }
-        /* Fiji added end pling 06/25/2009 */
+        /* Foxconn added end pling 06/25/2009 */
 
 		/* close the file */
 		close(fd);
@@ -620,7 +620,7 @@ void do_stor(char *filename, int flags)
 			return;
 		}
 
-        /* Fiji added start pling 06/25/2009 */
+        /* Foxconn added start pling 06/25/2009 */
         /* Lock this file for write access */
         struct flock lock;
         lock.l_type = F_WRLCK;
@@ -636,7 +636,7 @@ void do_stor(char *filename, int flags)
 			free(mapped);
 			return;
         }
-        /* Fiji added end pling 06/25/2009 */
+        /* Foxconn added end pling 06/25/2009 */
 	}
 
 #ifdef HAVE_ZLIB_H
@@ -670,18 +670,18 @@ void do_stor(char *filename, int flags)
 	   -- Jesse
 	 */
 	num_clients = bftpdutmp_usercount("*");
-    /* Fiji modified start pling 06/19/2009 */
+    /* Foxconn modified start pling 06/19/2009 */
     /* For better throughput performance */
 	// my_buffer_size = get_buffer_size(num_clients);
     my_buffer_size = MAX_BUFFER_SIZE; 
-    /* Fiji modified end pling 06/19/2009 */
+    /* Foxconn modified end pling 06/19/2009 */
 
 	alarm(0);
-    /* Fiji modified start pling 06/19/2009 */
+    /* Foxconn modified start pling 06/19/2009 */
     /* For better throughput performance */
 	// buffer = malloc(xfer_bufsize);
 	buffer = malloc(MAX_BUFFER_SIZE);
-    /* Fiji modified end pling 06/19/2009 */
+    /* Foxconn modified end pling 06/19/2009 */
 	/* Check to see if we are out of memory. -- Jesse */
 	if (! buffer)
 	{
@@ -940,7 +940,7 @@ void command_retr(char *filename)
 	}
 #endif
 
-    /* Fiji added start pling 06/25/2009 */
+    /* Foxconn added start pling 06/25/2009 */
     /* Place a read Lock on this file to prevent it
      *  from any other write access
     */
@@ -950,7 +950,7 @@ void command_retr(char *filename)
     lock.l_start = 0;
     lock.l_len = 0;
     fcntl(phile, F_SETLK, &lock);
-    /* Fiji added end pling 06/25/2009 */
+    /* Foxconn added end pling 06/25/2009 */
 
 	stat(mapped, (struct stat *) &statbuf);
 	if (S_ISDIR(statbuf.st_mode)) {
@@ -1293,7 +1293,7 @@ void command_mdtm(char *filename)
 void command_cwd(char *dir)
 {
 	if (bftpd_cwd_chdir(dir)) {
-		/* Fiji modified start pling 05/14/2009 */
+		/* Foxconn modified start pling 05/14/2009 */
 		/* Deny access to root dir - '/' */
 		if (errno == EACCES) {
 			bftpd_log("Error: 'Not allowed to chdir to /'.\n");
@@ -1303,7 +1303,7 @@ void command_cwd(char *dir)
 					strerror(errno), dir);
 			control_printf(SL_FAILURE, "451 Error: %s.", strerror(errno));
 		}
-		/* Fiji modified end pling 05/14/2009 */
+		/* Foxconn modified end pling 05/14/2009 */
 	} else {
 		bftpd_log("Changed directory to '%s'.\n", dir);
 		control_printf(SL_SUCCESS, "250 OK");
@@ -1570,7 +1570,7 @@ void command_auth(char *type)
 	control_printf(SL_FAILURE, "550 Not implemented yet\r\n");
 }
 
-/* Fiji added start pling 09/16/2009 */
+/* Foxconn added start pling 09/16/2009 */
 void command_opts(char *params)
 {
     if (strcasecmp(params, "utf8 on") == 0)
@@ -1578,7 +1578,7 @@ void command_opts(char *params)
     else
   		control_printf(SL_SUCCESS, "550 %s not implemented", params);
 }
-/* Fiji added end pling 09/16/2009 */
+/* Foxconn added end pling 09/16/2009 */
 
 /* Command parsing */
 
@@ -1670,7 +1670,7 @@ int parsecmd(char *str)
 			if (!strcasecmp(config_getoption(confstr), "no")) {
                             bftpd_log("550 The command '%s' is disabled.\n",
 						commands[i].name);
-                /* Fiji modified start pling 06/25/2009 */
+                /* Foxconn modified start pling 06/25/2009 */
                 /* Change the message sent to FTP client, as
                  * specified by Netgear.
                  */
@@ -1684,7 +1684,7 @@ int parsecmd(char *str)
                 else
 				control_printf(SL_FAILURE, "550 The command '%s' is disabled.",
 						commands[i].name);
-                /* Fiji modified end pling 06/25/2009 */
+                /* Foxconn modified end pling 06/25/2009 */
 				return 1;
 			}
 			cutto(str, strlen(commands[i].name));

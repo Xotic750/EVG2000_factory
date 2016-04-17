@@ -262,7 +262,7 @@ int sys_lstat(const char *fname,SMB_STRUCT_STAT *sbuf)
 	return ret;
 }
 
-/* Fiji added start pling 11/25/2009 */
+/* Foxconn added start pling 11/25/2009 */
 /*******************************************************************
  An lstat() wrapper that will deal with 64 bit filesizes.
 ********************************************************************/
@@ -285,7 +285,7 @@ SMB_BIG_UINT get_real_file_size(struct stat *st)
 
     return file_size_64;
 }
-/* Fiji added end pling 11/25/2009 */
+/* Foxconn added end pling 11/25/2009 */
 
 /*******************************************************************
  An ftruncate() wrapper that will deal with 64 bit filesizes.
@@ -304,20 +304,20 @@ int sys_ftruncate(int fd, SMB_OFF_T offset)
  An lseek() wrapper that will deal with 64 bit filesizes.
 ********************************************************************/
 
-/* Fiji modified start pling 11/18/2009 */
+/* Foxconn modified start pling 11/18/2009 */
 extern __off64_t lseek64 (int __fd, __off64_t __offset, int __whence);
 
 //SMB_OFF_T sys_lseek(int fd, SMB_OFF_T offset, int whence)
 SMB_BIG_UINT sys_lseek(int fd, SMB_BIG_UINT offset, int whence)
-/* Fiji modified end pling 11/18/2009 */
+/* Foxconn modified end pling 11/18/2009 */
 {
 #if defined(HAVE_EXPLICIT_LARGEFILE_SUPPORT) && defined(HAVE_OFF64_T) && defined(HAVE_LSEEK64)
 	return lseek64(fd, offset, whence);
 #else
-    /* Fiji modified start pling 11/19/2009 */
+    /* Foxconn modified start pling 11/19/2009 */
 	//return lseek(fd, offset, whence);
 	return lseek64(fd, offset, whence);
-    /* Fiji modified end pling 11/19/2009 */
+    /* Foxconn modified end pling 11/19/2009 */
 #endif
 }
 

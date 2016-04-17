@@ -250,13 +250,13 @@ struct sockaddr_in {
 #define MULTICAST(x)	(((x) & htonl(0xf0000000)) == htonl(0xe0000000))
 #define BADCLASS(x)	(((x) & htonl(0xf0000000)) == htonl(0xf0000000))
 #define ZERONET(x)	(((x) & htonl(0xff000000)) == htonl(0x00000000))
-/* Fiji modified start, 06/20/2009, @make 224.0.0.x passthrough*/
+/* Foxconn modified start, 06/20/2009, @make 224.0.0.x passthrough*/
 #ifdef IGMP_PROXY
 #define LOCAL_MCAST(x)	(((x) & htonl(0xFFFFFFFE)) == htonl(0xE0000000))
 #else
 #define LOCAL_MCAST(x)	(((x) & htonl(0xFFFFFF00)) == htonl(0xE0000000))
 #endif
-/* Fiji modified end, 06/20/2009, @make 224.0.0.x passthrough*/
+/* Foxconn modified end, 06/20/2009, @make 224.0.0.x passthrough*/
 
 #endif
 

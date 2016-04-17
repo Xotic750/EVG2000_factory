@@ -121,7 +121,7 @@ void hidegroups_end()
         }
 }
 
-/* Fiji added start pling 06/20/2009 */
+/* Foxconn added start pling 06/20/2009 */
 #include "logging.h"
 int is_dir_allow_read(char *dir_name)
 {
@@ -145,7 +145,7 @@ int is_dir_allow_read(char *dir_name)
 
     return allow_read;
 }
-/* Fiji added end pling 06/20/2009 */
+/* Foxconn added end pling 06/20/2009 */
 
 void bftpd_stat(char *name, FILE * client)
 {
@@ -159,26 +159,26 @@ void bftpd_stat(char *name, FILE * client)
         return;
     }
 
-    /* Fiji added start pling 06/20/2009 */
+    /* Foxconn added start pling 06/20/2009 */
     /* Don't let 'guest' user see "Admin-read" folders */
     if (S_ISDIR(statbuf.st_mode) || S_ISLNK(statbuf.st_mode))
     {
         if (!is_dir_allow_read(name))
             return;
     }
-    /* Fiji added end pling 06/20/2009 */
+    /* Foxconn added end pling 06/20/2009 */
 
 #ifdef S_ISLNK
 	if (S_ISLNK(statbuf.st_mode)) {
 		strcpy(perm, "lrwxrwxrwx");
-        /* Fiji modified start pling 06/20/2009 */
+        /* Foxconn modified start pling 06/20/2009 */
         /* Don't show symlink */
 #if 0
 		temp[readlink(name, temp, sizeof(temp) - 1)] = '\0';
 		sprintf(linktarget, " -> %s", temp);
 #endif
         linktarget[0] = '\0';
-        /* Fiji modified end pling 06/20/2009 */
+        /* Foxconn modified end pling 06/20/2009 */
 	} else {
 #endif
 		strcpy(perm, "----------");
@@ -215,7 +215,7 @@ void bftpd_stat(char *name, FILE * client)
     mygetpwuid(statbuf.st_uid, passwdfile, uid)[8] = 0;
     mygetpwuid(statbuf.st_gid, groupfile, gid)[8] = 0;
 
-    /* Fiji modified start pling 06/29/2009 */
+    /* Foxconn modified start pling 06/29/2009 */
     /* Show big file size (>4GB) correctly */
 #if 0
 	fprintf(client, "%s %3i %-8s %-8s %8lu %s %s%s\r\n", perm,
@@ -228,7 +228,7 @@ void bftpd_stat(char *name, FILE * client)
 			(int) statbuf.st_nlink, uid, gid,
 			(unsigned long long) real_file_size,
 			timestr, name, linktarget);
-    /* Fiji modified end pling 06/29/2009 */
+    /* Foxconn modified end pling 06/29/2009 */
 }
 
 void dirlist_one_file(char *name, FILE *client, char verbose)

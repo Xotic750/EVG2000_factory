@@ -134,17 +134,17 @@ int ngroups;			/* How many groups valid in groups */
 
 static struct timeval start_time;	/* Time when link was started. */
 
-/* Fiji add start, Jasmine Yang, 12/28/2007 */
+/* Foxconn add start, Jasmine Yang, 12/28/2007 */
 struct pppd_stats old_link_stats;
-/* Fiji add end, Jasmine Yang, 12/28/2007 */
+/* Foxconn add end, Jasmine Yang, 12/28/2007 */
 
-/* Fiji added start pling 09/19/2008 */
+/* Foxconn added start pling 09/19/2008 */
 extern char idle_timed_out[2];
 #if (defined PPPOE_RANDOM_HOLDOFF)
 static int retry_attempt = 0;
 static unsigned int random_holdoff = 5;
 #endif
-/* Fiji added end pling 09/19/2008 */
+/* Foxconn added end pling 09/19/2008 */
 
 struct pppd_stats link_stats;
 int link_connect_time;
@@ -420,7 +420,7 @@ main(argc,argv)
 	script_setenv("DEVICE", devnam, 1);
     slprintf(numbuf, sizeof(numbuf), "%d", getpid());
     script_setenv("PPPD_PID", numbuf, 1);
-    /* Fiji add start, Jasmine Yang, 07/24/2007 */
+    /* Foxconn add start, Jasmine Yang, 07/24/2007 */
     {
         FILE *pid_fp;
         char cmd[256] = "";
@@ -434,7 +434,7 @@ main(argc,argv)
             fclose (pid_fp);
         }
     }
-    /* Fiji add end, Jasmine Yang, 07/24/2007 */
+    /* Foxconn add end, Jasmine Yang, 07/24/2007 */
     
     setup_signals();
 
@@ -640,7 +640,7 @@ main(argc,argv)
 	if (demand)
 	    demand_discard();
 	t = need_holdoff? holdoff: 0;
-    /* Fiji modified start pling 09/19/2008 */
+    /* Foxconn modified start pling 09/19/2008 */
     /* If the disconnect reason is not idle timeout,
      * then use random holdoff period */
 #if (defined PPPOE_RANDOM_HOLDOFF)
@@ -654,7 +654,7 @@ main(argc,argv)
         t = random_holdoff;
     }
 #endif
-    /* Fiji modified end pling 09/19/2008 */
+    /* Foxconn modified end pling 09/19/2008 */
 	if (holdoff_hook)
 	    t = (*holdoff_hook)();
 	if (t > 0) {
@@ -1166,7 +1166,7 @@ cleanup()
 	cleanup_db();
 }
 
-/* Fiji add start, Jasmine Yang, 12/28/2007 */
+/* Foxconn add start, Jasmine Yang, 12/28/2007 */
 /*
  * reset_link_stats - "reset" stats when link goes up.
  */
@@ -1178,7 +1178,7 @@ void reset_link_stats (u)
     gettimeofday (&start_time, NULL);
 }
 
-/* Fiji add end, Jasmine Yang, 12/28/2007 */
+/* Foxconn add end, Jasmine Yang, 12/28/2007 */
 /*
  * update_link_stats - get stats at link termination.
  */
@@ -1195,10 +1195,10 @@ update_link_stats(u)
     link_connect_time = now.tv_sec - start_time.tv_sec;
     link_stats_valid = 1;
 
-/* Fiji add start, Jasmine Yang, 12/28/2007 */
+/* Foxconn add start, Jasmine Yang, 12/28/2007 */
     link_stats.bytes_in -= old_link_stats.bytes_in;
     link_stats.bytes_out-= old_link_stats.bytes_out;
-/* Fiji add end, Jasmine Yang, 12/28/2007 */
+/* Foxconn add end, Jasmine Yang, 12/28/2007 */
 
     slprintf(numbuf, sizeof(numbuf), "%d", link_connect_time);
     script_setenv("CONNECT_TIME", numbuf, 0);

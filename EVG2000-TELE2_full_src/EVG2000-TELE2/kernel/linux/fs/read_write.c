@@ -806,10 +806,10 @@ asmlinkage ssize_t sys_sendfile(int out_fd, int in_fd, off_t __user *offset, siz
 		if (unlikely(get_user(off, offset)))
 			return -EFAULT;
 		pos = off;
-        /* Fiji modified start pling 12/04/2009 */
+        /* Foxconn modified start pling 12/04/2009 */
 		//ret = do_sendfile(out_fd, in_fd, &pos, count, MAX_NON_LFS);
 		ret = do_sendfile(out_fd, in_fd, &pos, count, (loff_t)0xFFFFFFFFUL);
-        /* Fiji modified end pling 12/04/2009 */
+        /* Foxconn modified end pling 12/04/2009 */
 		if (unlikely(put_user(pos, offset)))
 			return -EFAULT;
 		return ret;

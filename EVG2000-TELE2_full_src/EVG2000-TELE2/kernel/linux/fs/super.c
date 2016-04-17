@@ -88,11 +88,11 @@ static struct super_block *alloc_super(struct file_system_type *type)
 		mutex_init(&s->s_dquot.dqonoff_mutex);
 		init_rwsem(&s->s_dquot.dqptr_sem);
 		init_waitqueue_head(&s->s_wait_unfrozen);
-        /* Fiji modified start pling 12/04/2009 */
+        /* Foxconn modified start pling 12/04/2009 */
         /* Large file support, up to 4GB for FAT32 */
 		//s->s_maxbytes = MAX_NON_LFS;
 		s->s_maxbytes = 0xFFFFFFFFUL;
-        /* Fiji modified end pling 12/04/2009 */
+        /* Foxconn modified end pling 12/04/2009 */
 		s->dq_op = sb_dquot_ops;
 		s->s_qcop = sb_quotactl_ops;
 		s->s_op = &default_op;

@@ -1075,7 +1075,7 @@ void ntfs_ucsfree(ntfschar *ucs)
  * Define the character encoding to be used.
  * Use UTF-8 unless specified otherwise.
  */
-#if 0       /* Fiji removed pling 04/01/2009, not used but have compiler errors */
+#if 0       /* Foxconn removed pling 04/01/2009, not used but have compiler errors */
 int ntfs_set_char_encoding(const char *locale)
 {
 	use_utf8 = 0;

@@ -118,7 +118,7 @@ ln -s /var/ipsec/ipsec.conf $ROOTFS/etc/ipsec.conf
 ln -s /var/ipsec/racoon.conf $ROOTFS/etc/racoon.conf
 ln -s /var/ipsec/psk.txt $ROOTFS/etc/psk.txt
 ln -s /var/iproute2/rt_tables $ROOTFS/etc/iproute2/rt_tables
-#Fiji add, FredPeng, 2007/07/26
+#Foxconn add, FredPeng, 2007/07/26
 ln -s /var $ROOTFS/tmp
 
 if [ -x $PROFILE/special-buildFS ]; then

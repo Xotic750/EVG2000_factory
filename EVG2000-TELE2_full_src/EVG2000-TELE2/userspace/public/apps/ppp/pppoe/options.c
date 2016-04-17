@@ -122,10 +122,10 @@ bool devnam_fixed;		/* can no longer change device name */
 static int logfile_fd = -1;	/* fd opened for log file */
 static char logfile_name[MAXPATHLEN];	/* name of log file */
 
-/* Fiji added start pling 09/04/2008 */
+/* Foxconn added start pling 09/04/2008 */
 extern int lcp_echo_interval;	/* Interval between LCP echo-requests */
 extern int lcp_echo_fails;	    /* Tolerance to unanswered echo-requests */
-/* Fiji added start pling 09/04/2008 */
+/* Foxconn added start pling 09/04/2008 */
 
 /*
  * Prototypes
@@ -448,7 +448,7 @@ parse_args(argc, argv)
 		    lcp_allowoptions[0].mru = atoi(optarg);
 		    break;
 
-        /* Fiji added start pling 09/04/2008 */
+        /* Foxconn added start pling 09/04/2008 */
 	    case 'e': /* modify LCP echo request interval */
 		    lcp_echo_interval = atoi(optarg);
 		    break;
@@ -459,7 +459,7 @@ parse_args(argc, argv)
             holdoff = atoi(optarg);
             holdoff_specified = 1;
             break;
-        /* Fiji added end pling 09/04/2008 */
+        /* Foxconn added end pling 09/04/2008 */
 
 	    default:
 //#ifdef INET6

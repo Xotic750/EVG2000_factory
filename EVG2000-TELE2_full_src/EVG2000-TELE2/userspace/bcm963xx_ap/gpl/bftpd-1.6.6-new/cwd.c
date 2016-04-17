@@ -24,14 +24,14 @@ int bftpd_cwd_chdir(char *dir)
     }
 	char *tmp = bftpd_cwd_mappath(dir);
 
-	/* Fiji added start pling 05/14/2009 */
+	/* Foxconn added start pling 05/14/2009 */
 	/* Sanity check, don't allow user to get outside of the /shares  */
 	if (strlen(tmp) == 0 || strcmp(tmp, "/") == 0) {
 		free(tmp);
 		errno = EACCES;
 		return -1;
 	}
-	/* Fiji added end pling 05/14/2009 */
+	/* Foxconn added end pling 05/14/2009 */
 
 	if (chdir(tmp)) {
 		free(tmp);

@@ -1,7 +1,7 @@
 /* reserveip.c
  *
  * udhcp Server
- * Copyright (C) 2005 Eric Huang <eric.sy.huang@fiji.com>
+ * Copyright (C) 2005 Eric Huang <eric.sy.huang@foxconn.com>
  *
  *
  * This program is free software; you can redistribute it and/or modify
@@ -130,17 +130,17 @@ static int getTokens(char *str, char *delimiter, char token[][MAX_TOKEN_SIZE], i
  * Read the reserved IP addresses from configuration file and put them into array.
  * Returns the number of IP address read.
  */
-/*fiji modified start, water, 06/25/2008, @mlan on dvg834noud*/
+/*foxconn modified start, water, 06/25/2008, @mlan on dvg834noud*/
 //int getReservedAddr(char reservedMacAddr[][MAX_TOKEN_SIZE], char reservedIpAddr[][MAX_TOKEN_SIZE])
 int getReservedAddr(char reservedMacAddr[][MAX_TOKEN_SIZE], char reservedIpAddr[][MAX_TOKEN_SIZE], int whichlan)
-/*fiji modified end, water, 06/25/2008, @mlan on dvg834noud*/
+/*foxconn modified end, water, 06/25/2008, @mlan on dvg834noud*/
 {
 #define BUFFER_SIZE     2*1024
     int numReservedMac=0, numReservedIp=0;
-    char buffer[BUFFER_SIZE];      /* Fiji modified pling 10/04/2007, to allow max 64 reserved IP */
+    char buffer[BUFFER_SIZE];      /* Foxconn modified pling 10/04/2007, to allow max 64 reserved IP */
     FILE *in;
     
-	/*fiji modified start, water, 06/25/2008, @mlan on dvg834noud*/
+	/*foxconn modified start, water, 06/25/2008, @mlan on dvg834noud*/
     //if (!(in = fopen("/tmp/udhcpd_resrv.conf", "r"))) 
     char resrvfile[50] = "";
     if (whichlan == 0)
@@ -152,7 +152,7 @@ int getReservedAddr(char reservedMacAddr[][MAX_TOKEN_SIZE], char reservedIpAddr[
     else if (whichlan == 3)
         strcpy(resrvfile, "/var/udhcpd/udhcpd_resrv_br3.conf");
 	if (!(in = fopen(resrvfile, "r")))
-	/*fiji modified end, water, 06/25/2008, @mlan on dvg834noud*/
+	/*foxconn modified end, water, 06/25/2008, @mlan on dvg834noud*/
     {
 		LOG(LOG_ERR, "unable to open config file: /tmp/udhcpd_resrv.conf");
 		return 0;
@@ -200,19 +200,19 @@ int check_reserved_ip(u_int32_t req_ip, u_int8_t *chaddr)
     u_int32_t reserved_ip=0;
     int i=0;
 
-    /* fiji added start by EricHuang, 02/01/2007 */
+    /* foxconn added start by EricHuang, 02/01/2007 */
     
     if ( ntohl(req_ip) == ntohl(server_config.server) )
     {
         return 0; /* requested ip is router's ip */
     }
-    /* fiji added end by EricHuang, 02/01/2007 */
+    /* foxconn added end by EricHuang, 02/01/2007 */
 
     for (i=0; i<num_of_reservedIP; i++)
     {
         reserved_ip = inet_addr(resrvIpAddr[i]);
 
-        if ( reserved_ip == /*ntohl*/(req_ip) )/*Fiji modified by finerain 05/20/2008 @Reserved ip*/
+        if ( reserved_ip == /*ntohl*/(req_ip) )/*Foxconn modified by finerain 05/20/2008 @Reserved ip*/
         {
             unsigned char tempMac[32], mac[7];
             if(i>3)
@@ -288,19 +288,19 @@ int check_reserved_ip(u_int32_t req_ip, u_int8_t *chaddr)
     u_int32_t reserved_ip=0;
     int i=0;
 
-    /* fiji added start by EricHuang, 02/01/2007 */
+    /* foxconn added start by EricHuang, 02/01/2007 */
     
     if ( ntohl(req_ip) == ntohl(server_config.server) )
     {
         return 0; /* requested ip is router's ip */
     }
-    /* fiji added end by EricHuang, 02/01/2007 */
+    /* foxconn added end by EricHuang, 02/01/2007 */
 
     for (i=0; i<num_of_reservedIP; i++)
     {
         reserved_ip = inet_addr(resrvIpAddr[i]);
 
-        if ( reserved_ip == /*ntohl*/(req_ip) )/*Fiji modified by finerain 05/20/2008 @Reserved ip*/
+        if ( reserved_ip == /*ntohl*/(req_ip) )/*Foxconn modified by finerain 05/20/2008 @Reserved ip*/
         {
             unsigned char tempMac[32], mac[7];
             sprintf(tempMac, "%s", resrvMacAddr[i]);

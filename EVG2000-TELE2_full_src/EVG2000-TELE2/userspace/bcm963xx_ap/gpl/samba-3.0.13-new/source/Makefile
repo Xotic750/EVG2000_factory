@@ -13,7 +13,7 @@ exec_prefix=${prefix}
 LIBS= -lcrypt -ldl
 CC=/opt/toolchains/uclibc-crosstools-gcc-4.2.3-3/usr/bin/mips-linux-uclibc-gcc
 SHLD=${CC} ${CFLAGS}
-CFLAGS= -DFTP_ACCESS_USB -DSUPPORT_TR111 -DU12H154_TELE2 -DDNSMASQ_FOR_MULTIPLE_LAN_WAN -DBSP_4_X_X -I/home/eric/U12H154_Tele2/EVG2000-53115/bcmdrivers/opensource/include/bcm963xx
+CFLAGS= -DFTP_ACCESS_USB -DSUPPORT_TR111 -DU12H154_TELE2 -DDNSMASQ_FOR_MULTIPLE_LAN_WAN -DBSP_4_X_X -I/home/antony/GPL/EVG2000-TELE2/bcmdrivers/opensource/include/bcm963xx
 CPPFLAGS=
 EXEEXT=
 LDFLAGS=
@@ -42,8 +42,8 @@ INSTALLCLIENTCMD_A=:
 
 
 #modified water, @make error if the srcdir changed, 11/24/2008
-#srcdir=/home/eric/U12H154_Tele2/EVG2000-53115/userspace/bcm963xx_ap/gpl/samba-3.0.13-new/source
-#builddir=/home/eric/U12H154_Tele2/EVG2000-53115/userspace/bcm963xx_ap/gpl/samba-3.0.13-new/source
+#srcdir=/home/antony/GPL/EVG2000-TELE2/userspace/bcm963xx_ap/gpl/samba-3.0.13-new/source
+#builddir=/home/antony/GPL/EVG2000-TELE2/userspace/bcm963xx_ap/gpl/samba-3.0.13-new/source
 srcdir := $(shell pwd)
 builddir := $(shell pwd)
 

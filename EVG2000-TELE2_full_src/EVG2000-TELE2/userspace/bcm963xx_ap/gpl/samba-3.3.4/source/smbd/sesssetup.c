@@ -1623,7 +1623,7 @@ void reply_sesssetup_and_X(struct smb_request *req)
 		setup_new_vc_session();
 	}
 
-    /* Fiji added start pling 11/30/2009 */
+    /* Foxconn added start pling 11/30/2009 */
 	/*If all shared folders are 'All - no password',
 	 then no need to login for "HTTP", "FTP" or samba.*/
     FILE *fp = NULL;
@@ -1634,7 +1634,7 @@ void reply_sesssetup_and_X(struct smb_request *req)
         if (strcmp(user, "guest") && strcmp(user, "admin"))
             fstrcpy(user, "guest");
 	}
-    /* Fiji added end pling 11/30/2009 */
+    /* Foxconn added end pling 11/30/2009 */
 
 	DEBUG(3,("sesssetupX:name=[%s]\\[%s]@[%s]\n",
 				domain, user, get_remote_machine_name()));

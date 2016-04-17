@@ -11,7 +11,7 @@
 
 #include "pppoe.h"
 #include <syscall.h>
-#include <sys/sysinfo.h> /*Fiji added by FinerainZhou 09/09/2009*/
+#include <sys/sysinfo.h> /*Foxconn added by FinerainZhou 09/09/2009*/
 
 // patch2
 //int ses_retries=8;
@@ -142,7 +142,7 @@ static int std_rcv_pads(struct session* ses,
     if( verify_packet(ses, p_in) < 0)
 	return -1;
 	
-	/*Fiji add start FinerainZhou 09/08/2009*/
+	/*Foxconn add start FinerainZhou 09/08/2009*/
 	/*it is for WAN detecion to indicate we receive a PADS packet and record time*/
 	FILE *fp;
     struct sysinfo info;
@@ -152,7 +152,7 @@ static int std_rcv_pads(struct session* ses,
         fprintf(fp, "%ld", info.uptime);
         fclose(fp);
     }
-	/*Fiji add end FinerainZhou 09/08/2009*/
+	/*Foxconn add end FinerainZhou 09/08/2009*/
     
     if (DEB_DISC)
 	poe_dbglog (ses,"Got connection: %x",

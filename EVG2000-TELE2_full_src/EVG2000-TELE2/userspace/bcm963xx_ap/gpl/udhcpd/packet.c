@@ -29,7 +29,7 @@ void init_header(struct dhcpMessage *packet, char type)
 	case DHCPREQUEST:
 	case DHCPRELEASE:
 	case DHCPINFORM:
-	case DHCPDECLINE: /* fiji wklin added, 08/10/2007 */
+	case DHCPDECLINE: /* foxconn wklin added, 08/10/2007 */
 		packet->op = BOOTREQUEST;
 		break;
 	case DHCPOFFER:

@@ -28,10 +28,10 @@ static BOOL setup_write_cache(files_struct *, SMB_OFF_T);
  Read from write cache if we can.
 ****************************************************************************/
 
-/* Fiji modified start pling 11/25/2009 */
+/* Foxconn modified start pling 11/25/2009 */
 //static BOOL read_from_write_cache(files_struct *fsp,char *data,SMB_OFF_T pos,size_t n)
 static BOOL read_from_write_cache(files_struct *fsp,char *data,SMB_BIG_UINT pos,size_t n)
-/* Fiji modified end pling 11/25/2009 */
+/* Foxconn modified end pling 11/25/2009 */
 {
 	write_cache *wcp = fsp->wcp;
 
@@ -52,10 +52,10 @@ static BOOL read_from_write_cache(files_struct *fsp,char *data,SMB_BIG_UINT pos,
  Read from a file.
 ****************************************************************************/
 
-/* Fiji modified start pling 11/25/2009 */
+/* Foxconn modified start pling 11/25/2009 */
 //ssize_t read_file(files_struct *fsp,char *data,SMB_OFF_T pos,size_t n)
 ssize_t read_file(files_struct *fsp,char *data,SMB_BIG_UINT pos,size_t n)
-/* Fiji modified end pling 11/25/2009 */
+/* Foxconn modified end pling 11/25/2009 */
 {
 	ssize_t ret=0,readret;
 
@@ -118,10 +118,10 @@ static unsigned int allocated_write_caches;
  *Really* write to a file.
 ****************************************************************************/
 
-/* Fiji modified start pling 11/18/2009 */
+/* Foxconn modified start pling 11/18/2009 */
 //static ssize_t real_write_file(files_struct *fsp,char *data,SMB_OFF_T pos, size_t n)
 static ssize_t real_write_file(files_struct *fsp,char *data, SMB_BIG_UINT pos, size_t n)
-/* Fiji modified end pling 11/18/2009 */
+/* Foxconn modified end pling 11/18/2009 */
 {
 	ssize_t ret;
 
@@ -172,10 +172,10 @@ static ssize_t real_write_file(files_struct *fsp,char *data, SMB_BIG_UINT pos, s
 write to a file
 ****************************************************************************/
 
-/* Fiji modified start pling 11/18/2009 */
+/* Foxconn modified start pling 11/18/2009 */
 //ssize_t write_file(files_struct *fsp, char *data, SMB_OFF_T pos, size_t n)
 ssize_t write_file(files_struct *fsp, char *data, SMB_BIG_UINT pos, size_t n)
-/* Fiji modified end pling 11/18/2009 */
+/* Foxconn modified end pling 11/18/2009 */
 {
 	write_cache *wcp = fsp->wcp;
 	ssize_t total_written = 0;

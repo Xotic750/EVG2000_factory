@@ -15,14 +15,14 @@
 #include "dnsmasq.h"
 
 static int sigterm, sighup, sigusr1, sigalarm, num_kids, in_child;
-/* Fiji added start, Winster Chan, 01/12/2007 */
-/* fiji wklin modified start, 01/24/2007 */
+/* Foxconn added start, Winster Chan, 01/12/2007 */
+/* foxconn wklin modified start, 01/24/2007 */
 /* init this value to -1, so that it won't affect the
  * protocols other than pptp/pppoe which support DoD.
  */
 static int wan_up = -1;
-/* fiji wklin modified end, 01/24/2007 */
-/* Fiji added end, Winster Chan, 01/12/2007 */
+/* foxconn wklin modified end, 01/24/2007 */
+/* Foxconn added end, Winster Chan, 01/12/2007 */
 static int sigabort = 0;    
 
 static int set_dns_listeners(struct daemon *daemon, fd_set *set, int maxfd);
@@ -59,10 +59,10 @@ int main (int argc, char **argv)
   sigaction(SIGTERM, &sigact, NULL);
   sigaction(SIGALRM, &sigact, NULL);
   sigaction(SIGCHLD, &sigact, NULL);
-  /* Fiji added start, Winster Chan, 01/12/2007 */
+  /* Foxconn added start, Winster Chan, 01/12/2007 */
   sigaction(SIGINT, &sigact, NULL);
   sigaction(SIGUSR2, &sigact, NULL);
-  /* Fiji added end, Winster Chan, 01/12/2007 */
+  /* Foxconn added end, Winster Chan, 01/12/2007 */
   sigaction(SIGABRT, &sigact, NULL);    
 
   /* ignore SIGPIPE */
@@ -76,10 +76,10 @@ int main (int argc, char **argv)
   sigaddset(&sigact.sa_mask, SIGHUP);
   sigaddset(&sigact.sa_mask, SIGALRM);
   sigaddset(&sigact.sa_mask, SIGCHLD);
-  /* Fiji added start, Winster Chan, 01/12/2007 */
+  /* Foxconn added start, Winster Chan, 01/12/2007 */
   sigaddset(&sigact.sa_mask, SIGINT);
   sigaddset(&sigact.sa_mask, SIGUSR2);
-  /* Fiji added end, Winster Chan, 01/12/2007 */
+  /* Foxconn added end, Winster Chan, 01/12/2007 */
   sigaddset(&sigact.sa_mask, SIGABRT);  
   sigprocmask(SIG_BLOCK, &sigact.sa_mask, &sigmask); 
 
@@ -146,7 +146,7 @@ int main (int argc, char **argv)
  
   now = dnsmasq_time(daemon->uptime_fd);
   
-#if 0 /* fiji wklin removed, 01/24/2007 */
+#if 0 /* foxconn wklin removed, 01/24/2007 */
   if (daemon->dhcp)
     {
 #if !defined(IP_PKTINFO) && !defined(IP_RECVIF)
@@ -175,13 +175,13 @@ int main (int argc, char **argv)
 #ifdef HAVE_SOCKADDR_SA_LEN
       addr.in.sin_len = sizeof(struct sockaddr_in);
 #endif
-      /* Fiji modified start pling 06/27/2008 */
+      /* Foxconn modified start pling 06/27/2008 */
 #if (defined DNSMASQ_FOR_MULTIPLE_LAN_WAN)      
       allocate_sfd(&addr, &daemon->sfds, "");
 #else
       allocate_sfd(&addr, &daemon->sfds);
 #endif
-      /* Fiji modified end pling 06/27/2008 */
+      /* Foxconn modified end pling 06/27/2008 */
 #ifdef HAVE_IPV6
       addr.in6.sin6_family = AF_INET6;
       addr.in6.sin6_addr = in6addr_any;
@@ -190,13 +190,13 @@ int main (int argc, char **argv)
 #ifdef HAVE_SOCKADDR_SA_LEN
       addr.in6.sin6_len = sizeof(struct sockaddr_in6);
 #endif
-      /* Fiji modified start pling 06/27/2008 */
+      /* Foxconn modified start pling 06/27/2008 */
 #if (defined DNSMASQ_FOR_MULTIPLE_LAN_WAN)      
       allocate_sfd(&addr, &daemon->sfds, "");
 #else
       allocate_sfd(&addr, &daemon->sfds);
 #endif
-      /* Fiji modified end pling 06/27/2008 */
+      /* Foxconn modified end pling 06/27/2008 */
 #endif
     }
   
@@ -284,7 +284,7 @@ int main (int argc, char **argv)
 	}
     }
 
-#ifdef USE_SYSLOG /* fiji wklin added, 08/13/2007 */
+#ifdef USE_SYSLOG /* foxconn wklin added, 08/13/2007 */
   openlog("dnsmasq", 
 	  DNSMASQ_LOG_OPT(daemon->options & OPT_DEBUG), 
 	  DNSMASQ_LOG_FAC(daemon->options & OPT_DEBUG));
@@ -298,7 +298,7 @@ int main (int argc, char **argv)
     syslog(LOG_WARNING, "setting --bind-interfaces option because of OS limitations");
 #endif /* USE_SYSLOG */
   
-#if 0 /* fiji wklin removed, 01/24/2007 */
+#if 0 /* foxconn wklin removed, 01/24/2007 */
   if (daemon->dhcp)
     {
       struct dhcp_context *dhcp_tmp;
@@ -327,7 +327,7 @@ int main (int argc, char **argv)
     }
 #endif
 
-#ifdef USE_SYSLOG /* fiji wklin added, 08/13/2007 */
+#ifdef USE_SYSLOG /* foxconn wklin added, 08/13/2007 */
 #ifdef HAVE_BROKEN_RTC
   if (daemon->dhcp)
     syslog(LOG_INFO, "DHCP, %s will be written every %ds", daemon->lease_file, daemon->min_leasetime/3);
@@ -388,7 +388,7 @@ int main (int argc, char **argv)
 	  sigalarm  = 0;
 	}
 
-    /* Fiji added start 10/31/2008 */
+    /* Foxconn added start 10/31/2008 */
 #if (defined DNSMASQ_FOR_MULTIPLE_PPPOE_SESSION) || (defined SingTel)
     if (sigabort)
     {
@@ -396,7 +396,7 @@ int main (int argc, char **argv)
         sigabort = 0;
     }
 #endif
-    /* Fiji added end 10/31/2008 */
+    /* Foxconn added end 10/31/2008 */
       
       FD_ZERO(&rset);
       
@@ -404,7 +404,7 @@ int main (int argc, char **argv)
 	{
 	  int maxfd = set_dns_listeners(daemon, &rset, 0);
 	  	  
-#if 0  /* fiji wklin removed, 01/24/2007 */	  	  
+#if 0  /* foxconn wklin removed, 01/24/2007 */	  	  
 	  if (daemon->dhcp)
 	    {
 	      FD_SET(daemon->dhcpfd, &rset);
@@ -452,7 +452,7 @@ int main (int argc, char **argv)
 		{
 		  if (stat(res->name, &statbuf) == -1)
 		    {
-#ifdef USE_SYSLOG /* fiji wklin added, 08/13/2007 */
+#ifdef USE_SYSLOG /* foxconn wklin added, 08/13/2007 */
 		      if (!res->logged)
 			syslog(LOG_WARNING, "failed to access %s: %m", res->name);
 #endif
@@ -490,7 +490,7 @@ int main (int argc, char **argv)
 #endif	
     }
   
-#ifdef USE_SYSLOG /* fiji wklin added, 08/13/2007 */
+#ifdef USE_SYSLOG /* foxconn wklin added, 08/13/2007 */
   syslog(LOG_INFO, "exiting on receipt of SIGTERM");
 #endif
 
@@ -530,22 +530,22 @@ static void sig_handler(int sig)
       while (waitpid(-1, NULL, WNOHANG) > 0)
 	num_kids--;
     }
-  /* Fiji added start, Winster Chan, 01/12/2007 */
+  /* Foxconn added start, Winster Chan, 01/12/2007 */
   else if (sig == SIGINT)
   {
-    wan_up = 0; /* fiji wklin modified, 01/24/2007 */
+    wan_up = 0; /* foxconn wklin modified, 01/24/2007 */
   }
   else if (sig == SIGUSR2)
   {
-    wan_up = 1; /* fiji wklin modified, 01/24/2007 */
+    wan_up = 1; /* foxconn wklin modified, 01/24/2007 */
   }
-  /* Fiji added end, Winster Chan, 01/12/2007 */
-  /* Fiji added start pling 10/31/2008 */
+  /* Foxconn added end, Winster Chan, 01/12/2007 */
+  /* Foxconn added start pling 10/31/2008 */
   else if (sig == SIGABRT)
   {
     sigabort = 1;
   }
-  /* Fiji added end pling 10/31/2008 */
+  /* Foxconn added end pling 10/31/2008 */
 }
 
 static int set_dns_listeners(struct daemon *daemon, fd_set *set, int maxfd)
@@ -586,10 +586,10 @@ static void check_dns_listeners(struct daemon *daemon, fd_set *set, time_t now)
      {
        if (FD_ISSET(listener->fd, set))
         {
-          /* Fiji added start, Winster Chan, 01/12/2007 */
+          /* Foxconn added start, Winster Chan, 01/12/2007 */
           if (!wan_up) /* maybe true in pptp/pppoe mode */
             system("ping -c 1 -g 0 255.255.255.255");
-          /* Fiji added end, Winster Chan, 01/12/2007 */
+          /* Foxconn added end, Winster Chan, 01/12/2007 */
           receive_query(listener, daemon, now);
         }
        

@@ -8,12 +8,12 @@ struct dhcpOfferedAddr {
 	u_int32_t yiaddr;	/* network order */
 	u_int32_t expires;	/* host order */
 	char hostname[64];
-/* Fiji added start, Lewis, 2008/9/19, @Lan host identification */
+/* Foxconn added start, Lewis, 2008/9/19, @Lan host identification */
 #if defined(TI_ALICE) || defined(SingTel)
     u_int32_t hosttype;
     char vendorid[64];
 #endif
-/* Fiji added end, Lewis, 2008/9/19, @Lan host identification */
+/* Foxconn added end, Lewis, 2008/9/19, @Lan host identification */
 };
 
 extern unsigned char blank_chaddr[];

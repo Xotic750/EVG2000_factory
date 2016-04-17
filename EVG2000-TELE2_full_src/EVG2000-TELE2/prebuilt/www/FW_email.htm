@@ -84,7 +84,7 @@ function checkData()
         else
             cf.auth_enable.value = 0;
 
-        /* Fiji Add Start : Steve Hsieh : 04/27/2006 @immeMail {*/ 	
+        /* Foxconn Add Start : Steve Hsieh : 04/27/2006 @immeMail {*/ 	
         //if(cf.block_site.checked)
         //    cf.email_alert.value = "1";
         if(cf.alert_blocksite.checked)
@@ -95,7 +95,7 @@ function checkData()
             immeMail += 4;        
 
         cf.email_alert.value = immeMail;
-        /* Fiji Add End : Steve Hsieh : 04/27/2006 @immeMail }*/ 	
+        /* Foxconn Add End : Steve Hsieh : 04/27/2006 @immeMail }*/ 	
 
         cf.time_type.value = cf.cfAlert_Select.options[cf.cfAlert_Select.selectedIndex].value;
 
@@ -137,22 +137,22 @@ function checkData()
             if(cf.cfAlert_am[1].checked) cf.time_hour.value = parseInt(cf.time_hour.value) + 12;
         }
 
-        /* Fiji Add Start : Steve Hsieh : 05/10/2006 @emailCrash {*/
+        /* Foxconn Add Start : Steve Hsieh : 05/10/2006 @emailCrash {*/
         // supply the default value for day and hour to avoid psi error
         if (cf.time_day.value == "")
             cf.time_day.value = "0"
         if (cf.time_hour.value == "")
             cf.time_hour.value = "0"            
-        /* Fiji Add End : Steve Hsieh : 05/10/2006 @emailCrash }*/
+        /* Foxconn Add End : Steve Hsieh : 05/10/2006 @emailCrash }*/
     }
-    /* Fiji Add Start : Steve Hsieh : 04/27/2006 @ntpInfo {*/ 
+    /* Foxconn Add Start : Steve Hsieh : 04/27/2006 @ntpInfo {*/ 
     /*
     if (cf.adjust.checked)
 		cf.schedule_daylightadjust.value = 1;
 	else
 		cf.schedule_daylightadjust.value = 0;
     */
-    /* Fiji Add End  : Steve Hsieh : 04/27/2006 @ntpInfo }*/         
+    /* Foxconn Add End  : Steve Hsieh : 04/27/2006 @ntpInfo }*/         
     return true;
 }
 
@@ -163,25 +163,25 @@ function init()
     
     cf.email_notify.checked = false;
     cf.smtp_auth.checked = false;    
-    /* Fiji Add Start : Steve Hsieh : 04/27/2006 @immeMail {*/ 	
+    /* Foxconn Add Start : Steve Hsieh : 04/27/2006 @immeMail {*/ 	
     //cf.block_site.checked = false;
     cf.alert_dos.checked = false;
     cf.alert_portscan.checked = false;
     cf.alert_blocksite.checked = false;
-    /* Fiji Add End : Steve Hsieh : 04/27/2006 @immeMail }*/ 	
+    /* Foxconn Add End : Steve Hsieh : 04/27/2006 @immeMail }*/ 	
 
-    /* Fiji Add Start : Steve Hsieh : 04/27/2006 @immeMail {*/ 
+    /* Foxconn Add Start : Steve Hsieh : 04/27/2006 @immeMail {*/ 
     // change the default from -1 to 0
     cf.cfAlert_Select.selectedIndex = 0;
     cf.cfAlert_Day.selectedIndex = 0;
     cf.cfAlert_Hour.selectedIndex = 0;
-    /* Fiji Add Start : Steve Hsieh : 04/27/2006 @immeMail }*/ 
+    /* Foxconn Add Start : Steve Hsieh : 04/27/2006 @immeMail }*/ 
     cf.cfAlert_am[0].checked = false;
     cf.cfAlert_am[1].checked = false;
-    /* Fiji del : Steve Hsieh : 04/27/2006 @immeMail */ 
+    /* Foxconn del : Steve Hsieh : 04/27/2006 @immeMail */ 
     // cf.adjust.checked = false;
 
-    /* Fiji Add Start : Steve Hsieh : 04/27/2006 @immeMail {*/
+    /* Foxconn Add Start : Steve Hsieh : 04/27/2006 @immeMail {*/
     /*	
     if(cf.email_alert.value == "1")
     {
@@ -193,7 +193,7 @@ function init()
     if(immeMailPoint & 0x1 )  cf.alert_blocksite.checked = true;
     if(immeMailPoint & 0x2 )  cf.alert_dos.checked = true;
     if(immeMailPoint & 0x4 )  cf.alert_portscan.checked = true;
-    /* Fiji Add End : Steve Hsieh : 04/27/2006 @immeMail }*/        
+    /* Foxconn Add End : Steve Hsieh : 04/27/2006 @immeMail }*/        
 
     if(cf.time_type.value==1) cf.cfAlert_Select.selectedIndex=0;
     else if(cf.time_type.value==2) cf.cfAlert_Select.selectedIndex=1;
@@ -250,12 +250,12 @@ function init()
     else
     {
         cf.smtp_auth.disabled = true;
-	 /* Fiji Add Start : Steve Hsieh : 04/27/2006 @immeMail {*/ 	
+	 /* Foxconn Add Start : Steve Hsieh : 04/27/2006 @immeMail {*/ 	
         //cf.block_site.disabled = true;
 	 cf.alert_dos.disabled = true;
 	 cf.alert_portscan.disabled = true;
 	 cf.alert_blocksite.disabled = true;
-	 /* Fiji Add End : Steve Hsieh : 04/27/2006 @immeMail }*/ 			        
+	 /* Foxconn Add End : Steve Hsieh : 04/27/2006 @immeMail }*/ 			        
         cf.email_smtp.disabled = true;
         cf.email_addr.disabled = true;
         cf.auth_user.disabled = true;
@@ -267,12 +267,12 @@ function init()
         cf.cfAlert_am[1].disabled = true;
     }
 
-        /* Fiji Add Start : Steve Hsieh : 04/27/2006 @ntpInfo {*/ 
+        /* Foxconn Add Start : Steve Hsieh : 04/27/2006 @ntpInfo {*/ 
         /*
 	if (cf.schedule_daylightadjust.value == 1)
 		cf.adjust.checked = true;
         */
-        /* Fiji Add Start : Steve Hsieh : 04/27/2006 @ntpInfo }*/ 
+        /* Foxconn Add Start : Steve Hsieh : 04/27/2006 @ntpInfo }*/ 
 
     if (cf.auth_enable.value == 1)
         cf.smtp_auth.checked = true;
@@ -293,12 +293,12 @@ function setGray()
     if(cf.email_notify.checked)
     {
         cf.smtp_auth.disabled = false;
-	 /* Fiji Add Start : Steve Hsieh : 04/27/2006 @immeMail {*/ 	
+	 /* Foxconn Add Start : Steve Hsieh : 04/27/2006 @immeMail {*/ 	
         //cf.block_site.disabled = false;
 	 cf.alert_dos.disabled = false;
 	 cf.alert_portscan.disabled = false;
 	 cf.alert_blocksite.disabled = false;
-	 /* Fiji Add End : Steve Hsieh : 04/27/2006 @immeMail }*/ 	
+	 /* Foxconn Add End : Steve Hsieh : 04/27/2006 @immeMail }*/ 	
         cf.email_smtp.disabled = false;
         cf.email_addr.disabled = false;
         cf.auth_user.disabled = false;
@@ -308,12 +308,12 @@ function setGray()
     else
     {
         cf.smtp_auth.disabled = true;
-	 /* Fiji Add Start : Steve Hsieh : 04/27/2006 @immeMail {*/ 	
+	 /* Foxconn Add Start : Steve Hsieh : 04/27/2006 @immeMail {*/ 	
         //cf.block_site.disabled = true;
 	 cf.alert_dos.disabled = true;
 	 cf.alert_portscan.disabled = true;
 	 cf.alert_blocksite.disabled = true;
-	 /* Fiji Add End : Steve Hsieh : 04/27/2006 @immeMail }*/ 			
+	 /* Foxconn Add End : Steve Hsieh : 04/27/2006 @immeMail }*/ 			
         cf.email_smtp.disabled = true;
         cf.email_addr.disabled = true;
         cf.auth_user.disabled = true;
@@ -389,7 +389,7 @@ function setAuthGray()
     
     <tr>
         <td colspan="2" background="liteblue.gif" height="12">&nbsp; </td></tr>
-<!-- Fiji Add Start : Steve Hsieh : 04/27/2006 @immeMail -->        
+<!-- Foxconn Add Start : Steve Hsieh : 04/27/2006 @immeMail -->        
 <tr>
 	<td colspan="2"><a href="javascript:loadhelp('FW_email','alert')" tabindex="-1"><b>Send E-Mail alerts immediately</b></a></td>
 </tr>
@@ -417,7 +417,7 @@ function setAuthGray()
         <td colspan="2" background="liteblue.gif" height="12">&nbsp; </td></tr>
         
     -- old code  end -->     
- <!-- Fiji Add End : Steve Hsieh : 04/27/2006 @immeMail -->        
+ <!-- Foxconn Add End : Steve Hsieh : 04/27/2006 @immeMail -->        
     <tr>
 	    <td colspan="2" nowrap><a href="javascript:loadhelp('FW_email','schedule')" tabindex="-1"><b>Send Logs According to this Schedule</b></a></td></tr>
     <tr>
@@ -457,9 +457,9 @@ function setAuthGray()
                 <input type="radio" name="cfAlert_am" value="pm" tabindex="11">p.m.</td></tr>
     <tr>
         <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td></tr>
- <!-- Fiji del start : Steve Hsieh : 04/28/2006 @ntpInfo -->               
+ <!-- Foxconn del start : Steve Hsieh : 04/28/2006 @ntpInfo -->               
 
- <!-- Fiji del end : Steve Hsieh : 04/28/2006 @ntpInfo -->            
+ <!-- Foxconn del end : Steve Hsieh : 04/28/2006 @ntpInfo -->            
     <tr>
 	    <td colspan="2" align="center">
 	        <input type="SUBMIT" name="cfAlert_Apply" value="Apply" onClick="return checkData()" tabindex="12">

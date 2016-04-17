@@ -27,7 +27,7 @@
 #include "nameclash.h"
 #include "file_name.h"
 
-#define USB_VOL_NAME_FILE   "/tmp/usb_vol_name/%s"  /* Fiji added pling 05/06/2009 */
+#define USB_VOL_NAME_FILE   "/tmp/usb_vol_name/%s"  /* Foxconn added pling 05/06/2009 */
 
 void label_name(doscp_t *cp, const char *filename, int verbose,
 		int *mangled, dos_name_t *ans)
@@ -117,13 +117,13 @@ void mlabel(int argc, char **argv, int type)
 	int isRo=0;
 	int *isRop=NULL;
 
-    /* Fiji added start pling 05/06/2009 */
+    /* Foxconn added start pling 05/06/2009 */
     char sd_name[32];
     char vol_name[64];
 
     memset(sd_name, 0, sizeof(sd_name));
     memset(vol_name, 0, sizeof(vol_name));
-    /* Fiji added end pling 05/06/2009 */
+    /* Foxconn added end pling 05/06/2009 */
 
 	init_clash_handling(&ch);
 	ch.name_converter = label_name;
@@ -221,7 +221,7 @@ void mlabel(int argc, char **argv, int type)
             strcpy(vol_name, shortname);
         }
 
-        /* Fiji added start pling 05/06/2009 */
+        /* Foxconn added start pling 05/06/2009 */
         /* Store the volume label in a file under /tmp */
         FILE *fp = NULL;
         char *devname;
@@ -238,7 +238,7 @@ void mlabel(int argc, char **argv, int type)
                 }
             }
         }   
-        /* Fiji added end pling 05/06/2009 */
+        /* Foxconn added end pling 05/06/2009 */
 	}
 
 	/* ask for new label */

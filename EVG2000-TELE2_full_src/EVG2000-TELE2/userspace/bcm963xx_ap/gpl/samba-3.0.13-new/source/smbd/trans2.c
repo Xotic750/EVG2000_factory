@@ -29,7 +29,7 @@ extern int global_oplock_break;
 extern uint32 global_client_caps;
 extern struct current_user current_user;
 
-/* Fiji modified start pling 11/25/2009 */
+/* Foxconn modified start pling 11/25/2009 */
 //#define get_file_size(sbuf) ((sbuf).st_size)
 #define get_file_size(sbuf)  get_file_size2(sbuf)
 static SMB_BIG_UINT get_file_size2(struct stat st)
@@ -51,7 +51,7 @@ static SMB_BIG_UINT get_file_size2(struct stat st)
 
     return file_size_64;
 }
-/* Fiji modified end pling 11/25/2009 */
+/* Foxconn modified end pling 11/25/2009 */
 
 #define DIR_ENTRY_SAFETY_MARGIN 4096
 
@@ -84,11 +84,11 @@ SMB_BIG_UINT get_allocation_size(connection_struct *conn, files_struct *fsp, SMB
 #if defined(HAVE_STAT_ST_BLOCKS) && defined(STAT_ST_BLOCKSIZE)
 	ret = (SMB_BIG_UINT)STAT_ST_BLOCKSIZE * (SMB_BIG_UINT)sbuf->st_blocks;
 #else
-    /* Fiji modified start pling 11/25/2009 */
+    /* Foxconn modified start pling 11/25/2009 */
     /* Set the correct allocation size, even for large files */
 	//ret = (SMB_BIG_UINT)get_file_size(*sbuf);
 	ret = (SMB_BIG_UINT)STAT_ST_BLOCKSIZE * (SMB_BIG_UINT)sbuf->st_blocks;
-    /* Fiji modified start pling 11/25/2009 */
+    /* Foxconn modified start pling 11/25/2009 */
 #endif
 
 	if (!ret && fsp && fsp->initial_allocation_size)
@@ -850,10 +850,10 @@ static BOOL get_lanman2_dir_entry(connection_struct *conn,
 	uint32 reskey=0;
 	long prev_dirpos=0;
 	int mode=0;
-    /* Fiji modified start pling 11/23/2009 */
+    /* Foxconn modified start pling 11/23/2009 */
 	//SMB_OFF_T file_size = 0;
 	SMB_BIG_UINT file_size = 0;
-    /* Fiji modified start pling 11/23/2009 */
+    /* Foxconn modified start pling 11/23/2009 */
 	SMB_BIG_UINT allocation_size = 0;
 	uint32 len;
 	time_t mdate=0, adate=0, cdate=0;
@@ -1078,10 +1078,10 @@ static BOOL get_lanman2_dir_entry(connection_struct *conn,
 			put_long_date(p,adate); p += 8;
 			put_long_date(p,mdate); p += 8;
 			put_long_date(p,mdate); p += 8;
-            /* Fiji modified start pling 11/23/2009 */
+            /* Foxconn modified start pling 11/23/2009 */
 			//SOFF_T(p,0,file_size); p += 8;
 			SOFF64_T(p,0,file_size); p += 8;
-            /* Fiji modified end pling 11/23/2009 */
+            /* Foxconn modified end pling 11/23/2009 */
 			SOFF_T(p,0,allocation_size); p += 8;
 			SIVAL(p,0,nt_extmode); p += 4;
 			q = p; p += 4; /* q is placeholder for name length. */
@@ -3194,10 +3194,10 @@ static int call_trans2setfilepathinfo(connection_struct *conn, char *inbuf, char
 	uint16 tran_call = SVAL(inbuf, smb_setup0);
 	uint16 info_level;
 	int dosmode=0;
-    /* Fiji modified start pling 11/19/2009 */
+    /* Foxconn modified start pling 11/19/2009 */
 	//SMB_OFF_T size=0;
 	SMB_BIG_UINT size=0;
-    /* Fiji modified end pling 11/19/2009 */
+    /* Foxconn modified end pling 11/19/2009 */
 	struct utimbuf tvs;
 	SMB_STRUCT_STAT sbuf;
 	pstring fname;
@@ -3487,7 +3487,7 @@ static int call_trans2setfilepathinfo(connection_struct *conn, char *inbuf, char
 #ifdef LARGE_SMB_OFF_T
 			size |= (((SMB_OFF_T)IVAL(pdata,4)) << 32);
 #else /* LARGE_SMB_OFF_T */
-            /* Fiji modified start pling 11/19/2009 */
+            /* Foxconn modified start pling 11/19/2009 */
             /* We should support large file size */
 #if 0
 			if (IVAL(pdata,4) != 0)	/* more than 32 bits? */
@@ -3496,7 +3496,7 @@ static int call_trans2setfilepathinfo(connection_struct *conn, char *inbuf, char
 			if (IVAL(pdata,4) != 0)	{ /* more than 32 bits? */ 
 			    size |= (((SMB_BIG_UINT)IVAL(pdata,4)) << 32);
             }
-            /* Fiji modified end pling 11/19/2009 */
+            /* Foxconn modified end pling 11/19/2009 */
 #endif /* LARGE_SMB_OFF_T */
 			DEBUG(10,("call_trans2setfilepathinfo: Set end of file info for file %s to %.0f\n", fname, (double)size ));
 			break;

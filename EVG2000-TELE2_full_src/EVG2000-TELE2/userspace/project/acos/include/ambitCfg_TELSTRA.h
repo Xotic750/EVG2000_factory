@@ -117,7 +117,7 @@
 
 /* wklin added start, 11/22/2006 */
 /* The following definition is used in acosNvramConfig.c and acosNvramConfig.h
- * to distingiush between Fiji's and Broadcom's implementation.
+ * to distingiush between Foxconn's and Broadcom's implementation.
  */
 #define BRCM_NVRAM          /* use broadcom nvram instead of ours */
 

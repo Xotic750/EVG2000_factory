@@ -19,10 +19,10 @@
 #include <net/if.h>
 #include <sys/ioctl.h>
 
-/* Fiji added start pling 07/14/2008 */
+/* Foxconn added start pling 07/14/2008 */
 #include <unistd.h>
 #include <fcntl.h>
-/* Fiji added end pling 07/14/2008 */
+/* Foxconn added end pling 07/14/2008 */
 
 static struct sockaddr_atmpvc pvcaddr;
 static char *qosstr = NULL;
@@ -156,13 +156,13 @@ static int open_device_pppoatm(void)
 	// brcm
 	fd_pppoa = fd;
 
-    /* Fiji added start pling 07/14/2008 */
+    /* Foxconn added start pling 07/14/2008 */
     /* set the close-on-exec flag for this fd. 
      * Otherwise, process such as timesync will occupy atm device,
      * causing dod to fail.
      */
     fcntl (fd, F_SETFD, FD_CLOEXEC);        
-    /* Fiji added end pling 07/14/2008 */
+    /* Foxconn added end pling 07/14/2008 */
 
 	memset(&qos, 0, sizeof qos);
 	qos.txtp.traffic_class = qos.rxtp.traffic_class = ATM_UBR;

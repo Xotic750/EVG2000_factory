@@ -206,12 +206,12 @@ static void auto_mount(int num)
     {
 #ifndef MOUNT_PRIMARY
         auto_mount_usb_dev(&device_array[ii]);
-        /* fiji added start Bob, 2008/09/04 */
+        /* foxconn added start Bob, 2008/09/04 */
         if(device_array[ii].mounted == 1)
         {
             mounted++;
         }
-        /* fiji added end Bob, 2008/09/04 */
+        /* foxconn added end Bob, 2008/09/04 */
 #else
       if (device_array[ii].primary == 1)
       {
@@ -219,12 +219,12 @@ static void auto_mount(int num)
         {
             /* If this is the only partition mount it */
             auto_mount_usb_dev(&device_array[ii]);
-            /* fiji added start Bob, 2008/09/04 */
+            /* foxconn added start Bob, 2008/09/04 */
             if(device_array[ii].mounted == 1)
             {
                 mounted++;
             }
-            /* fiji added end Bob, 2008/09/04 */
+            /* foxconn added end Bob, 2008/09/04 */
         }
         else
         {
@@ -235,12 +235,12 @@ static void auto_mount(int num)
       else
       {
         auto_mount_usb_dev(&device_array[ii]);
-        /* fiji added start Bob, 2008/09/04 */
+        /* foxconn added start Bob, 2008/09/04 */
         if(device_array[ii].mounted == 1)
         {
             mounted++;
         }
-        /* fiji added end Bob, 2008/09/04 */
+        /* foxconn added end Bob, 2008/09/04 */
       }
 #endif
     }
@@ -251,16 +251,16 @@ static void auto_mount(int num)
       if(device_array[ii].mounted == 1)
         auto_umount_usb_dev(&device_array[ii]);
       auto_mount_usb_dev(&device_array[ii]);
-      /* fiji added start Bob, 2008/09/04 */
+      /* foxconn added start Bob, 2008/09/04 */
       if(device_array[ii].mounted == 1)
       {
           mounted++;
       }
-      /* fiji added end Bob, 2008/09/04 */
+      /* foxconn added end Bob, 2008/09/04 */
     }
   }
-    /* fiji added start Bob, 2008/09/04 */
-    /* Fiji modified pling, 2008/10/09 */
+    /* foxconn added start Bob, 2008/09/04 */
+    /* Foxconn modified pling, 2008/10/09 */
     /* TI USB LED is shared with Power LED, so don't change LED status */
 #if (!defined TI_ALICE)
     if(mounted > 0)
@@ -272,7 +272,7 @@ static void auto_mount(int num)
         close(fd);
     }
 #endif
-    /* fiji added end Bob, 2008/09/04 */
+    /* foxconn added end Bob, 2008/09/04 */
 
 /* Wins add-S 0925-08 */
 #if (defined TI_ALICE)
@@ -340,8 +340,8 @@ static void auto_umount(int num)
     }
   }
 
-    /* fiji added start Bob, 2008/09/04 */
-    /* Fiji modified pling, 2008/10/09 */
+    /* foxconn added start Bob, 2008/09/04 */
+    /* Foxconn modified pling, 2008/10/09 */
     /* TI USB LED is shared with Power LED, so don't change LED status */
 #if (!defined TI_ALICE)
     int fd;
@@ -349,7 +349,7 @@ static void auto_umount(int num)
     ioctl(fd, IOCTL_USB_LED_STATE, 0);
     close(fd);
 #endif
-    /* fiji added end Bob, 2008/09/04 */
+    /* foxconn added end Bob, 2008/09/04 */
 
   /* Fix for hub resets */
   /* unmount already mounted devices & remount it again!*/

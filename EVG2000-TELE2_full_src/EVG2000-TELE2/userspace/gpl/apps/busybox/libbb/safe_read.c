@@ -52,11 +52,11 @@ ssize_t safe_read(int fd, void *buf, size_t count)
       rv = select(width, &readFds, NULL, NULL, &timer);
       if (rv == 0)
       {
-         /* Fiji modify start, Jasmine Yang, 06/12/2007 */
+         /* Foxconn modify start, Jasmine Yang, 06/12/2007 */
          //printf("Shell exited after timing out\n");
          //exit(0);
          continue;
-         /* Fiji modify end, Jasmine Yang, 06/12/2007 */
+         /* Foxconn modify end, Jasmine Yang, 06/12/2007 */
       }
       else if ((rv > 0) && FD_ISSET(fd, &readFds))
       {

@@ -4080,9 +4080,9 @@ static void set_default_server_announce_type(void)
 	/* note that the flag should be set only if we have a 
 	   printer service but nmbd doesn't actually load the 
 	   services so we can't tell   --jerry */
-    /* Fiji removed start pling 07/16/2009, disable printer server */
+    /* Foxconn removed start pling 07/16/2009, disable printer server */
 	//default_server_announce |= SV_TYPE_PRINTQ_SERVER;
-    /* Fiji removed end pling 07/16/2009 */
+    /* Foxconn removed end pling 07/16/2009 */
 
 	switch (lp_announce_as()) {
 		case ANNOUNCE_AS_NT_SERVER:

@@ -263,7 +263,7 @@ static NTSTATUS check_ntlm_password(const struct auth_context *auth_context,
 			continue;
 		}
 		
-		/*fiji modified start, water, 11/17/2008*/
+		/*foxconn modified start, water, 11/17/2008*/
 		/*when username=guest, user can access the shared folder with any password*/
 		nt_status = result;
 		DEBUG(0, ("guest, 268, user_info->smb_name=%s\n", user_info->smb_name));
@@ -272,9 +272,9 @@ static NTSTATUS check_ntlm_password(const struct auth_context *auth_context,
 			DEBUG(0, ("guest, auth.c\n"));
 			nt_status = NT_STATUS_OK;
 		}
-		/*fiji modified end, water, 11/17/2008*/
+		/*foxconn modified end, water, 11/17/2008*/
 		
-		/*fiji add start, water, 06/08/2009*/
+		/*foxconn add start, water, 06/08/2009*/
 		/*If all shared folders are 'All - no password',
 		 then no need to login for "HTTP", "FTP" or samba.*/
 		fp = fopen("/tmp/all_no_password","r");
@@ -284,7 +284,7 @@ static NTSTATUS check_ntlm_password(const struct auth_context *auth_context,
 		    DEBUG(0, ("all_no_password, auth.c\n"));
 			nt_status = NT_STATUS_OK;
 		}
-		/*fiji add end, water, 06/08/2009*/
+		/*foxconn add end, water, 06/08/2009*/
 		
 		if (NT_STATUS_IS_OK(nt_status)) {
 			DEBUG(3, ("check_ntlm_password: %s authentication for user [%s] succeeded\n", 

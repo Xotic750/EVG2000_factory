@@ -371,13 +371,13 @@ static int usb_stor_intr_transfer(struct us_data *us, void *buf,
 	unsigned int maxp;
 
 	US_DEBUGP("%s: xfer %u bytes\n", __FUNCTION__, length);
-    usb_pkt_cnt++;   /* fiji added Bob, 2008/09/04 */
-    /* fiji added start Bob, 12/04/2008 */
+    usb_pkt_cnt++;   /* foxconn added Bob, 2008/09/04 */
+    /* foxconn added start Bob, 12/04/2008 */
     if(us->pusb_dev->dev.bus_id[2] == '1')
         usb_1_pkt_cnt++;
     if(us->pusb_dev->dev.bus_id[2] == '2')
         usb_2_pkt_cnt++;
-    /* fiji added end Bob, 12/04/2008 */
+    /* foxconn added end Bob, 12/04/2008 */
 	/* calculate the max packet size */
 	maxp = usb_maxpacket(us->pusb_dev, pipe, usb_pipeout(pipe));
 	if (maxp > length)
@@ -404,14 +404,14 @@ int usb_stor_bulk_transfer_buf(struct us_data *us, unsigned int pipe,
 	int result;
 
 	US_DEBUGP("%s: xfer %u bytes\n", __FUNCTION__, length);
-    usb_pkt_cnt++;    /* fiji added Bob, 2008/09/04 */
+    usb_pkt_cnt++;    /* foxconn added Bob, 2008/09/04 */
     
-    /* fiji added start Bob, 12/04/2008 */
+    /* foxconn added start Bob, 12/04/2008 */
     if(us->pusb_dev->dev.bus_id[2] == '1')
         usb_1_pkt_cnt++;
     if(us->pusb_dev->dev.bus_id[2] == '2')
         usb_2_pkt_cnt++;
-    /* fiji added end Bob, 12/04/2008 */
+    /* foxconn added end Bob, 12/04/2008 */
 	/* fill and submit the URB */
 	usb_fill_bulk_urb(us->current_urb, us->pusb_dev, pipe, buf, length,
 		      usb_stor_blocking_completion, NULL);
@@ -443,13 +443,13 @@ static int usb_stor_bulk_transfer_sglist(struct us_data *us, unsigned int pipe,
 	/* initialize the scatter-gather request block */
 	US_DEBUGP("%s: xfer %u bytes, %d entries\n", __FUNCTION__,
 			length, num_sg);
-	usb_pkt_cnt++;    /* fiji added Bob, 2008/09/04 */
-	/* fiji added start Bob, 12/04/2008 */
+	usb_pkt_cnt++;    /* foxconn added Bob, 2008/09/04 */
+	/* foxconn added start Bob, 12/04/2008 */
 	if(us->pusb_dev->dev.bus_id[2] == '1')
         usb_1_pkt_cnt++;
     if(us->pusb_dev->dev.bus_id[2] == '2')
         usb_2_pkt_cnt++;
-    /* fiji added end Bob, 12/04/2008 */
+    /* foxconn added end Bob, 12/04/2008 */
 	result = usb_sg_init(&us->current_sg, us->pusb_dev, pipe, 0,
 			sg, num_sg, length, GFP_NOIO);
 	if (result) {

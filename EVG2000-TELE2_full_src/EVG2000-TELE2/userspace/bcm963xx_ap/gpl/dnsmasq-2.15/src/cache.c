@@ -494,7 +494,7 @@ static void read_hostsfile(char *filename, int opts, char *buff, char *domain_su
   
   if (!f)
     {
-#ifdef USE_SYSLOG /* fiji wklin added, 08/13/2007 */
+#ifdef USE_SYSLOG /* foxconn wklin added, 08/13/2007 */
       syslog(LOG_ERR, "failed to load names from %s: %m", filename);
 #endif
       return;
@@ -558,7 +558,7 @@ static void read_hostsfile(char *filename, int opts, char *buff, char *domain_su
 		 add_hosts_entry(cache, &addr, addrlen, flags);
 	       }
 	   }
-#ifdef USE_SYSLOG /* fiji wklin added, 08/13/2007 */
+#ifdef USE_SYSLOG /* foxconn wklin added, 08/13/2007 */
 	 else
 	   syslog(LOG_ERR, "bad name at %s line %d", filename, lineno); 
 #endif
@@ -567,7 +567,7 @@ static void read_hostsfile(char *filename, int opts, char *buff, char *domain_su
   
   fclose(f);
 
-#ifdef USE_SYSLOG /* fiji wklin added, 08/13/2007 */
+#ifdef USE_SYSLOG /* foxconn wklin added, 08/13/2007 */
   syslog(LOG_INFO, "read %s - %d addresses", filename, count);
 #endif
 }
@@ -602,7 +602,7 @@ void cache_reload(int opts, char *buff, char *domain_suffix, char *addn_hosts)
   
   if ((opts & OPT_NO_HOSTS) && !addn_hosts)
     {
-#ifdef USE_SYSLOG /* fiji wklin added, 08/13/2007 */
+#ifdef USE_SYSLOG /* foxconn wklin added, 08/13/2007 */
       if (cache_size > 0)
 	syslog(LOG_INFO, "cleared cache");
 #endif
@@ -653,7 +653,7 @@ void cache_add_dhcp_entry(char *host_name, struct in_addr *host_address, time_t 
     {
       if (crec->flags & F_HOSTS)
 	{
-#ifdef USE_SYSLOG /* fiji wklin added, 08/13/2007 */
+#ifdef USE_SYSLOG /* foxconn wklin added, 08/13/2007 */
 	  if (crec->addr.addr.addr4.s_addr != host_address->s_addr)
 	    syslog(LOG_WARNING, "not naming DHCP lease for %s because it clashes with an /etc/hosts entry.", host_name);
 #endif
@@ -663,7 +663,7 @@ void cache_add_dhcp_entry(char *host_name, struct in_addr *host_address, time_t 
 	{
 	  if (!(crec->flags & F_NEG))
 	    {
-#ifdef USE_SYSLOG /* fiji wklin added, 08/13/2007 */
+#ifdef USE_SYSLOG /* foxconn wklin added, 08/13/2007 */
 	      syslog(LOG_WARNING, "not naming DHCP lease for %s because it clashes with a cached name.", host_name);
 #endif
 	      return;
@@ -708,7 +708,7 @@ void cache_add_dhcp_entry(char *host_name, struct in_addr *host_address, time_t 
 
 void dump_cache(int debug, int cache_size)
 {
-#ifdef USE_SYSLOG /* fiji wklin added, 08/13/2007 */
+#ifdef USE_SYSLOG /* foxconn wklin added, 08/13/2007 */
   syslog(LOG_INFO, "cache size %d, %d/%d cache insertions re-used unexpired cache entries.", 
 	 cache_size, cache_live_freed, cache_inserted); 
   
@@ -764,7 +764,7 @@ void dump_cache(int debug, int cache_size)
 
 void log_query(unsigned short flags, char *name, struct all_addr *addr, unsigned short type)
 {
-#ifdef USE_SYSLOG /* fiji wklin added, 08/13/2007 */
+#ifdef USE_SYSLOG /* foxconn wklin added, 08/13/2007 */
   char *source;
   char *verb = "is";
   char types[20];

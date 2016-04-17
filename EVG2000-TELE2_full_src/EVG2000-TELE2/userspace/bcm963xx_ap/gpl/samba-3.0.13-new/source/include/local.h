@@ -17,7 +17,7 @@
 */
 #ifndef MAX_DEBUG_LEVEL
 //#define MAX_DEBUG_LEVEL 1000
-#define MAX_DEBUG_LEVEL -1/*fiji modified, water, 09/23/2009*/
+#define MAX_DEBUG_LEVEL -1/*foxconn modified, water, 09/23/2009*/
 #endif
 
 /* This defines the section name in the configuration file that will contain */

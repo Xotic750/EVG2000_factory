@@ -517,7 +517,7 @@ int vfs_allocate_file_space(files_struct *fsp, SMB_BIG_UINT len)
 
 	DEBUG(10,("vfs_allocate_file_space: file %s, len %.0f\n", fsp->fsp_name, (double)len ));
 
-    /* Fiji removed start pling 11/18/2009 */
+    /* Foxconn removed start pling 11/18/2009 */
     /* Don't check negative length, to avoid "disk full" error 
      * when copy file from Vista/Win7 to USB.
      */
@@ -528,7 +528,7 @@ int vfs_allocate_file_space(files_struct *fsp, SMB_BIG_UINT len)
 		return -1;
 	}
 #endif
-    /* Fiji removed end pling 11/18/2009 */
+    /* Foxconn removed end pling 11/18/2009 */
 
 	ret = SMB_VFS_FSTAT(fsp, &st);
 	if (ret == -1)

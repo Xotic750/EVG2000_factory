@@ -507,13 +507,13 @@ static NTSTATUS ntlmssp_server_auth(struct ntlmssp_state *ntlmssp_state,
 	char *domain = NULL;
 	char *user = NULL;
 	char *workstation = NULL;
-	/*fiji add start, water, 11/17/2008*/
+	/*foxconn add start, water, 11/17/2008*/
 	/*when security=share, the samba doesn't workable, 
 	now set security=user, but does not check username & password*/
 	FILE* fp = NULL;
 	char TmpUsr[6] = "guest";/*If all shared folders are 'All - no password',
 	                        then no need to login for "HTTP", "FTP" or samba.*/
-	/*fiji add end, water, 11/17/2008*/
+	/*foxconn add end, water, 11/17/2008*/
 
 	/* parse the NTLMSSP packet */
 	*reply = data_blob(NULL, 0);
@@ -577,16 +577,16 @@ static NTSTATUS ntlmssp_server_auth(struct ntlmssp_state *ntlmssp_state,
 			return NT_STATUS_INVALID_PARAMETER;
 		}
 	}
-	/*fiji add start, water, 11/17/2008*/
+	/*foxconn add start, water, 11/17/2008*/
 	/*when security=share, the samba doesn't workable, 
 	now set security=user, but does not check username & password*/
 	//DEBUG(0, ("[UsrDebug] %d, user=%s\n", __LINE__, user) );
 	//if (strlen (user) > 0)
 		//memcpy(user, TmpUsr, sizeof(TmpUsr) );
 	//DEBUG(0, ("[UsrDebug] %d, user=%s\n", __LINE__, user) );
-	/*fiji add end, water, 11/17/2008*/
+	/*foxconn add end, water, 11/17/2008*/
 	
-	/*fiji add start, water, 06/08/2009*/
+	/*foxconn add start, water, 06/08/2009*/
 	/*If all shared folders are 'All - no password',
 	 then no need to login for "HTTP", "FTP" or samba.*/
 	fp = fopen("/tmp/all_no_password","r");
@@ -598,7 +598,7 @@ static NTSTATUS ntlmssp_server_auth(struct ntlmssp_state *ntlmssp_state,
 	        memcpy(user, TmpUsr, sizeof(TmpUsr) );
 	    DEBUG(0, ("[UsrDebug] %d, user=%s\n", __LINE__, user) );
 	}
-	/*fiji add end, water, 06/08/2009*/
+	/*foxconn add end, water, 06/08/2009*/
 
 	if (auth_flags)
 		ntlmssp_handle_neg_flags(ntlmssp_state, auth_flags, lp_lanman_auth());

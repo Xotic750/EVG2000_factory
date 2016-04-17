@@ -88,7 +88,7 @@ struct dhcpOfferedAddr *find_lease_by_chaddr(u_int8_t *chaddr)
 	
 	return NULL;
 }
-/* Fiji added start, Lewis, 2008/9/19, @Lan host identification */
+/* Foxconn added start, Lewis, 2008/9/19, @Lan host identification */
 #if defined(TI_ALICE) || defined(SingTel)
 /* Find the first lease that matches hostname, NULL if no match */
 struct dhcpOfferedAddr *find_lease_by_hostname(u_int8_t *hostname)
@@ -101,9 +101,9 @@ struct dhcpOfferedAddr *find_lease_by_hostname(u_int8_t *hostname)
     return NULL;
 }
 #endif
-/* Fiji added end, Lewis, 2008/9/19, @Lan host identification */
+/* Foxconn added end, Lewis, 2008/9/19, @Lan host identification */
 
-    /* Fiji added start, 08/08/2009 */
+    /* Foxconn added start, 08/08/2009 */
 #if defined(SingTel)
 void dhcp_releaseall()
 {
@@ -118,7 +118,7 @@ void dhcp_releaseall()
     write_leases();
 }
 #endif
-    /* Fiji added end, 08/08/2009 */
+    /* Foxconn added end, 08/08/2009 */
 
 /* Find the first lease that matches yiaddr, NULL is no match */
 struct dhcpOfferedAddr *find_lease_by_yiaddr(u_int32_t yiaddr)

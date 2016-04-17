@@ -33,7 +33,7 @@
 #include <asm/sections.h>
 #include <asm/time.h>
 
-/* Fiji added start pling 08/04/2008 */
+/* Foxconn added start pling 08/04/2008 */
 #include <linux/netdevice.h>
 
 #define LED_BLINK_RATE_FAST     50
@@ -55,7 +55,7 @@
 
 //#define GPIO_ANTENA_0_IN_USE    12
 
-/* Fiji added start, Silver Shih 2008/10/21,@USB6368 */
+/* Foxconn added start, Silver Shih 2008/10/21,@USB6368 */
 #define GPIO_USB_LED        15
 //#define GPIO_USB_1_LED      14  
 //#define GPIO_USB_2_LED      2  
@@ -86,7 +86,7 @@ typedef void gpioFn(int gpio, int state);
 gpioFn *gpioFnPtr = NULL;
 static unsigned long gpioFnAddr = 0;
 
-/* Fiji added start, Silver Shih 2008/11/11 */
+/* Foxconn added start, Silver Shih 2008/11/11 */
 int lan_led_state = 0;
 EXPORT_SYMBOL(lan_led_state);
 
@@ -346,7 +346,7 @@ static int lan_led_normal_blink(void)
 
     return 0;
 }
-/* Fiji added end Bob 11/24/2008 */
+/* Foxconn added end Bob 11/24/2008 */
 
 static int wan_led_normal_blink(void)
 {
@@ -393,7 +393,7 @@ static int wan_led_normal_blink(void)
     
     return 0;
 }
-/* Fiji added end Bob 11/24/2008 */
+/* Foxconn added end Bob 11/24/2008 */
 
 /*
  * The integer part of the number of usecs per jiffy is taken from tick,
@@ -548,7 +548,7 @@ irqreturn_t timer_interrupt(int irq, void *dev_id)
 	 */
 	local_timer_interrupt(irq, dev_id);
 	
-	/* Fiji added start pling 08/04/2008 */
+	/* Foxconn added start pling 08/04/2008 */
     /* Blink LED depending of WPS status */
 /*
     if (!gpioFnAddr)
@@ -578,7 +578,7 @@ irqreturn_t timer_interrupt(int irq, void *dev_id)
         led_output(GPIO_WAN_LED, WAN_LED_OFF);
     }
 
-/* Fiji added start, Silver Shih 2008/10/21,@BoardLED */
+/* Foxconn added start, Silver Shih 2008/10/21,@BoardLED */
     static int interrupt_count2 = 0;
      
     interrupt_count2++;
@@ -608,7 +608,7 @@ irqreturn_t timer_interrupt(int irq, void *dev_id)
             board_led_output();
         }
     }
-/* Fiji added end, Silver Shih 2008/10/21,@BoardLED */
+/* Foxconn added end, Silver Shih 2008/10/21,@BoardLED */
     
 
     /* WPS use ON-LINE LED so we don't need to care the LED state during WPS is not running */
@@ -623,7 +623,7 @@ irqreturn_t timer_interrupt(int irq, void *dev_id)
         wps_blink();
     }
 
-    /* Fiji added start Bob 08/04/2008 */
+    /* Foxconn added start Bob 08/04/2008 */
 #if 1    
     if (usb_led_state)
     {
@@ -633,7 +633,7 @@ irqreturn_t timer_interrupt(int irq, void *dev_id)
     {
         led_output(GPIO_USB_LED, USB_LED_OFF);
     }
-    /* Fiji added end Bob 08/04/2008 */
+    /* Foxconn added end Bob 08/04/2008 */
 #endif
     if (usb_1_led_state)
     {

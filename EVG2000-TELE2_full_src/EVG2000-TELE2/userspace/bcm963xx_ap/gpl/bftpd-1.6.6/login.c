@@ -284,7 +284,7 @@ int bftpd_login (char *password)
     char *file_auth;            /* if used, points to file used to auth users */
     char *home_directory = NULL;        /* retrieved from auth_file */
     char *anonymous = NULL;
-    char chfolder [256]=""; /* Fiji add, Jasmine Yang, 09/12/2007 */
+    char chfolder [256]=""; /* Foxconn add, Jasmine Yang, 09/12/2007 */
 
     P1MSG("%s(%d)\r\n", __FUNCTION__, __LINE__);
     str[0] = '\0';              /* avoid garbage in str */
@@ -382,10 +382,10 @@ int bftpd_login (char *password)
     if (!file_auth[0])
     {
 #ifndef NO_GETPWNAM
-/* Fiji add start, Jasmine Yang, 09/12/2007 */
+/* Foxconn add start, Jasmine Yang, 09/12/2007 */
         //if (checkuser () || checkshell ()) 
         if (checkuser ())
-/* Fiji add end, Jasmine Yang, 09/12/2007 */        	
+/* Foxconn add end, Jasmine Yang, 09/12/2007 */        	
         {
             control_printf (SL_FAILURE, "421 Login incorrect.");
             //printf ("%s(%d)\r\n", __FUNCTION__, __LINE__);
@@ -426,15 +426,15 @@ int bftpd_login (char *password)
 
         setgid (userinfo.pw_gid);
         initgroups (userinfo.pw_name, userinfo.pw_gid);
-        /* Fiji add start, Jasmine Yang, 09/12/2007 */
+        /* Foxconn add start, Jasmine Yang, 09/12/2007 */
         scanPartitons(); //zzz, get first partition, 12/11/2007
         /* Make sure the login folder is user's account name */
 
-        /* Fiji Add Start : Steve Hsieh : 01/22/2008, @ftpRW {*/
+        /* Foxconn Add Start : Steve Hsieh : 01/22/2008, @ftpRW {*/
         /* -- should use shared dir in usb_setting page as root dir --*/
         //sprintf (chfolder, "%s/%s", mount_path, userinfo.pw_name);
         sprintf (chfolder, "%s/%s", mount_path, userinfo.pw_dir);
-        /* Fiji Add End : Steve Hsieh : 01/22/2008, @ftpRW }*/
+        /* Foxconn Add End : Steve Hsieh : 01/22/2008, @ftpRW }*/
         
         //water add temporarily, no usb now, it will be removed soon, @debug 05/30/2008
         //sprintf (chfolder, "/var%s", userinfo.pw_dir);
@@ -480,7 +480,7 @@ int bftpd_login (char *password)
         }
         
         strcpy(str,chfolder );
-        /* Fiji add end, Jasmine Yang, 09/12/2007 */
+        /* Foxconn add end, Jasmine Yang, 09/12/2007 */
         if (strcasecmp (config_getoption ("DO_CHROOT"), "no"))
         {
             bftpd_log("change for ROOTDIR [%s]\n",chfolder);
@@ -615,7 +615,7 @@ int checkpass_pwd (char *password)
 #ifdef HAVE_SHADOW_H
     struct spwd *shd;
 #endif
-/* Fiji add start, Jasmine Yang, 09/12/2007 */
+/* Foxconn add start, Jasmine Yang, 09/12/2007 */
     //if (strcmp(userinfo.pw_passwd, (char *) crypt(password, userinfo.pw_passwd))) {
     
     P1MSG("%s(%d)userinfo.pw_passwd=%s , password=%s \r\n", __FUNCTION__,
@@ -623,7 +623,7 @@ int checkpass_pwd (char *password)
 
     if (strcmp (userinfo.pw_passwd, password))
     {
-/* Fiji add end, Jasmine Yang, 09/12/2007 */
+/* Foxconn add end, Jasmine Yang, 09/12/2007 */
 #ifdef HAVE_SHADOW_H
         if (!(shd = getspnam (user)))
             return 1;

@@ -478,19 +478,19 @@ ssize_t vfs_write_data(files_struct *fsp,const char *buffer,size_t N)
 	return (ssize_t)total;
 }
 
-/* Fiji modified start pling 11/18/2009 */
+/* Foxconn modified start pling 11/18/2009 */
 //ssize_t vfs_pwrite_data(files_struct *fsp,const char *buffer,
 //                size_t N, SMB_OFF_T offset)
 ssize_t vfs_pwrite_data(files_struct *fsp,const char *buffer,
                 size_t N, SMB_BIG_UINT offset)
-/* Fiji modified end pling 11/18/2009 */
+/* Foxconn modified end pling 11/18/2009 */
 {
-    /* Fiji modified start pling 11/18/2009 */
+    /* Foxconn modified start pling 11/18/2009 */
 	//size_t total=0;
 	//ssize_t ret;
 	SMB_BIG_UINT total=0;
 	SMB_BIG_UINT ret;
-    /* Fiji modified end pling 11/18/2009 */
+    /* Foxconn modified end pling 11/18/2009 */
 
 	while (total < N) {
 		ret = SMB_VFS_PWRITE(fsp, fsp->fd, buffer + total,
@@ -527,7 +527,7 @@ int vfs_allocate_file_space(files_struct *fsp, SMB_BIG_UINT len)
 
 	DEBUG(10,("vfs_allocate_file_space: file %s, len %.0f\n", fsp->fsp_name, (double)len ));
 
-    /* Fiji removed start pling 11/18/2009 */
+    /* Foxconn removed start pling 11/18/2009 */
     /* Don't check negative length, to avoid "disk full" error 
      * when copy file from Vista/Win7 to USB.
      */
@@ -537,7 +537,7 @@ int vfs_allocate_file_space(files_struct *fsp, SMB_BIG_UINT len)
 		return -1;
 	}
 #endif
-    /* Fiji removed end pling 11/18/2009 */
+    /* Foxconn removed end pling 11/18/2009 */
 
 	ret = SMB_VFS_FSTAT(fsp,fsp->fd,&st);
 	if (ret == -1)

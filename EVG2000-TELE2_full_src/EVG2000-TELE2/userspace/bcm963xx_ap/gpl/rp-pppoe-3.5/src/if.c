@@ -291,7 +291,7 @@ openInterface(char const *ifname, UINT16_t type, unsigned char *hwaddr)
     int sock;
     int i;
 
-    RELAY_DEBUG("Zz [fun=%s,%d],USE_BPF\n",__FUNCTION__,__LINE__);/*Fiji modify,Zz Shan 01/03/2008*/
+    RELAY_DEBUG("Zz [fun=%s,%d],USE_BPF\n",__FUNCTION__,__LINE__);/*Foxconn modify,Zz Shan 01/03/2008*/
     /* BSD only opens one socket for both Discovery and Session packets */
     if (fd >= 0) {
 	return fd;
@@ -433,7 +433,7 @@ openInterface(char const *ifname, UINT16_t type, unsigned char *hwaddr)
     struct ifreq ifr;
     int domain, stype;
 
-RELAY_DEBUG("Zz [fun=%s,%d],USE_LINUX_PACKET\n",__FUNCTION__,__LINE__);/*Fiji modify,Zz Shan 01/03/2008*/
+RELAY_DEBUG("Zz [fun=%s,%d],USE_LINUX_PACKET\n",__FUNCTION__,__LINE__);/*Foxconn modify,Zz Shan 01/03/2008*/
 #ifdef HAVE_STRUCT_SOCKADDR_LL
     struct sockaddr_ll sa;
 #else
@@ -525,13 +525,13 @@ RELAY_DEBUG("Zz [fun=%s,%d],USE_LINUX_PACKET\n",__FUNCTION__,__LINE__);/*Fiji mo
 
 #endif /* USE_LINUX */
 
-/*fiji add start, water, 10/12/2008, @packet statistics*/
+/*foxconn add start, water, 10/12/2008, @packet statistics*/
 char wanPortMac[20] = "";
 unsigned int rxRelay = 0;
 unsigned int rxByte = 0;
 unsigned int txRelay = 0;
 unsigned int txByte = 0;
-/*fiji add end, water, 10/12/2008, @packet statistics*/
+/*foxconn add end, water, 10/12/2008, @packet statistics*/
 
 /***********************************************************************
 *%FUNCTION: sendPacket
@@ -548,14 +548,14 @@ int
 sendPacket(PPPoEConnection *conn, int sock, PPPoEPacket *pkt, int size)
 {
 #if defined(USE_BPF)
-    RELAY_DEBUG("Zz [fun=%s,%d],\n",__FUNCTION__,__LINE__);/*Fiji modify,Zz Shan 01/03/2008*/
+    RELAY_DEBUG("Zz [fun=%s,%d],\n",__FUNCTION__,__LINE__);/*Foxconn modify,Zz Shan 01/03/2008*/
     if (write(sock, pkt, size) < 0) {
 	sysErr("write (sendPacket)");
 	return -1;
     }
 #elif defined(HAVE_STRUCT_SOCKADDR_LL)
-    RELAY_DEBUG("Zz [fun=%s,%d],\n",__FUNCTION__,__LINE__);/*Fiji modify,Zz Shan 01/03/2008*/
-    /*fiji add start, water, 10/12/2008, @packet statistics*/
+    RELAY_DEBUG("Zz [fun=%s,%d],\n",__FUNCTION__,__LINE__);/*Foxconn modify,Zz Shan 01/03/2008*/
+    /*foxconn add start, water, 10/12/2008, @packet statistics*/
     char sourceMac[20] = "";
     if (strlen(wanPortMac) > 0)
     {
@@ -577,7 +577,7 @@ sendPacket(PPPoEConnection *conn, int sock, PPPoEPacket *pkt, int size)
             rxByte = rxByte + size;
         }
     }
-    /*fiji add end, water, 10/12/2008, @packet statistics*/
+    /*foxconn add end, water, 10/12/2008, @packet statistics*/
     
     if (send(sock, pkt, size, 0) < 0) {
         RELAY_DEBUG("Error Send send (sendPacket)\n");
@@ -585,7 +585,7 @@ sendPacket(PPPoEConnection *conn, int sock, PPPoEPacket *pkt, int size)
     }
 #else
 #ifdef USE_DLPI
-RELAY_DEBUG("Zz [fun=%s,%d],\n",__FUNCTION__,__LINE__);/*Fiji modify,Zz Shan 01/03/2008*/
+RELAY_DEBUG("Zz [fun=%s,%d],\n",__FUNCTION__,__LINE__);/*Foxconn modify,Zz Shan 01/03/2008*/
 #define ABS(x)          ((x) < 0 ? -(x) : (x))
 
 	u_char  addr[MAXDLADDR];
@@ -622,7 +622,7 @@ RELAY_DEBUG("Zz [fun=%s,%d],\n",__FUNCTION__,__LINE__);/*Fiji modify,Zz Shan 01/
 
 
 #else
-    RELAY_DEBUG("Zz [fun=%s,%d],\n",__FUNCTION__,__LINE__);/*Fiji modify,Zz Shan 01/03/2008*/
+    RELAY_DEBUG("Zz [fun=%s,%d],\n",__FUNCTION__,__LINE__);/*Foxconn modify,Zz Shan 01/03/2008*/
     struct sockaddr sa;
 
     if (!conn) {
@@ -677,7 +677,7 @@ receivePacket(int sock, PPPoEPacket *pkt, int *size)
 #ifdef USE_BPF
     struct bpf_hdr hdr;
     int seglen, copylen;
-    RELAY_DEBUG("Zz [fun=%s,%d],USE_BPF\n",__FUNCTION__,__LINE__);/*Fiji modify,Zz Shan 01/03/2008*/
+    RELAY_DEBUG("Zz [fun=%s,%d],USE_BPF\n",__FUNCTION__,__LINE__);/*Foxconn modify,Zz Shan 01/03/2008*/
     if (bpfSize <= 0) {
 	bpfOffset = 0;
 	if ((bpfSize = read(sock, bpfBuffer, bpfLength)) < 0) {
@@ -719,7 +719,7 @@ receivePacket(int sock, PPPoEPacket *pkt, int *size)
 	struct strbuf data;
 	int flags = 0;
 	int retval;
-    RELAY_DEBUG("Zz [fun=%s,%d],USE_DLPI\n",__FUNCTION__,__LINE__);/*Fiji modify,Zz Shan 01/03/2008*/
+    RELAY_DEBUG("Zz [fun=%s,%d],USE_DLPI\n",__FUNCTION__,__LINE__);/*Foxconn modify,Zz Shan 01/03/2008*/
 	data.buf = (char *) pkt;
 	data.maxlen = MAXDLBUF;
 	data.len = 0;
@@ -732,14 +732,14 @@ receivePacket(int sock, PPPoEPacket *pkt, int *size)
 	*size = data.len;
 
 #else
-    RELAY_DEBUG("Zz [fun=%s,%d],else\n",__FUNCTION__,__LINE__);/*Fiji modify,Zz Shan 01/03/2008*/
+    RELAY_DEBUG("Zz [fun=%s,%d],else\n",__FUNCTION__,__LINE__);/*Foxconn modify,Zz Shan 01/03/2008*/
     if ((*size = recv(sock, pkt, sizeof(PPPoEPacket), 0)) < 0) {
 	sysErr("recv (receivePacket)");
 	return -1;
     }
 #endif
 #endif
-    RELAY_DEBUG("Zz [fun=%s,%d],\n",__FUNCTION__,__LINE__);/*Fiji modify,Zz Shan 01/03/2008*/
+    RELAY_DEBUG("Zz [fun=%s,%d],\n",__FUNCTION__,__LINE__);/*Foxconn modify,Zz Shan 01/03/2008*/
     return 0;
 }
 

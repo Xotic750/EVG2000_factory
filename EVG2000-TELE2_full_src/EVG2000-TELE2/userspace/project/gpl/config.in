@@ -31,19 +31,19 @@ export GPLTOPDIR := $(HOMEDIR)/gpl
 endif
 
 # Set the toolchain path
-# Fiji Add : Steve Hsieh : @ADSL_porting , 03/08/2006
+# Foxconn Add : Steve Hsieh : @ADSL_porting , 03/08/2006
 # @ use the toolchain export from top level Makefile 
 # TOOLPATH := $(HOMEDIR)/tools/buildroot/build_armeb
 TOOLPATH := $(TOOLCHAIN)
 
 
 # Set the toolchain prefix
-# Fiji Add Start : Steve Hsieh : @ADSL_porting , 03/08/2006
+# Foxconn Add Start : Steve Hsieh : @ADSL_porting , 03/08/2006
 # TOOLPREFIX=armeb-linux-
 #TOOLPREFIX=mips-linux-
 
 # Set the kernel path which is used by several build scripts
-# Fiji Add Start : Steve Hsieh : @ADSL_porting , 03/08/2006
+# Foxconn Add Start : Steve Hsieh : @ADSL_porting , 03/08/2006
 # KERNELPATH=$(HOMEDIR)/src/kernels/linux-$(LSDK_KERNELVERSION)
 KERNELPATH=$(KERNEL_DIR)
 
@@ -58,13 +58,13 @@ INSTNET = ${INSMOD}net/
 TOPDIR	:= $(shell /bin/pwd)
 
 #CROSS_COMPILE := $(TOOLPATH)/bin/$(TOOLPREFIX)
-# Fiji Add Start : Steve Hsieh : @ADSL_porting , 03/08/2006
+# Foxconn Add Start : Steve Hsieh : @ADSL_porting , 03/08/2006
 # customize of ADSL router
 # INSTALLLIB_DIR := $(HOMEDIR)/src/target/ap71-rootdir
 # INSTALLDIR := $(HOMEDIR)/src/target/ap71-rootdir
 INSTALLLIB_DIR := $(INSTALL_DIR)
 INSTALLDIR := $(INSTALL_DIR)
-# Fiji Add End : Steve Hsieh : @ADSL_porting , 03/08/2006
+# Foxconn Add End : Steve Hsieh : @ADSL_porting , 03/08/2006
 
 TARGETDIR := $(INSTALLLIB_DIR)
 

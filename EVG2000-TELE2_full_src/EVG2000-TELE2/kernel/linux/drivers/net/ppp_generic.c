@@ -291,7 +291,7 @@ static struct class *ppp_class;
 
 #define FOX_TCP_MSS_PATCH
 #ifdef FOX_TCP_MSS_PATCH
-/* Fiji added start pling 03/28/2006 */
+/* Foxconn added start pling 03/28/2006 */
 /**********************************************************************
 * FUNCTION: computeTCPChecksum
 * ARGUMENTS:
@@ -476,7 +476,7 @@ void ppp_modify_tcp_mss(unsigned char *payload, int clampMss)
 }
 #undef UINT16
 #undef UINT32
-/* Fiji added end pling 03/28/2006 */
+/* Foxconn added end pling 03/28/2006 */
 #endif /* FOX_TCP_MSS_PATCH */
 
 /* Translates a PPP protocol number to a NP index (NP == network protocol) */
@@ -1361,33 +1361,33 @@ ppp_send_frame(struct ppp *ppp, struct sk_buff *skb)
 		if (!(ppp->active_filter
 		      && sk_run_filter(skb, ppp->active_filter,
 				       ppp->active_len) == 0))
-			/* Fiji modified start pling 12/01/2008 */
+			/* Foxconn modified start pling 12/01/2008 */
 #if 0 //defined(CONFIG_MIPS_BRCM)
 	       if (timestamp)
 #endif					       
 			if (!skb->sk) /* record the time if not from IP stack */
-			/* Fiji modified end pling 12/01/2008 */
+			/* Foxconn modified end pling 12/01/2008 */
 			ppp->last_xmit = jiffies;
 		skb_pull(skb, 2);
 #else
 		/* for data packets, record the time */
-		/* Fiji modified start pling 12/01/2008 */
+		/* Foxconn modified start pling 12/01/2008 */
 #if 0 //defined(CONFIG_MIPS_BRCM)
 	       if (timestamp)
 #endif			
 		if (!skb->sk) /* record the time if not from IP stack */
-		/* Fiji modified end pling 12/01/2008 */
+		/* Foxconn modified end pling 12/01/2008 */
 		ppp->last_xmit = jiffies;
 #endif /* CONFIG_PPP_FILTER */
 	}
 
-        /* Fiji added start ping 03/28/2006 */
+        /* Foxconn added start ping 03/28/2006 */
         /* Modify MSS where necessary */
         /*printk("%s: Modify outgoing TCP packet (%d)\n", __FUNCTION__, ppp->dev->mtu);*/
 #ifdef FOX_TCP_MSS_PATCH 
         ppp_modify_tcp_mss(skb->data, ppp->dev->mtu - 40);      // pling modified 80->40
 #endif /* FOX_TCP_MSS_PATCH */
-        /* Fiji added end pling 03/28/2006 */
+        /* Foxconn added end pling 03/28/2006 */
 
 	++ppp->stats.tx_packets;
 	ppp->stats.tx_bytes += skb->len - 2;
@@ -1454,7 +1454,7 @@ ppp_send_frame(struct ppp *ppp, struct sk_buff *skb)
 		if (ppp->file.rq.qlen > PPP_MAX_RQLEN)
 			goto drop;
 
-		/* Fiji modified start pling 12/01/2008 */
+		/* Foxconn modified start pling 12/01/2008 */
 #if 0 //defined(CONFIG_MIPS_BRCM)		
 		if (!timestamp)
 			goto drop;
@@ -1467,7 +1467,7 @@ ppp_send_frame(struct ppp *ppp, struct sk_buff *skb)
 				goto drop;
 		}
 		printk("PPP: DoD triggered.\n");
-		/* Fiji modified end pling 12/01/2008 */
+		/* Foxconn modified end pling 12/01/2008 */
 
 		skb_queue_tail(&ppp->file.rq, skb);
 		wake_up_interruptible(&ppp->file.rwait);
@@ -1969,12 +1969,12 @@ ppp_receive_nonmp_frame(struct ppp *ppp, struct sk_buff *skb)
 		break;
 	}
 
-        /* Fiji added start pling 03/28/2006 */
+        /* Foxconn added start pling 03/28/2006 */
         /*printk("%s: Modify incoming TCP packet (%d)\n", __FUNCTION__, ppp->dev->mtu);*/
 #ifdef FOX_TCP_MSS_PATCH 
         ppp_modify_tcp_mss(skb->data, ppp->dev->mtu - 40);      // pling modified 80->40
 #endif /* FOX_TCP_MSS_PATCH */
-        /* Fiji added end pling 03/28/2006 */
+        /* Foxconn added end pling 03/28/2006 */
 
 	++ppp->stats.rx_packets;
 	ppp->stats.rx_bytes += skb->len - 2;
@@ -2021,17 +2021,17 @@ ppp_receive_nonmp_frame(struct ppp *ppp, struct sk_buff *skb)
 #if defined(CONFIG_MIPS_BRCM)
 	       if (timestamp)
 #endif					       
-			/* Fiji removed start pling 12/01/2008 */
+			/* Foxconn removed start pling 12/01/2008 */
 			; //ppp->last_recv = jiffies;
-			/* Fiji removed end pling 12/01/2008 */
+			/* Foxconn removed end pling 12/01/2008 */
 		skb_pull(skb, 2);
 #else
 #if defined(CONFIG_MIPS_BRCM)
 		if (timestamp)
 #endif
-		/* Fiji removed start pling 12/01/2008 */
+		/* Foxconn removed start pling 12/01/2008 */
 		; //ppp->last_recv = jiffies;
-		/* Fiji removed end pling 12/01/2008 */
+		/* Foxconn removed end pling 12/01/2008 */
 #endif /* CONFIG_PPP_FILTER */
 
 		if ((ppp->dev->flags & IFF_UP) == 0

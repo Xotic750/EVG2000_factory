@@ -182,7 +182,7 @@ int add_simple_option(unsigned char *optionptr, unsigned char code, u_int32_t da
 	return add_option_string(optionptr, option);
 }
 
-/* Fiji added start, Lewis, 2008/9/19, @Lan host identification */
+/* Foxconn added start, Lewis, 2008/9/19, @Lan host identification */
 #ifdef TI_ALICE
 /* add hostname option to a packet */
 int add_hostname_option(unsigned char *optionptr, char * hostname)
@@ -197,7 +197,7 @@ int add_hostname_option(unsigned char *optionptr, char * hostname)
     return add_option_string(optionptr, option);
 }
 #endif
-/* Fiji added end, Lewis, 2008/9/19, @Lan host identification */
+/* Foxconn added end, Lewis, 2008/9/19, @Lan host identification */
 
 
 /* find option 'code' in opt_list */
