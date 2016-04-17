@@ -1,0 +1,55 @@
+<html>
+<head>
+<% meta_get(); %>
+<title>router form</title>
+<link rel="stylesheet" type="text/css" href="style.css">
+<% script_get(); %>
+<script language="javascript" type="text/javascript">
+<!--
+
+function goSelect2() {
+    document.forms[0].submit();
+}
+
+//-->
+</script>
+</head>
+
+<body bgcolor="#ffffff" onLoad="loadhelp('WIZ_ph_fail');document.forms[0].elements[0].focus();">
+<form name="formname" action="ph_fail.cgi" method="POST"> 
+<table border="0" cellpadding="0" cellspacing="3" width="100%">
+<tr>
+<td colspan="2" align="center">
+<h1>The Smart Wizard Cannot Detect Your ADSL Service</H1>
+</td>
+</tr>
+<tr> <!-- RULE -->
+ <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+<tr>
+<td align="center">
+ <ul><p><strong>The Smart Wizard could not detect the ADSL network.</strong></p></ul>
+ </td></tr>
+ <tr><td>
+ <ul><p>Click Next to use the Basic Settings page of the router to configure the ADSL settings according to the instructions in the online help page or the product manual.</p>
+</td>
+</tr>
+
+<tr>
+ <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+<tr>
+<td colspan="2" align="center">
+<p>&nbsp;</p>
+<input type="button" name="Back" value="&nbsp;&nbsp;Back&nbsp;&nbsp;" onclick="location.href='WIZ_passwd.htm'">
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+<input type="Button" name="Button" value="&nbsp;&nbsp;Next&nbsp;&nbsp;" onClick="goSelect2()">
+
+</tr>
+</table>
+</form>
+<p></p>
+</body>
+
+</html>

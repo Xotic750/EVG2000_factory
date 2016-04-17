@@ -1,0 +1,658 @@
+<html>
+<head>
+<% meta_get(); %>
+<title>VoIP Settings</title> 
+<link rel="stylesheet" href="form.css">
+<script language="javascript" type="text/javascript" src="utility1.js"></script>	
+<script language="javascript" type="text/javascript" src="linux.js"></script>
+<script language="javascript" type="text/javascript" src="func.js"></script>
+<script language="javascript" type="text/javascript" src="msg.js"></script>
+
+<script language="javascript" type="text/javascript">
+<!-- hide script from old browsers
+
+function frmLoad() 
+{
+	var cf = document.forms[0];	
+
+	if(cf.h_line1_enable.value == 1)
+		cf.line1_enable.selectedIndex = 0;
+	else
+		cf.line1_enable.selectedIndex = 1;	
+
+	if(cf.h_line2_enable.value == 1)
+		cf.line2_enable.selectedIndex = 0;
+	else
+		cf.line2_enable.selectedIndex = 1;	
+
+	if ( cf.hd_out_tftp_enable.value == "0")	
+		cf.out_tftp_enable.checked = false;
+	else
+		cf.out_tftp_enable.checked = true;
+
+	if ( cf.h_out_sip_enable.value == 0)
+      	 cf.out_sip_enable.checked = false;
+    else
+         cf.out_sip_enable.checked = true;    
+	
+	if ( cf.h_vad_enable.value == 0)
+      	 cf.vad_enable.checked = false;
+    else
+         cf.vad_enable.checked = true;
+	
+	if ( cf.hd_line1_ring_valid.value == 0)
+      	 cf.line1_ring_valid.checked = false;
+    else
+         cf.line1_ring_valid.checked = true;
+
+	if ( cf.hd_line2_ring_valid.value == 0)
+      	 cf.line2_ring_valid.checked = false;
+    else
+         cf.line2_ring_valid.checked = true;
+
+	if ( cf.hd_line1Status.value == 1)
+	    cf.btn_reg1.value = "Unregister";
+	else
+	    cf.btn_reg1.value = "Register";
+
+	if ( cf.hd_line2Status.value == 1)
+	    cf.btn_reg2.value = "Unregister"; 
+	else
+	    cf.btn_reg2.value = "Register";
+	
+    cf.line1_pref_codec.selectedIndex = cf.h_line1_pref_codec.value;
+    cf.line2_pref_codec.selectedIndex = cf.h_line2_pref_codec.value;
+
+    cf.line1_pref_fax_codec.selectedIndex = cf.h_line1_pref_fax_codec.value - 1 ;
+    cf.line2_pref_fax_codec.selectedIndex = cf.h_line2_pref_fax_codec.value - 1 ;
+}
+function chgOutBound()
+{
+	var cf = document.forms[0];	
+	var dflag = !cf.out_sip_enable.checked;
+
+	cf.sip_ob_server.disabled  = cf.sip_ctrl_port.disabled  = dflag;
+}
+function chgVAD()
+{
+	var cf = document.forms[0];	
+	var dflag = !cf.vad_enable.checked;
+
+	cf.si_time.disabled  = dflag;
+}
+function checkCfgFileNameBackSlash(str)
+{
+        var i;
+
+        for(i = 0; i < str.length; i ++)
+        {
+            var c = str.substring(i, i + 1);
+            if(c == "\\")
+               return false;
+        }
+        return true;
+}
+
+function chgRingID()
+{
+	var cf = document.forms[0];	
+	var dflag = !cf.line1_ring_valid.checked;
+
+	if(!cf.line1_enable.selectedIndex)
+		cf.line1_ring_id.disabled  = dflag;
+	else
+		cf.line1_ring_id.disabled  = true;
+
+	dflag = !cf.line2_ring_valid.checked ;
+
+	if(!cf.line2_enable.selectedIndex)
+		cf.line2_ring_id.disabled  = dflag;
+	else
+		cf.line2_ring_id.disabled  = true;
+}
+
+function OnEnableChange()
+{
+	var cf = document.forms[0];
+	var dflag ;
+	dflag = cf.line1_enable.selectedIndex;
+
+	cf.line1_tel_name.disabled = dflag;
+	cf.line1_tel_num.disabled = dflag;
+	cf.line1_uid.disabled = dflag;
+	cf.line1_password.disabled = dflag;
+	cf.line1_reg_headstart.disabled = dflag;
+	cf.line1_reg_expire.disabled = dflag;
+	cf.line1_pref_fax_codec.disabled = dflag;
+	cf.line1_pref_codec.disabled = dflag;
+	cf.line1_ring_valid.disabled = dflag;
+	
+	if (cf.line1_ring_valid.checked)
+	{
+		cf.line1_ring_id.disabled = dflag;
+	}	
+	cf.btn_reg1.disabled = dflag;
+ 
+	dflag = cf.line2_enable.selectedIndex;
+	
+ 	cf.line2_tel_name.disabled = dflag;
+	cf.line2_tel_num.disabled = dflag;
+	cf.line2_uid.disabled = dflag;
+	cf.line2_password.disabled = dflag;
+	cf.line2_reg_headstart.disabled = dflag;
+	cf.line2_reg_expire.disabled = dflag;
+	cf.line2_pref_fax_codec.disabled = dflag;
+	cf.line2_pref_codec.disabled = dflag;
+	cf.line2_ring_valid.disabled = dflag;
+	if (cf.line2_ring_valid.checked)
+	{
+		cf.line2_ring_id.disabled = dflag;
+	}
+	cf.btn_reg2.disabled = dflag;
+}
+
+function checkdata()
+{
+	var flag;
+	var MaxRtpPort = '65535';
+	var cf = document.forms[0];	
+	var msg = "";
+	var dflag;
+     
+	dflag = !cf.out_tftp_enable.checked;
+		
+	if(((getSelected(cf.line1_enable)=="1" || getSelected(cf.line2_enable)=="1")) && dflag)  
+	{
+		msg += checkBlank(cf.sip_proxy,"SIP Proxy");
+		msg += checkInt(cf.sip_reg_port,"SIP Control Port",1,65534,true);
+		msg += checkInt(cf.sip_local_port,"SIP Local Port",1,65534,true);
+		msg += checkInt(cf.start_rtp_port,"SIP Starting RTP Port",0,65534,true);
+		if(cf.out_sip_enable.checked){
+			msg += checkBlank(cf.sip_ob_server,"SIP Outbound Proxy");
+			msg += checkInt(cf.sip_ctrl_port,"SIP Outbound Port",1,65534,true);
+		}
+		if(cf.vad_enable.checked){
+			msg += checkBlank(cf.si_time,"Silence Detect Time");
+			if(!isIntStr(cf.si_time.value))
+				msg +="Silence Detect Time contains invalid number.\n";
+		}
+	}
+	if((getSelected(cf.line1_enable)=="1") && dflag) {
+		msg += checkBlank(cf.line1_tel_name,"Line 1 Display Name");
+		msg += checkBlank(cf.line1_tel_num,"Line 1 Telephone Number");
+		msg += checkBlank(cf.line1_uid,"Line 1 User Name");
+		msg += checkBlank(cf.line1_password,"Line 1 Password");
+		msg += checkInt(cf.line1_reg_expire,"Line 1 Register Expire Time", 1,99999, true);
+		msg += checkInt(cf.line1_reg_headstart,"Line 1 Registration Head Start Time", 1,99999, true);
+		if(parseInt(cf.line1_reg_headstart.value) >= parseInt(cf.line1_reg_expire.value))
+			msg +="Line 1 Head Start Time should be smaller than Expire time.\n";
+		if(cf.line1_ring_valid.checked)
+			msg += checkInt(cf.line1_ring_id,"Line 1 ring ID", 0,7, true);
+	}
+
+	if((getSelected(cf.line2_enable)=="1") && dflag){
+		msg += checkBlank(cf.line2_tel_name,"Line 2 Display Name");
+		msg += checkBlank(cf.line2_tel_num,"Line 2 Telephone Number");
+		msg += checkBlank(cf.line2_uid,"Line 2 User Name");
+		msg += checkBlank(cf.line2_password,"Line 2 Password");
+		msg += checkInt(cf.line2_reg_expire,"Line 2 Register Expire Time", 1,99999, true);
+
+		msg += checkInt(cf.line2_reg_headstart,"Line 2 Registration Head Start Time", 1,99999, true);
+		if(parseInt(cf.line2_reg_headstart.value) >= parseInt(cf.line2_reg_expire.value))
+			msg +="Line 2 Head Start Time should be smaller than Expire time.\n";
+		if(cf.line2_ring_valid.checked)
+			msg += checkInt(cf.line2_ring_id,"Line 2 ring ID", 0,7, true);
+	}
+
+	if (!dflag)
+	{
+		msg += checkBlank(cf.tftp_server,"TFTP Server");
+		msg += checkInt(cf.tftp_def_port,"TFTP Default Port",1,65534,true);
+		msg += checkInt(cf.tftp_pri_port,"TFTP Primary Alternate Port",1,65534,true);
+		msg += checkInt(cf.tftp_sec_port,"TFTP Secondary Alternate Port",1,65534,true);
+
+		if(!checkCfgFileNameBackSlash(cf.tftp_config.value))
+		{
+			msg += "Configuration File disallow use of backslash in TFTP filename filed.\n";
+		}
+	}
+	
+	if (msg.length > 1)
+	{
+		alert(msg);
+		return false;
+	}
+	   
+	if(cf.out_tftp_enable.checked)
+	 	cf.hd_out_tftp_enable.value = 1;
+	else
+		cf.hd_out_tftp_enable.value = 0;
+	  
+	if( cf.vad_enable.checked )
+	   cf.h_vad_enable.value = 1;
+	 else
+	   cf.h_vad_enable.value = 0;
+	
+	if( cf.out_sip_enable.checked )
+	   cf.h_out_sip_enable.value = 1;
+	else
+	   cf.h_out_sip_enable.value = 0;	
+	  
+	if( cf.line1_ring_valid.checked )
+	   cf.hd_line1_ring_valid.value = 1;
+	else
+	   cf.hd_line1_ring_valid.value = 0;	 
+
+	if( cf.line2_ring_valid.checked )
+	   cf.hd_line2_ring_valid.value = 1;
+	else
+	   cf.hd_line2_ring_valid.value = 0;	 	
+
+	return true;
+}
+
+function chgTFTP() //alan
+{
+	var cf = document.forms[0];	
+	var dflag = !cf.out_tftp_enable.checked;
+
+	cf.tftp_server.disabled  = dflag;	
+	cf.tftp_def_port.disabled  = dflag;
+	cf.tftp_pri_port.disabled  = dflag;
+	cf.tftp_sec_port.disabled  = dflag;
+	cf.tftp_config.disabled  = dflag;
+	
+	cf.sip_proxy.disabled  = !dflag;
+	cf.sip_reg_port.disabled  = !dflag;
+	cf.sip_local_port.disabled  = !dflag;
+	cf.start_rtp_port.disabled  = !dflag;
+	cf.out_sip_enable.disabled  = !dflag;	
+	cf.vad_enable.disabled  = !dflag;
+	cf.sip_ob_server.disabled  = !dflag;
+	cf.sip_ctrl_port.disabled  = !dflag;
+	cf.si_time.disabled  = !dflag;
+    cf.useragent.disabled  = !dflag;
+	cf.line1_enable.disabled  = !dflag;
+	cf.line2_enable.disabled  = !dflag;
+
+	if(dflag){
+		OnEnableChange();
+		chgOutBound();
+		chgVAD();
+		chgRingID();
+		return;
+	}
+	cf.line1_tel_name.disabled  = !dflag;
+	cf.line1_tel_num.disabled  = !dflag;
+	cf.line1_uid.disabled  = !dflag;
+	cf.line1_password.disabled  = !dflag;
+	cf.line1_reg_expire.disabled  = !dflag;
+	cf.line1_reg_headstart.disabled  = !dflag;
+	cf.line1_ring_valid.disabled  = !dflag;
+	cf.line1_ring_id.disabled  = !dflag;
+	cf.line1_pref_fax_codec.disabled  = !dflag;
+	cf.line1_pref_codec.disabled  = !dflag;
+	cf.btn_reg1.disabled  = !dflag;
+
+	cf.line2_tel_name.disabled  = !dflag;
+	cf.line2_tel_num.disabled  = !dflag;
+	cf.line2_uid.disabled  = !dflag;
+	cf.line2_password.disabled  = !dflag;
+	cf.line2_reg_expire.disabled  = !dflag;
+	cf.line2_reg_headstart.disabled  = !dflag;
+	cf.line2_ring_valid.disabled  = !dflag;
+	cf.line2_ring_id.disabled  = !dflag;
+	cf.line2_pref_fax_codec.disabled  = !dflag;
+	cf.line2_pref_codec.disabled  = !dflag;
+	cf.btn_reg2.disabled  = !dflag;	
+}
+
+function voip_reg1()
+{
+	var cf = document.forms[0];	
+	cf.todo.value = "voip_reg1";
+	return true;	
+}
+
+function voip_reg2()
+{
+	var cf = document.forms[0];	
+	cf.todo.value = "voip_reg2";
+	return true;	
+}
+
+function initReg()
+{
+    var cf = document.forms[0];	
+    
+    if(cf.reg_state1.value == "1")
+        cf.btn_reg1.value = "UnRegister";
+    else
+        cf.btn_reg1.value = "Register";	
+    
+    if(cf.reg_state2.value == "1")
+        cf.btn_reg2.value = "UnRegister";
+    else
+        cf.btn_reg2.value = "Register";
+}
+
+function init()
+{
+    frmLoad();
+    OnEnableChange();
+    chgVAD();
+    chgRingID();
+    initReg();
+    chgOutBound();
+    chgTFTP();
+}
+
+//-->
+</script>
+</head>
+<body bgcolor="#ffffff" onload="init();  loadhelp('VOIP_voip');">
+<form name="formname" method="POST" action="voip.cgi">
+<table border="0" cellpadding="0" cellspacing="3" width="100%">
+<tr>
+	<td colspan="2"><h1>VoIP Settings</h1></td>
+</tr>
+
+<tr>
+  <td colspan="2" background="liteblue.gif" height="12">&nbsp; </td>
+</tr>
+
+
+<tr>
+	<td colspan="2"><b><a href="javascript:loadhelp('VOIP_voip','tftp')" tabindex="-1">Provisioning Service</a></b></td>
+</tr>
+
+
+
+<tr>
+	<td colspan="2" nowrap align="left"><input type="checkbox" name="out_tftp_enable" onclick="chgTFTP()">&nbsp; TFTP Provisioning</td>
+</tr>
+
+<tr>
+	<td width="50%" align="left">TFTP Server</td>
+	<td width="50%" align="right"><input type="text" name="tftp_server" value="<% voip_get_params("tftp_server"); %>" size="24" maxlength="150"></td>
+<tr>
+	<td width="50%" align="left" nowrap>Default Port</td>
+ <td width="50%" align="right"><input type="text" name="tftp_def_port" value="<% voip_get_params("tftp_def_port"); %>" size="5" maxlength="5"></td>
+</tr>
+<tr>
+	<td width="50%" align="left">Primary Alternate Port</td>
+	<td width="50%" align="right"><input type="text" name="tftp_pri_port" value="<% voip_get_params("tftp_pri_port"); %>" size="5" maxlength="5"></td>
+<tr>
+	<td width="50%" align="left" nowrap>Secondary Alternate Port</td>
+ <td width="50%" align="right"><input type="text" name="tftp_sec_port" value="<% voip_get_params("tftp_sec_port"); %>" size="5" maxlength="5"></td>
+</tr>
+<tr>
+	<td width="50%" align="left" nowrap>Configuration File</td>
+ <td width="50%" align="right"><input type="text" name="tftp_config" value="<% voip_get_params("tftp_config"); %>" size="24" maxlength="150"></td>
+</tr>
+<tr> 
+ <td colspan="2" background="liteblue.gif" height="12">&nbsp;</td>
+</tr>
+
+<tr>
+	<td colspan="2"><b><a href="javascript:loadhelp('VOIP_voip','ser')" tabindex="-1">SIP Service</a></b></td>
+</tr>
+
+
+<tr>
+	<td width="50%" align="left" nowrap>SIP Proxy</td>
+ <td width="50%" align="right"><input type="text" name="sip_proxy" value="<% nvram_get("voip_sip_proxy_address"); %>" size="24" maxlength="32" ></td>
+</tr>
+
+<tr>
+	<td width="50%" align="left" nowrap>SIP Control Port</td>
+ <td width="50%" align="right"><input type="text" name="sip_reg_port" value="<% nvram_get("voip_sip_remote_port"); %>" size="5" maxlength="5" ></td>
+</tr>
+
+<tr>
+	<td width="50%" align="left" nowrap>SIP Local Port</td>
+ <td width="50%" align="right"><input type="text" name="sip_local_port" value="<% nvram_get("voip_sip_localport"); %>" size="5" maxlength="5" ></td>
+</tr>
+<tr>
+	<td width="50%" align="left" nowrap>Starting RTP Port</td>
+ <td width="50%" align="right"><input type="text" name="start_rtp_port" value="<% nvram_get("voip_sip_rtp_port_base"); %>" size="5" maxlength="5" ></td>
+</tr>
+
+<tr>
+	<td colspan="2" nowrap align="left"><input type="checkbox" name="out_sip_enable"  onclick="chgOutBound()">&nbsp; Use SIP Outbound Proxy</td>
+</tr>
+
+<tr>
+	<td width="50%" align="left">Outbound Proxy Address</td>
+	<td width="50%" align="right"><input type="text" name="sip_ob_server" value="<% nvram_get("voip_sip_outbound_address"); %>" size="24" maxlength="32" ></td>
+<tr>
+	<td width="50%" align="left" nowrap>Outbound Proxy Port</td>
+ <td width="50%" align="right"><input type="text" name="sip_ctrl_port" value="<% nvram_get("voip_sip_outbound_port"); %>" size="5" maxlength="5" ></td>
+</tr>
+
+<tr>
+<td width="50%" align="left">User-Agent</td>
+<td width="50%" align="right"><input type="text" name="useragent" value="<% nvram_get("voip_sip_user_agent"); %>" size="24" maxlength="32" >
+</td>
+
+
+<tr>
+	<td align="left" nowrap colspan="2"><input type="checkbox" name="vad_enable"  onclick="chgVAD()">&nbsp; VAD</td>
+</tr>
+<tr>
+	<td width="50%" align="left">Silence Detect Time</td>
+	<td width="50%" align="right"><input type="text" name="si_time" value="10" size="2" maxlength="2"  class=num>msec</td>
+</tr>
+
+<tr> 
+ <td colspan="2" background="liteblue.gif" height="12">&nbsp;</td>
+</tr>
+
+
+<tr>
+	<td colspan="2"><b><a href="javascript:loadhelp('VOIP_voip','line')" tabindex="-1">Line 1</a></b></td>
+</tr>
+
+<tr>
+	<td width="50%" align="left" nowrap>Line Enable</td>
+	<td width="50%" align="right">
+	<select name="line1_enable" size="1" onchange="OnEnableChange();">
+		<option value="1">yes</option>
+		<option value="0">no</option>
+	</select>
+	</td>
+</tr>
+
+<tr>
+	<td width="50%" align="left" nowrap>Display Name</td>
+ <td width="50%" align="right"><input type="text" name="line1_tel_name" value="<% nvram_get("voip_user_user0_displayname"); %>" size="15" maxlength="15" ></td>
+</tr>
+
+<tr>
+	<td width="50%" align="left" nowrap>Telephone Number</td>
+ <td width="50%" align="right"><input type="text" name="line1_tel_num" value="<% nvram_get("voip_user_user0_username"); %>" size="15" maxlength="31" ></td>
+</tr>
+
+<tr>
+	<td width="50%" align="left" nowrap>User Name</td>
+ <td width="50%" align="right"><input type="text" name="line1_uid" value="<% nvram_get("voip_user_user0_authusername"); %>" size="15" maxlength="63" ></td>
+</tr>
+<tr>
+	<td width="50%" align="left" nowrap>Password</td>
+ <td width="50%" align="right"><input type="password" name="line1_password" value="<% nvram_get("voip_user_user0_password"); %>" size="15" maxlength="63" ></td>
+</tr>
+
+<tr>
+	<td width="50%" align="left" nowrap>Register Expire Time (sec.)</td>
+ <td width="50%" align="right"><input type="text" name="line1_reg_expire" value="<% nvram_get("voip_sip_expires0"); %>" size="5" maxlength="5" ></td>
+</tr>
+
+<tr>
+	<td width="50%" align="left" nowrap>Registration Head Start Time (sec.)</td>
+ <td width="50%" align="right"><input type="text" name="line1_reg_headstart" value="<% nvram_get("voip_sip_reg_head_start0"); %>" size="5" maxlength="5" ></td>
+</tr>
+
+<tr>
+	<td width="50%" align="left" nowrap>Distinctive Ring Valid</td>
+ <td width="50%" align="right"><input type="checkbox" name="line1_ring_valid"  onclick="chgRingID()"></td>
+</tr>
+<tr>
+	<td width="50%" align="left" nowrap>Prefer Ring ID</td>
+ <td width="50%" align="right"><input type="text" name="line1_ring_id" value="<% nvram_get("voip_user_user0_ringId"); %>" size="5" maxlength="5" ></td>
+</tr>
+
+<tr>
+	<td width="50%" align="left" nowrap>Prefer Fax Codec</td>
+	<td width="50%" align="right">
+		<select name="line1_pref_fax_codec" size="1">
+			<option value="1">Fax - G.711</option>
+			<option value="2">Fax - T.38</option>
+		</select>
+	</td>
+</tr>
+
+<tr>
+	<td width="50%" align="left" nowrap>Prefer Codec</td>
+	<td width="50%" align="right">
+		<select name="line1_pref_codec" size="1">
+			<option value="0">G.711 u-Law @ 10ms</option>
+			<option value="1">G.711 u-Law @ 20ms</option>
+			<option value="2">G.711 u-Law @ 30ms</option>
+			<option value="3">G.711 a-Law @ 10ms</option>
+			<option value="4">G.711 a-Law @ 20ms</option>
+			<option value="5">G.711 a-Law @ 30ms</option>
+			<option value="6">G.729AB @ 10ms</option>
+			<option value="7">G.729AB @ 20ms</option>
+			<option value="8">G.729AB @ 30ms</option>
+			<option value="9">G.729AB @ 40ms</option>
+			<option value="10">G.726 16K</option>
+			<option value="11">G.726 24K</option>
+			<option value="12">G.726 32K</option>
+			<option value="13">G.726 40K</option>
+		</select>
+	</td>
+</tr>
+<tr>
+    <td width="50%" align="right"></td>
+    <td align="right"><input type="SUBMIT" name="btn_reg1" value="UnRegister" onClick="return voip_reg1()"></td>
+</tr>
+
+<tr><td colspan="2" background="liteblue.gif" height="12">&nbsp;</td></tr>
+
+<tr>
+  <td colspan="2"><b><a href="javascript:loadhelp('VOIP_voip','line')" tabindex="-1">Line 2</a></b></td>
+</tr>
+
+<tr>
+	<td width="50%" align="left" nowrap>Line Enable</td>
+	<td width="50%" align="right">
+		<select name="line2_enable" size="1" onchange="OnEnableChange();">
+			<option value="1">yes</option>
+			<option value="0">no</option>
+		</select>
+	</td>
+</tr>
+
+<tr>
+	<td width="50%" align="left" nowrap>Display Name</td>
+ <td width="50%" align="right"><input type="text" name="line2_tel_name" value="<% nvram_get("voip_user_user1_displayname"); %>" size="15" maxlength="15" ></td>
+</tr>
+
+<tr>
+	<td width="50%" align="left" nowrap>Telephone Number</td>
+    <td width="50%" align="right"><input type="text" name="line2_tel_num" value="<% nvram_get("voip_user_user1_username"); %>" size="15" maxlength="31" ></td>
+
+</tr>
+
+<tr>
+	<td width="50%" align="left" nowrap>User Name</td>
+    <td width="50%" align="right"><input type="text" name="line2_uid" value="<% nvram_get("voip_user_user1_authusername"); %>" size="15" maxlength="63" ></td>
+</tr>
+<tr>
+	<td width="50%" align="left" nowrap>Password</td>
+    <td width="50%" align="right"><input type="password" name="line2_password" value="<% nvram_get("voip_user_user1_password"); %>" size="15" maxlength="63" ></td>
+</tr>
+
+<tr>
+	<td width="50%" align="left" nowrap>Register Expire Time (sec.)</td>
+    <td width="50%" align="right"><input type="text" name="line2_reg_expire" value="<% nvram_get("voip_sip_expires1"); %>" size="8" maxlength="5" ></td>
+</tr>
+
+<tr>
+	<td width="50%" align="left" nowrap>Registration Head Start Time (sec.)</td>
+ <td width="50%" align="right"><input type="text" name="line2_reg_headstart" value="<% nvram_get("voip_sip_reg_head_start1"); %>" size="5" maxlength="5" ></td>
+</tr>
+
+<tr>
+	<td width="50%" align="left" nowrap>Distinctive Ring Valid</td>
+ <td width="50%" align="right"><input type="checkbox" name="line2_ring_valid"  onclick="chgRingID()"></td>
+</tr>
+<tr>
+	<td width="50%" align="left" nowrap>Prefer Ring ID</td>
+ <td width="50%" align="right"><input type="text" name="line2_ring_id" value="<% nvram_get("voip_user_user1_ringId"); %>" size="5" maxlength="5" ></td>
+</tr>
+
+<tr>
+	<td width="50%" align="left" nowrap>Prefer Fax Codec</td>
+	<td width="50%" align="right">
+	<select name="line2_pref_fax_codec" size="1">
+		<option value="1">Fax - G.711</option>
+		<option value="2">Fax - T.38</option>
+	</select>
+	</td>
+</tr>
+<tr>
+	<td width="50%" align="left" nowrap>Prefer Codec</td>
+	<td width="50%" align="right">
+		<select name="line2_pref_codec" size="1">
+			<option value="0">G.711 u-Law @ 10ms</option>
+			<option value="1">G.711 u-Law @ 20ms</option>
+			<option value="2">G.711 u-Law @ 30ms</option>
+			<option value="3">G.711 a-Law @ 10ms</option>
+			<option value="4">G.711 a-Law @ 20ms</option>
+			<option value="5">G.711 a-Law @ 30ms</option>
+			<option value="6">G.729AB @ 10ms</option>
+			<option value="7">G.729AB @ 20ms</option>
+			<option value="8">G.729AB @ 30ms</option>
+			<option value="9">G.729AB @ 40ms</option>
+			<option value="10">G.726 16K</option>
+			<option value="11">G.726 24K</option>
+			<option value="12">G.726 32K</option>
+			<option value="13">G.726 40K</option>
+		</select>
+	</td>
+</tr>
+
+<tr>
+    <td width="50%" align="right"></td>
+    <td align="right"><input type="SUBMIT" name="btn_reg2" value="UnRegister" onClick="return voip_reg2()"></td>
+</tr>
+
+<tr><td colspan="2" background="liteblue.gif" height="12">&nbsp;</td></tr>
+
+<tr>
+ <td colspan="2" align="center">
+  	<input type="SUBMIT" name="apply" value=" Apply " onclick="return checkdata();">
+	<input type="button" name="Cancel" value="Cancel"  onclick="location.href='VOIP_voip.htm'">
+</td>
+</tr>
+</table>
+<input type="hidden" name="todo" value="save">
+<input type="hidden" name="hd_out_tftp_enable" value= "<% nvram_get("prov_tftp_enable"); %>" >
+<input type="hidden" name="h_out_sip_enable" value= "<% nvram_get("voip_sip_ob_server_enable"); %>" >
+<input type="hidden" name="h_vad_enable" value= "<% nvram_get("voip_sip_vad_enable"); %>" >
+<input type="hidden" name="hd_line1_ring_valid" value= "<% nvram_get("voip_user_user0_ringId"); %>" >
+<input type="hidden" name="hd_line2_ring_valid" value= "<% nvram_get("voip_user_user1_ringId"); %>" >
+<input type="hidden" name="hd_line1Status" value= "<% nvram_get("voip_status_user0_register"); %>" >
+<input type="hidden" name="hd_line2Status" value= "<% nvram_get("voip_status_user1_register"); %>" >
+<input type="hidden" name="h_line1_enable" value="<% nvram_get("voip_user_user0_enable"); %>">
+<input type="hidden" name="h_line2_enable" value="<% nvram_get("voip_user_user1_enable"); %>">
+<input type="hidden" name="h_line1_pref_codec" value="<% voip_codec_selectedIndex("0"); %>">
+<input type="hidden" name="h_line2_pref_codec" value="<% voip_codec_selectedIndex("1"); %>">
+<input type="hidden" name="h_line1_pref_fax_codec" value="<% voip_fax_codec_selectedIndex("0"); %>">
+<input type="hidden" name="h_line2_pref_fax_codec" value="<% voip_fax_codec_selectedIndex("1"); %>">
+<input type="hidden" name="reg_state1" value="<% nvram_get("voip_status_user0_register"); %>"> 
+<input type="hidden" name="reg_state2" value="<% nvram_get("voip_status_user1_register"); %>">
+</form>
+</body>
+</html>

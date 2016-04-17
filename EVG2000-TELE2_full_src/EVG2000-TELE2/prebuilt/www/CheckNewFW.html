@@ -1,0 +1,111 @@
+<html>
+<head>
+<% meta_get(); %>
+<title>router form</title>
+<link rel="stylesheet" href="form.css">
+<% script_get(); %>
+<script language="javascript" type="text/javascript">
+<!-- hide script from old browsers
+
+var pchar = "|"; // progress char
+var maxchars = 60; 
+var delay_time = 1500; // msecs
+var charcount = <% fw_check_get_pgbarcount(); %>;
+
+function stop1()
+{
+	document.forms[0].stop.value = "yes";
+	return true;
+}
+function do_submit()
+{
+	var cf = document.forms[0];
+	cf.pgbarcount.value = charcount;
+	cf.submit();
+}
+function warning()
+{
+	var cf = document.forms[0];
+	if (!cf.ver_check_ena.checked) {
+		if (confirm("The firmware upgrade can contain valuable enhancements. Are you sure you want to turn off automatic checking?\r\n\r\nAfter you turn it off, you can re-enable it through the \"Router Upgrade\" page")) {
+			cf.ver_check_enable.value = 0;
+            do_submit();
+            return;
+		} else {
+			cf.ver_check_enable.value = 1;
+			cf.ver_check_ena.checked = 1;
+			return;
+		}
+	}
+
+	cf.ver_check_enable.value = 1;
+	do_submit();
+}
+
+function makeStr(strSize, fillChar)
+{
+	var temp = "";
+	for (i=0; i < strSize ; i ++)
+		temp = temp + fillChar;
+	return temp;
+}
+
+function updateProgress()
+{
+	var cf = document.forms[0];
+
+	if (charcount < maxchars) {
+		charcount ++;
+		cf.progress.value = makeStr(charcount,pchar);
+		setTimeout("updateProgress()",delay_time);
+	}
+
+	if ((charcount % 5) == 0)
+		do_submit();
+}
+
+//-->
+</script>
+</head>
+<body bgcolor="#ffffff" onLoad="loadhelp('VER_sel','');updateProgress();">
+<form name="formname" method="POST" action="fw_check.cgi"> 
+<table border="0" cellpadding="0" cellspacing="3" width="100%">
+<tr>
+<td colspan="2">
+<h1>Checking for Firmware Updates</H1>
+</td>
+</tr>
+
+<tr> <!-- RULE -->
+ <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+
+<tr>
+<td colspan="2">The router is checking the NETGEAR server to see if updated firmware available for your router. <br> <br>  This could take up to 90 seconds, please wait ...</td>
+</tr>
+<tr></tr>
+<tr></tr>
+
+<tr>
+<td nowrap align="center"><input type="text" name="progress" class="prgbar" value="" style="color: blue" size="60"></td>
+</tr>
+<tr></tr>
+<tr></tr>
+<TR>
+<TD colspan="2" nowrap valign=top><input type=checkbox NAME=ver_check_ena value="1" onclick='warning();' <% nvram_match("ver_check_enable", "1", "checked"); %>>Check for Updated Firmware Upon Log-in</td>
+</tr>
+<tr></tr>
+<tr></tr>
+
+<tr><td colspan="2" align="center">
+<input type="SUBMIT" name="Cancel" value=" Cancel " onClick="return stop1();">
+</td></tr>
+</table>
+<input type="hidden" name="stop" value="no">
+<input type="hidden" name="pgbarcount" value="<% fw_check_get_pgbarcount(); %>">
+<input type="hidden" name="ver_check_enable" value="<% nvram_get("ver_check_enable"); %>">
+</form>
+<p></p>
+</body>
+</html>
+

@@ -1,0 +1,170 @@
+<html>
+<head>
+<% meta_get(); %>
+<title>DDNS</title> 
+<link rel="stylesheet" href="form.css">
+<script language="javascript" type="text/javascript" src="utility.js"></script>
+<script language="javascript" type="text/javascript" src="msg.js"></script>
+<script language="javascript" type="text/javascript" src="linux.js"></script>
+<script language="javascript" type="text/javascript" src="func.js"></script>
+<script language="javascript" type="text/javascript">
+<!-- hide script from old browsers
+function loadSettings()
+{
+	var cf = document.forms[0];
+	var ddnsEnable = "<% ddns_cgi_get_param("ddns_enable"); %>" ;
+	if (ddnsEnable == "1"){
+	    cf.sysDNSActive.checked = true;
+	}else{
+        cf.sysDNSActive.checked = false;
+	}
+	cf.sysDNSHost.value = "<% ddns_cgi_get_param("ddns_hostname"); %>";
+	cf.sysDNSUser.value = "<% ddns_cgi_get_param("ddns_username"); %>";
+	cf.sysDNSPassword.value = "<% ddns_cgi_get_param("ddns_passwd"); %>";
+	cf.adslChoice.selectedIndex = cf.nowchoice.value;
+
+    disableDDNS();
+}
+
+function disableDDNS(){
+	with ( document.forms[0] ) {
+		if (sysDNSActive.checked == false){
+			sysDNSProviderlist.disabled =true;			sysDNSHost.disabled =true;
+			sysDNSUser.disabled =true;			sysDNSPassword.disabled =true;		
+
+		} else {
+			sysDNSProviderlist.disabled =false;			sysDNSHost.disabled =false;
+			sysDNSUser.disabled =false;			sysDNSPassword.disabled =false;		      
+		}
+	}
+}
+
+function ShowResult()
+{
+	openDataSubWin('DNS_ddns_st.htm','alwaysRaised,dependent,resizable,scrollbars,width=500,height=220,left=200,top=200');
+}
+
+function checkData()
+{
+ 	var cf = document.forms[0];
+	var msg = "";
+	var str;
+	if(cf.sysDNSActive.checked)
+	{
+	    msg+= checkBlank(cf.sysDNSHost, "Host Name");
+	    msg+= checkBlank(cf.sysDNSUser, "User Name");	
+	    msg+= checkBlank(cf.sysDNSPassword, "Password");	
+    
+    	dataToHidden(cf);
+    }
+
+    if (cf.sysDNSHost.value.match( /[^\x20-\x7E]/ ))
+    {
+		alert("Character is not allowed.");
+		return false;
+	}
+
+    if (cf.sysDNSUser.value.match( /[^\x20-\x7E]/ ))
+    {
+		alert("Character is not allowed.");
+		return false;
+	}
+	
+    if (cf.sysDNSPassword.value.match( /[^\x20-\x7E]/ ))
+    {
+		alert("Character is not allowed.");
+		return false;
+	}
+	
+	if (msg.length > 1)
+	{
+		alert(msg);
+		return false;
+	}
+    cf.nowchoice.value = -1;
+    return true;	
+}
+
+function selectPVC()
+{
+		
+    var tmpstr;
+	  var cf = document.forms[0];
+    var index = cf.adslChoice.selectedIndex;
+    tmpstr = "ddns.cgi?nowchoice=" + index ;
+		location.href = tmpstr;
+	//document.forms[0].submit();
+	
+}
+//-->
+</script> 
+</head>
+<body bgcolor="#ffffff" onload="loadSettings();loadhelp('DNS_ddns');document.forms[0].elements[0].focus();">
+<form name="formname" method="POST" action="ddns.cgi">
+<table border="0" cellpadding="0" cellspacing="3" width="100%">
+<tr>
+	<td colspan="2"><h1>Dynamic DNS</h1></td>
+</tr>
+
+<% vlan_cgi_show_item_begin("start"); %>
+<tr>
+  <td nowrap width="50%"><select name="adslChoice" size="1" onChange=selectPVC();>
+    <option value="0">WAN1</option>
+    <option value="1">WAN2</option>
+    <option value="2">WAN3</option>
+    <option value="3">WAN4</option>
+    <option value="4">WAN5</option>
+    <option value="5">WAN6</option>
+    <option value="6">WAN7</option>
+    <option value="7">WAN8</option>
+  </select></td>
+  <td nowrap width="50%" align="right">&nbsp;</td>
+</tr>
+<% vlan_cgi_show_item_begin("end"); %>
+
+<tr>  <!-- RULE -->
+  <td colspan="2" background="liteblue.gif" height="12">&nbsp; </td>
+</tr>
+<tr>
+	<td colspan="2">
+	<input type="checkbox" name="sysDNSActive" value="dnsEnable" onclick="disableDDNS()"><a href="javascript:loadhelp('DNS_ddns','setup')" tabindex="-1"><b>Use a Dynamic DNS Service</b></a></td>
+</tr>
+<tr>  <!-- RULE -->
+  <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+<tr>
+	<td width="50%" align="left" nowrap>
+	<a href="javascript:loadhelp('DNS_ddns','provider')" tabindex="-1"><b>Service Provider</b></a> 
+	</td>
+	<td width="50%" align="right">
+	<select name="sysDNSProviderlist" size="1"><option selected>www.DynDNS.org</option></select></td>
+</tr>
+<tr>
+	<td width="50%" align="left" nowrap>Host Name</td>
+    <td width="50%" align="right"><input type="text" name="sysDNSHost" size="32" maxlength="160" ></td>
+</tr>
+<tr>
+	<td width="50%" align="left">User Name</td>
+	<td width="50%" align="right"><input type="text" name="sysDNSUser" size="32" maxlength="60" ></td>
+</tr>
+<tr>
+	<td width="50%" align="left">Password</td>
+	<td width="50%" align="right"><input type="password" name="sysDNSPassword" size="32" maxlength="60" ></td>
+</tr>
+
+<tr><td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td></tr>
+<tr>
+	<td colspan="2" align="center">
+	<input type="submit" name="Apply" value="Apply" onClick="return checkData();">
+	<input type="button" name="Cancel" value="Cancel" onClick="location.href='DNS_ddns.htm'"> 
+	<input type="button" name="Button" value="Show Status" onClick="ShowResult();"></td>
+</tr>
+</table>
+<INPUT name=nowchoice type=hidden value= "<% ddns_cgi_get_param("ddns_wanifno"); %>">
+<% vlan_cgi_show_item_begin("markstart"); %>
+<INPUT name=adslChoice type=hidden value= "0">
+<% vlan_cgi_show_item_begin("markend"); %>
+
+</form>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<html><head>
+<% meta_get(); %>
+<link rel="stylesheet" href="help.css">
+</head>
+<body>
+<h1>WAN Setup Help </h1> 
+<p>Using this page, you can set up several parameters related the the WAN connection.</p>
+
+<a name="dod"></a>
+<p><b>Connect Automatically, as Required</b>
+</p><p>This option just can act when ppp is not set to be always on line.Normally, this option should be Enabled, so that an Internet
+connection will be made automatically, whenever Internet-bound traffic
+is detected. If this causes high connection costs, you can disable this
+setting. <br>If disabled, you must connect manually, using the sub-screen accessed from the "Connection Status" button on the <b>Status</b> screen.</p>
+<p>If you have an "Always on" connection, this setting has no effect.</p>
+
+<a name="spi"></a>
+<p><b>Disable Port Scan and DoS Protection</b> - The Firewall protects
+your LAN against Port Scans and Denial of Service (DoS) attacks. This
+should be disabled only in special circumstances.</p>
+
+<a name="ping"></a>
+<p><b> Respond To Ping On Internet Port </b>
+</p><p> If you want the EVG2000 to respond to a 'Ping' from the
+Internet, click this check box. This can be used as a diagnostic tool.
+This can be a security problem. You shouldn't check this box unless you
+have a specific reason to do so. </p>
+
+<a name="mtu"> </a>
+<p><b>MTU Size</b>
+</p><p>The normal MTU (Maximum Transmit Unit) value for most Ethernet
+networks is 1500 Bytes, or 1492 Bytes for PPPoE connections. For some
+ISPs you may need to reduce the MTU. But this is rarely required, and
+should not be done unless you are sure it is necessary for your ISP
+connection.</p>
+
+<p><b>To Apply Or Cancel  </b></p>
+<p>
+Click <b>Apply</b> to save the new settings to the Router.<br>
+
+Click <b>Cancel</b> to disregard any unsaved changes.<br>
+
+</p></body></html>

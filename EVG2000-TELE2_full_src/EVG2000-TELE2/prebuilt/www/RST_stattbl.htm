@@ -1,0 +1,75 @@
+<html>
+<head>
+<% meta_get(); %>
+<% rst_cgi_get_stats("cal_stats"); %>
+<title>Router Statistics</title> 
+<link rel="stylesheet" href="form.css">
+</head>
+<body bgcolor="#ffffff">
+<table width="102%" border="0">
+ <tr> <!-- RULE -->
+ <td background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+
+<tr>
+<td><b>System Up Time</b> <!><% rst_cgi_get_stats("uptime"); %><!></td>
+</tr>
+	
+ <table border="1" cellpadding="0" cellspacing="0" width="99%">
+ <tr> 
+ <td nowrap width="10%" align="center"> <span class="thead">Port</span> 
+ </td>
+ <td nowrap width="10%" align="center"> <span class="thead">Status</span> 
+ </td>
+ <td nowrap width="10%" align="center"> <span class="thead">TxPkts</span> 
+ </td>
+ <td nowrap width="10%" align="center"> <span class="thead">RxPkts</span> 
+ </td>
+ <td nowrap width="10%" align="center"> <span class="thead">Collisions</span> 
+ </td>
+ <td nowrap width="10%" align="center"> <span class="thead">Tx B/s</span> 
+ </td>
+ <td nowrap width="10%" align="center"> <span class="thead">Rx B/s</span> 
+ </td>
+ <td nowrap width="20%" align="center"> <span class="thead">Up Time</span> 
+ </td>
+ </tr>
+ <tr> 
+ <td nowrap width="10%" align="center"> <span class="thead">WAN</span> 
+ </td>
+ <td nowrap width="10%" align="center"> <span class="ttext"><% rst_cgi_get_stats("WAN", "status"); %></span> </td>
+ <td nowrap width="10%" align="center"> <span class="ttext"><% rst_cgi_get_stats("WAN", "tx_pkts"); %></span> </td>
+ <td nowrap width="10%" align="center"> <span class="ttext"><% rst_cgi_get_stats("WAN", "rx_pkts"); %></span> </td>
+ <td nowrap width="10%" align="center"> <span class="ttext"><% rst_cgi_get_stats("WAN", "collisions"); %></span> </td>
+ <td nowrap width="10%" align="center"> <span class="ttext"><% rst_cgi_get_stats("WAN", "tx_bit_rate"); %></span> </td>
+ <td nowrap width="10%" align="center"> <span class="ttext"><% rst_cgi_get_stats("WAN", "rx_bit_rate"); %></span> </td>
+ <td nowrap width="20%" align="center"> <span class="ttext"><% rst_cgi_get_stats("WAN", "uptime"); %></span> </td>
+ </tr>
+ <tr> 
+ <td nowrap width="10%" align="center"> <span class="thead">LAN</span> </td>
+ <td nowrap width="10%" align="center"> <span class="ttext"><% rst_cgi_get_stats("LAN", "status"); %></span> </td>
+ <td nowrap width="10%" align="center"> <span class="ttext"><% rst_cgi_get_stats("LAN", "tx_pkts"); %></span> </td>
+ <td nowrap width="10%" align="center"> <span class="ttext"><% rst_cgi_get_stats("LAN", "rx_pkts"); %></span> </td>
+ <td nowrap width="10%" align="center"> <span class="ttext"><% rst_cgi_get_stats("LAN", "collisions"); %></span> </td>
+ <td nowrap width="10%" align="center"> <span class="ttext"><% rst_cgi_get_stats("LAN", "tx_bit_rate"); %></span> </td>
+ <td nowrap width="10%" align="center"> <span class="ttext"><% rst_cgi_get_stats("LAN", "rx_bit_rate"); %></span> </td>
+ <td nowrap width="20%" align="center"> <span class="ttext"><% rst_cgi_get_stats("LAN", "uptime"); %></span> </td>
+ </tr>
+
+ <tr>
+ <td nowrap width="10%" align="center"><span class="thead">WLAN</span></td>
+ <td nowrap width="15%" align="center"><span class="ttext"><% rst_cgi_get_stats("wl0", "status"); %></span></td>
+ <td nowrap width="10%" align="center"><span class="ttext"><% rst_cgi_get_stats("wl0", "tx_pkts"); %></span></td>
+ <td nowrap width="10%" align="center"><span class="ttext"><% rst_cgi_get_stats("wl0", "rx_pkts"); %></span></td>
+ <td nowrap width="10%" align="center"><span class="ttext"><% rst_cgi_get_stats("wl0", "collisions"); %></span></td>
+ <td nowrap width="10%" align="center"><span class="ttext"><% rst_cgi_get_stats("wl0", "tx_bit_rate"); %></span></td>
+ <td nowrap width="10%" align="center"><span class="ttext"><% rst_cgi_get_stats("wl0", "rx_bit_rate"); %></span></td>
+ <td nowrap width="15%" align="center"><span class="ttext"><% rst_cgi_get_stats("wl0", "uptime"); %></span></td>
+ </tr>
+ </table>
+
+ 
+</table>
+</body>
+</html>
+

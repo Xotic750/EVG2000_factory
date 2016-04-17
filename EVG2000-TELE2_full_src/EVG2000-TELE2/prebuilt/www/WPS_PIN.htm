@@ -1,0 +1,97 @@
+<html>
+<head>
+<% meta_get(); %>
+<title>WPS Wizard</title>
+<link rel=Stylesheet href=form.css>
+<script language="javascript" type="text/javascript" src="func.js"></script>
+<script language="javascript" type="text/javascript">
+<!--
+function check_pin()
+{
+	var cf = document.forms[0];
+	var lpin = cf.PIN.value;
+	var accum = 0;
+
+	if (lpin.length != 4 && lpin.length != 8) {
+		alert("A PIN is a string of 4 or 8 digits.");
+		return false;
+	}
+
+	lpin = parseInt(cf.PIN.value);
+	if (isNaN(lpin)) {
+		alert("A PIN is a string of 4 or 8 digits.");
+		return false;
+	}
+
+	if (lpin.length == 8) {
+		lpin = parseFloat(cf.PIN.value);
+		accum += 3 * parseInt(lpin / 10000000) % 10;
+		accum += 1 * parseInt(lpin / 1000000) % 10;
+		accum += 3 * parseInt(lpin / 100000) % 10;
+		accum += 1 * parseInt(lpin / 10000) % 10;
+		accum += 3 * parseInt(lpin / 1000) % 10;
+		accum += 1 * parseInt(lpin / 100) % 10;
+		accum += 3 * parseInt(lpin / 10) % 10;
+		accum += 1 * parseInt(lpin / 1) % 10;
+
+		if (0 != (accum % 10)) {
+			alert("The checksum of PIN is not correct. Please check the PIN again.\n");
+			return false;
+		}
+	}
+
+	cf.Next.disabled = true;
+	cf.WPS_type[0].disabled = true;
+	cf.WPS_type[1].disabled = true;
+	return true;
+}
+//-->
+</script>
+</head>
+
+<body bgcolor="#ffffff" onload="loadhelp('WPS');document.forms[0].elements[0].focus();">
+
+<div class=Section1>
+<form method=post action="wps_pin.cgi" onSubmit="if (!check_pin()) return false;">
+<table class=MsoNormalTable border=0 cellspacing=3 cellpadding=0 width="100%">
+<tr><td colspan=2><h1>Add WPS Client</h1></td></tr>
+
+<tr>
+<td colspan=3 background=liteblue.gif>
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+</td>
+</tr>
+
+<tr></tr>
+<tr>
+<p class=MsoNormal>
+<td colspan=3><b>Select a setup method:</b></td></p>
+</tr>
+
+<tr>
+<td colspan="3"><input type="radio" name="WPS_type" value="Push Button" onClick="location.href='WPS.htm'">Push Button (recommended)</td></tr>
+<tr>
+<td colspan="3"><input type="radio" name="WPS_type" value="PIN Number" checked>PIN Number</td></tr>
+<tr>
+<td colspan="3"><p>This is the security PIN of the WPS client. While connecting, WPS-enabled adapters provide a randomly-generated security PIN.</p></td></tr>
+<TR>
+<TD><p>Enter Client's PIN:</p></TD>
+<TD nowrap><INPUT TYPE="TEXT" NAME="PIN" SIZE="8" MAXLENGTH="8" VALUE="" align="left"></TD>
+<TD>
+<p class=MsoNormal align=center>
+<INPUT TYPE="submit" VALUE="Next" NAME="Next">&nbsp;&nbsp;
+<o:p></o:p></p></TD>
+</TR>
+
+<tr>
+<td colspan="3" background=liteblue.gif>
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+</td>
+</tr>
+
+<tr></tr>
+</table>
+</form>
+</div>
+</body>
+</html>

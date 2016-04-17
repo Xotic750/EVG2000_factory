@@ -1,0 +1,62 @@
+<html>
+<head>
+<% meta_get(); %>
+<title>Routes</title> 
+<link rel="stylesheet" href="form.css">
+<% script_get(); %>
+<script language="javascript" type="text/javascript">
+<!-- 
+function chgSel(index)
+{
+ document.forms[0].select.value = index;
+ return true;
+}
+//-->
+</script> 
+</head>
+<body bgcolor="#ffffff" onload="loadhelp('STR_routes');document.forms[0].elements[0].focus();">
+<form name="frmRoutes" method="POST" action="routes.cgi">
+<table border="0" cellpadding="0" cellspacing="3" width="100%">
+<tr>
+<td colspan="2">
+	<h1>Static Routes</h1></td>
+</tr>
+<tr> <!-- RULE -->
+ <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+
+<tr>
+<td colspan="2">
+	<table border="1" cellpadding="2" cellspacing="0" width="100%">
+	<tr><td width="5%" align="center"><span class="thead"> &nbsp;</span></td>
+		<td width="5%" align="center"><span class="thead">#</span></td>
+		<td width="15%" align="center"><span class="thead">Active</b></td>
+		<td width="25%" align="center"><span class="thead">Name</b></td>
+		<td width="25%" align="center"><span class="thead">Destination</b></td>
+		<td width="25%" align="center"><span class="thead">Gateway</b></td>
+	</tr>
+	<% route_cgi_get_route_table(); %>
+	</table>
+</td>
+</tr>
+
+<tr> <!-- RULE -->
+ <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+
+<tr>
+	<td colspan="2" align="center">
+		<input type="SUBMIT" name="Add" value=" Add ">
+		<input type="submit" name="Edit" value=" Edit ">
+		<input type="submit" name="Delete" value="Delete">
+		<input type="hidden" name="select" value="-1">
+	</td>
+</tr>
+
+</table>
+</form>
+<p>
+</p>
+</body>
+</html>
+

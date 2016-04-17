@@ -1,0 +1,569 @@
+<html>
+<head>
+<% meta_get(); %>
+<title>LAN Settings</title> 
+<link rel="stylesheet" href="form.css">
+<STYLE TYPE="text/javascript">
+	classes.num.all.fontFamily = "Courier";
+	classes.num.all.fontSize = "10pt" ;
+</style>
+<% script_get(); %>
+<script language="javascript" type="text/javascript">
+<!--
+all_lan_ipaddr = new Array(4);
+all_lan_netmask = new Array(4);
+all_dhcp_start = new Array(4);
+all_dhcp_end = new Array(4);
+all_rip_enable = new Array(4);
+all_rip_multicast = new Array(4);
+all_rip_version = new Array(4);
+all_lan_proto = new Array(4);
+all_rip_direction = new Array(4);
+all_dmz_ip = new Array(4);
+all_dmz_enable = new Array(4);
+
+function loadarray()
+{
+    var cf = document.forms[0];
+    all_lan_ipaddr[0]=cf.lan_ipaddr;
+    all_lan_ipaddr[1]=cf.lan_ipaddr1;
+    all_lan_ipaddr[2]=cf.lan_ipaddr2;
+    all_lan_ipaddr[3]=cf.lan_ipaddr3;
+    //all_lan_ipaddr[4]=cf.lan_ipaddr4;
+    all_lan_netmask[0]=cf.lan_netmask;    
+    all_lan_netmask[1]=cf.lan_netmask1;
+    all_lan_netmask[2]=cf.lan_netmask2;
+    all_lan_netmask[3]=cf.lan_netmask3;
+    //all_lan_netmask[4]=cf.lan_netmask4;
+    all_dhcp_start[0]=cf.dhcp_start;
+    all_dhcp_start[1]=cf.dhcp_start1;
+    all_dhcp_start[2]=cf.dhcp_start2;
+    all_dhcp_start[3]=cf.dhcp_start3; 
+    //all_dhcp_start[4]=cf.dhcp_start4; 
+    all_dhcp_end[0]=cf.dhcp_end;
+    all_dhcp_end[1]=cf.dhcp_end1;
+    all_dhcp_end[2]=cf.dhcp_end2;
+    all_dhcp_end[3]=cf.dhcp_end3;
+    //all_dhcp_end[4]=cf.dhcp_end4;
+    all_rip_enable[0]=cf.rip_enable;
+    all_rip_enable[1]=cf.rip_enable1; 
+    all_rip_enable[2]=cf.rip_enable2;
+    all_rip_enable[3]=cf.rip_enable3; 
+    //all_rip_enable[4]=cf.rip_enable4; 
+    all_rip_multicast[0]=cf.rip_multicast;
+    all_rip_multicast[1]=cf.rip_multicast1; 
+    all_rip_multicast[2]=cf.rip_multicast2; 
+    all_rip_multicast[3]=cf.rip_multicast3;
+    //all_rip_multicast[4]=cf.rip_multicast4;
+    all_rip_version[0]=cf.rip_version;
+    all_rip_version[1]=cf.rip_version1; 
+    all_rip_version[2]=cf.rip_version2; 
+    all_rip_version[3]=cf.rip_version3;
+    //all_rip_version[4]=cf.rip_version4;
+    all_lan_proto[0]=cf.lan_proto;
+    all_lan_proto[1]=cf.lan_proto1;
+    all_lan_proto[2]=cf.lan_proto2;
+    all_lan_proto[3]=cf.lan_proto3;
+    //all_lan_proto[4]=cf.lan_proto4;
+    all_rip_direction[0]=cf.rip_dir;
+    all_rip_direction[1]=cf.rip_dir1;
+    all_rip_direction[2]=cf.rip_dir2;
+    all_rip_direction[3]=cf.rip_dir3;                         
+    //all_rip_direction[4]=cf.rip_dir4; 
+    all_dmz_ip[0]=cf.dmz_ip;
+    all_dmz_ip[1]=cf.dmz_ip1;
+    all_dmz_ip[2]=cf.dmz_ip2;
+    all_dmz_ip[3]=cf.dmz_ip3;  
+    
+    all_dmz_enable[0]=cf.dmz_enab; 
+    all_dmz_enable[1]=cf.dmz_enab1;
+    all_dmz_enable[2]=cf.dmz_enab2;
+    all_dmz_enable[3]=cf.dmz_enab3;
+                           
+    var selectlan = parseInt(cf.nowchoice.value);    
+    cf.LanChoice.selectedIndex = selectlan;  
+    showDhcpClient(selectlan);
+}
+
+function showDhcpClient(index)
+{
+    var cf = document.forms[0];
+    var lan_client_num = cf.client_num.value.split("#");  
+    cf.clients.value = lan_client_num[index];
+}
+
+function ChangeLanChoice()
+{
+    var tmpstr;
+    var cf = document.forms[0];
+    var index = cf.LanChoice.selectedIndex;
+    //LoadDate(stype);   
+    //showDhcpClient(stype);
+    
+    tmpstr = "lan2.cgi?nowchoice=" + index ;
+    location.href = tmpstr;
+}
+
+function loadSettings(index)
+{
+    var cf = document.forms[0];   
+    if (index == 100)
+        index = cf.nowchoice.value;
+    LoadDate(index);   
+    //showDhcpClient(index); 
+}
+
+
+function LoadDate(index)
+{
+	var cf = document.forms[0];
+	var lan_ipaddr = all_lan_ipaddr[index].value.split(".");
+	var lan_netmask = all_lan_netmask[index].value.split(".");
+	var dhcp_start = all_dhcp_start[index].value.split(".");
+	var dhcp_end = all_dhcp_end[index].value.split(".");
+	var lan_proto = all_lan_proto[index].value;
+	var rip_enable = all_rip_enable[index].value;
+	var rip_multicast = all_rip_multicast[index].value;
+	var rip_version = all_rip_version[index].value;
+	var dmz_ip = all_dmz_ip[index].value;
+	var dmz_enable = all_dmz_enable[index].value;
+
+	cf.sysLANIPAddr1.value = lan_ipaddr[0];
+	cf.sysLANIPAddr2.value = lan_ipaddr[1];
+	cf.sysLANIPAddr3.value = lan_ipaddr[2];
+	cf.sysLANIPAddr4.value = lan_ipaddr[3];
+	cf.sysLANSubnetMask1.value = lan_netmask[0];
+	cf.sysLANSubnetMask2.value = lan_netmask[1];
+	cf.sysLANSubnetMask3.value = lan_netmask[2];
+	cf.sysLANSubnetMask4.value = lan_netmask[3];
+
+	cf.rip_direction.selectedIndex = all_rip_direction[index].value;
+    //cf.rip_direction.selectedIndex = all_rip_direction[0];
+	if (rip_enable == "0")
+		cf.sysRIPVersion.selectedIndex = 0;
+	else
+	if (rip_version == "1")
+		cf.sysRIPVersion.selectedIndex = 1;
+	else
+	if (rip_version == "2")
+	{
+		if (rip_multicast == "0")
+			cf.sysRIPVersion.selectedIndex = 2;
+		else
+			cf.sysRIPVersion.selectedIndex = 3;
+	}
+
+    cf.dmzip1.value = lan_ipaddr[0];
+	cf.dmzip2.value = lan_ipaddr[1];
+	cf.dmzip3.value = lan_ipaddr[2];	
+	if (dmz_enable == "0")
+	{
+	    cf.dmz_enable.checked = false;
+		cf.dmzip4.value = '0';
+	}
+	else
+	{
+	    cf.dmz_enable.checked = true;
+	    cf.dmzip4.value = dmz_ip;
+	}
+    doEnableDMZ();    
+    
+	if (lan_proto == "dhcp")
+		cf.dhcp_server.checked = true;
+	else
+		cf.dhcp_server.checked = false;
+	cf.sysPoolStartingAddr1.value = dhcp_start[0];
+	cf.sysPoolStartingAddr2.value = dhcp_start[1];
+	cf.sysPoolStartingAddr3.value = dhcp_start[2];
+	cf.sysPoolStartingAddr4.value = dhcp_start[3];
+	cf.sysPoolFinishAddr1.value = dhcp_end[0];
+	cf.sysPoolFinishAddr2.value = dhcp_end[1];
+	cf.sysPoolFinishAddr3.value = dhcp_end[2];
+	cf.sysPoolFinishAddr4.value = dhcp_end[3];
+}
+
+function chgSel(index, where)
+{
+ document.forms[0].select.value = index;
+ document.forms[0].selectbelong.value = where;
+ return true;
+}
+function checkData()
+{
+	var cf = document.forms[0];
+	var msg = "";
+	var n1=parseInt(cf.sysPoolStartingAddr4.value);
+	var n2=parseInt(cf.sysPoolFinishAddr4.value);
+	var wan_ipaddr = cf.wan_ipaddr.value.split(".");
+	var wan_netmask = cf.wan_netmask.value.split(".");
+	var w_ipaddr = (wan_ipaddr[0] << 24) | (wan_ipaddr[1] << 16) | (wan_ipaddr[2] << 8)| (wan_ipaddr[3]);
+	var w_netmask = (wan_netmask[0]<< 24) | (wan_netmask[1]<< 16) | (wan_netmask[2]<< 8)| (wan_netmask[3]);
+	var l_ipaddr = (cf.sysLANIPAddr1.value << 24) | (cf.sysLANIPAddr2.value << 16) | (cf.sysLANIPAddr3.value << 8)| (cf.sysLANIPAddr4.value);
+	var l_netmask = (cf.sysLANSubnetMask1.value<< 24) | (cf.sysLANSubnetMask2.value<< 16) | (cf.sysLANSubnetMask3.value<< 8)| (cf.sysLANSubnetMask4.value);
+    var l_netaddr = l_ipaddr & l_netmask;
+    var l_bcastaddr = (l_ipaddr & l_netmask) | (~l_netmask);
+    var lan_netaddr_min = (l_ipaddr & l_netmask) + 1;
+	var lan_netaddr_max = ((l_ipaddr & l_netmask) | (~l_netmask)) - 1;
+
+	if(checkIP(cf.sysLANIPAddr1,cf.sysLANIPAddr2,cf.sysLANIPAddr3,cf.sysLANIPAddr4,254)
+        ||(parseInt(cf.sysLANIPAddr4.value,10)==0)||parseInt(cf.sysLANIPAddr1.value,10)>224
+        ||(l_ipaddr < lan_netaddr_min)||(l_ipaddr > lan_netaddr_max))
+		msg+= "Invalid IP Address\n";
+
+	if(checkIP(cf.sysLANSubnetMask1,cf.sysLANSubnetMask2,cf.sysLANSubnetMask3,cf.sysLANSubnetMask4,255)
+        ||!isNetmask(cf.sysLANSubnetMask1, cf.sysLANSubnetMask2, cf.sysLANSubnetMask3, cf.sysLANSubnetMask4)
+        ||(lan_netaddr_min > lan_netaddr_max))
+		msg+= "Invalid Subnet Mask\n";
+
+	if( isNaN(n1) || isNaN(n2)
+        || (n1<1||n1>254||n2<1||n2>254||n1>n2)
+        || ((n1 == n2) && (n1 == (l_ipaddr & 0xFF)))
+        || (n1 < (lan_netaddr_min & 0xFF)) || (n2 > (lan_netaddr_max & 0xFF))
+        || ((cf.sysPoolStartingAddr4.value & cf.sysLANSubnetMask4.value) != (cf.sysLANIPAddr4.value & cf.sysLANSubnetMask4.value))
+        || ((cf.sysPoolFinishAddr4.value & cf.sysLANSubnetMask4.value) != (cf.sysLANIPAddr4.value & cf.sysLANSubnetMask4.value)) )
+        msg+= "Invalid DHCP server Starting/Ending IP Address\n";
+
+	if (msg.length > 1)
+	{
+		alert(msg);
+		return false;
+	}
+	else
+	{
+        if ((w_ipaddr != 0) && 
+            (((l_netmask & w_netmask ) & l_ipaddr) == ((l_netmask & w_netmask ) & w_ipaddr)))
+        {
+            alert("IP address is conflicted with WAN IP subnet, please enter again.\n");
+		    return false;
+        }
+	}
+	
+	cf.lan_ipaddr.value = cf.sysLANIPAddr1.value+'.'+cf.sysLANIPAddr2.value+'.'+cf.sysLANIPAddr3.value+'.'+cf.sysLANIPAddr4.value;
+	cf.lan_netmask.value = cf.sysLANSubnetMask1.value+'.'+cf.sysLANSubnetMask2.value+'.'+cf.sysLANSubnetMask3.value+'.'+cf.sysLANSubnetMask4.value;
+	cf.dhcp_start.value = cf.sysLANIPAddr1.value+'.'+cf.sysLANIPAddr2.value+'.'+cf.sysLANIPAddr3.value+'.'+cf.sysPoolStartingAddr4.value;
+	cf.dhcp_end.value = cf.sysLANIPAddr1.value+'.'+cf.sysLANIPAddr2.value+'.'+cf.sysLANIPAddr3.value+'.'+cf.sysPoolFinishAddr4.value;
+	if (cf.dhcp_server.checked)
+    {
+        var old_start = cf.dhcp_start_old.value.split(".");
+        var old_end   = cf.dhcp_end_old.value.split(".");               
+        cf.lan_proto.value = "dhcp";
+        alert("Please do ipconfig /release and ipconfig /renew and enter the new IP in the browser in order to access the GUI again if LAN IP subnet will be changed.");
+    }
+	else
+    {
+		cf.lan_proto.value = "static";
+        alert("Please change your computer's IP address manually if LAN IP subnet will be changed.");
+    }
+    
+	if (cf.dmz_enable.checked)
+	{
+		if( parseInt(cf.dmzip4.value,10) == 0 )
+			msg += "DMZ Server is not a valid IP address.\n";
+	}
+
+    cf.dmzIP.value = cf.dmzip1.value+'.'+cf.dmzip2.value+'.'+cf.dmzip3.value+'.'+cf.dmzip4.value;
+
+    checkRip();
+    cf.nowchoice.value = -1;
+	return true;
+}
+
+function checkRip()
+{
+	var cf = document.forms[0];
+
+	if (cf.sysRIPVersion.selectedIndex == 0)
+	{
+		cf.rip_enable.value = "0";
+	}
+	else
+	if (cf.sysRIPVersion.selectedIndex == 1)
+	{
+		cf.rip_enable.value = "1";
+		cf.rip_version.value = "1";
+	}
+	else
+	if (cf.sysRIPVersion.selectedIndex == 2)
+	{
+		cf.rip_enable.value = "1";
+		cf.rip_version.value = "2";
+		cf.rip_multicast.value = "0";
+	}
+	else
+	if (cf.sysRIPVersion.selectedIndex == 3)
+	{
+		cf.rip_enable.value = "1";
+		cf.rip_version.value = "2";
+		cf.rip_multicast.value = "1";
+	}
+}
+    
+function dhcp_update(index)
+{
+    var cf = document.forms[0];
+    switch (index) {
+        case 1:
+            cf.sysPoolStartingAddr1.value=cf.sysLANIPAddr1.value;
+            cf.sysPoolFinishAddr1.value=cf.sysLANIPAddr1.value;
+            cf.dmzip1.value=cf.sysLANIPAddr1.value;
+            break;
+        case 2:
+            cf.sysPoolStartingAddr2.value=cf.sysLANIPAddr2.value;
+            cf.sysPoolFinishAddr2.value=cf.sysLANIPAddr2.value;
+            cf.dmzip2.value=cf.sysLANIPAddr2.value;
+            break;
+        case 3:
+            cf.sysPoolStartingAddr3.value=cf.sysLANIPAddr3.value;
+            cf.sysPoolFinishAddr3.value=cf.sysLANIPAddr3.value;
+            cf.dmzip3.value=cf.sysLANIPAddr3.value;
+            break;
+        case 4:
+            cf.sysPoolStartingAddr3.value=cf.sysLANIPAddr3.value;
+            cf.sysPoolFinishAddr3.value=cf.sysLANIPAddr3.value;
+            cf.dmzip3.value=cf.sysLANIPAddr3.value;
+            break;
+    }
+}
+
+function doEnableDMZ()
+{
+    var cf = document.forms[0];
+    
+    cf.dmzip1.disabled = true;
+	cf.dmzip2.disabled = true;
+	cf.dmzip3.disabled = true;
+    if (cf.dmz_enable.checked == true)
+	    cf.dmzip4.disabled = false;
+    else
+	    cf.dmzip4.disabled = true;    
+}
+
+function loadalert()
+{
+    var doalert = "<% lan_cgi_get_rsvip_table("doalert"); %>";
+    loadhelp('LAN_lan');
+    document.forms[0].elements[0].focus();
+    if (doalert == 1)
+        alert("LAN IP Mask conflict with another group.");
+}
+
+//-->
+</script> 
+</head>
+<body bgcolor="#ffffff" onload="loadarray();loadSettings(100);loadhelp('LAN_lan');loadalert();">
+<form name="formname" method="POST" action="lan2.cgi">
+	<table border="0" cellpadding="0" cellspacing="3" width="100%">
+		<tr>
+			<td colspan="2">
+				<h1>LAN IP Setup</h1> 
+		    </td>
+	    </tr>
+
+<tr>  <!-- RULE -->
+  <td colspan="2" background="liteblue.gif" height="12">&nbsp; </td>
+</tr>
+
+<tr>
+    <td colspan="2">
+    <select name="LanChoice" onChange="ChangeLanChoice()" size="1">
+	<option value=0><% lan_cgi_get_grpname(1); %></option>
+	<option value=1><% lan_cgi_get_grpname(2); %></option>
+	<option value=2><% lan_cgi_get_grpname(3); %></option>
+	<option value=3><% lan_cgi_get_grpname(4); %></option>
+    </select>
+    </td>
+</tr>
+	
+<tr> <!-- RULE -->
+ <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+
+<tr>
+	<td nowrap colspan="2"><p><b><a href="javascript:loadhelp('LAN_lan','tcp')" tabindex="-1">LAN TCP/IP Setup</a></b></p></td>
+	</tr>
+<tr>
+<td nowrap>IP Address</td>
+<td nowrap align="right" class="num">
+    <input type="text" name="sysLANIPAddr1" class="num" size="4" maxlength="3" onChange="dhcp_update(1)">.
+    <input type="text" name="sysLANIPAddr2" class="num" size="4" maxlength="3" onChange="dhcp_update(2)">.
+    <input type="text" name="sysLANIPAddr3" class="num" size="4" maxlength="3" onChange="dhcp_update(3)">.
+    <input type="text" name="sysLANIPAddr4" class="num" size="4" maxlength="3" onChange="dhcp_update(4)"></td>
+</tr>
+<tr>
+<td nowrap>IP Subnet Mask</td>
+<td nowrap align="right" class="num">
+    <input type="text" name="sysLANSubnetMask1" class="num" size="4" maxlength="3" >.
+    <input type="text" name="sysLANSubnetMask2" class="num" size="4" maxlength="3" >.
+    <input type="text" name="sysLANSubnetMask3" class="num" size="4" maxlength="3" >.
+    <input type="text" name="sysLANSubnetMask4" class="num" size="4" maxlength="3" ></td>
+</tr>
+
+<tr>
+	<td nowrap>RIP Direction</td>
+	<td align="right">
+		<select name="rip_direction" size="1"> 
+			<option value="0">None</option>
+			<option value="1">Both</option>
+			<option value="2">In Only</option>
+			<option value="3">Out Only</option>
+		</select></td>
+</tr>
+<tr>
+	<td nowrap>RIP Version	</td>
+	<td align="right">
+		<select name="sysRIPVersion" size="1">
+		    <option value="0">Disabled</option>
+			<option value="1">RIP-1</option>
+			<option value="2">RIP-2B</option>
+			<option value="3">RIP-2M</option>
+        </select></td>
+</tr>
+
+<tr>
+    <td colspan="2" background="liteblue.gif" height="12">&nbsp; </td>
+</tr>
+
+<tr>
+	<td nowrap align="left" width="50%"><input type="checkbox" name="dmz_enable" value="dmz_enable" onclick="doEnableDMZ();">
+    <a href="javascript:loadhelp('LAN_lan','dmz')" tabindex="-1"><b>Default DMZ Server</b></a></td>
+    <td nowrap align="right"><span class="num"><input type="text" name="dmzip1" class="num" size="4" maxlength="3"  >.<input type="text" name="dmzip2" class="num" size="4" maxlength="3"  >.<input type="text" name="dmzip3" class="num" size="4" maxlength="3">.<input type="text" name="dmzip4" class="num" size="4" maxlength="3" ></span></td>
+</tr>
+
+<tr><!-- RULE -->
+ <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+
+<tr>
+	<td colspan="2" nowrap><input type="checkbox" name="dhcp_server" value="dhcp_server"><a href="javascript:loadhelp('LAN_lan','dhcp')" tabindex="-1"><b> Use Router as DHCP Server</b> </a> 
+	</td>
+</tr>
+
+<tr>
+<td nowrap>Starting IP Address</td>
+<td nowrap align="right" class="num">
+	<input type="text" name="sysPoolStartingAddr1" class="num" size="4" maxlength="3" disabled="true">.
+	<input type="text" name="sysPoolStartingAddr2" class="num" size="4" maxlength="3" disabled="true">.
+	<input type="text" name="sysPoolStartingAddr3" class="num" size="4" maxlength="3" disabled="true">.
+	<input type="text" name="sysPoolStartingAddr4" class="num" size="4" maxlength="3" ></td>
+</tr>
+<tr>
+<td nowrap>Ending IP Address</td>
+<td nowrap align="right" class="num">
+	<input type="text" name="sysPoolFinishAddr1" class="num" size="4" maxlength="3" disabled="true">.
+	<input type="text" name="sysPoolFinishAddr2" class="num" size="4" maxlength="3" disabled="true">.
+	<input type="text" name="sysPoolFinishAddr3" class="num" size="4" maxlength="3" disabled="true">.
+	<input type="text" name="sysPoolFinishAddr4" class="num" size="4" maxlength="3" ></td>
+</tr>
+
+<tr> <!-- RULE -->
+ <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+
+<tr>
+	<td nowrap colspan="2"><a href="javascript:loadhelp('LAN_lan','reserved')" tabindex="-1"><b>Address Reservation</b></a></td>
+</tr>
+
+<tr>
+<td colspan="2">
+	<table border="1" cellpadding="2" cellspacing="0" width="100%">
+	<tr>
+		<td nowrap align="center" width="6%"><span class="thead"> &nbsp;</span></td>
+		<td nowrap align="center" width="6%"><span class="thead"># </span></td>
+		<td nowrap align="center"><span class="thead">IP Address</span></td>
+		<td nowrap align="center"><span class="thead">Device Name</span></td>
+		<td nowrap align="center"><span class="thead">Mac Address</span></td>
+	</tr>
+	<% lan_cgi_get_rsvip_table(); %>
+	</table>
+</td>
+</tr>
+
+<tr>
+<td colspan="2" align="center">
+	<input type="Submit" name="Add" value=" Add " >
+	<input type="Submit" name="Edit" value=" Edit ">
+	<input type="Submit" name="Delete" value="Delete">
+	<input type="hidden" name="select" value="-1">
+	<input type="hidden" name="selectbelong" value="-1">
+</td>
+</tr>
+
+<tr> <!-- RULE -->
+ <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+
+<tr>
+  <td nowrap>Number of Dynamic DHCP Clients :&nbsp;&nbsp;</td>
+  <td nowrap><input name="clients" type="text" disabled="true" style = "border:1px #FFFFFF" value=""></td>
+</tr>
+
+ <tr>  <!-- RULE -->
+  <td colspan="2" background="liteblue.gif" height="12">&nbsp; </td>
+</tr>
+
+<tr>
+	<td colspan="2" align="center">
+	<input type="SUBMIT" name="Apply" value="Apply" onClick="return checkData();">
+	<input type="BUTTON" name="Cancel" value="Cancel" onClick="LoadDate(<% nvram_get("dhcp_now_reserve_no"); %>);"></td>
+</tr>
+</table>
+
+  <INPUT name=nowchoice type=hidden value= "<% nvram_get("dhcp_now_reserve_no"); %>">
+  <INPUT name=dmzIP type=hidden value= "">
+  <INPUT name=client_num type=hidden value= "<% getnumberofDHCPclients(); %>">
+  <INPUT name=lan_ipaddr type=hidden value= "<% nvram_get("lan_ipaddr"); %>">
+  <INPUT name=lan_netmask type=hidden value= "<% nvram_get("lan_netmask"); %>">
+  <INPUT name=lan_proto type=hidden value= "<% nvram_get("lan_proto"); %>">
+  <INPUT name=dhcp_start type=hidden value= "<% nvram_get("dhcp_start"); %>">
+  <INPUT name=dhcp_end type=hidden value= "<% nvram_get("dhcp_end"); %>">
+  <INPUT name=dhcp_start_old type=hidden value= "<% nvram_get("dhcp_start"); %>">
+  <INPUT name=dhcp_end_old type=hidden value= "<% nvram_get("dhcp_end"); %>">
+  <INPUT name=wan_ipaddr type=hidden value= "<% nvram_get("wan_ipaddr"); %>">
+  <INPUT name=wan_netmask type=hidden value= "<% nvram_get("wan_netmask"); %>">
+  <INPUT name=dmz_ip type=hidden value= "<% nvram_get("fw_dmz_ip4"); %>">
+  <INPUT name=dmz_enab type=hidden value= "<% nvram_get("fw_dmz_enab"); %>">
+  <INPUT name=rip_enable type=hidden value= "<% nvram_get("rip_enable"); %>">
+  <INPUT name=rip_multicast type=hidden value= "<% nvram_get("rip_multicast"); %>">
+  <INPUT name=rip_version type=hidden value= "<% nvram_get("rip_version"); %>">
+  <INPUT name=rip_dir type=hidden value= "<% nvram_get("rip_dir"); %>">
+  
+  <INPUT name=lan_ipaddr1 type=hidden value= "<% nvram_get("lan_ipaddr1"); %>">
+  <INPUT name=lan_netmask1 type=hidden value= "<% nvram_get("lan_netmask1"); %>">
+  <INPUT name=lan_proto1 type=hidden value= "<% nvram_get("lan_proto1"); %>">
+  <INPUT name=dhcp_start1 type=hidden value= "<% nvram_get("dhcp_start1"); %>">
+  <INPUT name=dhcp_end1 type=hidden value= "<% nvram_get("dhcp_end1"); %>">
+  <INPUT name=dmz_ip1 type=hidden value= "<% nvram_get("fw_dmz1_ip4"); %>">
+  <INPUT name=dmz_enab1 type=hidden value= "<% nvram_get("fw_dmz1_enab"); %>">
+  <INPUT name=rip_enable1 type=hidden value= "<% nvram_get("rip_enable1"); %>">
+  <INPUT name=rip_multicast1 type=hidden value= "<% nvram_get("rip_multicast1"); %>">
+  <INPUT name=rip_version1 type=hidden value= "<% nvram_get("rip_version1"); %>">
+  <INPUT name=rip_dir1 type=hidden value= "<% nvram_get("rip_dir1"); %>">
+
+  <INPUT name=lan_ipaddr2 type=hidden value= "<% nvram_get("lan_ipaddr2"); %>">
+  <INPUT name=lan_netmask2 type=hidden value= "<% nvram_get("lan_netmask2"); %>">
+  <INPUT name=lan_proto2 type=hidden value= "<% nvram_get("lan_proto2"); %>">
+  <INPUT name=dhcp_start2 type=hidden value= "<% nvram_get("dhcp_start2"); %>">
+  <INPUT name=dhcp_end2 type=hidden value= "<% nvram_get("dhcp_end2"); %>">
+  <INPUT name=dmz_ip2 type=hidden value= "<% nvram_get("fw_dmz2_ip4"); %>">
+  <INPUT name=dmz_enab2 type=hidden value= "<% nvram_get("fw_dmz2_enab"); %>">
+  <INPUT name=rip_enable2 type=hidden value= "<% nvram_get("rip_enable2"); %>">
+  <INPUT name=rip_multicast2 type=hidden value= "<% nvram_get("rip_multicast2"); %>">
+  <INPUT name=rip_version2 type=hidden value= "<% nvram_get("rip_version2"); %>">
+  <INPUT name=rip_dir2 type=hidden value= "<% nvram_get("rip_dir2"); %>">
+  
+  <INPUT name=lan_ipaddr3 type=hidden value= "<% nvram_get("lan_ipaddr3"); %>">
+  <INPUT name=lan_netmask3 type=hidden value= "<% nvram_get("lan_netmask3"); %>">
+  <INPUT name=lan_proto3 type=hidden value= "<% nvram_get("lan_proto3"); %>">
+  <INPUT name=dhcp_start3 type=hidden value= "<% nvram_get("dhcp_start3"); %>">
+  <INPUT name=dhcp_end3 type=hidden value= "<% nvram_get("dhcp_end3"); %>">  
+  <INPUT name=dmz_ip3 type=hidden value= "<% nvram_get("fw_dmz3_ip4"); %>">
+  <INPUT name=dmz_enab3 type=hidden value= "<% nvram_get("fw_dmz3_enab"); %>">
+  <INPUT name=rip_enable3 type=hidden value= "<% nvram_get("rip_enable3"); %>">
+  <INPUT name=rip_multicast3 type=hidden value= "<% nvram_get("rip_multicast3"); %>">
+  <INPUT name=rip_version3 type=hidden value= "<% nvram_get("rip_version3"); %>">
+  <INPUT name=rip_dir3 type=hidden value= "<% nvram_get("rip_dir3"); %>">
+</form>
+<p>
+</p>
+</body>
+</html>

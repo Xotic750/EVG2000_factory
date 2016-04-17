@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<% meta_get(); %>
+<meta HTTP-EQUIV="Expires" CONTENT="Mon, 06 Jan 1990 00:00:01 GMT"> 
+<title>LAN Settings</title> 
+<link rel="stylesheet" href="form.css">
+<STYLE TYPE="text/javascript">
+	classes.num.all.fontFamily = "Courier";
+	classes.num.all.fontSize = "10pt" ;
+</style>
+<% script_get(); %>
+<script language="javascript" type="text/javascript">
+<!--
+function chgSel(index)
+{
+ document.forms[0].select.value = index;
+ return true;
+}
+function checkData()
+{
+	var cf = document.forms[0];
+	var msg = "";
+	var n3=parseInt(cf.sysLANIPAddr1.value);
+
+	if(checkIP(cf.sysLANIPAddr1,cf.sysLANIPAddr2,cf.sysLANIPAddr3,cf.sysLANIPAddr4,254)||(parseInt(cf.sysLANIPAddr4.value)==0))
+		msg+= "Invalid IP Address, please enter again\n";
+	if(checkIP(cf.sysLANSubnetMask1,cf.sysLANSubnetMask2,cf.sysLANSubnetMask3,cf.sysLANSubnetMask4,255))
+		msg+= "Invalid Subnet Mask, please enter again\n";
+	if(n3>=224)
+	    msg+= "Invalid IP Address, please enter again\n";	
+	if (msg.length > 1)
+	{
+		alert(msg);
+		return false;
+	}
+	cf.lan_ipaddr.value = cf.sysLANIPAddr1.value+'.'+cf.sysLANIPAddr2.value+'.'+cf.sysLANIPAddr3.value+'.'+cf.sysLANIPAddr4.value;
+	cf.lan_netmask.value = cf.sysLANSubnetMask1.value+'.'+cf.sysLANSubnetMask2.value+'.'+cf.sysLANSubnetMask3.value+'.'+cf.sysLANSubnetMask4.value;
+
+	return true;
+}
+
+function loadSettings()
+{
+	var cf = document.forms[0];
+	var lan_ipaddr = cf.lan_ipaddr.value.split(".");
+	var lan_netmask = cf.lan_netmask.value.split(".");
+	var lan_proto = cf.lan_proto.value;
+
+	cf.sysLANIPAddr1.value = lan_ipaddr[0];
+	cf.sysLANIPAddr2.value = lan_ipaddr[1];
+	cf.sysLANIPAddr3.value = lan_ipaddr[2];
+	cf.sysLANIPAddr4.value = lan_ipaddr[3];
+	cf.sysLANSubnetMask1.value = lan_netmask[0];
+	cf.sysLANSubnetMask2.value = lan_netmask[1];
+	cf.sysLANSubnetMask3.value = lan_netmask[2];
+	cf.sysLANSubnetMask4.value = lan_netmask[3];
+}
+    
+//-->
+</script> 
+</head>
+<body bgcolor="#ffffff" onload="loadSettings();loadhelp('LAN_lan');document.forms[0].elements[0].focus();">
+<form name="frmLan" method="POST" action="lan.cgi">
+	<table border="0" cellpadding="0" cellspacing="3" width="100%">
+		<tr>
+			<td colspan="2">
+				<h1>LAN IP Setup</h1> 
+		</td>
+	</tr>
+	
+<tr> <!-- RULE -->
+ <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+
+<tr>
+	<td nowrap colspan="2"><p><b><a href="javascript:loadhelp('LAN_lan','tcp')" tabindex="-1">LAN TCP/IP Setup</a></b></p></td>
+	</tr>
+<tr>
+<td nowrap>IP Address</td>
+<td nowrap align="right" class="num">
+    <input type="text" name="sysLANIPAddr1" class="num" size="4" maxlength="3" tabindex="2">.
+    <input type="text" name="sysLANIPAddr2" class="num" size="4" maxlength="3" tabindex="3">.
+    <input type="text" name="sysLANIPAddr3" class="num" size="4" maxlength="3" tabindex="4">.
+    <input type="text" name="sysLANIPAddr4" class="num" size="4" maxlength="3" tabindex="5"></td>
+</tr>
+<tr>
+<td nowrap>IP Subnet Mask</td>
+<td nowrap align="right" class="num">
+    <input type="text" name="sysLANSubnetMask1" class="num" size="4" maxlength="3" tabindex="6">.
+    <input type="text" name="sysLANSubnetMask2" class="num" size="4" maxlength="3" tabindex="7">.
+    <input type="text" name="sysLANSubnetMask3" class="num" size="4" maxlength="3" tabindex="8">.
+    <input type="text" name="sysLANSubnetMask4" class="num" size="4" maxlength="3" tabindex="9"></td>
+</tr>
+
+<tr> <!-- RULE -->
+ <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+
+<tr>
+	<td colspan="2" align="center">
+	<input type="SUBMIT" name="action" value="Apply" onClick="return checkData()" tabindex="27">
+	<input type="BUTTON" name="Cancel" value="Cancel" onClick="loadSettings();" tabindex="28"></td>
+</tr>
+</table>
+  <INPUT name=lan_ipaddr type=hidden value= "<% nvram_get("lan_ipaddr"); %>">
+  <INPUT name=lan_netmask type=hidden value= "<% nvram_get("lan_netmask"); %>">
+  <INPUT name=lan_proto type=hidden value= "static">
+  <INPUT name=rip_enable type=hidden value= "0">
+  <INPUT name=rip_multicast type=hidden value= "<% nvram_get("rip_multicast"); %>">
+  <INPUT name=rip_version type=hidden value= "<% nvram_get("rip_version"); %>">
+  <INPUT name=dhcp_start type=hidden value= "<% nvram_get("dhcp_start"); %>">
+  <INPUT name=dhcp_end type=hidden value= "<% nvram_get("dhcp_end"); %>">  
+</form>
+<p>
+</p>
+</body>
+</html>
+
+
+

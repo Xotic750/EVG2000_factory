@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>klprPDE</string>
+	<key>CFBundleIdentifier</key>
+	<string>edu.ncsu.pde.KLPR</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>klprPDE</string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
+	<key>CFBundleSignature</key>
+	<string>KLPR</string>
+	<key>CFBundleVersion</key>
+	<string>1.0</string>
+	<key>CFPlugInDynamicRegistration</key>
+	<string>NO</string>
+	<key>CFPlugInFactories</key>
+	<dict>
+		<key>DCB1416E-1C6A-11D8-AAFB-000A95BA4184</key>
+		<string>MyCFPlugInFactory</string>
+	</dict>
+	<key>CFPlugInTypes</key>
+	<dict>
+		<key>BDB091F4-E57F-11D3-B5CC-0050E4603277</key>
+		<array>
+			<string>DCB1416E-1C6A-11D8-AAFB-000A95BA4184</string>
+		</array>
+	</dict>
+</dict>
+</plist>

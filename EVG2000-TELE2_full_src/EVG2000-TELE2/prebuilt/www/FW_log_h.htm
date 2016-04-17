@@ -1,0 +1,59 @@
+<html>
+<head>
+<% meta_get(); %>
+<title>
+NETGEAR Help 
+</title>
+<link rel="stylesheet" href="help.css">
+</head>
+<body>
+<h1>Logs Help</h1> 
+
+<p>Your Router will log security-related events such as denied incoming service requests, hacker probes, and administrator logins, according to your settings on this screen.
+
+<p>If you have set up content filtering on the <i>Block Sites</i> page, you can also log when someone on your network tried to access a blocked site. 
+
+<p>If you have e-mail notification on, you'll receive these logs in an e-mail message. If you don't have e-mail notification set up, you can view the logs here.
+</p>
+
+<p>To delete all log entries:
+<ul>
+<li>Click <b>Clear Log</b>.
+</ul>
+<p>To see the most recent entries:
+<ul>
+<li>Click <b>Refresh</b>.
+</ul>
+<p>To email the log now:
+<ul>
+<li>Click <b>Send Log</b>.
+</ul>
+
+<a name="contents"></a>
+<P><b>Include in Log</b>
+<p>Use these checkboxes to determine which events are included in the log. Checking all options will increase the size of the log, so it is good practice to disable any events which are not really required.
+<ul>
+<li>Attempted access to blocked sites - If checked, attempted Internet accesses which were blocked are logged. 
+<li>Connections to the Web-based interface of this Router - If checked, this will log connections TO this Router, rather than through this Router to the Internet.
+<li>Router operation - If checked, other Router operations (not covered by the selections above) will be logged.
+<li>Known DoS attacks and Port Scans - If checked, Denial of Service attacks, as well as port scans, will be logged.
+</ul>
+
+<a name="syslog"></a>
+<P><b>Syslog</b>
+<p>The Logs can be send to a Syslog server. Enable one of these three options, as required:
+<ul>
+<li> Disable - Select this if you don't have a Syslog server.
+<li> Broadcast on LAN  - the Syslog data is broadcast, rather than sent to a specific Syslog server. Use this if your Syslog Server does not have a fixed IP address.
+<li> Send to this Syslog server IP address - If your Syslog server has a fixed IP address, select this option, and enter the IP address of your Syslog server. 
+</ul>
+
+<p>
+&nbsp;
+</p>
+
+</body>
+
+</html>
+
+

@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<% meta_get(); %>
+<meta HTTP-EQUIV="Expires" CONTENT="Mon, 06 Jan 1990 00:00:01 GMT"> 
+<title>Device Mode</title> 
+<link rel="stylesheet" href="form.css">
+<STYLE TYPE="text/javascript">
+	classes.num.all.fontFamily = "Courier";
+	classes.num.all.fontSize = "10pt" ;
+</style>
+<% script_get(); %>
+</head>
+<body bgcolor="#ffffff">
+<form method="POST" action="br.cgi">
+<table border="0" cellpadding="0" cellspacing="3" width="100%">
+<tr>
+	<td colspan="2"><h1>Device Mode</h1></td>
+</tr>
+
+<tr>  <!-- RULE -->
+  <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+<tr>
+	<td width="50%" align="left" nowrap>Device Name</td>
+    <td width="50%" align="left"></td>
+</tr>
+<tr>
+	<td width="50%" align="left" nowrap>Device Mode </td>
+	<td width="50%" align="left">
+	<select name="device_mode" size="1"> 
+	<option value="route">Router (Modem + Router)</option>
+	<option value="bridge">Modem (Modem only)</option>
+ </select></td>
+</tr>
+
+
+<tr>  <!-- RULE -->
+  <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+<tr>
+	<td colspan="2" align="center">
+	<input type="SUBMIT" name="cfAlert_Apply" value="Apply"></td>
+
+
+</tr>
+</table>
+
+</form>
+<p>
+</p>
+</body>
+</html>

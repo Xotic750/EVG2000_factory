@@ -1,0 +1,3 @@
+# Aliases extracted from modules themselves.
+alias net-pf-16-proto-6 xfrm_user
+alias pci:v*d*sv*sd*bc02sc80i* wl

@@ -1,0 +1,12 @@
+/* title of our first setting */
+"Setting #1" = "Setting #1";
+
+/* custom pane title */
+"Custom Feature" = "Kerberized Printing";
+
+/* the value of setting #1 when not selected */
+"Off" = "Off";
+
+/* the value of setting #1 when selected */
+"On" = "On";
+

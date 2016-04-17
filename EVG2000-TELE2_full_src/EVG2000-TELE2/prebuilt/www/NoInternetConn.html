@@ -1,0 +1,42 @@
+<html>
+<head>
+<% meta_get(); %>
+<title>router form</title>
+<link rel="stylesheet" href="form.css">
+<% script_get(); %>
+<script language="javascript" type="text/javascript">
+<!--
+function goHome() {
+ location.href="start_multiwan.htm"
+}
+//-->
+</script>
+</head>
+<body bgcolor="#ffffff">
+<form name="formname" action="ph_fail" method="POST"> 
+<table border="0" cellpadding="0" cellspacing="3" width="100%">
+<tr>
+<td colspan="2" align="center">
+<h1>No Internet Connection </H1>
+</td>
+</tr>
+
+<tr>
+<td colspan="2" align="center">
+    No Internet connection is detected, the router cannot check the NETGEAR server for updated firmware. After setting up your Internet connection, go to the "Router Upgrade" page to check for updated firmware.
+</td>
+</tr>
+
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr>
+<td colspan="2" align="center">
+<input type="Button" name="Button" value="OK" onClick="goHome();">
+</tr>
+</table>
+</form>
+<p></p>
+</body>
+
+</html>

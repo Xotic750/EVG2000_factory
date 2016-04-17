@@ -1,0 +1,307 @@
+<html><head>
+<% meta_get(); %>
+<title>USB Advanced Settings</title> 
+<link rel="stylesheet" href="form.css">
+<style type="text/javascript">
+    classes.num.all.fontFamily = "Courier";
+    classes.num.all.fontSize = "10pt" ;
+</style>
+<% script_get(); %>
+<script language="javascript" type="text/javascript">
+<!--
+
+function remove_disk()
+{
+    var msg = ""
+	cf=document.forms[0];
+	
+	if(cf.usb_num.value == 0)
+	{
+        msg+= "No Disk.\n";
+    }
+    if (msg.length > 1)
+	{
+		alert(msg);
+		return false;
+    }
+    return true;
+}	
+
+function edit_folder()
+{
+	cf = document.forms[0];
+	if(cf.no_usb_device.value == 1)
+	{
+	    alert("No Disk.");
+		return false;
+	}
+	if(cf.select.value == -1)
+	{
+		alert("Please choose a Folder.");
+		return false;
+	}
+	cf.action.value = "edit";
+	document.forms[0].submit();
+}
+
+function delete_folder()
+{
+	cf=document.forms[0];
+	if(cf.no_usb_device.value == 1)
+	{
+	    alert("No Disk.");
+		return false;
+	}
+	if(cf.select.value == -1)
+	{
+		alert("Please choose a Folder.\n");
+		return false;
+	}
+	return true;
+}
+
+function checkData()
+{
+	var cf=document.forms[0];
+	var space_flag=0;
+	var msg = "";
+	var dev_name=cf.deviceName.value;
+
+	msg+= checkBlank(cf.deviceName, "deviceName");
+	msg+= checkBlank(cf.workGroup, "workGroup");
+	if (msg.length > 1)
+	{
+		alert(msg);
+		return false;
+	}
+	if (   (cf.deviceName.value.match( /[\x21-\x2C]/ ))
+	    || (cf.deviceName.value.match( /[\x2E-\x2F]/ ))
+        || (cf.deviceName.value.match( /[\x3A-\x40]/ ))
+        || (cf.deviceName.value.match( /[\x5B-\x60]/ ))
+        || (cf.deviceName.value.match( /[\x7B-\x80]/ ))
+        || (cf.deviceName.value.match( /[^\x21-\x7E]/ ))
+       )
+	{
+		alert("Invalid device name.\n");
+		return false;
+	}
+
+	if(cf.workGroup.value == ""){
+		alert("Invalid Workgroup Name.\n");
+		return false;
+	}
+	if (cf.workGroup.value.match( /[^\x20-\x7E]/ ))
+	{
+		cf.workGroup.focus();
+		alert("This folder not exist,please input correct folder path.\n");
+		return false;
+	}
+	
+	var portvalue=parseInt(cf.http_via_port.value);
+	if( isNaN(portvalue) || portvalue < 443 || (portvalue > 443 && portvalue < 1024) || portvalue > 65534)
+	{
+		alert("http via port should be 80 or in the range [1024 ~ 65534] .");
+		return false;
+	}
+
+    portvalue=parseInt(cf.ftp_via_port.value);
+    if( isNaN(portvalue) || portvalue < 21 || (portvalue > 21 & portvalue < 1024) || portvalue > 65534)
+    {
+	    alert("ftp via port should be 21 or in the range [1024 ~ 65534] .");
+	    return false;
+    }
+    if (cf.ftp_via_port.value == cf.http_via_port.value)
+    {
+        alert("HTTP port (via internet) should not be same as FTP port (via internet).");
+	    return false;
+    }
+    
+    document.forms[0].submit();
+	return true;
+}
+
+function chgSel(index)
+{
+ document.forms[0].select.value = index;
+ return true;
+}
+
+function loadSettings()
+{
+    var cf=document.forms[0];
+    var adv_add_edit_page = <% usb_cgi_get_param("adv_add_edit_page"); %>;
+	if (cf.no_usb_device.value == 1)
+        cf.Remove.disabled = true;
+    if (cf.umountsucc.value == "1")
+    {
+         alert("Now you can remove this device.");
+    }
+    else if (cf.umountsucc.value == "2")
+    {
+        openWarnWindow();
+    }
+    if (adv_add_edit_page == "2")
+        window.open('USB_adv_edit.htm','net_folder','resizable=0,scrollbars=yes,width=500,height=400,left=400,top=300').focus();
+    else if (adv_add_edit_page == "1")
+        window.open('USB_adv_add.htm','net_folder','resizable=0,scrollbars=yes,width=500,height=400,left=400,top=300').focus();
+}
+var trWarnWinVar = null;
+
+function openTrWarnWin(filename,win_type)
+{
+	trWarnWinVar = window.open(filename,'trwarn_win',win_type);
+}
+
+function openWarnWindow()
+{
+	var winoptions;
+
+    winoptions = "width=400,height=360,status=yes,resizable=yes";
+    openTrWarnWin('USB_umount.htm',winoptions);
+}
+function creat_folder()
+{
+    var cf=document.forms[0];
+    if(cf.no_usb_device.value == 1)
+	{
+	    alert("No Disk.\n");
+		return false;
+	}
+    cf.action.value = "add";
+    document.forms[0].submit();
+}
+//-->
+</script></head>
+<body onload="loadhelp('USB_adv');loadSettings();" bgcolor="#ffffff">
+<form name="frmService" method="post" action="usb_adv.cgi">
+<table border="0" cellpadding="0" cellspacing="3" width="100%">
+<tr>
+    <td nowrap><h1>USB Storage (Advanced Settings)</h1></td>
+</tr>
+<tr> <!-- RULE -->
+<td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+
+<tr>
+<td colspan="2">
+<table border="0" cellpadding="2" cellspacing="0" width="60%">
+<tr>
+<td><a href="javascript:loadhelp('USB_adv','network')" 
+	tabindex="-1"><b>Network/Device Name :</b></a></td>
+<td width="30%"><input type="text" name="deviceName" size="21" maxlength="15" value="<%nvram_get("smb_host_name");%>"></td>
+</tr>
+<tr><td></td></tr>
+<tr>
+<td><a href="javascript:loadhelp('USB_adv','workgroup')" 
+	tabindex="-1"><b>Workgroup :</b></a></td>
+<td width="30%"><input type="text" name="workGroup" size="21" maxlength="15" value="<%nvram_get("smb_group_name");%>"></td>
+</tr>
+</table>
+</td>
+</tr>
+
+<tr><td></td></tr>
+<tr>
+<td colspan="2">
+<table border="1" cellpadding="2" cellspacing="0" width="60%">
+<tr>
+<td align="center" nowrap="nowrap"><span class="thead">Enable</span></td>
+<td align="center" nowrap="nowrap"><span class="thead">Access Method</span></td>
+<td align="center" nowrap="nowrap"><span class="thead">Link</span></td>
+<td align="center" nowrap="nowrap"><span class="thead">Port</span></td>
+</tr>
+<tr>
+<td align="center" nowrap="nowrap"><input type="checkbox" name="enable_samba" value="enable_samba" <% nvram_match("smb_enable","1","CHECKED"); %>></td>
+<td align="center" nowrap="nowrap">Network Connection</td>
+<td align="center" nowrap="nowrap"><% usb_cgi_get_url("smb_lan"); %></td>
+<td align="center" nowrap="nowrap">-</td>
+</tr>
+<tr>
+<td align="center" nowrap="nowrap"><input type="checkbox" name="enable_http" value="enable_http" <% nvram_match("usb_http_enable","1","CHECKED"); %>></td>
+<td align="center" nowrap="nowrap">HTTP</td>
+<td align="center" nowrap="nowrap"><% usb_cgi_get_url("http_lan"); %></td>
+<td align="center" nowrap="nowrap">80</td>
+</tr>
+<tr>
+<td align="center" nowrap="nowrap"><input type="checkbox" name="enable_wan_http" value="enable_wan_http" <% nvram_match("usb_wan_http_enable","1","CHECKED"); %>></td>
+<td align="center" nowrap="nowrap">HTTPS (via internet)</td>
+<td align="center" nowrap="nowrap"><% usb_cgi_get_url("http"); %></td>
+<td align="center" nowrap="nowrap"><input type="text" name="http_via_port" size="5" maxlength="5" value="<%nvram_get("usb_wan_http_port");%>"></td>
+</tr>
+<tr>
+<td align="center" nowrap="nowrap"><input type="checkbox" name="enable_ftp" value="enable_ftp" <% nvram_match("usb_ftp_enable","1","CHECKED"); %>></td>
+<td align="center" nowrap="nowrap">FTP</td>
+<td align="center" nowrap="nowrap"><% usb_cgi_get_url("ftp_lan"); %></td>
+<td align="center" nowrap="nowrap">21</td>
+</tr>
+<tr>
+<td align="center" nowrap="nowrap"><input type="checkbox" name="enable_wan_ftp" value="enable_wan_ftp" <% nvram_match("usb_wan_ftp_enable","1","CHECKED"); %>></td>
+<td align="center" nowrap="nowrap">FTP (via internet)</td>
+<td align="center" nowrap="nowrap"><% usb_cgi_get_url("ftp"); %></td>
+<td align="center" nowrap="nowrap"><input type="text" name="ftp_via_port" size="5" maxlength="5" value="<%nvram_get("usb_wan_ftp_port");%>"></td>
+</tr>
+</table>
+</td>
+</tr>
+<tr><td></td></tr><tr><td></td></tr>
+<tr>
+<td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+
+<tr>
+<td><a href="javascript:loadhelp('USB_adv','Folders_tab')" tabindex="-1"><b>Available Network Folders</b></a></td>
+</tr>
+<tr><td></td></tr><tr><td></td></tr>
+<tr>
+<td colspan="2">
+	<table border="1" cellpadding="2" cellspacing="0" width="100%">
+	<tr>
+	<td align="center" nowrap="nowrap" width="5%"><span class="thead"> &nbsp;</span></td>
+	<td align="center" nowrap="nowrap" width="25%"><span class="thead">Share Name</span></td>
+	<td align="center" nowrap="nowrap" width="10%"><span class="thead">Read<BR>Access</span></td>
+	<td align="center" nowrap="nowrap" width="10%"><span class="thead">Write<BR>Access</span></td>
+	<td align="center" nowrap="nowrap" width="15%"><span class="thead">Folder Name</span></td>
+	<td align="center" nowrap="nowrap" width="15%"><span class="thead">Volume Name</span></td>
+	<td align="center" nowrap="nowrap" width="10%"><span class="thead">Total<BR>Space</span></td>
+	<td align="center" nowrap="nowrap" width="10%"><span class="thead">Free<BR>Space</span></td>
+	</tr>
+
+	<% usb_cgi_get_table("adv_usb_table"); %>
+	</table>
+	</td>
+</tr>
+<tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
+<tr>
+<td>
+<input name="Edit" value="Edit" onclick="edit_folder();" type="button">
+<input name="Add" value="Create Network Folder" onClick='creat_folder();' type="button">
+<input name="Delete" value="Delete" onclick="return delete_folder();" type="submit"></td>
+</tr>
+<tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
+<tr> 
+<td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+<tr><td></td></tr><tr><td></td></tr>
+<tr>
+<td>
+<input name="Remove" value="Safely Remove USB Device" type="submit" onClick="return remove_disk();">
+</td>
+</tr>
+<tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
+<tr>
+<td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+<tr><td></td></tr><tr><td></td></tr>
+<tr>
+<td>
+<input name="Apply" value="Apply" type="button" onclick="checkData();" >
+<input name="Refresh" value="Refresh" onclick="location.href='USB_adv.htm'" type="button" >
+</td>
+</tr>
+</table>
+<input type="hidden" name="usb_num" value="<% usb_cgi_get_param("dev_num"); %>">
+<input type="hidden" name="select" value="0">
+<input type="hidden" name="action" value="advance">
+<INPUT name=umountsucc type=hidden value="<% nvram_get("usb_umount") %>">
+</form>
+</body></html>

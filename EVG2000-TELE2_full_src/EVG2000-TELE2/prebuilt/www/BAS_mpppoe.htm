@@ -1,0 +1,820 @@
+<html>
+<head>
+<% meta_get(); %>
+<title>PPPoE</title>
+<link rel="stylesheet" href="form.css">
+<STYLE TYPE="text/javascript">
+	classes.num.all.fontFamily = "Courier";
+	classes.num.all.fontSize = "10pt" ;
+</style>
+<% script_get(); %>
+<script language="javascript" type="text/javascript">
+var DisableFixedIP = false;
+var DisableFixedDNS = false;
+var all_wan_proto      = new Array(8);
+var all_pppoe_localip = new Array(8);
+var all_wan_dns_sel = new Array(8);
+var all_wan_dns1_pri = new Array(8);
+var all_wan_dns1_sec = new Array(8);
+var all_wan_nat = new Array(8);
+var all_wan_fw = new Array(8);
+var all_ppp_dod = new Array(8);
+var all_pppoe_idletime = new Array(8);
+var all_pppoe_username = new Array(8);
+var all_pppoe_passwd =  new Array(8);
+var all_pppoe_servicename = new Array(8);
+var all_is_static_ip = new Array(8);
+
+all_vlan_id        = new Array(8);
+all_vlan_pri       = new Array(8);
+all_wan_enable= new Array(8);
+
+function loadMultiWanInfo()
+{
+    var cf = document.forms[0];
+    cf.adslChoice.selectedIndex = cf.nowchoice.value;
+    
+    all_wan_proto[0] = "<% nvram_get("wan0_proto"); %>";
+    all_wan_proto[1] = "<% nvram_get("wan1_proto"); %>";
+    all_wan_proto[2] = "<% nvram_get("wan2_proto"); %>";
+    all_wan_proto[3] = "<% nvram_get("wan3_proto"); %>";
+    all_wan_proto[4] = "<% nvram_get("wan4_proto"); %>";
+    all_wan_proto[5] = "<% nvram_get("wan5_proto"); %>";
+    all_wan_proto[6] = "<% nvram_get("wan6_proto"); %>";
+    all_wan_proto[7] = "<% nvram_get("wan7_proto"); %>";
+    
+    all_pppoe_localip[0] = "<% nvram_get("ppp0_ip_addr"); %>";
+    all_pppoe_localip[1] = "<% nvram_get("ppp1_ip_addr"); %>";
+    all_pppoe_localip[2] = "<% nvram_get("ppp2_ip_addr"); %>";
+    all_pppoe_localip[3] = "<% nvram_get("ppp3_ip_addr"); %>";
+    all_pppoe_localip[4] = "<% nvram_get("ppp4_ip_addr"); %>";
+    all_pppoe_localip[5] = "<% nvram_get("ppp5_ip_addr"); %>";
+    all_pppoe_localip[6] = "<% nvram_get("ppp6_ip_addr"); %>";
+    all_pppoe_localip[7] = "<% nvram_get("ppp7_ip_addr"); %>";
+
+    all_ppp_dod[0] = <% nvram_get("ppp0_dod"); %>;
+    all_ppp_dod[1] = <% nvram_get("ppp1_dod"); %>;
+    all_ppp_dod[2] = <% nvram_get("ppp2_dod"); %>;
+    all_ppp_dod[3] = <% nvram_get("ppp3_dod"); %>;
+    all_ppp_dod[4] = <% nvram_get("ppp4_dod"); %>;
+    all_ppp_dod[5] = <% nvram_get("ppp5_dod"); %>;
+    all_ppp_dod[6] = <% nvram_get("ppp6_dod"); %>;
+    all_ppp_dod[7] = <% nvram_get("ppp7_dod"); %>;
+
+    all_pppoe_idletime[0] = <% nvram_get("ppp0_idle_timeout"); %> / 60;
+    all_pppoe_idletime[1] = <% nvram_get("ppp1_idle_timeout"); %> / 60;
+    all_pppoe_idletime[2] = <% nvram_get("ppp2_idle_timeout"); %> / 60;
+    all_pppoe_idletime[3] = <% nvram_get("ppp3_idle_timeout"); %> / 60;
+    all_pppoe_idletime[4] = <% nvram_get("ppp4_idle_timeout"); %> / 60;
+    all_pppoe_idletime[5] = <% nvram_get("ppp5_idle_timeout"); %> / 60;
+    all_pppoe_idletime[6] = <% nvram_get("ppp6_idle_timeout"); %> / 60;
+    all_pppoe_idletime[7] = <% nvram_get("ppp7_idle_timeout"); %> / 60;
+    
+    all_wan_dns_sel[0] = "<% nvram_get("wan0_dns_sel"); %>";
+    all_wan_dns_sel[1] = "<% nvram_get("wan1_dns_sel"); %>";
+    all_wan_dns_sel[2] = "<% nvram_get("wan2_dns_sel"); %>";
+    all_wan_dns_sel[3] = "<% nvram_get("wan3_dns_sel"); %>";
+    all_wan_dns_sel[4] = "<% nvram_get("wan4_dns_sel"); %>";
+    all_wan_dns_sel[5] = "<% nvram_get("wan5_dns_sel"); %>";
+    all_wan_dns_sel[6] = "<% nvram_get("wan6_dns_sel"); %>";
+    all_wan_dns_sel[7] = "<% nvram_get("wan7_dns_sel"); %>";
+    
+    all_wan_dns1_pri[0] = "<% nvram_list("wan0_dns1", 0); %>";
+    all_wan_dns1_pri[1] = "<% nvram_list("wan1_dns1", 0); %>";
+    all_wan_dns1_pri[2] = "<% nvram_list("wan2_dns1", 0); %>";
+    all_wan_dns1_pri[3] = "<% nvram_list("wan3_dns1", 0); %>";
+    all_wan_dns1_pri[4] = "<% nvram_list("wan4_dns1", 0); %>";
+    all_wan_dns1_pri[5] = "<% nvram_list("wan5_dns1", 0); %>";
+    all_wan_dns1_pri[6] = "<% nvram_list("wan6_dns1", 0); %>";
+    all_wan_dns1_pri[7] = "<% nvram_list("wan7_dns1", 0); %>";
+
+    all_wan_dns1_sec[0] = "<% nvram_list("wan0_dns1", 1); %>";
+    all_wan_dns1_sec[1] = "<% nvram_list("wan1_dns1", 1); %>";
+    all_wan_dns1_sec[2] = "<% nvram_list("wan2_dns1", 1); %>";
+    all_wan_dns1_sec[3] = "<% nvram_list("wan3_dns1", 1); %>";
+    all_wan_dns1_sec[4] = "<% nvram_list("wan4_dns1", 1); %>";
+    all_wan_dns1_sec[5] = "<% nvram_list("wan5_dns1", 1); %>";
+    all_wan_dns1_sec[6] = "<% nvram_list("wan6_dns1", 1); %>";
+    all_wan_dns1_sec[7] = "<% nvram_list("wan7_dns1", 1); %>";
+    
+    all_wan_nat[0] = "<% nvram_get("wan0_nat_enable"); %>";
+    all_wan_nat[1] = "<% nvram_get("wan1_nat_enable"); %>"; 
+    all_wan_nat[2] = "<% nvram_get("wan2_nat_enable"); %>"; 
+    all_wan_nat[3] = "<% nvram_get("wan3_nat_enable"); %>"; 
+    all_wan_nat[4] = "<% nvram_get("wan4_nat_enable"); %>"; 
+    all_wan_nat[5] = "<% nvram_get("wan5_nat_enable"); %>"; 
+    all_wan_nat[6] = "<% nvram_get("wan6_nat_enable"); %>"; 
+    all_wan_nat[7] = "<% nvram_get("wan7_nat_enable"); %>";
+    
+    all_wan_fw[0] = "<% nvram_get("wan0_fw_enable"); %>";
+    all_wan_fw[1] = "<% nvram_get("wan1_fw_enable"); %>";
+    all_wan_fw[2] = "<% nvram_get("wan2_fw_enable"); %>"; 
+    all_wan_fw[3] = "<% nvram_get("wan3_fw_enable"); %>"; 
+    all_wan_fw[4] = "<% nvram_get("wan4_fw_enable"); %>"; 
+    all_wan_fw[5] = "<% nvram_get("wan5_fw_enable"); %>"; 
+    all_wan_fw[6] = "<% nvram_get("wan6_fw_enable"); %>"; 
+    all_wan_fw[7] = "<% nvram_get("wan7_fw_enable"); %>";
+    
+    all_pppoe_username[0] = "<% nvram_get("ppp0_username"); %>";
+    all_pppoe_username[1] = "<% nvram_get("ppp1_username"); %>";
+    all_pppoe_username[2] = "<% nvram_get("ppp2_username"); %>";
+    all_pppoe_username[3] = "<% nvram_get("ppp3_username"); %>";
+    all_pppoe_username[4] = "<% nvram_get("ppp4_username"); %>";
+    all_pppoe_username[5] = "<% nvram_get("ppp5_username"); %>";
+    all_pppoe_username[6] = "<% nvram_get("ppp6_username"); %>";
+    all_pppoe_username[7] = "<% nvram_get("ppp7_username"); %>";
+    
+    all_pppoe_passwd[0] = "<% nvram_get("ppp0_password"); %>";
+    all_pppoe_passwd[1] = "<% nvram_get("ppp1_password"); %>";
+    all_pppoe_passwd[2] = "<% nvram_get("ppp2_password"); %>";
+    all_pppoe_passwd[3] = "<% nvram_get("ppp3_password"); %>";
+    all_pppoe_passwd[4] = "<% nvram_get("ppp4_password"); %>";
+    all_pppoe_passwd[5] = "<% nvram_get("ppp5_password"); %>";
+    all_pppoe_passwd[6] = "<% nvram_get("ppp6_password"); %>";
+    all_pppoe_passwd[7] = "<% nvram_get("ppp7_password"); %>";
+    
+    all_pppoe_servicename[0] = "<% nvram_get("ppp0_service_name"); %>";
+    all_pppoe_servicename[1] = "<% nvram_get("ppp1_service_name"); %>";
+    all_pppoe_servicename[2] = "<% nvram_get("ppp2_service_name"); %>";
+    all_pppoe_servicename[3] = "<% nvram_get("ppp3_service_name"); %>";
+    all_pppoe_servicename[4] = "<% nvram_get("ppp4_service_name"); %>";
+    all_pppoe_servicename[5] = "<% nvram_get("ppp5_service_name"); %>";
+    all_pppoe_servicename[6] = "<% nvram_get("ppp6_service_name"); %>";
+    all_pppoe_servicename[7] = "<% nvram_get("ppp7_service_name"); %>";
+    
+    all_is_static_ip[0] = "<% nvram_get("ppp0_static_ip"); %>";
+    all_is_static_ip[1] = "<% nvram_get("ppp1_static_ip"); %>";
+    all_is_static_ip[2] = "<% nvram_get("ppp2_static_ip"); %>";
+    all_is_static_ip[3] = "<% nvram_get("ppp3_static_ip"); %>";
+    all_is_static_ip[4] = "<% nvram_get("ppp4_static_ip"); %>";
+    all_is_static_ip[5] = "<% nvram_get("ppp5_static_ip"); %>";
+    all_is_static_ip[6] = "<% nvram_get("ppp6_static_ip"); %>";
+    all_is_static_ip[7] = "<% nvram_get("ppp7_static_ip"); %>";
+    
+    all_vlan_id[0] = "<% nvram_get("wan0_vlan_id"); %>";
+    all_vlan_id[1] = "<% nvram_get("wan1_vlan_id"); %>";
+    all_vlan_id[2] = "<% nvram_get("wan2_vlan_id"); %>";
+    all_vlan_id[3] = "<% nvram_get("wan3_vlan_id"); %>";
+    all_vlan_id[4] = "<% nvram_get("wan4_vlan_id"); %>";
+    all_vlan_id[5] = "<% nvram_get("wan5_vlan_id"); %>";
+    all_vlan_id[6] = "<% nvram_get("wan6_vlan_id"); %>";
+    all_vlan_id[7] = "<% nvram_get("wan7_vlan_id"); %>";
+
+    all_vlan_pri[0] = "<% nvram_get("wan0_vlan_pri"); %>";
+    all_vlan_pri[1] = "<% nvram_get("wan1_vlan_pri"); %>";
+    all_vlan_pri[2] = "<% nvram_get("wan2_vlan_pri"); %>";
+    all_vlan_pri[3] = "<% nvram_get("wan3_vlan_pri"); %>";
+    all_vlan_pri[4] = "<% nvram_get("wan4_vlan_pri"); %>";
+    all_vlan_pri[5] = "<% nvram_get("wan5_vlan_pri"); %>";
+    all_vlan_pri[6] = "<% nvram_get("wan6_vlan_pri"); %>";
+    all_vlan_pri[7] = "<% nvram_get("wan7_vlan_pri"); %>";
+
+    all_wan_enable[0] = "<% nvram_get("wan0_enable"); %>";
+    all_wan_enable[1] = "<% nvram_get("wan1_enable"); %>";
+    all_wan_enable[2] = "<% nvram_get("wan2_enable"); %>";
+    all_wan_enable[3] = "<% nvram_get("wan3_enable"); %>";
+    all_wan_enable[4] = "<% nvram_get("wan4_enable"); %>";
+    all_wan_enable[5] = "<% nvram_get("wan5_enable"); %>";
+    all_wan_enable[6] = "<% nvram_get("wan6_enable"); %>";
+    all_wan_enable[7] = "<% nvram_get("wan7_enable"); %>";
+
+}
+
+function goTestApply()
+{
+	var winoptions = "width=640,height=480,menubar=yes,toolbar=yes,status=yes,location=yes,resizable=yes";
+	if(document.forms[0].runtest.value == "yes")
+	openDataSubWin('wtest.htm',winoptions);
+}
+
+function ChangeAdslChoice()
+{
+    var cf = document.forms[0];
+    var index = cf.adslChoice.selectedIndex;
+    
+    var wan_proto = all_wan_proto[index];
+    if (wan_proto == "dhcp" || wan_proto == "ipoa" 
+        || wan_proto == "mer" || wan_proto == "static" )
+        doTypeChange2(0);
+    else if (wan_proto == "pppoe")
+        doTypeChange2(1);
+    else
+        doTypeChange2(2);
+}
+
+function doTypeChange2(newIndex)
+{
+    var tmpstr;
+    var cf = document.forms[0];
+    var index = cf.adslChoice.selectedIndex;    
+    
+	if (newIndex == 0)
+	{
+	    tmpstr = "ether_m.cgi?nowchoice=" + index + "&nowproto=0";
+		location.href = tmpstr;
+    }
+	else if (newIndex == 1)
+	{
+	    tmpstr = "pppoe_m.cgi?nowchoice=" + index+ "&nowproto=1";
+		location.href = tmpstr;	
+    }
+	else if (newIndex == 2)
+	{
+	    tmpstr = "pppoa_m.cgi?nowchoice=" + index+ "&nowproto=1";
+		location.href = tmpstr;	
+    }    
+}
+
+function doTypeChange3(newIndex)
+{
+    var tmpstr;
+    var cf = document.forms[0];
+    var index = cf.adslChoice.selectedIndex;
+    var mux = cf.dsl_multiplex.value;
+    var vpi = cf.dsl_vpi.value;
+    var vci = cf.dsl_vci.value;
+    var msg = "";
+    if( isNumeric(cf.dsl_vpi, 255) ) 
+        msg = "VPI contains an invalid number"
+    if( isNumeric(cf.dsl_vci, 65536) ) 
+        msg = "VC contains an invalid number"
+    if (vpi < 0 || vpi > 255) 
+        msg = "VPI is out of range [0~255]"
+    if (vci < 32 || vci > 65535)
+	    msg = "VC is out of range [32~65535]"
+	if (msg.length > 1)
+	{
+		alert(msg);
+		return false;
+	}
+    if (newIndex == 0)
+    {
+        tmpstr="ether_m.cgi?nowchoice="+index+"&havetmpvar=1&tmpmux="+mux+"&tmpvpi="+vpi+"&tmpvci="+vci;
+        location.href = tmpstr;
+    }
+    else if (newIndex == 1)
+    {
+        tmpstr="pppoe_m.cgi?nowchoice="+index+"&havetmpvar=1&tmpmux="+mux+"&tmpvpi="+vpi+"&tmpvci="+vci;
+        location.href = tmpstr;
+    }
+}
+
+function setServer()
+{
+	var cf = document.forms[0];
+	var stype = cf.login_type.selectedIndex;
+	var tmpstr;
+	var index = cf.adslChoice.selectedIndex;
+	var mux = cf.dsl_multiplex.value;
+    var vpi = cf.dsl_vpi.value;
+    var vci = cf.dsl_vci.value;
+    var msg = "";
+    if( isNumeric(cf.dsl_vpi, 255) ) 
+        msg = "VPI contains an invalid number"
+    if( isNumeric(cf.dsl_vci, 65536) ) 
+        msg = "VC contains an invalid number"
+    if (vpi < 0 || vpi > 255) 
+        msg = "VPI is out of range [0~255]"
+    if (vci < 32 || vci > 65535)
+	    msg = "VC is out of range [32~65535]"
+	if (msg.length > 1)
+	{
+		alert(msg);
+		return false;
+	}
+    
+    if(stype==0) //pppoe
+    {
+        tmpstr="pppoe_m.cgi?nowchoice="+index+"&havetmpvar=1&tmpmux="+mux+"&tmpvpi="+vpi+"&tmpvci="+vci;
+        location.href = tmpstr;
+    }
+    else if(stype==1) //pppoa
+    {
+        tmpstr="pppoa_m.cgi?nowchoice="+index+"&havetmpvar=1&tmpmux="+mux+"&tmpvpi="+vpi+"&tmpvci="+vci;
+        location.href = tmpstr;
+    }
+}
+
+function loadcheck()
+{
+    var cf = document.forms[0];
+    if (isIE())
+    {
+		cf.pppoe_username.size="24";
+		cf.pppoe_passwd.size="24";
+	}
+    loadhelp('BAS_mpppoe');
+    setIP();
+	setDNS();
+}
+
+function setIP()
+{
+	var cf = document.forms[0];
+	var dflag = cf.WANAssign[0].checked;
+	setDisabled(dflag,cf.WPethr1,cf.WPethr2,cf.WPethr3,cf.WPethr4);
+	DisableFixedIP = dflag;
+}
+
+function setDNS()
+{
+	var cf = document.forms[0];
+	var dflag = cf.DNSAssign[0].checked;
+	setDisabled(dflag,cf.DAddr1,cf.DAddr2,cf.DAddr3,cf.DAddr4,cf.PDAddr1,cf.PDAddr2,cf.PDAddr3,cf.PDAddr4);
+	DisableFixedDNS = dflag;
+}
+
+function checkData()
+{
+    var cf = document.forms[0];
+	var msg = "";
+    var vpi = cf.dsl_vpi.value;
+    var vci = cf.dsl_vci.value;
+    
+    if( isNumeric(cf.dsl_vpi, 255) ) 
+        msg = "VPI contains an invalid number"
+    if( isNumeric(cf.dsl_vci, 65536) ) 
+        msg = "VC contains an invalid number"
+    if (vpi < 0 || vpi > 255) 
+        msg = "VPI is out of range [0~255]"
+    if (vci < 32 || vci > 65535)
+	    msg = "VC is out of range [32~65535]"
+        
+    msg+= checkBlank(cf.pppoe_username, "User name");
+	if(cf.pppoe_idletime.value.length<=0)
+	 msg+= "Please enter idle time.\n";
+	else if(!_isNumeric(cf.pppoe_idletime.value))
+	 msg+= "Invalid idle time,please enter proper numeral.\n";
+     
+    if(cf.WANAssign[1].checked)
+	{
+		if(checkIP(cf.WPethr1,cf.WPethr2,cf.WPethr3,cf.WPethr4,254)||(parseInt(cf.WPethr4.value)==0))
+			msg+= "Invalid static IP address.\n";
+		cf.pppoe_localip.value = cf.WPethr1.value+'.'+cf.WPethr2.value+'.'+cf.WPethr3.value+'.'+cf.WPethr4.value;
+	}
+	else    
+		cf.pppoe_localip.value = "0.0.0.0";
+        
+    if(cf.DNSAssign[1].checked)
+	{
+		if(checkIP(cf.DAddr1,cf.DAddr2,cf.DAddr3,cf.DAddr4,254)||(parseInt(cf.DAddr4.value)==0))
+			msg+= "Invalid Primary DNS Address, please enter again.\n";
+		if(cf.PDAddr1.value.length>0)
+			if(checkIP(cf.PDAddr1,cf.PDAddr2,cf.PDAddr3,cf.PDAddr4,254)||(parseInt(cf.PDAddr4.value)==0))
+				msg+= "Invalid Secondary DNS Address, please enter again.\n";
+	}
+    
+    if (duplicatepvcChk(vpi,vci))
+        msg += "duplicate PVC found!\n";
+        
+    var index = cf.adslChoice.selectedIndex;
+    if(cf.wan_vlan_enable.value >0 && all_wan_enable[index]>0)
+    {
+        if(cf.vlan_id.value>4090||cf.vlan_id.value<1)
+            msg += "Invalid VLAN Id!\n";;
+        if(cf.vlan_pri.value>7||cf.vlan_pri.value<0)
+            msg += "Invalid Priority!\n";
+    }
+
+    if (msg.length > 1)
+	{
+		alert(msg);
+		return false;
+	}
+    
+    cf.wan_dns1_pri.value = cf.DAddr1.value+'.'+cf.DAddr2.value+'.'+cf.DAddr3.value+'.'+cf.DAddr4.value;
+	cf.wan_dns1_sec.value = cf.PDAddr1.value+'.'+cf.PDAddr2.value+'.'+cf.PDAddr3.value+'.'+cf.PDAddr4.value;
+	cf.nowchoice.value = -1;
+    return true;
+}
+
+function duplicatepvcChk(vpi, vci)
+{
+    var cf = document.forms[0];
+    var index = cf.adslChoice.selectedIndex;
+    if (( index != 0) && (vpi == cf.atm0_vpi.value) && (vci == cf.atm0_vci.value) && (cf.wan0_dial.value == "1"))
+        return true;
+    if ((index != 1) && (vpi == cf.atm1_vpi.value) && (vci == cf.atm1_vci.value) && (cf.wan1_dial.value == "1"))
+        return true;
+    if ((index != 2) && (vpi == cf.atm2_vpi.value) && (vci == cf.atm2_vci.value) && (cf.wan2_dial.value == "1"))
+        return true;
+    if ((index != 3) && (vpi == cf.atm3_vpi.value) && (vci == cf.atm3_vci.value) && (cf.wan3_dial.value == "1"))
+        return true;
+    if ((index != 4) && (vpi == cf.atm4_vpi.value) && (vci == cf.atm4_vci.value) && (cf.wan4_dial.value == "1"))
+        return true;
+    if ((index != 5) && (vpi == cf.atm5_vpi.value) && (vci == cf.atm5_vci.value) && (cf.wan5_dial.value == "1"))
+        return true;
+    if ((index != 6) && (vpi == cf.atm6_vpi.value) && (vci == cf.atm6_vci.value) && (cf.wan6_dial.value == "1"))
+        return true;
+    if ((index != 7) && (vpi == cf.atm7_vpi.value) && (vci == cf.atm7_vci.value) && (cf.wan7_dial.value == "1"))
+        return true;
+    return false;
+}
+
+function resetPvc()
+{
+    window.location.href="BAS_mpppoe.htm";
+}
+
+function loadSettings(index)
+{
+    var cf = document.forms[0];
+	var pppoe_localip;
+	var wan_dns1_pri;
+	var wan_dns1_sec;	
+	var tmp;
+	var wan_proto;
+    var dod;
+    
+    if (index == 100)
+        index = eval(cf.nowchoice.value);
+    loadvpivci(index);
+    wan_proto = all_wan_proto[index];
+    
+    if (all_pppoe_localip[index].length!=0)
+	{
+	    pppoe_localip=all_pppoe_localip[index].split(".");
+	    cf.WPethr1.value = pppoe_localip[0];
+    	cf.WPethr2.value = pppoe_localip[1];
+    	cf.WPethr3.value = pppoe_localip[2];
+    	cf.WPethr4.value = pppoe_localip[3];
+    }
+    var wan_dns_sel = all_wan_dns_sel[index];    
+    if ( all_wan_dns1_pri[index].length!=0 )
+	{
+	    wan_dns1_pri = all_wan_dns1_pri[index].split(".");
+	    cf.DAddr1.value = wan_dns1_pri[0];
+		cf.DAddr2.value = wan_dns1_pri[1];
+		cf.DAddr3.value = wan_dns1_pri[2];
+		cf.DAddr4.value = wan_dns1_pri[3];
+    }    
+	if ( all_wan_dns1_sec[index].length!=0 )
+	{
+	    wan_dns1_sec = all_wan_dns1_sec[index].split(".");
+	    cf.PDAddr1.value = wan_dns1_sec[0];
+		cf.PDAddr2.value = wan_dns1_sec[1];
+		cf.PDAddr3.value = wan_dns1_sec[2];
+		cf.PDAddr4.value = wan_dns1_sec[3];
+    }	    
+    cf.pppoe_idletime.value = all_pppoe_idletime[index];
+    if (all_ppp_dod[index] == 2)
+        cf.pppoe_idletime.disabled = true;
+    else
+        cf.pppoe_idletime.disabled = false;
+    //if (all_pppoe_localip[index]=="0.0.0.0")
+	//	cf.WANAssign[0].checked = true;
+	//else
+	//	cf.WANAssign[1].checked = true;    
+    if (all_is_static_ip[index] == 1)//static ip
+        cf.WANAssign[1].checked = true;
+    else
+        cf.WANAssign[0].checked = true;
+    
+    
+    cf.DNSAssign[wan_dns_sel].checked = true;
+    
+    if (all_wan_nat[index] == 0)
+        cf.nat_enable[1].checked = true;
+    else if (all_wan_fw[index] == 0)
+        cf.nat_enable[2].checked = true;
+    else
+        cf.nat_enable[0].checked = true;
+    //cf.pppoe_username.value = all_pppoe_username[index];
+    //cf.pppoe_passwd.value = all_pppoe_passwd[index];
+    //cf.pppoe_servicename.value = all_pppoe_servicename[index];
+
+    setIP();
+	setDNS();
+	    
+    if(cf.wan_vlan_enable.value >0 )
+    {
+        if( all_wan_enable[index]>0)
+        {
+            cf.vlan_id.value=all_vlan_id[index];
+            cf.vlan_pri.value=all_vlan_pri[index];
+            cf.vlanEnable[0].checked = true;
+        }else
+            cf.vlanEnable[1].checked = true;
+    }
+
+}
+
+function loadvpivci(index)
+{
+    var cf = document.forms[0];
+    var multiplex;
+    var vpi;
+    var vci;
+    
+    switch(index)
+    {
+        case 0:
+            vpi=cf.atm0_vpi.value;
+            vci=cf.atm0_vci.value;
+            multiplex=cf.atm0_encap.value;
+            break;
+        case 1:
+            vpi=cf.atm1_vpi.value;
+            vci=cf.atm1_vci.value;
+            multiplex=cf.atm1_encap.value;        
+            break;
+        case 2:
+            vpi=cf.atm2_vpi.value;
+            vci=cf.atm2_vci.value;
+            multiplex=cf.atm2_encap.value;        
+            break;
+        case 3:
+            vpi=cf.atm3_vpi.value;
+            vci=cf.atm3_vci.value;
+            multiplex=cf.atm3_encap.value;        
+            break;
+        case 4:
+            vpi=cf.atm4_vpi.value;
+            vci=cf.atm4_vci.value;
+            multiplex=cf.atm4_encap.value;        
+            break;
+        case 5:
+            vpi=cf.atm5_vpi.value;
+            vci=cf.atm5_vci.value;
+            multiplex=cf.atm5_encap.value;        
+            break;
+        case 6:
+            vpi=cf.atm6_vpi.value;
+            vci=cf.atm6_vci.value;
+            multiplex=cf.atm6_encap.value;        
+            break;
+        case 7:
+            vpi=cf.atm7_vpi.value;
+            vci=cf.atm7_vci.value;
+            multiplex=cf.atm7_encap.value;        
+            break;                                                                                
+    }    
+    var tmpvarhave = "<% basic_cgi_get_param("havetmpvar"); %>";
+    var tmpmux = "<% basic_cgi_get_param("tmpmux"); %>";
+    var tmpvpi = "<% basic_cgi_get_param("tmpvpi"); %>";
+    var tmpvci = "<% basic_cgi_get_param("tmpvci"); %>";
+    if (tmpvarhave == 1)
+    {
+        if (multiplex != tmpmux)
+            cf.cfgChanged.value='1';
+        if (vpi != tmpvpi)
+            cf.cfgChanged.value='1';
+        if (vci != tmpvci)
+            cf.cfgChanged.value='1';
+        
+        multiplex = tmpmux;
+        vpi = tmpvpi;
+        vci = tmpvci;
+    }
+    
+    if (multiplex == "LLC")
+ 	    cf.dsl_multiplex.selectedIndex = 0;
+    else 
+	    cf.dsl_multiplex.selectedIndex = 1;
+    cf.dsl_vpi.value=vpi;
+    cf.dsl_vci.value=vci;   
+}
+
+function setCfgChanged()
+{
+    var cf = document.forms[0];
+    
+    cf.cfgChanged.value='1';
+}
+
+function checkTest()
+{
+    var cf = document.forms[0];
+    var ret = checkData();
+    var winoptions = "width=640,height=480,menubar=yes,toolbar=yes,status=yes,location=yes,resizable=yes";
+    if ( ret == true)
+	{
+    	if (cf.cfgChanged.value=='0')
+    	{
+    	    var tmpstr = "pppoe_m.cgi?nowchoice=100" + "&nowproto=0";
+    		location.href = tmpstr;
+    	}
+    	else
+    	{
+        	cf.testpressed.value = '1';
+            cf.nowchoice.value = -1;
+            document.formname.submit();
+        }
+    }
+}
+</script>
+</head>
+<body bgcolor="#ffffff" onload="loadMultiWanInfo();loadSettings(100);loadcheck();goTestApply();">
+<form name="formname" method="POST" action="pppoe_m.cgi">
+<table border="0" cellpadding="0" cellspacing="3" width="99%">
+<tr>
+    <td colspan="2"><h1>Basic Settings</h1></td>
+</tr>
+<% vlan_cgi_show_item_begin("start"); %>
+<tr>
+    <td colspan="2">
+    <select name="adslChoice" onChange="ChangeAdslChoice();" size="1">
+	<option value=0>WAN1</option>
+	<option value=1>WAN2</option>
+	<option value=2>WAN3</option>
+	<option value=3>WAN4</option>
+	<option value=4>WAN5</option>
+	<option value=5>WAN6</option>
+	<option value=6>WAN7</option>
+	<option value=7>WAN8</option>		
+    </select>
+    </td>
+</tr>
+<tr>
+  <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+<tr>
+	<td colspan="2">
+	<p><a href="javascript:loadhelp('BAS_mether','question')" tabindex="-1"><b>Do You Want To Enable This Interface?</b></a></p></td>
+</tr>
+<tr>
+<td colspan="2"><input type="radio" name="vlanEnable" value="vlanEnable" onClick="this.form.submit();"> Yes</td>
+</tr>
+<tr>
+<td colspan="2"><input type="radio" name="vlanEnable" value="vlanDisable" onClick="this.form.submit();"> No</td>
+</tr>
+
+<% vlan_cgi_show_item_begin("vlan_id_enable"); %>
+
+<% vlan_cgi_show_item_begin("end"); %>
+
+<tr>  <!-- RULE -->
+  <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+<tr>
+	<td colspan="2">
+	<p><a href="javascript:loadhelp('BAS_mpppoe','question')" tabindex="-1"><b>Does Your Internet Connection Require A Login?</b></a></p></td>
+</tr>
+<tr>
+	<td colspan="2"><input type="radio" checked name="loginreq" value="pppoe" onClick="doTypeChange3(1);">
+	<a href="javascript:loadhelp('BAS_mpppoe','question')" tabindex="-1">Yes</a></td>
+</tr>
+<tr>
+	<td colspan="2"><input type="radio" name="loginreq" value="dhcp" onClick="doTypeChange3(0);">
+	<a href="javascript:loadhelp('BAS_mpppoe','question')" tabindex="-1">No</a></td>
+</tr>
+
+<tr>
+ <td width="50%"><a href="javascript:loadhelp('BAS_mpppoe','isp')" tabindex="-1"><b>Encapsulation</b></a></td>
+ <td width="50%" align="right"><select name="login_type" onChange="setServer()"><option>PPPoE (PPP over Ethernet)</option></select></td>
+</tr>
+<tr>  <!-- RULE -->
+  <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+<tr>
+	<td><a href="javascript:loadhelp('BAS_mpppoe','login')" tabindex="-1"><b>Login</b></a></td>
+	<td align="right"><input type="text" name="pppoe_username" value="<% nvram_get("ppp0_username"); %>" size="15" maxlength="60" value="" onChange="setCfgChanged()"></td>
+</tr>
+<tr>
+	<td><a href="javascript:loadhelp('BAS_mpppoe','password')" tabindex="-1"><b>Password</b></a></td>
+	<td align="right"><input type="password" name="pppoe_passwd" value="<% nvram_get("ppp0_password"); %>" size="15" maxlength="50" value="" onChange="setCfgChanged()"></td>
+</tr>
+
+<tr>
+	<td nowrap><a href="javascript:loadhelp('BAS_mpppoe','serv_name')" tabindex="-1"><b>Service Name</b></a> (If Required) &nbsp;</td>
+	<td align="right"><input type="text" name="pppoe_servicename" value="<% nvram_get("ppp0_service_name"); %>" maxlength="50" size="15" value="" onChange="setCfgChanged()"></td>
+</tr>
+
+<tr>
+	<td nowrap><a href="javascript:loadhelp('BAS_mpppoe','idletime')" tabindex="-1"><b>Idle Timeout</b></a> (In Minutes)</td>
+	<td align="right"><input type="text" class="num" name="pppoe_idletime" size="3" maxlength="3" onChange="setCfgChanged()"></td>
+</tr>
+<tr>  <!-- RULE -->
+  <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+<tr>
+	<td colspan="2"><a href="javascript:loadhelp('BAS_mpppoe','InternetIP')" tabindex="-1"><b>Internet IP Address</b></a></td>
+</tr>
+<tr>
+	<td colspan="2"><input type="radio" name="WANAssign" value="Dynamic" onClick="setIP()" onChange="setCfgChanged()">Get Dynamically From ISP</td>
+</tr>
+<tr>
+	<td nowrap><input type="radio" name="WANAssign" value="Fixed" onClick="setIP()" onChange="setCfgChanged()">Use Static IP Address</td>
+	<td align="right" class="num">
+	<input type="text" name="WPethr1" class="num" size="4" maxlength="3" onFocus="if(DisableFixedIP) this.blur()" onChange="setCfgChanged()">.
+	<input type="text" name="WPethr2" class="num" size="4" maxlength="3" onFocus="if(DisableFixedIP) this.blur()" onChange="setCfgChanged()">.
+	<input type="text" name="WPethr3" class="num" size="4" maxlength="3" onFocus="if(DisableFixedIP) this.blur()" onChange="setCfgChanged()">.
+	<input type="text" name="WPethr4" class="num" size="4" maxlength="3" onFocus="if(DisableFixedIP) this.blur()" onChange="setCfgChanged()"></td>
+</tr>
+<tr> <!-- RULE -->
+ <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+
+<tr>
+	<td colspan="2"><a href="javascript:loadhelp('BAS_mpppoe','DNSaddress')" tabindex="-1"><b>Domain Name Server (DNS) Address </b></a></td>
+</tr>
+
+<tr>
+	<td colspan="2"><input type="radio" name="DNSAssign" value="0" onClick="setDNS()" onChange="setCfgChanged()"> Get Automatically From ISP</td>
+</tr>
+
+<tr>
+	<td colspan="2"><input type="radio" name="DNSAssign" value="1" onClick="setDNS()" onChange="setCfgChanged()"> Use These DNS Servers</td>
+</tr>
+
+<tr>
+		<td><img src="spacer.gif" width="20" height="12" border="0">Primary DNS</td>
+		<td align="right" class="num">
+        <input type="text" name="DAddr1" class="num" size="4" maxlength="3" onFocus="if(DisableFixedDNS) this.blur()" onChange="setCfgChanged()">.
+        <input type="text" name="DAddr2" class="num" size="4" maxlength="3" onFocus="if(DisableFixedDNS) this.blur()" onChange="setCfgChanged()">.
+        <input type="text" name="DAddr3" class="num" size="4" maxlength="3" onFocus="if(DisableFixedDNS) this.blur()" onChange="setCfgChanged()">.
+        <input type="text" name="DAddr4" class="num" size="4" maxlength="3" onFocus="if(DisableFixedDNS) this.blur()" onChange="setCfgChanged()"></td>
+</tr>
+<tr>
+		<td><img src="spacer.gif" width="20" height="12" border="0"><a href="javascript:loadhelp('BAS_mpppoe','DNSaddress')" tabindex="-1">Secondary DNS</a></td>
+		<td align="right" class="num">
+        <input type="text" name="PDAddr1" class="num" size="4" maxlength="3" onFocus="if(DisableFixedDNS) this.blur()" onChange="setCfgChanged()">.
+        <input type="text" name="PDAddr2" class="num" size="4" maxlength="3" onFocus="if(DisableFixedDNS) this.blur()" onChange="setCfgChanged()">.
+        <input type="text" name="PDAddr3" class="num" size="4" maxlength="3" onFocus="if(DisableFixedDNS) this.blur()" onChange="setCfgChanged()">.
+        <input type="text" name="PDAddr4" class="num" size="4" maxlength="3" onFocus="if(DisableFixedDNS) this.blur()" onChange="setCfgChanged()"></td>
+</tr>
+<tr> <!-- RULE -->
+ <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+
+<tr>
+	<td colspan="2"><a href="javascript:loadhelp('BAS_mpppoe','nat')" tabindex="-1"><b>NAT (Network Address Translation) </b></a></td>
+</tr>
+
+<tr>
+	<td> &nbsp; </td>
+	<td align="right">
+    <input type="radio" name="nat_enable" value="1" onChange="setCfgChanged()"> Enable &nbsp;
+    <input type="radio" name="nat_enable" value="0" onChange="setCfgChanged()"> Disable &nbsp;
+    </td>
+</tr>
+<tr> <!-- RULE -->
+ <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+
+<tr>
+<td colspan="2" align="center"><div ID="pppoebuttons" onmouseover="loadhelp('BAS_mpppoe','buttons')">
+	<input type="SUBMIT" name="apply" value="Apply" onClick="return checkData()">
+	<input type="BUTTON" name="Cancel" value="Cancel" onClick="resetPvc();">
+	<input type="BUTTON" name="Test" value="Test" onClick="checkTest();">
+	</div></td></tr>
+</table>
+  <INPUT name=nowchoice type=hidden value= "<% nvram_get("nowchoice"); %>">
+  <INPUT name=pppoe_localip type=hidden value= "">
+  <INPUT name=wan_dns_sel type=hidden value= "">
+  <INPUT name=wan_dns1_pri type=hidden value= "">
+  <INPUT name=wan_dns1_sec type=hidden value= "">
+  
+  <INPUT name=atm0_vpi type=hidden value= "<% nvram_get("atmVcc0_vpi"); %>">
+  <INPUT name=atm0_vci type=hidden value= "<% nvram_get("atmVcc0_vci"); %>">
+  <INPUT name=atm0_multiplex type=hidden value= "<% nvram_get("atmVcc0_multiplex"); %>">
+  <INPUT name=atm0_encap type=hidden value= "<% nvram_get("atmVcc0_encap"); %>">  
+  <INPUT name=atm1_vpi type=hidden value= "<% nvram_get("atmVcc1_vpi"); %>">
+  <INPUT name=atm1_vci type=hidden value= "<% nvram_get("atmVcc1_vci"); %>">
+  <INPUT name=atm1_multiplex type=hidden value= "<% nvram_get("atmVcc1_multiplex"); %>">
+  <INPUT name=atm1_encap type=hidden value= "<% nvram_get("atmVcc1_encap"); %>">  
+  <INPUT name=atm2_vpi type=hidden value= "<% nvram_get("atmVcc2_vpi"); %>">
+  <INPUT name=atm2_vci type=hidden value= "<% nvram_get("atmVcc2_vci"); %>">
+  <INPUT name=atm2_multiplex type=hidden value= "<% nvram_get("atmVcc2_multiplex"); %>">
+  <INPUT name=atm2_encap type=hidden value= "<% nvram_get("atmVcc2_encap"); %>">  
+  <INPUT name=atm3_vpi type=hidden value= "<% nvram_get("atmVcc3_vpi"); %>">
+  <INPUT name=atm3_vci type=hidden value= "<% nvram_get("atmVcc3_vci"); %>">
+  <INPUT name=atm3_multiplex type=hidden value= "<% nvram_get("atmVcc3_multiplex"); %>">
+  <INPUT name=atm3_encap type=hidden value= "<% nvram_get("atmVcc3_encap"); %>">  
+  <INPUT name=atm4_vpi type=hidden value= "<% nvram_get("atmVcc4_vpi"); %>">
+  <INPUT name=atm4_vci type=hidden value= "<% nvram_get("atmVcc4_vci"); %>">
+  <INPUT name=atm4_multiplex type=hidden value= "<% nvram_get("atmVcc4_multiplex"); %>">
+  <INPUT name=atm4_encap type=hidden value= "<% nvram_get("atmVcc4_encap"); %>">  
+  <INPUT name=atm5_vpi type=hidden value= "<% nvram_get("atmVcc5_vpi"); %>">
+  <INPUT name=atm5_vci type=hidden value= "<% nvram_get("atmVcc5_vci"); %>">
+  <INPUT name=atm5_multiplex type=hidden value= "<% nvram_get("atmVcc5_multiplex"); %>">
+  <INPUT name=atm5_encap type=hidden value= "<% nvram_get("atmVcc5_encap"); %>">  
+  <INPUT name=atm6_vpi type=hidden value= "<% nvram_get("atmVcc6_vpi"); %>">
+  <INPUT name=atm6_vci type=hidden value= "<% nvram_get("atmVcc6_vci"); %>">
+  <INPUT name=atm6_multiplex type=hidden value= "<% nvram_get("atmVcc6_multiplex"); %>">
+  <INPUT name=atm6_encap type=hidden value= "<% nvram_get("atmVcc6_encap"); %>">  
+  <INPUT name=atm7_vpi type=hidden value= "<% nvram_get("atmVcc7_vpi"); %>">
+  <INPUT name=atm7_vci type=hidden value= "<% nvram_get("atmVcc7_vci"); %>">
+  <INPUT name=atm7_multiplex type=hidden value= "<% nvram_get("atmVcc7_multiplex"); %>">
+  <INPUT name=atm7_encap type=hidden value= "<% nvram_get("atmVcc7_encap"); %>">
+  <input type="hidden" name="cfgChanged" value="0">
+  <input type="hidden" name="testpressed" value="0">
+  <input type="hidden" name="runtest" value="<% basic_cgi_get_param("runtest"); %>">
+  <INPUT name=wan0_dial type=hidden value= "<% adsl_dial_flag(0); %>">
+  <INPUT name=wan1_dial type=hidden value= "<% adsl_dial_flag(1); %>">
+  <INPUT name=wan2_dial type=hidden value= "<% adsl_dial_flag(2); %>">
+  <INPUT name=wan3_dial type=hidden value= "<% adsl_dial_flag(3); %>">
+  <INPUT name=wan4_dial type=hidden value= "<% adsl_dial_flag(4); %>">
+  <INPUT name=wan5_dial type=hidden value= "<% adsl_dial_flag(5); %>">
+  <INPUT name=wan6_dial type=hidden value= "<% adsl_dial_flag(6); %>">
+  <INPUT name=wan7_dial type=hidden value= "<% adsl_dial_flag(7); %>">
+<% vlan_cgi_show_item_begin("markstart"); %>
+  <input type="hidden" name="adslChoice" value="<% nvram_get("nowchoice"); %>">
+<% vlan_cgi_show_item_begin("markend"); %>
+  <input type="hidden" name="dsl_multiplex" value="LLC">
+  <input type="hidden" name="dsl_vpi" value="8">
+  <input type="hidden" name="dsl_vci" value="35">
+  <input type="hidden" name="wan_vlan_enable" value="<% nvram_get("wan_vlan_enable"); %>">
+</form>
+<p></p>
+</body>
+</html>

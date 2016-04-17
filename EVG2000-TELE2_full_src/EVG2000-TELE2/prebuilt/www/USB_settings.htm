@@ -1,0 +1,39 @@
+<HTML><HEAD>
+<% meta_get(); %>
+<TITLE>NETGEAR Router</TITLE>
+<% script_get(); %>
+<link rel="stylesheet" href="form.css">
+<script language="javascript" type="text/javascript">
+<!--
+function update_enable_check()
+{
+   	var cf = document.forms[0];
+	if( cf.enable_all_usb_device[0].checked )
+		cf.enable_all_usb.value = "1";
+	else
+		cf.enable_all_usb.value = "0";
+}
+//-->
+</script></head>
+<BODY onLoad="loadhelp('USB_settings');" bgcolor=#ffffff>
+<form name="USB_settings" method="post" action="usb_settings.cgi">
+<TABLE width=100% border=0 cellpadding=0 cellspacing=3>
+<TR><TD colSpan=2><H1>USB Settings</H1></TD></TR>
+<TR><TD colSpan=2></TD></TR>
+</tr><tr><td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td></tr>
+<tr><td></td></tr><tr><td></td></tr>
+<TR>
+<TD nowrap><b>Enable any USB Device connected to the USB port</b>
+<input type="radio" name="enable_all_usb_device" value="0" <% nvram_match("enable_any_usb_dev","1","checked"); %> onclick="update_enable_check();"> Yes 
+<input type="radio" name="enable_all_usb_device" value="1" <% nvram_match("enable_any_usb_dev","0","checked"); %> onclick="update_enable_check();"> No </TD>
+<TD nowrap><input type="button" name="approve" value="Approved Devices" onClick='location.href="Adv_USB.htm";'></TD>
+</TR>
+<tr><td></td></tr><tr><td></td></tr>
+</tr><tr><td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td></tr>
+<tr><td></td></tr><tr><td></td></tr>
+<TR><TD colspan=2><input type="submit" name="apply" value=" Apply " onClick=''></TD></TR>
+</TABLE>
+<INPUT type=hidden name=enable_all_usb value="<% nvram_get("enable_any_usb_dev"); %>">
+</FORM>
+</BODY>
+</HTML>

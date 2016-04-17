@@ -1,0 +1,120 @@
+<html>
+<head>
+<% meta_get(); %>
+<title>LAN IP Setup Help</title>
+<link rel="stylesheet" href="help.css">
+</head>
+
+<body>
+	
+<h1>LAN IP Setup Help</h1>
+<p>The DHCP and TCP/IP default values work for most users.</p>
+
+<hr>		
+<a name="tcp"></a>
+<p><b>LAN TCP/IP Setup</b></p>
+
+<p>These are advanced settings that you may configure if you are a network administrator and your network contains multiple Routers. If you make any changes to these settings you will need to restart your computer(s) for the settings to take effect.
+</p>
+
+<ul><li><B>IP Address:</B> Type the IP address of your Router in dotted decimal notation (factory default: 192.168.0.1).
+
+<li><b>IP Subnet Mask:</B> The subnet mask specifies the network number portion of an IP address. Your Router will automatically calculate the subnet mask based on the IP address that you assign. Unless you are implementing subnetting, use 255.255.255.0 as the subnet mask (computed by the Router).
+
+<li><b>RIP Direction:</B> RIP (Routing Information Protocol, RFC1058 and RFC1389) allows a Router to exchange routing information with other Routers. The RIP Direction selection controls how the Router sends and receives RIP packets. Both is the default.
+<ul><li>When set to <b>Both</b> or <b>Out Only</b>, the Router will broadcast its routing table periodically. <li>When set to <b>Both</b> or <b>In Only</b>, it will incorporate the RIP information that it receives.
+ <li>When set to <b>None</b>, it will not send any RIP packets and will ignore any RIP packets received.
+</ul>
+<li><b>RIP Version:</B> This controls the format and the broadcasting method of the RIP packets that the Router sends. (It recognizes both formats when receiving.) By default, this is set for None.
+<ul><li>RIP-1 is universally supported. RIP-1 is probably adequate for most networks, unless you have an unusual network setup.
+<li>RIP-2 carries more information. Both RIP-2B and RIP-2M send the routing data in RIP-2 format.  <UL><li>RIP-2B uses subnet broadcasting. 
+<li>RIP-2M uses multicasting. (See note below.)
+</ul> 
+</ul>
+</ul>
+<p><b>Note: </b>Multicasting can reduce the load on non-Router machines because they do not listen to the RIP multicast address and will not receive the RIP packets. However, if one Router uses multicasting, then all Routers on your network must use multicasting.
+</ul>
+</ul>
+
+<hr>
+<a name="dmz"></a>
+<p><b> Default DMZ Server </b>
+</p><p> Specifying a Default DMZ Server allows you to set up a computer
+or server that is available to anyone on the Internet for services that
+you haven't defined. There are security issues with doing this, so only
+do this if you're willing to risk open access. If you do not assign a
+Default DMZ Server, the Router discards any incoming service requests
+which are undefined. This can be a security problem. You shouldn't
+check this box unless you have a specific reason to do so. </p><p>	To assign a computer or server to be a DMZ server: 
+</p><ol>
+<li>Click the <i>Default DMZ Server</i> checkbox</li>
+<li>Type the IP address for that server. </li>
+<li>Click <b> Apply</b>. </li>
+</ol>
+
+<hr>
+<a name="dhcp"></a>
+<h2>Use Router As DHCP Server</h2>
+		<p>The EVG2000 Router is set up by default as a DHCP (Dynamic Host Configuration Protocol) Server, which provides the TCP/IP configuration for the all the computers that are connected to the Router.
+   
+  <p> Unless told to change these settings by your ISP, leave the <b>Use Router As DHCP Server</b> check box checked.
+  
+  <p> If your ISP has you clear this check box, you must have another DHCP server within your network or else you must manually configure the computer.
+  
+   
+  <ul>
+<li><B>Starting IP Address:</B> This box specifies the first of the contiguous addresses in the IP address pool.
+  192.168.0.2 is the default start address.
+  <li><b>Ending IP Address:</b> This box specifies the last of the contiguous addresses in the IP address pool.
+    192.168.0.254 is the default ending address.
+</ul>
+
+
+
+<hr>
+<a name="reserved"></a>
+<p><b>Address Reservation</b></p>
+
+<p>When you specify a reserved IP address for a PC on the LAN, that PC will always receive the same IP address each time it accesses the DHCP server. Reserved IP addresses should be assigned to servers that require permanent IP settings.
+<p>
+<b>To Reserve An IP Address:</b> 
+<ol>
+<li>  Click the <b>Add</b> button. 
+
+<li> Check the Computer you wish to add to the <b>Address Reservation Table </b>at fisrt.
+
+<li>  If the Computer is not on the <b>Address Reservation Table</b>; Enter the IP Address, MAC Address, and Device Name of the computer you wish to add.
+
+<li> Click the <B>Add</b> button when finished.
+</ol>
+
+<p><b>To Edit A Reserved IP Address:</b> </p>
+
+<ol>
+<li>  Select the radio button next to the reserved address you want to edit.
+
+<li>  Click the <b>Edit</b> button.
+
+<li>  Edit the IP Address, MAC Address or Device Name.
+
+<li>  Click the <B>Accept</b> button when finished.
+</ol>
+
+
+<p><b>To Delete A Reserved IP Address:</b> </p>
+
+<ol>
+<li>  Select the radio button next to the reserved address you want to delete.
+
+<li>  Click the <b>Delete</b> button. 
+</ol>
+
+<hr>
+<a name="To"></a>
+<p><b>To Save Or Cancel Changes</b></p>
+<p>
+Click <b>Apply</b> to save the new settings to the Router.If the lan ip changed,the Router need to be reboot <br>
+
+Click <b>Cancel</b> to disregard any unsaved changes. </p>
+</body>
+</html>

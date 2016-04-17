@@ -1,0 +1,475 @@
+<html><head>
+<% meta_get(); %>
+<title>Schedule</title>
+<link rel="stylesheet" href="form.css">
+<% script_get(); %>
+<script language="javascript" type="text/javascript">
+<!--
+function BlockPeriodClick(cf)
+{
+	if(cf.checkboxNamehours.checked)
+	{
+		cf.starthour.disabled = true;
+		cf.startminute.disabled = true;
+		cf.endhour.disabled = true;
+		cf.endminute.disabled = true;
+		TimePeriodDisabled = true;
+	}
+	else
+	{
+		cf.starthour.disabled = false;
+		cf.startminute.disabled = false;
+		cf.endhour.disabled = false;
+		cf.endminute.disabled = false;
+		TimePeriodDisabled = false;
+	}
+	return;
+}
+
+function BlockAllClickCheck()
+{
+	var cf = document.forms[0];
+	if(cf.checkboxNameAll.checked)
+	{
+		cf.checkboxNameMon.checked = true;
+		cf.checkboxNameTue.checked = true;
+		cf.checkboxNameWed.checked = true;
+		cf.checkboxNameThu.checked = true;
+		cf.checkboxNameFri.checked = true;
+		cf.checkboxNameSat.checked = true;
+		cf.checkboxNameSun.checked = true;
+
+		cf.checkboxNameMon.disabled = true;
+		cf.checkboxNameTue.disabled = true;
+		cf.checkboxNameWed.disabled = true;
+		cf.checkboxNameThu.disabled = true;
+		cf.checkboxNameFri.disabled = true;
+		cf.checkboxNameSat.disabled = true;
+		cf.checkboxNameSun.disabled = true;
+	}
+	else
+	{
+		cf.checkboxNameMon.disabled = false;
+		cf.checkboxNameTue.disabled = false;
+		cf.checkboxNameWed.disabled = false;
+		cf.checkboxNameThu.disabled = false;
+		cf.checkboxNameFri.disabled = false;
+		cf.checkboxNameSat.disabled = false;
+		cf.checkboxNameSun.disabled = false;
+	}
+    BlockPeriodClick(cf);
+	return;
+}
+
+function init()
+{
+	var cf = document.forms[0];
+	var temp;
+	var old;
+	BIN=new Array(4);
+
+	if (cf.schedule_day.value == 127) //check everyday if all check except everyday
+	{
+		cf.checkboxNameAll.checked = true;
+        }
+
+	for(var i=0; i<8; i++)
+			BIN[i]=0;
+
+	if (cf.schedule_day.value > 1)
+	{
+		temp = cf.schedule_day.value;
+		for(var i=0; i<8; i++)
+		{
+			old = temp;
+			temp = Math.floor(temp/2);
+
+			if (temp >= 1)
+			{
+				if ((temp*2) != old)
+					BIN[7-i] = 1;
+				else
+					BIN[7-i] = 0;
+				if (temp == 1)
+				{
+					BIN[6-i] = temp;
+					i=7;
+				}
+			}
+			else
+				i=7;
+		}
+	}
+	else if (cf.schedule_day.value == 1)
+		BIN[7]=1;
+
+	if (BIN[0] == 1) //128
+		cf.checkboxNameAll.checked = true;
+	if (BIN[1] == 1) //64
+		cf.checkboxNameSun.checked = true;
+	if (BIN[2] == 1) //32
+		cf.checkboxNameMon.checked = true;
+	if (BIN[3] == 1) //16
+		cf.checkboxNameTue.checked = true;
+	if (BIN[4] == 1) //8
+		cf.checkboxNameWed.checked = true;
+	if (BIN[5] == 1) //4
+		cf.checkboxNameThu.checked = true;
+	if (BIN[6] == 1) //2
+		cf.checkboxNameFri.checked = true;
+	if (BIN[7] == 1) //1
+		cf.checkboxNameSat.checked = true;
+
+	if ((cf.schedule_starthour.value == 0) && (cf.schedule_startminute.value == 0) && (cf.schedule_endhour.value == 23) && (cf.schedule_endminute.value == 59))
+		cf.checkboxNamehours.checked = true;
+	else
+	{
+		cf.starthour.value = cf.schedule_starthour.value;
+		cf.startminute.value = cf.schedule_startminute.value;
+		cf.endhour.value = cf.schedule_endhour.value;
+		cf.endminute.value = cf.schedule_endminute.value;
+	}
+	BlockAllClickCheck();
+
+    /* moved here from fw_email.htm */
+    if (cf.schedule_daylightadjust.value == 1)
+        cf.adjust.checked = true;
+    
+    loadTimeZone();
+    loadNtpServer();
+}
+
+function checkSchedule()
+{
+	var cf = document.forms[0];
+	var value = 0;
+
+	if (cf.checkboxNamehours.checked)
+		cf.schedule_alldayenable.value = 1;
+	else
+		cf.schedule_alldayenable.value = 0;
+
+	if (cf.checkboxNameAll.checked)
+		value = 128;
+	if (cf.checkboxNameSun.checked)
+		value = value + 64;
+	if (cf.checkboxNameMon.checked)
+		value = value + 32;
+	if (cf.checkboxNameTue.checked)
+		value = value + 16;
+	if (cf.checkboxNameWed.checked)
+		value = value + 8;
+	if (cf.checkboxNameThu.checked)
+		value = value + 4;
+	if (cf.checkboxNameFri.checked)
+		value = value + 2;
+	if (cf.checkboxNameSat.checked)
+		value = value + 1;
+
+	cf.schedule_day.value = value;
+
+	if (!(cf.checkboxNamehours.checked))
+    {
+    	if (cf.starthour.value == cf.endhour.value &&
+    	    cf.startminute.value == cf.endminute.value)
+    	{
+    		alert("Invalid time input.");
+    		return false;
+        }
+
+        if ((cf.starthour.value < 0) || (cf.starthour.value > 23) ||
+            (cf.endhour.value < 0) || (cf.endhour.value > 23) ||
+            (cf.startminute.value < 0) || (cf.startminute.value > 59) ||
+            (cf.endminute.value < 0) || (cf.endminute.value > 59))
+    	{
+    		alert("Invalid time input.");
+    		return false;
+    	}
+
+    	if ((!_isNumeric(cf.starthour.value)) ||
+    	    (!_isNumeric(cf.endhour.value)) ||
+    	    (!_isNumeric(cf.startminute.value)) ||
+    	    (!_isNumeric(cf.endminute.value)))
+    	{
+    		alert("Invalid time input.");
+    		return false;
+    	}
+
+    	if ((cf.starthour.value == '') || (cf.endhour.value == ''))
+    	{
+    		alert("Invalid time input.");
+    		return false;
+    	}
+
+    	if ((cf.starthour.value != '') && (cf.endhour.value != ''))
+    	{
+    		if (cf.startminute.value == '')
+    			cf.startminute.value = 0;
+    		if (cf.endminute.value == '')
+    			cf.endminute.value = 0;
+    	}
+	}
+
+    /* moved here from fw_email.htm */
+    if (cf.adjust.checked)
+		cf.schedule_daylightadjust.value = 1;
+	else
+		cf.schedule_daylightadjust.value = 0;
+
+    setTimeZone();
+
+    if(checkNtpServer() == false)
+        return false;
+	return true;
+}
+
+function ntpServerClick(cf)
+{
+    setDisabled(!cf.use_ntpserver.checked, cf.ntp_server);
+	return;
+}
+
+function loadTimeZone()
+{
+    var cf = document.forms[0];
+    
+    for(var i=0;i<100;i++)
+    {
+        if(cf.time_zone_cfg.value == cf.time_zone.options[i].value)
+        {
+            cf.time_zone.selectedIndex = i;
+            return;
+        }
+    }
+    
+    cf.time_zone.selectedIndex = 0;
+}
+
+function setTimeZone()
+{
+    var cf = document.forms[0];
+    cf.time_zone_cfg.value = cf.time_zone.options[cf.time_zone.selectedIndex].value;
+}
+
+function loadNtpServer()
+{
+     var cf = document.forms[0];
+    
+    if (cf.ntp_server_sp.value == 1)
+        cf.use_ntpserver.checked = true;
+    else
+        cf.use_ntpserver.checked = false;
+    
+    if(cf.ntp_server_sp.value == 0)
+        setDisabled(!cf.use_ntpserver.checked, cf.ntp_server);     
+}
+
+function checkNtpServer()
+{
+    var cf = document.forms[0];
+    var msg = "";
+    
+    if(cf.use_ntpserver.checked == true)
+    {
+        msg += checkBlank(cf.ntp_server, "Invalid Ntp server address");
+    	if (msg.length > 1)
+    	{
+            alert(msg);
+            return false;
+    	}
+        else
+        {
+            cf.ntp_server_sp.value = 1;
+            return true;
+        }
+    }
+    else
+    {
+        cf.ntp_server_sp.value = 0;
+        return true;
+    }
+}
+
+function CancelAction()
+{
+    var cf = document.forms[0];
+
+    cf.result.value="cancel";
+    return true;
+}
+
+//-->
+</script>
+</head>
+<body bgcolor="#ffffff" onload="BlockAllClickCheck();loadhelp('FW_schedule');init();document.forms[0].elements[0].focus();">
+<form method="POST" action="fwSchedule.cgi">
+<table border="0" cellpadding="0" cellspacing="3" width="100%">
+	<tr>
+		<td colspan="2">
+			<h1>Schedule</h1></td></tr>
+    <tr>
+        <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td></tr>
+	<tr>
+		<td colspan="2"><b><a href="javascript:loadhelp('FW_schedule','days')" tabindex="-1">Days to Block:</a></b></td></tr>
+    <TR>
+        <TD colSpan=2>
+            <INPUT name=checkboxNameAll onclick=BlockAllClickCheck(); tabIndex=2 type=checkbox value=checkboxValue>Every Day </TD></TR>
+    <TR>
+        <TD colSpan=2>
+            <INPUT name=checkboxNameSun tabIndex=3 type=checkbox value=checkboxValue >Sunday</TD></TR>
+    <TR>
+        <TD colSpan=2>
+            <INPUT name=checkboxNameMon tabIndex=4 type=checkbox value=checkboxValue>Monday</TD></TR>
+    <TR>
+        <TD colSpan=2>
+            <INPUT name=checkboxNameTue tabIndex=5 type=checkbox value=checkboxValue>Tuesday</TD></TR>
+    <TR>
+        <TD colSpan=2>
+            <INPUT name=checkboxNameWed tabIndex=6 type=checkbox value=checkboxValue>Wednesday</TD></TR>
+    <TR>
+        <TD colSpan=2>
+            <INPUT name=checkboxNameThu tabIndex=7 type=checkbox value=checkboxValue>Thursday</TD></TR>
+    <TR>
+        <TD colSpan=2>
+            <INPUT name=checkboxNameFri tabIndex=8 type=checkbox value=checkboxValue>Friday</TD></TR>
+    <TR>
+        <TD colSpan=2>
+            <INPUT name=checkboxNameSat tabIndex=9 type=checkbox value=checkboxValue>Saturday</TD></TR>
+    <tr>
+        <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td></tr>
+	<tr>
+		<td colspan="2"><b><a href="javascript:loadhelp('FW_schedule','tod')" tabindex="-1">Time of day to Block:</a></b> (use 24-hour clock)</td></tr>
+    <TR>
+        <TD colSpan=2>
+            <INPUT name=checkboxNamehours onclick=BlockPeriodClick(this.form); tabIndex=10 type=checkbox value=checkboxValue> All Day</TD></TR>
+    <TR>
+        <TD width="50%">Start Blocking</TD>
+        <TD width="50%">
+            <INPUT class=num maxLength=2 name=starthour onfocus="if(TimePeriodDisabled) this.blur()" size=3 tabIndex=11>Hour
+            <INPUT class=num maxLength=2 name=startminute onfocus="if(TimePeriodDisabled) this.blur()" size=3 tabIndex=12>Minute</TD></TR>
+    <TR>
+        <TD width="50%">End Blocking</TD>
+        <TD>
+            <INPUT class=num maxLength=2 name=endhour onfocus="if(TimePeriodDisabled) this.blur()" size=3 tabIndex=13>Hour
+            <INPUT class=num maxLength=2 name=endminute onfocus="if(TimePeriodDisabled) this.blur()" size=3 tabIndex=14>Minute</TD></TR>
+    <tr>
+        <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td></tr>
+
+ <tr>
+    <td colspan="2"><a href="javascript:loadhelp('FW_schedule','timezone')" tabindex="-1"><b>Time Zone</b></a></td></tr>
+<tr>
+    <td colspan="2">
+        <SELECT name=time_zone size=1 tabIndex=15>
+
+<option value="International Date Line West">(GMT-12:00) International Date Line West</option>
+<option value="Midway Island, Samoa">(GMT-11:00) Midway Island, Samoa</option>
+<option value="Hawaii">(GMT-10:00) Hawaii</option>
+<option value="Alaska">(GMT-9:00) Alaska</option>
+<option value="Pacific Time, Tijuana">(GMT-8:00) Pacific Time, Tijuana</option>
+<option value="Arizona, Mazatlan">(GMT-7:00) Arizona, Mazatlan</option>
+<option value="Chihuahua, La Paz">(GMT-7:00) Chihuahua, La Paz</option>
+<option value="Mountain Time">(GMT-7:00) Mountain Time</option>
+<option value="Central America">(GMT-6:00) Central America</option>
+<option value="Central Time">(GMT-6:00) Central Time</option>
+<option value="Guadalajara, Mexico City, Monterrey">(GMT-6:00) Guadalajara, Mexico City, Monterrey</option>
+<option value="Saskatchewan">(GMT-6:00) Saskatchewan</option>
+<option value="Bogota, Lima, Quito">(GMT-5:00) Bogota, Lima, Quito</option>
+<option value="Eastern Time">(GMT-5:00) Eastern Time</option>
+<option value="Indiana">(GMT-5:00) Indiana</option>
+<option value="Atlantic Time">(GMT-4:00) Atlantic Time</option>
+<option value="Caracas, La Paz">(GMT-4:00) Caracas, La Paz</option>
+<option value="Santiago">(GMT-4:00) Santiago</option>
+<option value="Newfoundland">(GMT-3:00) Newfoundland</option>
+<option value="Brasilia">(GMT-3:00) Brasilia</option>
+<option value="Buenos Aires, Georgetown">(GMT-3:00) Buenos Aires, Georgetown</option>
+<option value="Greenland">(GMT-3:00) Greenland</option>
+<option value="Mid-Atlantic">(GMT-2:00) Mid-Atlantic</option>
+<option value="Azores">(GMT-1:00) Azores</option>
+<option value="Cape Verde Is.">(GMT-1:00) Cape Verde Is.</option>
+<option value="Casablanca, Monrovia">(GMT) Casablanca, Monrovia</option>
+<option value="Greenwich Mean Time: Dublin, Edinburgh, Lisbon, London">(GMT) Greenwich Mean Time: Dublin, Edinburgh, Lisbon, London</option>
+<option value="Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna">(GMT+1:00) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna</option>
+<option value="Belgrade, Bratislava, Budapest, Ljubljana, Prague">(GMT+1:00) Belgrade, Bratislava, Budapest, Ljubljana, Prague</option>
+<option value="Brussels, Copenhagen, Madrid, Paris">(GMT+1:00) Brussels, Copenhagen, Madrid, Paris</option>
+<option value="Sarajevo, Skopje, Warsaw, Zagreb">(GMT+1:00) Sarajevo, Skopje, Warsaw, Zagreb</option>
+<option value="West Central Africa">(GMT+2:00) West Central Africa</option>
+<option value="Athens, Istanbul, Minsk">(GMT+2:00) Athens, Istanbul, Minsk</option>
+<option value="Bucharest">(GMT+2:00) Bucharest</option>
+<option value="Cairo">(GMT+2:00) Cairo</option>
+<option value="Harare, Pretoria">(GMT+2:00) Harare, Pretoria</option>
+<option value="Helsinki, Kyiv, Riga, Sofia, Tallinn, Vilnius">(GMT+2:00) Helsinki, Kyiv, Riga, Sofia, Tallinn, Vilnius</option>
+<option value="Jerusalem">(GMT+2:00) Jerusalem</option>
+<option value="Baghdad">(GMT+3:00) Baghdad</option>
+<option value="Kuwait, Riyadh">(GMT+3:00) Kuwait, Riyadh</option>
+<option value="Moscow, St. Petersburg, Volgograd">(GMT+3:00) Moscow, St. Petersburg, Volgograd</option>
+<option value="Nairobi">(GMT+3:00) Nairobi</option>
+<option value="Tehran">(GMT+3:30) Tehran</option>
+<option value="Abu Dhabi, Muscat">(GMT+4:00) Abu Dhabi, Muscat</option>
+<option value="Baku, Tbilisi, Yerevan">(GMT+4:00) Baku, Tbilisi, Yerevan</option>
+<option value="Kabul">(GMT+4:30) Kabul</option>
+<option value="Ekaterinburg">(GMT+5:00) Ekaterinburg</option>
+<option value="Islamabad, Karachi, Tashkent">(GMT+5:00) Islamabad, Karachi, Tashkent</option>
+<option value="Chennai, Kolkata, Mumbai, New Delhi">(GMT+5:30) Chennai, Kolkata, Mumbai, New Delhi</option>
+<option value="Kathmandu">(GMT+5:30) Kathmandu</option>
+<option value="Almaty, Novosibirsk">(GMT+6:00) Almaty, Novosibirsk</option>
+<option value="Astana, Dhaka">(GMT+6:00) Astana, Dhaka</option>
+<option value="Sri Jayawardenepura">(GMT+6:00) Sri Jayawardenepura</option>
+<option value="Rangoon">(GMT+6:00) Rangoon</option>
+<option value="Bangkok, Hanoi, Jakarta">(GMT+7:00) Bangkok, Hanoi, Jakarta</option>
+<option value="Krasnoyarsk">(GMT+7:30) Krasnoyarsk</option>
+<option value="Beijing, Chongquing, Hong Kong, Urumqi">(GMT+8:00) Beijing, Chongquing, Hong Kong, Urumqi</option>
+<option value="Irkutsk, Ulaan Bataar">(GMT+8:00) Irkutsk, Ulaan Bataar</option>
+<option value="Kuala Lumpur, Singapore">(GMT+8:00) Kuala Lumpur, Singapore</option>
+<option value="Perth">(GMT+8:00) Perth</option>
+<option value="Taipei">(GMT+8:00) Taipei</option>
+<option value="Osaka, Sapporo, Tokyo">(GMT+9:00) Osaka, Sapporo, Tokyo</option>
+<option value="Seoul">(GMT+9:00) Seoul</option>
+<option value="Yakutsk">(GMT+9:00) Yakutsk</option>
+<option value="Adelaide">(GMT+9:30) Adelaide</option>
+<option value="Darwin">(GMT+9:30) Darwin</option>
+<option value="Brisbane">(GMT+10:00) Brisbane</option>
+<option value="Canberra, Melbourne, Sydney">(GMT+10:00) Canberra, Melbourne, Sydney</option>
+<option value="Guam, Port Moresby">(GMT+10:00) Guam, Port Moresby</option>
+<option value="Hobart">(GMT+10:00) Hobart</option>
+<option value="Vladivostok">(GMT+10:00) Vladivostok</option>
+<option value="Magadan">(GMT+11:00) Magadan</option>
+<option value="Solomon Is., New Caledonia">(GMT+11:00) Solomon Is., New Caledonia</option>
+<option value="Auckland, Wellington">(GMT+12:00) Auckland, Wellington</option>
+<option value="Fiji, Kamchatka, Marshall Is.">(GMT+12:00) Fiji, Kamchatka, Marshall Is. </option>
+<option value="Nuku'alofa">(GMT+13:00) Nuku'alofa </option>
+</SELECT></td></tr>
+<tr>
+<td colspan="2">
+<input type="checkbox" name="adjust" value="adjust" tabindex="16">Adjust for Daylight Savings Time</td></tr>
+
+<tr>
+<td nowrap>
+<input type="checkbox" name="use_ntpserver" value="use_ntpserver" onclick=ntpServerClick(this.form); tabindex="17">Use this NTP Server</td>
+<td nowrap align="right">
+<input type="text" name="ntp_server" value="<% nvram_get("ntp_server"); %>" size="24" maxlength="32" ></td>
+</tr>
+
+<tr>
+<td colspan="2" align="center"><BR><b>Current Time: &nbsp; <% fw_cgi_get_mail_param("schedule_currenttime"); %></b><BR> &nbsp; </td></tr>
+
+<tr>
+<td colspan="2" background="liteblue.gif" height="12">&nbsp; </td></tr>
+<tr>
+<td colspan="2" align="center">
+<INPUT name=action onclick="if(!checkSchedule()) return false;" tabIndex=22 type=submit value=Apply>&nbsp;&nbsp;
+<INPUT name=action tabIndex=23 type=submit value=Cancel onclick="CancelAction()"></TD></TR>
+</table>
+<INPUT name=schedule_day type=hidden value= "<% fw_cgi_get_daytime_param("schedule_day"); %>">
+<INPUT name=schedule_alldayenable type=hidden>
+<INPUT name=schedule_starthour type=hidden value= "<% fw_cgi_get_daytime_param("schedule_starthour"); %>">
+<INPUT name=schedule_startminute type=hidden value= "<% fw_cgi_get_daytime_param("schedule_startminute"); %>">
+<INPUT name=schedule_endhour type=hidden value= "<% fw_cgi_get_daytime_param("schedule_endhour"); %>">
+<INPUT name=schedule_endminute type=hidden value= "<% fw_cgi_get_daytime_param("schedule_endminute"); %>">
+<INPUT name=schedule_daylightadjust type=hidden value= "<% nvram_get("schedule_daylightadjust"); %>">
+<INPUT name=time_zone_cfg type=hidden value= "<% nvram_get("time_zone_country"); %>">
+<INPUT name=ntp_server_sp type=hidden value= "<% nvram_get("ntp_server_sp"); %>">
+<INPUT name=result type=hidden value= "apply">
+</form>
+<p></p>
+</body>
+</html>

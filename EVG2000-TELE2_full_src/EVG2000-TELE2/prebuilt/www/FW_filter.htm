@@ -1,0 +1,204 @@
+<html>
+<head>
+<% meta_get(); %>
+<title> Firewall </title> 
+<link rel="stylesheet" href="form.css">
+<STYLE TYPE="text/javascript">
+	classes.num.all.fontFamily = "Courier";
+	classes.num.all.fontSize = "10pt" ;
+</style>
+<% script_get(); %>
+<script language="javascript" type="text/javascript">
+<!-- hide script from old browsers
+var radioSelected=-1;
+function clickRadio(type)
+{
+    if(type==1)
+        radioSelected=1;
+    else
+        radioSelected=0;
+}
+
+function moveRule(fObj, radioObj, actionStr, type)
+{
+	var ptext = "\nNew position:" ; 
+    var pos ;
+    var cf = document.forms[0];
+
+    if(radioSelected==-1 || radioSelected!=type)
+    {
+        alert("please select a rule.");
+        return false;
+    }
+
+    pos = prompt(ptext,"") ;
+    
+    if(pos == null) //cancel
+        return false;
+
+    while ( isNaN(parseInt(pos,10)) ||  parseInt(pos,10) <= 0 )  
+	{
+        ptext = "\nInvalid position. Please re-enter new position.";
+        pos = prompt(ptext,"") ;
+        
+        if(pos == null) //cancel
+            break;
+	} 
+
+    if(pos == null) //cancel
+        return false;
+    else
+    {
+        document.forms[0].new_position.value = pos;                    
+        return true;
+    }  
+}
+
+// get the in/out enable value form check box
+function saveEnable()
+{
+    var cf = document.forms[0];
+    var form_size = cf.elements.length;
+    
+    cf.rule_enable.value = "";
+    for (var i = 0; i < form_size; i++)
+    {
+        if (cf.elements[i].type == "checkbox")
+        {
+            if(cf.elements[i].name.substring(0,9)=="enable_cb")
+            cf.rule_enable.value+= (cf.elements[i].checked) ? "1" : "0";
+        }
+    }
+}
+
+function check_data()
+{
+    var cf = document.forms[0];
+    var msg = "";
+
+    if (msg.length > 1)
+	{
+		alert(msg);
+		return false;
+	}
+	cf.todo.value = "save";
+	saveEnable();
+	return true;	
+}
+//-->
+</script> 
+</head>
+<body bgcolor="#ffffff" onload="document.forms[0].elements[0].focus();loadhelp('FW_filter');">
+<form name="formname" action="fw_filter.cgi" method="POST">
+
+<table border="0" cellpadding="0" cellspacing="3" width="100%">
+<tr>
+	<td colspan="2"><h1>Firewall Rules</h1></td>
+</tr>
+
+<tr><td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td></tr>
+<tr>
+	<td colspan="2">
+		<a href="javascript:loadhelp('FW_filter','out')" tabindex="-1"><b>Outbound Services</b></a> 
+	</td>
+</tr>
+<tr>
+	<td colspan="2">
+		<table border="1" cellpadding="2" cellspacing="0" width="100%">
+		<tr>
+			<td nowrap align="center" width="6%"><span class="thead">&nbsp;</span></td>
+			<td nowrap align="center" width="6%"><span class="thead"># </span>	</td>
+			<td nowrap align="center"><span class="thead">Enable</span></td>
+			<td nowrap align="center"><span class="thead">Service Name</span></td>
+			<td nowrap align="center"><span class="thead">Action</span></td>
+			<td nowrap align="center"><span class="thead">LAN Users</span></td>
+			<td nowrap align="center"><span class="thead">WAN Servers</span></td>
+			<td nowrap align="center"><span class="thead">Log</span></td>
+		</tr>
+		
+		<!-- to disply the current outbound filter rule -->
+		<% fw_cgi_filter_get_outb_table(); %>
+		<tr>
+			<td nowrap align="center"><span class="thead">&nbsp;</span></td>
+			<td nowrap align="center"><span class="thead">Default</span></td>
+			<td nowrap align="center"><span class="ttext">Yes</span></td>
+			<td nowrap align="center"><span class="ttext">Any</span></td>
+			<td nowrap align="center"><span class="ttext">ALLOW always</span></td>
+			<td nowrap align="center"><span class="ttext">Any</span></td>
+			<td nowrap align="center"><span class="ttext">Any</span></td>
+			<td nowrap align="center"><span class="ttext">Never</span></td>
+		</tr>
+	</table>
+</td>
+</tr>
+<tr>
+<td colspan="2" align="center">
+<BR>
+	<input type="Submit" name="outadd" value=" Add " >
+	<input type="Submit" name="outedit" value=" Edit " <% fw_cgi_outbut_set("Edit"); %> > 
+	<input type="Submit" name="outmove" value=" Move " <% fw_cgi_outbut_set(); %> onClick="return moveRule(this.form,this.form.rule_sel,'outmove', 1)"> <!-- @moveBug -->
+	<input type="Submit" name="outdelete" value="Delete" <% fw_cgi_outbut_set("Delete"); %> > 
+</tr>
+
+<tr>
+	<td colspan="2">
+		<a href="javascript:loadhelp('FW_filter','in')" tabindex="-1"><b>Inbound Services</b></a> 
+	</td>
+</tr>
+<tr>
+	<td colspan="2">
+		<table border="1" cellpadding="2" cellspacing="0" width="100%">
+		<tr>
+			<td nowrap align="center" width="6%"><span class="thead">&nbsp;</span></td>
+			<td nowrap align="center" width="6%"><span class="thead"># </span>	</td>
+			<td nowrap align="center"><span class="thead">Enable</span></td>
+			<td nowrap align="center"><span class="thead">Service Name</span></td>
+			<td nowrap align="center"><span class="thead">Action</span></td>
+			<td nowrap align="center"><span class="thead">LAN Server IP address</span></td>
+			<td nowrap align="center"><span class="thead">WAN Users</span></td>
+			<td nowrap align="center"><span class="thead">Log</span></td>
+		</tr>
+		
+		<!-- to disply the current outbound filter rule -->
+		<% fw_cgi_filter_get_inb_table(); %>		
+		<tr>
+			<td nowrap align="center"><span class="thead">&nbsp;</span></td>
+			<td nowrap align="center"><span class="thead">Default</span></td>
+			<td nowrap align="center"><span class="ttext">Yes</span></td>
+			<td nowrap align="center"><span class="ttext">Any</span></td>
+			<td nowrap align="center"><span class="ttext">BLOCK always</span></td>
+			<td nowrap align="center"><span class="ttext">Any</span></td>
+			<td nowrap align="center"><span class="ttext">Any</span></td>
+			<td nowrap align="center"><span class="ttext">Never</span></td>
+		</tr>
+	</table>
+</td>
+</tr>
+<tr>
+	<td colspan="2" align="center">
+	<BR>
+	<input type="Submit" name="inadd" value=" Add "> 
+	<input type="Submit" name="inedit" value=" Edit " <% fw_cgi_inbut_set("Edit"); %> > <!-- onClick="this.form.next_file.value='rule_in.htm';radioTable(this.form,this.form.in_sel,'edit')"> -->
+	<input type="Submit" name="inmove" value=" Move " <% fw_cgi_inbut_set(); %> onClick="return moveRule(this.form,this.form.rule_sel,'inmove', 0)">  <!-- @moveBug -->
+	<input type="Submit" name="indelete" value="Delete" <% fw_cgi_inbut_set("Delete"); %>> <!-- onClick="this.form.next_file.value='rule_in.htm';radioTable(this.form,this.form.in_sel,'delete')"></td> -->
+</tr>
+<tr><td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td></tr>
+
+<tr>
+	<td colspan="2" align="center">
+	    <input type="submit" name="apply" value="Apply" onClick="check_data();"> &nbsp;&nbsp;
+		<input type="reset" name="Cancel" value="Cancel" >
+	</td>
+</tr>
+</table>
+
+<input type="hidden" name="h_in_sel" value="">
+<input type="hidden" name="h_out_sel" value="">
+<input type="hidden" name="rule_enable" >
+<input type="hidden" name="new_position" value="-1">
+<input type="hidden" name="todo" value="save">
+<input type="hidden" name="this_file" value="fw_rules.htm">
+<input type="hidden" name="next_file" value="fw_rules.htm">
+</form>
+</body>
+</html>

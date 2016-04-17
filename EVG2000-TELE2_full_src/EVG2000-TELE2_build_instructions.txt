@@ -1,0 +1,39 @@
+========================================
+ EVG2000 Build Instructions
+
+ Version: 1.0
+ Date   : May 28 2010
+======================================== 
+
+Note: 
+      1. This package has been built successfully on Fedora Core 6.
+         Compiling this package on platforms other than Fedora Core 6
+         may have unexpected results.
+
+===================
+ Install toolchain
+===================
+
+1. Download the toolchain "uclibc-crosstools-gcc-4.2.3-3_LFS.tar.bz2".
+2. Follow the install guide to  install the toolchain.
+   *** NOTE: it will need root privilege to install the toolchain ***
+
+3. After successful installation, the toolchain will be located in /opt/toolchains
+
+===================
+ Build code
+===================
+
+1. Put the file "EVG2000-TELE2_src.tar" into a directory of your choice.
+   Unzip and untar it with the following command:
+        
+        tar xvfj EVG2000-TELE2_src.tar.bz2
+
+2. Run the following commands to build image
+
+        cd EVG2000-TELE2
+        make PROFILE=TELE2
+
+3. The final firmware is located in targets/TELE2.
+   The filename is EVG2000-<build date time>.chk, or kernel_rootfs_image.chk
+

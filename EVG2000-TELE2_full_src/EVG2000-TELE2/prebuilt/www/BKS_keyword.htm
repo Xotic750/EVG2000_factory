@@ -1,0 +1,243 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<% meta_get(); %>
+<meta HTTP-EQUIV="Expires" CONTENT="Mon, 06 Jan 1990 00:00:01 GMT"> 
+
+<title>Block Sites</title> 
+<link rel="stylesheet" href="form.css">
+<STYLE TYPE="text/javascript">
+	classes.num.all.fontFamily = "Courier";
+	classes.num.all.fontSize = "10pt" ;
+</style>
+<% script_get(); %>
+<script language="javascript" type="text/javascript">
+<!-- 
+function checkData()
+{
+ 	var cf = document.forms[0];
+	var msg = "";
+	
+	if (cf.skeyword[0].checked)
+		cf.bs_enable.value = 0;
+	else if (cf.skeyword[1].checked)
+		cf.bs_enable.value = 1;	
+	else	
+		cf.bs_enable.value = 2;			
+		
+	if (cf.trustipenble.checked)
+		cf.bs_trustedip_enable.value = 1;
+	else
+		cf.bs_trustedip_enable.value = 0;			
+		
+	cf.bs_trustedip.value = cf.cfTrusted_IPAddress1.value+'.'+cf.cfTrusted_IPAddress2.value+'.'+cf.cfTrusted_IPAddress3.value+'.'+cf.cfTrusted_IPAddress4.value;		
+	
+	if((parseInt(cf.cfTrusted_IPAddress1.value) == 0)&&(parseInt(cf.cfTrusted_IPAddress2.value) == 0)
+	 &&(parseInt(cf.cfTrusted_IPAddress3.value) == 0)&&(parseInt(cf.cfTrusted_IPAddress4.value) == 0))
+	 return true;
+	if(cf.trustipenble.checked)
+	{
+		if(checkIP(cf.cfTrusted_IPAddress1,cf.cfTrusted_IPAddress2,cf.cfTrusted_IPAddress3,cf.cfTrusted_IPAddress4,254))
+			msg+= "Invalid IP Address, please enter again!\n";
+	}		
+	if (msg.length > 1)
+	{
+		alert(msg);
+		return false;
+	}
+	return true;	
+}
+function checkKeyWord()
+{
+	var cf = document.forms[0];
+	var msg = "";
+	msg+= checkBlank(cf.cfKeyWord_Domain, "keyword");
+	cf.cfKeyWord_Domain.focus();
+	if (msg.length > 1)
+	{
+		alert(msg);
+		return false;
+	}
+	
+	if (cf.skeyword[0].checked)
+		cf.bs_enable.value = 0;
+	else if (cf.skeyword[1].checked)
+		cf.bs_enable.value = 1;	
+	else	
+		cf.bs_enable.value = 2;			
+		
+	if (cf.trustipenble.checked)
+		cf.bs_trustedip_enable.value = 1;
+	else
+		cf.bs_trustedip_enable.value = 0;							
+							
+	cf.bs_trustedip.value = cf.cfTrusted_IPAddress1.value+'.'+cf.cfTrusted_IPAddress2.value+'.'+cf.cfTrusted_IPAddress3.value+'.'+cf.cfTrusted_IPAddress4.value;	
+		
+	return true;	
+}
+
+function checkTrustIP()
+{
+	var cf = document.forms[0];
+	if(!cf.trustipenble.checked)
+	{
+		cf.cfTrusted_IPAddress1.disabled = true;
+		cf.cfTrusted_IPAddress2.disabled = true;
+		cf.cfTrusted_IPAddress3.disabled = true;
+		cf.cfTrusted_IPAddress4.disabled = true;
+		
+	}
+	else
+	{
+		cf.cfTrusted_IPAddress1.disabled = false;
+		cf.cfTrusted_IPAddress2.disabled = false;
+		cf.cfTrusted_IPAddress3.disabled = false;
+		cf.cfTrusted_IPAddress4.disabled = false;
+	}
+}
+
+function checkTrustIP1()
+{
+	var cf = document.forms[0];
+    var ip = document.forms[0].bs_trustedip.value.split(".");
+
+    cf.cfTrusted_IPAddress1.value = ip[0];           
+    cf.cfTrusted_IPAddress2.value = ip[1];          
+    cf.cfTrusted_IPAddress3.value = ip[2];         
+    cf.cfTrusted_IPAddress4.value = ip[3];	
+	
+	if(!cf.trustipenble.checked)
+	{
+		cf.cfTrusted_IPAddress1.disabled = true;
+		cf.cfTrusted_IPAddress2.disabled = true;
+		cf.cfTrusted_IPAddress3.disabled = true;
+		cf.cfTrusted_IPAddress4.disabled = true;
+		
+	}
+	else
+	{
+		cf.cfTrusted_IPAddress1.disabled = false;
+		cf.cfTrusted_IPAddress2.disabled = false;
+		cf.cfTrusted_IPAddress3.disabled = false;
+		cf.cfTrusted_IPAddress4.disabled = false;
+	}
+}
+
+function checkKeyWordDomainList()
+{
+	var cf = document.forms[0];
+	
+    cf.cfKeyWord_Domain.value = "";
+    
+	if(cf.cfKeyWord_DomainList.options[0] == null)
+	{
+	    alert("please select a keyword or domain name!");
+		return false;
+	}
+		
+	if (cf.skeyword[0].checked)
+		cf.bs_enable.value = 0;
+	else if (cf.skeyword[1].checked)
+		cf.bs_enable.value = 1;	
+	else	
+		cf.bs_enable.value = 2;			
+		
+	if (cf.trustipenble.checked)
+		cf.bs_trustedip_enable.value = 1;
+	else
+		cf.bs_trustedip_enable.value = 0;							
+							
+	cf.bs_trustedip.value = cf.cfTrusted_IPAddress1.value+'.'+cf.cfTrusted_IPAddress2.value+'.'+cf.cfTrusted_IPAddress3.value+'.'+cf.cfTrusted_IPAddress4.value;
+					
+	return true;	
+}
+
+//-->
+</script> 
+</head>
+<body bgcolor="#ffffff" onload="checkTrustIP1();loadhelp('BKS_keyword');document.forms[0].elements['cfKeyWord_Domain'].focus();">
+<form method="POST" action="keyword.cgi">
+	<table border="0" cellpadding="0" cellspacing="3" width="100%">
+		<tr>
+			<td colspan="2">
+			<h1>Block Sites</h1> 
+			</td>
+		</tr>
+<tr> <!-- RULE -->
+ <td colspan="2" background="liteblue.gif" height="12">&nbsp; </td>
+</tr>
+
+<tr>
+	 <td colspan="2" height="18"><a href="javascript:loadhelp('BKS_keyword','blocking')" tabindex="-1"><b>Keyword Blocking</b></a><br>
+		<input <% nvram_match("bs_enable_temp", "0", "CHECKED"); %> type="radio" name="skeyword" value="never">Never<br> 
+		<input <% nvram_match("bs_enable_temp", "1", "CHECKED"); %> type="radio" name="skeyword" value="perschedule">Per Schedule<br>
+		<input <% nvram_match("bs_enable_temp", "2", "CHECKED"); %> type="radio" name="skeyword" value="always">Always
+	 </td>
+</tr>
+<tr> <!-- RULE -->
+ <td colspan="2" background="liteblue.gif" height="12">&nbsp; </td>
+</tr>
+
+<tr>
+ <td colspan="2"><a href="javascript:loadhelp('BKS_keyword','toaddword')" tabindex="-1"><b>Type Keyword or Domain Name Here.</b></a></td>
+</tr>
+
+<tr>
+	<td colspan="2"><input type="text" name="cfKeyWord_Domain" size="32" maxlength="60" value="<% nvram_get("bs_keyword"); %>" tabindex=2></td>
+</tr>
+
+<tr>
+	<td width="50%" align="left"><input type="submit" name="cfKeyWord_AddKeyword" value="Add Keyword" onClick="if(!checkKeyWord()) return false;" tabindex="3"></td>
+</tr>		
+
+<tr> <!-- RULE -->
+ <td colspan="2" background="liteblue.gif" height="12">&nbsp; </td>
+</tr>
+		<tr>
+			<td colspan="2"><a href="javascript:loadhelp('BKS_keyword','blocklist')" tabindex="-1"><b>Block Sites Containing these Keywords or Domain Names:</b></a></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<select name="cfKeyWord_DomainList" size="6" multiple tabindex="4"><% option_get("bs_keywords_temp"); %></select> 
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2"><input type="submit" name="cfKeyWord_DeleteKeyword" onclick="if(!checkKeyWordDomainList()) return false;" value="Delete Keyword" tabindex="5"> 
+			<input type="submit" name="cfKeyWord_ClearList" onclick="if(!checkKeyWordDomainList()) return false;" value="Clear List" tabindex="6"></td>
+		</tr>
+		
+<tr> <!-- RULE -->
+ <td colspan="2" background="liteblue.gif" height="12">&nbsp; </td>
+</tr>
+	<tr>
+	<td nowrap colspan="2"><input <% nvram_match("bs_trustedip_enable_temp", "1", "CHECKED"); %> type="checkbox" name="trustipenble" tabindex="1" value="" onclick= "checkTrustIP();"><a href="javascript:loadhelp('BKS_keyword','trusted')" tabindex="-1"><b>Allow Trusted IP Address to Visit Blocked Sites</b></a></td>
+</tr>
+<tr>
+	<td width="50%"><a href="javascript:loadhelp('BKS_keyword','trusted')" tabindex="-1"><b>Trusted IP Address</b></a></td>
+	<td width="50%" align="right" class="num"><input type="text" name="cfTrusted_IPAddress1" class="num" size="4" maxlength="3" value="192" tabindex="7">.<input type="text" name="cfTrusted_IPAddress2" class="num" size="4" maxlength="3" value="168" tabindex="8">.<input type="text" name="cfTrusted_IPAddress3" class="num" size="4" maxlength="3" value="0" tabindex="9">.<input type="text" name="cfTrusted_IPAddress4" class="num" size="4" maxlength="3" value="0" tabindex="10"></td>
+</tr>
+<tr> <!-- RULE -->
+ <td colspan="2" background="liteblue.gif" height="12">&nbsp; </td>
+
+
+</tr>
+		
+<tr>
+ <td align="center" colspan="2">
+	<input type="SUBMIT" name="wzWAN_IPFinish" value="Apply" onClick="return checkData()">
+<input type="SUBMIT" name="Cancel" value="Cancel"></td>
+</tr>
+ 
+</table>
+
+<INPUT name=bs_enable type=hidden value= "<% nvram_get("bs_enable_temp"); %>">
+<INPUT name=bs_trustedip_enable type=hidden value= "<% nvram_get("bs_trustedip_enable_temp"); %>">
+<INPUT name=bs_trustedip type=hidden value= "<% nvram_get("bs_trustedip_temp"); %>">
+
+</form>
+<p>
+</p>
+</body>
+</html>
+
+

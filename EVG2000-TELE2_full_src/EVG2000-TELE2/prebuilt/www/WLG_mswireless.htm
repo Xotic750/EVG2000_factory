@@ -1,0 +1,23 @@
+<html>
+<head>
+<% meta_get(); %>
+
+<title>Advanced Security</title>
+<script language="javascript" type="text/javascript">
+<!-- hide script from old browsers
+var secuType="<% wlg_cgi_get_secutype(); %>";
+function redirect()
+{
+    if((secuType=="WPA-PSK") || (secuType=="WPA2-PSK") || (secuType=="WPA-AUTO-PSK"))
+        window.location.href="WLG_mswireless2.htm";
+    else if(secuType=="WEP")
+        window.location.href="WLG_mswireless1.htm";
+    else
+        window.location.href="WLG_mswireless3.htm";
+}
+//-->
+</script>
+</head>
+<body bgcolor="#ffffff" onload="redirect();">
+</body>
+</html>

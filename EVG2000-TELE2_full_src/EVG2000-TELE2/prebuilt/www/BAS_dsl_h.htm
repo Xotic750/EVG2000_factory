@@ -1,0 +1,45 @@
+<html>
+<% meta_get(); %>
+<title>Help</title>
+<link rel="stylesheet" href="help.css">
+</head>
+
+<body>
+
+<h1 class="helpfile">ADSL Settings Help</h1>
+
+<p>The default parameters should be correct to match the system used by your ISP</p>
+    <ul>
+      <li>Multiplexing Method - Your ISP will indicate whether your Multiplexing Method is VC-BASED or LLC-BASED.
+      <li>Virtual Circuit - Your ISP will indicate which VPI/VCI combination is used for your service.
+    </ul>
+<p>Connection service guarantees are specified per ATM VPI/VCI by a set of measurable connection parameters.
+Please check your ISP to set the proper parameters. If you don't know how to configure them, please keep them as default.
+</p>
+<ul>
+      <li>UBR (Unspecified Bit Rate): The protocol that provides spare bandwidth to non-critical services such as file transfers. The actual rate depend on the bandwidth of the current network.
+
+      <li>CBR(Constant Bit Rate): Real-time connection with a specified amount of guaranteed bandwidth (PCR) that is continuously available during the connection life-time. 
+
+      <li>VBR-rt (Real-Time Variable Bit Rate): Similar as CBR intended for real-time applications with constrained delay and delay variation values, but which can benefit from variable bit-rates. The average guaranteed bandwidth is SCR, but data up to PCR may be sent for a limited amount of data specified by MBS. A VBR-rt connection is characterized by PCR, SCR, MBS. 
+
+
+      <li>VBR-nrt (Non-Real-Time Variable Bit Rate): Intended for non-real-time applications that have bursty traffic characteristics and no strict transfer delay requirements but which require an amount of guaranteed bandwidth. A VBR-nrt connection is characterized by an average guaranteed bandwidth (SCR) up to a maximum guaranteed bandwidth (PCR) for a burst with specified maximum size (MBS).
+
+
+      <li>PCR (Peak Cell Rate): Maximum number of ATM cells per second that may be sent on the connection.
+
+
+      <li>SCR (Sustainable Cell Rate): Average number of ATM cells per second that may be sent on the connection.
+      
+      <li>MBS (Maximum Burst. Size): Maximum number of ATM cells that may be sent in a burst, and thus exceeding the average number of cells (SCR) up to the maximum number of cells (PCR) for a limited number of ATM cells defined by MBS.
+
+    </ul>
+<p><b>To Apply or Cancel </b></p>
+<p>
+Click <b>Apply</b> to save the new settings to the Router. <br>
+
+Click <b>Cancel</b> to disregard any unsaved changes. <br>
+</body>
+
+</html>	

@@ -1,0 +1,102 @@
+<html>
+<head>
+<% meta_get(); %>
+<link rel="stylesheet" href="form.css">
+<STYLE TYPE="text/javascript">
+	classes.num.all.fontFamily = "Courier";
+	classes.num.all.fontSize = "10pt" ;
+</style>
+<title>Edit Address Reservation</title> 
+<% script_get(); %>
+<script language="javascript" type="text/javascript">
+<!--
+function goBack()
+{
+	window.location.href="LAN_lan.htm";
+}
+function checkData()
+{
+	var cf = document.forms[0];
+	var msg = "";
+	if(checkIP(cf.rsv_ip1,cf.rsv_ip2,cf.rsv_ip3,cf.rsv_ip4,254))
+		msg+= "Invalid IP Address, please enter again\n";
+	if(checkMacStr(cf.rsv_mac))
+		msg+= "Invalid MAC Address, please enter again!\n";
+	msg+= checkBlank(cf.dv_name, "Device Name");
+
+	if (msg.length > 1)
+	{
+		alert(msg);
+		return false;
+	}
+	cf.rsv_ip.value = cf.rsv_ip1.value+'.'+cf.rsv_ip2.value+'.'+cf.rsv_ip3.value+'.'+cf.rsv_ip4.value;
+	return true;
+}
+
+function loadSettings()
+{
+	var cf = document.forms[0];
+	var rsv_ip;
+        
+	rsv_ip = cf.rsv_ip.value.split(".");
+	cf.rsv_ip1.value = rsv_ip[0];
+	cf.rsv_ip2.value = rsv_ip[1];
+	cf.rsv_ip3.value = rsv_ip[2];
+	cf.rsv_ip4.value = rsv_ip[3];
+
+	cf.rsv_mac.value = "<% lan_cgi_get_rsvip_param("rsv_mac"); %>";
+	cf.dv_name.value = "<% lan_cgi_get_rsvip_param("dv_name"); %>";
+
+}
+
+//-->
+</script> 
+</head>
+<body bgcolor="#ffffff" onload="loadSettings();loadhelp('LAN_reserv_edit');document.forms[0].elements[0].focus();">
+<form method="POST" action="reserv.cgi">
+	<table border="0" cellpadding="0" cellspacing="3" width="100%">
+		<tr>
+			<td colspan="2">
+				<h1>Edit Address Reservation</h1> 
+		</td>
+	</tr>
+	
+<tr>
+<td colspan="2" nowrap><input type="checkbox" <% lan_cgi_get_rsvip_param("resv_enable"); %> name="resv_enable" value="1">Enable</td>	
+</tr>
+	
+<tr> <!-- RULE -->
+ <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+
+<tr>
+	<td width="50%" nowrap>IP Address</td>
+	<td width="50%" align="left" class="num">
+		<input type="text" name="rsv_ip1" class="num" size="4" maxlength="3">.<input type="text" name="rsv_ip2" class="num" size="4" maxlength="3">.<input type="text" name="rsv_ip3" class="num" size="4" maxlength="3">.<input type="text" name="rsv_ip4" class="num" size="4" maxlength="3"></td>
+</tr>
+<tr>
+	<td width="50%" nowrap>MAC Address</td>
+	<td width="50%" align="left" class="num"><input type="text" name="rsv_mac" class="num" size="17" maxlength="17"></td>
+</tr>
+<tr>
+	<td width="50%" nowrap>Device Name:</td>
+	<td width="50%" align="left">
+		<input type="text" name="dv_name" size="20" maxlength="20">
+	</td>
+</tr>
+
+<tr> <!-- RULE -->
+ <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+
+<tr>
+ <td colspan="2" align="center">
+ <input type="SUBMIT" name="apply" value="Apply" onClick="if(!checkData()) return false;"> 
+ <input type="Button" name="Cancel" value="Cancel" onClick="location.href='LAN_lan.htm'"></td>
+</tr>
+</table>
+<INPUT name=rsv_ip type=hidden value= "<% lan_cgi_get_rsvip_param("rsv_ip"); %>">
+<INPUT name=rsv_mode type=hidden value="edit">
+</form>
+</body>
+</html>

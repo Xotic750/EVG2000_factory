@@ -1,0 +1,138 @@
+<html>
+<head>
+<% meta_get(); %>
+<title>Router Status</title> 
+<link rel="stylesheet" href="form.css">
+<% script_get(); %>
+<script language="javascript" type="text/javascript">
+<!--
+function openStatWindow() {
+ window.open(this.form.stat_page.value, '','width=380,height=350,status=yes');
+ return ture;
+}
+
+//-->
+</script> 
+</head>
+<body bgcolor="#ffffff" onload="loadhelp('RST_status');" onUnload="closeWin(datSubWinVar);">
+<form method="POST" action="s_status.cgi">
+<table border="0" cellpadding="0" cellspacing="3" width="100%">
+<tr>
+	<td colspan="2"><h1>Router Status</h1></td>
+</tr>
+
+<tr> <!-- RULE -->
+	<td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+
+<tr>
+	<td width="50%"><b>Account Name</b></td>
+	<td width="50%"><% nvram_get("system_name"); %></td>
+</tr>
+
+<tr>
+	<td width="50%"><b>Firmware Version </b></td>
+	<td width="50%"><% rst_cgi_get_fw_version(); %></td>
+</tr>
+
+<tr> <!-- RULE -->
+	<td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+
+<tr>
+	<td colspan="2"><a href="javascript:loadhelp('RST_status','lan_port')" tabindex="-1"><span class="subhead">LAN Port</span></a></td>
+</tr>
+
+<tr>
+	<td width="50%"><b>IP Address </b></td>
+	<td width="50%"><% nvram_get("lan_ipaddr"); %></td>
+</tr>
+
+<tr>
+	<td width="50%"><b>IP Subnet Mask </b></td>
+	<td width="50%"><% nvram_get("lan_netmask"); %></td>
+</tr>
+
+<tr> <!-- RULE -->
+	<td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+
+<tr>
+	<td colspan="2"><a href="javascript:loadhelp('RST_status','modem')" tabindex="-1">
+		<span class="subhead">Modem</span> </a>
+	</td>
+</tr>
+
+<tr>
+	<td width="50%"><b>ADSL Firmware Version</b></td>
+	<td width="50%"><% rst_cgi_get_adsl_stats("Version"); %></td>
+</tr>
+
+<tr>
+	<td width="50%"><b>Modem Status</b></td>
+	<td width="50%"><% rst_cgi_get_adsl_stats("Connection"); %></td>
+</tr>
+<tr>
+	<td width="50%"><b>DownStream Connection Speed</b></td>
+	<td width="50%"><% rst_cgi_get_adsl_stats("LineRate","down"); %></td>
+</tr>
+<tr>
+	<td width="50%"><b>UpStream Connection Speed</b></td>
+	<td width="50%"><% rst_cgi_get_adsl_stats("LineRate","up"); %></td>
+</tr>
+<tr>
+	<td width="50%"><b>VPI</b></td>
+	<td width="50%"><% rst_cgi_get_adsl_stats("vpi"); %></td>
+</tr>
+
+<tr>
+	<td width="50%"><b>VCI</b></td>
+	<td width="50%"><% rst_cgi_get_adsl_stats("vci"); %></td>
+</tr>
+		
+<tr> <!-- RULE -->
+	<td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+
+<tr>
+	<td colspan="2"><a href="javascript:loadhelp('RST_status','wireless_port')" tabindex="-1">
+	<span class="subhead">Wireless Port </span> </a>
+</td>
+</tr>
+<tr>
+	<td width="50%"><b>Name (SSID)</b></td>
+	<td width="50%"><% wlg_cgi_get_ssid();%></td>
+</tr>
+<tr>
+	<td width="50%"><b>Region</b></td>
+	<td width="50%"><% wlg_cgi_get_country(); %></td>
+</tr>
+<tr>
+	<td width="50%"><b>Channel</b></td>
+	<td width="50%"><% wlg_cgi_get_chstr(); %></td>
+</tr>
+<tr>
+	<td width="50%"><b>Mode</b></td>
+	<td width="50%"><% wlg_cgi_get_curr_opmode(); %></td>
+</tr>
+<tr>
+	<td width="50%"><b>Wireless AP</b></td>
+	<td width="50%"><% wlg_cgi_get_apstate(); %></td>
+</tr>
+<tr>
+	<td width="50%"><b>Broadcast Name</b></td>
+	<td width="50%"><% wlg_cgi_get_bcaststate(); %></td>
+</tr>
+<tr> <!-- RULE -->
+	<td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+<tr>
+	<td nowrap colspan="2" align="center"><input type="BUTTON" name="system" value="Show Statistics" onclick="openDataSubWin('RST_statistics.htm','width=560,height=275,status=yes,resizable=yes');">
+</TD>
+</tr>
+</table>
+
+</form>
+</body>
+</html>
+

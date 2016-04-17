@@ -1,0 +1,88 @@
+<html>
+<head>
+<% meta_get(); %>
+
+<title>Add a Wireless Client</title> 
+<link rel="stylesheet" href="form.css">
+<% script_get(); %>
+<script type="text/javascript">
+<!--
+var pchar = "|"; // progress char
+var maxchars = 61; 
+var delay_time = 500; // msecs
+var charcount = <% wps_cgi_get_param("pgbar_count"); %>; 
+
+function stop1()
+{
+	document.forms[0].stop.value = "yes";
+	return true;
+}
+function do_submit()
+{
+	var cf = document.forms[0];
+	cf.pgbarcount.value = charcount;
+	cf.submit();
+}
+function makeStr(strsize, fillchar)
+{
+	var temp = "";
+	for (i=0; i < strsize ; i ++)
+		temp = temp + fillchar;
+	return temp;
+}
+function updateProgress()
+{
+	var cf = document.forms[0];
+
+	charcount ++;
+	cf.progress.value = makeStr(charcount/8,pchar);
+
+	if (charcount % 2 == 0)
+		cf.wps_icon.src = "wps_icon_on.bmp"
+	else
+		cf.wps_icon.src = "wps_icon_off.bmp"
+
+	setTimeout("updateProgress()",delay_time);
+
+	if (charcount % 10 == 0)
+		do_submit();
+}
+
+function updateMenu()
+{
+//	top.contents.location.href="MNU_menu_no_link.htm";
+}
+    
+//-->
+</script>
+</head>
+<body bgcolor="#ffffff" onLoad="updateMenu(); updateProgress();">
+<form method="post" name="formname" action="wps_status.cgi">
+<table border="0" cellpadding="0" cellspacing="3" width="100%">
+<TR><TD nowrap>
+<H1>Connecting to New Wireless Client</H1>
+</TD></TR>
+
+<tr>
+<td background="liteblue.gif" height="9"> &nbsp;</td>
+</tr>
+<% wps_cgi_get_param("ssid_pf_changed"); %> 
+<TR><TD>The client's PIN is <font size=4><b><% wps_cgi_get_param("client_pin"); %></b></font>.</TD></TR>
+<TR><TD><% wps_cgi_get_param("wps_status_msg"); %></TD></TR>
+
+<TR>
+    <td nowrap align="center"><IMG name="wps_icon" src="wps_icon_on.bmp">&nbsp;&nbsp;&nbsp;<input type="text" name="progress" class="prgbar" value="" style="color: blue" size="60"></td>
+</tr>
+	
+<TR>
+<TD ALIGN=center>
+<INPUT TYPE="submit" NAME="Cancel" VALUE="Cancel" onClick="return stop1();">
+</TD></TR>
+
+</table>
+<input type="hidden" name="stop" value="">
+<input type="hidden" name="pgbarcount" value="<% wps_cgi_get_param("pgbar_count"); %>">
+</form>
+</body>
+</html>
+

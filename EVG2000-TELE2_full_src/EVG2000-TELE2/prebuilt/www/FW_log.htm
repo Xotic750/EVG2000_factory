@@ -1,0 +1,242 @@
+<html>
+<head>
+<% meta_get(); %>
+<title>Logs</title>
+<link rel="stylesheet" href="form.css">
+<% script_get(); %>
+<script language="javascript" type="text/javascript">
+<!--
+function init()
+{
+	var cf = document.forms[0];
+	var ipaddr = cf.lan_ipaddr.value.split(".");
+	var temp;
+	var old;
+	BIN=new Array(4);
+
+    if( cf.lan_ipaddr.value != "" )
+    {
+    cf.sysLogIPAddr1.value = ipaddr[0];
+	cf.sysLogIPAddr2.value = ipaddr[1];
+	cf.sysLogIPAddr3.value = ipaddr[2];
+	cf.sysLogIPAddr4.value = ipaddr[3];
+    }
+    
+	if (cf.h_log_bsites.value == 1)
+		cf.log_bsites.checked = true;
+	if (cf.h_log_mg.value == 1)
+		cf.log_mg.checked = true;
+	if (cf.h_log_op.value == 1)
+		cf.log_op.checked = true;
+	if (cf.h_log_dos.value == 1)
+		cf.log_dos.checked = true;
+				  
+	if (cf.h_syslog_type.value == 2)
+		cf.syslog_type[2].checked = true;
+	else if (cf.h_syslog_type.value == 1)
+	{
+            cf.syslog_type[1].checked = true;
+            cf.sysLogIPAddr1.disabled = true;
+            cf.sysLogIPAddr2.disabled = true;
+            cf.sysLogIPAddr3.disabled = true;
+            cf.sysLogIPAddr4.disabled = true;
+        }
+	else
+	{
+	    cf.syslog_type[0].checked = true;			  
+            cf.sysLogIPAddr1.disabled = true;
+            cf.sysLogIPAddr2.disabled = true;
+            cf.sysLogIPAddr3.disabled = true;
+            cf.sysLogIPAddr4.disabled = true; 
+        }
+}
+
+function is_email_on()
+{
+    var cf = document.forms[0];
+    if(cf.email_on.value == 0)
+    {
+        alert("If you want to send email notice,\n please turn e-mail notification on in E-mail page.");
+        return false;
+    }
+    return true;
+}
+
+function clearLog()
+{
+    var cf = document.forms[0];
+    cf.log_clear.value=1;
+    cf.log_detail.value="";
+    cf.log_send.value=0;
+}
+
+function refreshLog()
+{
+    var cf = document.forms[0];
+    cf.log_refresh.value=1;
+    cf.log_detail.value="";
+    cf.log_send.value=0;
+}
+
+function sendLog()
+{
+    var cf = document.forms[0];
+    if(cf.log_detail.value < 5)
+    {
+        alert('There is no log message to send.');
+        return false;
+    }
+    cf.log_send.value=1;
+    cf.log_detail.value=""
+    return true;
+}
+
+function checkData()
+{
+ 	var cf = document.forms[0];
+	var msg = "Invalid ip, please enter again!\n";
+	if(cf.syslog_type[2].checked)
+	{
+	    if(checkIP(cf.sysLogIPAddr1,cf.sysLogIPAddr2,cf.sysLogIPAddr3,cf.sysLogIPAddr4,254))
+	    {
+	        alert(msg);
+		    return false;
+	    }
+        cf.lan_ipaddr.value = cf.sysLogIPAddr1.value+'.'+cf.sysLogIPAddr2.value+'.'+cf.sysLogIPAddr3.value+'.'+cf.sysLogIPAddr4.value;
+    }
+	return true;	
+}
+
+function enSyslogIP()
+{
+    var cf = document.forms[0];
+    cf.sysLogIPAddr1.disabled = false;
+    cf.sysLogIPAddr2.disabled = false;
+    cf.sysLogIPAddr3.disabled = false;
+    cf.sysLogIPAddr4.disabled = false;
+}
+
+function DisSyslogIP()
+{
+    var cf = document.forms[0];
+    cf.sysLogIPAddr1.disabled = true;
+    cf.sysLogIPAddr2.disabled = true;
+    cf.sysLogIPAddr3.disabled = true;
+    cf.sysLogIPAddr4.disabled = true;
+}
+
+//-->
+</script>
+</head>
+<body bgcolor="#ffffff" onload="loadhelp('FW_log');document.forms[0].elements[1].focus();init();">
+<FORM action=fwLog.cgi method=POST>
+	<table border="0" cellpadding="0" cellspacing="3" width="100%">
+		<tr>
+			<td colspan="2">
+				<h1>Logs</h1>
+			</td>
+		</tr>
+<tr>
+ <td colspan="2" background="liteblue.gif" height="12">&nbsp; </td>
+</tr>
+
+<tr>
+ <td colspan="2" align="center">
+ <table border="0" cellspacing="0" cellpadding="0">
+ <tr>
+ <td colspan="2"><pre><b>Current time: <% fw_cgi_get_log_param("fwLogCurrentTime"); %></b>
+<TEXTAREA NAME="log_detail" class="smallfix" ROWS="15" cols="45" WRAP="vitural" READONLY tabindex="-1"><% fw_cgi_get_log_param("fwLogContent"); %>
+</textarea></pre></td>
+ </tr>
+ </table>
+</td>
+</tr>
+
+<tr> <!-- RULE -->
+ <td colspan="2" background="liteblue.gif" height="12">&nbsp; </td>
+</tr>
+
+<tr>
+ <td colspan="2" align="center" height="35">
+    <INPUT name=action_Refresh type=submit value=Refresh onClick="refreshLog()"> &nbsp;&nbsp;
+    <INPUT name=action_Clear type=submit value="Clear Log" onClick="clearLog()"> &nbsp;&nbsp;
+    <INPUT name=action_Send type=submit onclick="if(!is_email_on()) return false; if(!sendLog()) return false;" type=submit value="Send Log">
+</tr>
+
+
+
+<tr>  <!-- RULE -->
+  <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+
+<tr>
+	<td colspan="2"><p><b><a href="javascript:loadhelp('FW_log','contents')" tabindex="-1">Include in Log</a></b></p></td>
+</tr>
+
+
+
+<tr>
+	<td colspan="2"><input type="checkbox" name="log_bsites" value="log_bsites"> Attempted access to blocked sites</td>
+</tr>
+
+<tr>
+	<td colspan="2"><input type="checkbox" name="log_mg" value="log_mg"> Connections to the Web-based interface of this Router</td>
+</tr>
+
+<tr>
+	<td colspan="2"><input type="checkbox" name="log_op" value="log_op"> Router operation (start up, get time etc)</td>
+</tr>
+
+<tr>
+	<td colspan="2"><input type="checkbox" name="log_dos" value="log_dos"> Known DoS attacks and Port Scans</td>
+</tr>
+
+<tr>  <!-- RULE -->
+  <td colspan="2" background="liteblue.gif" height="12">&nbsp; </td>
+</tr>
+
+
+<tr>
+	<td colspan="2"> <b><a href="javascript:loadhelp('FW_log','syslog')" tabindex="-1">Syslog</a></b></td>
+</tr>
+<tr>
+	<td colspan="2"><input type="radio" name="syslog_type" onclick="DisSyslogIP()" value="disable"> Disable</td>
+</tr>
+
+<tr>
+	<td colspan="2"><input type="radio" name="syslog_type" onclick="DisSyslogIP()" value="broadcast"> Broadcast on LAN</td>
+</tr>
+
+<tr>
+	<td width="50%"><input type="radio" name="syslog_type" onclick="enSyslogIP()" value="sendToIP"> Send to this Syslog server IP address</td>
+	<td align="right" class="num" nowrap><input type="text" name="sysLogIPAddr1" class="num" size="4" maxlength="3" value="">.<input type="text" name="sysLogIPAddr2" class="num" size="4" maxlength="3" value="">.<input type="text" name="sysLogIPAddr3" class="num" size="4" maxlength="3" value="">.<input type="text" name="sysLogIPAddr4" class="num" size="4" maxlength="3" value=""></td>
+</tr>
+
+
+<tr>  <!-- RULE -->
+  <td colspan="2" background="liteblue.gif" height="12">&nbsp; </td>
+</tr>
+
+<tr>
+ <td colspan="2" align="center">
+ 	<input type="SUBMIT" name="apply" value="Apply" onClick="return checkData()">
+	<input type="button" name="cancel" value="Cancel" onClick="location.href='FW_log.htm'"></td>
+</tr>
+
+</table>
+    <INPUT name=email_on type=hidden value="<% fw_cgi_get_log_param("fwLogMailOn"); %>">
+    <INPUT name=log_refresh type=hidden value= 0>
+    <INPUT name=log_send type=hidden value= "<% fw_cgi_get_log_param("log_send"); %>">
+    <INPUT name=log_clear type=hidden value= 0>
+    
+    <input type="hidden" name="h_log_bsites" value="<% fw_cgi_get_log_param("log_bsites"); %>"> 
+    <input type="hidden" name="h_log_mg" value="<% fw_cgi_get_log_param("log_mg"); %>"> 
+    <input type="hidden" name="h_log_op" value="<% fw_cgi_get_log_param("log_op"); %>"> 
+    <input type="hidden" name="h_log_dos" value="<% fw_cgi_get_log_param("log_dos"); %>">     
+    <input type="hidden" name="h_syslog_type" value="<% fw_cgi_get_log_param("syslog_type"); %>">
+    <input type="hidden" name="lan_ipaddr" value="<% fw_cgi_get_log_param("lan_ipaddr"); %>">
+</form>
+<p>
+</p>
+</body>
+</html>

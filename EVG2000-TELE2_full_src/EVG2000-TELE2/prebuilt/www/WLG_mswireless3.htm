@@ -1,0 +1,153 @@
+<html>
+<head>
+<% meta_get(); %>
+<meta HTTP-EQUIV="Expires" CONTENT="Mon, 06 Jan 1990 00:00:01 GMT">
+
+<title>Wireless LAN Access Point - Configuration</title>
+<link rel="stylesheet" href="form.css">
+<STYLE TYPE="text/javascript">
+    classes.num.all.fontFamily = "Courier";
+    classes.num.all.fontSize = "10pt" ;
+</style>
+<script language="javascript" type="text/javascript" src="func.js"></script>
+<script language="javascript" type="text/javascript" src="msg.js"></script>
+<script language="javascript" type="text/javascript" src="utility.js"></script>
+<script language="javascript" type="text/javascript" src="browser.js"></script>
+<script language="javascript" type="text/javascript" src="md5.js"></script>
+<script language="javascript" type="text/javascript">
+<!-- hide script from old browsers
+
+function initScrn()
+{
+    var defaultKey;
+    var fm=document.forms[0];
+    var i;
+
+    fm.bssid_index.selectedIndex = fm.bssid_idx.value;
+    
+    if (fm.enable_ap.value == 1)
+	fm.enable_ap_en.checked = true;
+    else
+	fm.enable_ap_en.checked = false;
+    if (fm.ssid_bc.value == 1)
+	fm.ssid_bc_en.checked = true;
+    else
+	fm.ssid_bc_en.checked = false;
+}
+
+function loadhelp(fname,anchname)
+{
+    if ((loadhelp.arguments.length == 1 ) || (anchname == "" ))
+        top.helpframe.location.href=fname+"_h.htm";
+    else
+        top.helpframe.location.href=fname+"_h.htm#" + anchname;
+}
+
+function ch_bssid()
+{
+    var cf = document.forms[0];
+    cf.bssid_change.value = "1";
+    cf.submit();
+}
+
+function checkData()
+{
+    var cf = document.forms[0];
+
+    if (cf.ssid.value == "")
+    {
+        alert("SSID cannot be empty");
+        return false;
+    }
+
+    if (cf.ssid.value.match( /[^\x20-\x7E]/ ))
+    {
+        alert("Character is not allowed in SSID.");
+        cf.ssid.focus();
+        return false;
+    }
+
+    if(cf.enable_ap_en.checked)
+	cf.enable_ap.value = 1;
+    else
+	cf.enable_ap.value = 0;
+    if(cf.ssid_bc_en.checked)
+	cf.ssid_bc.value = 1;
+    else
+	cf.ssid_bc.value = 0;
+    return true;
+}
+function menu_check(reload)
+{
+	if (reload == "1")
+		top.contents.location.href='MNU_menu.htm';
+}
+// -->
+</script>
+</head>
+<body bgcolor="#ffffff" onload="initScrn();loadhelp('WLG_wireless');menu_check(<% wlg_cgi_get_param("wps_changed"); %>);document.forms[0].elements[0].focus();">
+<form method="POST" action="wlg_mswireless.cgi">
+  <table border="0" cellpadding="0" cellspacing="3" width="100%">
+    <tr>
+      <td colspan="2"><h1>Wireless Settings</h1></td></tr>
+    <tr>
+      <td align="left">
+         <select name="bssid_index" size="1" onChange="ch_bssid();">
+         <option value="0">SSID1</option>
+         <option value="1">SSID2</option>
+         <option value="2">SSID3</option>
+         <option value="3">SSID4</option>
+        </select></td></tr>
+      
+      <!-- RULE -->
+  <tr>
+      <td colspan="2" background="liteblue.gif" height="12">&nbsp; </td></tr>
+    <tr>
+      <td colspan="2"><a href="javascript:loadhelp('WLG_wireless','network')" tabindex="-1"><b>Wireless Network</b> </a></td></tr>
+    <tr>
+      <td width="50%" align="left">Name (SSID):</td>
+      <td width="50%">
+        <input type="text" name="ssid" value="<%wlg_cgi_get_ssid();%>" size="20" maxlength="32"></td></tr>
+  <tr>
+  <td colspan="2">
+    <input type="checkbox"  name="enable_ap_en" value="enable_ap"> Enable </td></tr>
+  <tr>
+        <td nowrap colspan="2">
+            <input type="checkbox"  name="ssid_bc_en" value="ssid_bc"> Allow Broadcast of Name (SSID) </td></tr>
+  <tr>
+        <!-- RULE -->
+        <td colspan="2" background="liteblue.gif" height="12">&nbsp; </td></tr>
+    <tr>
+      <td colspan="2"><a href="javascript:loadhelp('WLG_wireless','security')" tabindex="-1"><b>Security Options</b></a></td></tr>
+<tr><td colspan="2">      
+<table border="0" cellpadding="0" cellspacing="3" width="100%">      
+    <tr>
+      <td colspan="2"><input type="radio" name="security_type" value="Disable" checked >Disable</td></tr>
+    <tr>
+      <td colspan="2"><input type="radio" name="security_type" value="WEP" onClick="this.form.submit();" >WEP</td></tr>
+    <tr>
+      <td colspan="2"><input type="radio" name="security_type" value="WPA-PSK" onClick="this.form.submit();" >WPA-PSK [TKIP]</td></tr>
+    <tr>
+      <td colspan="2"><input type="radio" name="security_type" value="WPA2-PSK" onClick="this.form.submit();">WPA2-PSK [AES]</td></tr>
+    <tr>
+      <td colspan="2"><input type="radio" name="security_type" value="AUTO-PSK" onClick="this.form.submit();">WPA-PSK [TKIP] + WPA2-PSK [AES]</td></tr>
+</table>
+</td></tr>
+    <tr>
+      <td colspan="2" background="liteblue.gif" height="12">&nbsp; </td></tr>
+    <tr>
+      <td colspan="2" align="center">
+      <input type="SUBMIT" name="Apply" value="Apply" onclick="return checkData();">
+      <input type="SUBMIT" name="Cancel" value="Cancel"></td></tr>
+  </table>
+  <input type="hidden" name="bssid_idx" value="<% wlg_cgi_get_bssid_index(); %>">
+  <INPUT name=enable_ap type=hidden value= "<%wlg_cgi_get_wlanstate_status(); %>">
+  <INPUT name=ssid_bc type=hidden value= "<% wlg_cgi_get_broadcast_status(); %>">
+  <input type="hidden" name="tempSetting" value="<% wlg_cgi_get_temp_setting("wla_temp_setting"); %>">
+  <input type="hidden" name="bssid_change" value="0">
+</form>
+<p>
+</p>
+</body>
+</html>
+

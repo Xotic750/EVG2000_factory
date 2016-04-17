@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<% meta_get(); %>
+<title>PPPOA Status</title>
+<meta HTTP-EQUIV="Expires" CONTENT="Mon, 06 Jan 1990 00:00:01 GMT"> 
+
+<link rel="stylesheet" href="form.css">
+<script language="javascript" type="text/javascript">
+<!--
+function refreshPage() {
+	if(document.forms[0].Connect.value == 'Renew')
+		return true;
+	window.setTimeout('window.location.href = "RST_st_ppa.htm";',5000);
+}
+function disableConButton()
+{
+    document.forms[0].Connect.disabled = true;
+    document.forms[0].Disconnect.disabled = true;
+    document.forms[0].ConMethod.value = "  Connect  ";
+
+    document.forms[0].submit();    
+    
+    return true;
+}
+
+function disableDisConButton()
+{
+    document.forms[0].Connect.disabled = true;
+    document.forms[0].Disconnect.disabled = true;
+    document.forms[0].ConMethod.value = "Disconnect";
+
+    document.forms[0].submit();     
+    
+    return true;
+}
+
+//-->
+</script>
+</head>
+
+<body bgcolor="#ffffff" onLoad="refreshPage()">
+<form name="ppa_st" method="post" action="st_ppa.cgi">
+
+<TABLE border=0 width="100%">
+ 
+ <TR>
+ <TD colspan="2" align="left" nowrap><h1>Connection Status </h1></TD>
+ </TR>
+ 
+</TABLE>
+
+<table border="0" cellpadding="0" cellspacing="3" width="100%">
+
+<tr> <!-- RULE -->
+ <td background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+</table>
+
+
+<table width="100%" border=1 cellspacing=1 cellpadding=4>
+<tr>
+	<TD NOWRAP width="50%"><B>Connection Time</B></td>
+	<TD NOWRAP width="50%"><% rst_cgi_get_pppoe_connect_time(); %></td>
+</tr>
+<tr>
+	<TD NOWRAP><B>Connecting to Server</B></td>
+	<TD NOWRAP><% rst_cgi_get_pppoe_status("Connect"); %></td>
+</tr>
+<tr>
+	<TD NOWRAP><B>Negotiation</B></td>
+	<TD NOWRAP><% rst_cgi_get_pppoe_status("LCP"); %></td>
+</tr>
+<tr>
+	<TD NOWRAP><B>Authentication</B></td>
+	<TD NOWRAP><% rst_cgi_get_pppoe_status("Authentication"); %></td>
+</tr>
+<tr>
+	<TD NOWRAP><B>Getting IP Address</B></td>
+	<TD NOWRAP><% rst_cgi_get_pppoe_status("IP"); %></td>
+</tr>
+<tr>
+	<TD NOWRAP><B>Getting Network Mask</B></td>
+	<TD NOWRAP><% rst_cgi_get_pppoe_status("Netmask"); %></td>
+</tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="3" width="100%">
+ <TR>
+ <TD NOWRAP align="center">
+<BR>
+<input type="submit" name="Connect" value="  Connect  " onClick="return disableConButton()">
+<input type="submit" name="Disconnect" value="Disconnect" onClick="alert('To re-establish the connection, please click the <Connect> button'); return disableDisConButton()"></TD>
+</TR>
+
+<tr> <!-- RULE -->
+ <TD background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+ <TR>
+ <TD NOWRAP align="center"><input type=button name="close" value="Close Window" onclick="self.close();"></TD>
+</TR>
+</TABLE>
+<input type="hidden" name="ConMethod" value="Disconnect">
+
+
+
+</form>
+
+</body>
+</html>

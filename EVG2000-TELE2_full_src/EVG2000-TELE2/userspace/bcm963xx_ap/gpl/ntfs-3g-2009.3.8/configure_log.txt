@@ -1,0 +1,331 @@
+checking build system type... mips-unknown-linux-uclibc
+checking host system type... mips-unknown-elf
+checking target system type... mips-unknown-linux-uclibc
+checking for a BSD-compatible install... /usr/bin/install -c
+checking whether build environment is sane... yes
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking for mips-strip... no
+checking for strip... strip
+configure: WARNING: In the future, Autoconf will not detect cross-tools
+whose name does not start with the host triplet.  If you think this
+configuration is useful to you, please write to autoconf@gnu.org.
+checking whether to enable maintainer-specific portions of Makefiles... no
+checking for mips-gcc... /opt/toolchains/uclibc-crosstools-gcc-4.2.3-3/usr/bin/mips-linux-uclibc-gcc
+checking for C compiler default output file name... a.out
+checking whether the C compiler works... yes
+checking whether we are cross compiling... yes
+checking for suffix of executables... 
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether /opt/toolchains/uclibc-crosstools-gcc-4.2.3-3/usr/bin/mips-linux-uclibc-gcc accepts -g... yes
+checking for /opt/toolchains/uclibc-crosstools-gcc-4.2.3-3/usr/bin/mips-linux-uclibc-gcc option to accept ISO C89... none needed
+checking for style of include used by make... GNU
+checking dependency style of /opt/toolchains/uclibc-crosstools-gcc-4.2.3-3/usr/bin/mips-linux-uclibc-gcc... gcc3
+checking whether ln -s works... yes
+checking whether /opt/toolchains/uclibc-crosstools-gcc-4.2.3-3/usr/bin/mips-linux-uclibc-gcc and cc understand -c and -o together... yes
+checking for a sed that does not truncate output... /bin/sed
+checking for grep that handles long lines and -e... /bin/grep
+checking for egrep... /bin/grep -E
+checking for ld used by /opt/toolchains/uclibc-crosstools-gcc-4.2.3-3/usr/bin/mips-linux-uclibc-gcc... /opt/toolchains/uclibc-crosstools-gcc-4.2.3-3/usr/mips-linux-uclibc/bin/ld
+checking if the linker (/opt/toolchains/uclibc-crosstools-gcc-4.2.3-3/usr/mips-linux-uclibc/bin/ld) is GNU ld... yes
+checking for /opt/toolchains/uclibc-crosstools-gcc-4.2.3-3/usr/mips-linux-uclibc/bin/ld option to reload object files... -r
+checking for BSD-compatible nm... nm
+checking how to recognise dependent libraries... unknown
+checking how to run the C preprocessor... /opt/toolchains/uclibc-crosstools-gcc-4.2.3-3/usr/bin/mips-linux-uclibc-gcc -E
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking dlfcn.h usability... yes
+checking dlfcn.h presence... yes
+checking for dlfcn.h... yes
+checking for mips-g++... no
+checking for mips-c++... no
+checking for mips-gpp... no
+checking for mips-aCC... no
+checking for mips-CC... no
+checking for mips-cxx... no
+checking for mips-cc++... no
+checking for mips-cl.exe... no
+checking for mips-FCC... no
+checking for mips-KCC... no
+checking for mips-RCC... no
+checking for mips-xlC_r... no
+checking for mips-xlC... no
+checking for g++... g++
+checking whether we are using the GNU C++ compiler... yes
+checking whether g++ accepts -g... yes
+checking dependency style of g++... gcc3
+checking how to run the C++ preprocessor... g++ -E
+checking for mips-g77... no
+checking for mips-xlf... no
+checking for mips-f77... no
+checking for mips-frt... no
+checking for mips-pgf77... no
+checking for mips-cf77... no
+checking for mips-fort77... no
+checking for mips-fl32... no
+checking for mips-af77... no
+checking for mips-xlf90... no
+checking for mips-f90... no
+checking for mips-pgf90... no
+checking for mips-pghpf... no
+checking for mips-epcf90... no
+checking for mips-gfortran... no
+checking for mips-g95... no
+checking for mips-xlf95... no
+checking for mips-f95... no
+checking for mips-fort... no
+checking for mips-ifort... no
+checking for mips-ifc... no
+checking for mips-efc... no
+checking for mips-pgf95... no
+checking for mips-lf95... no
+checking for mips-ftn... no
+checking for g77... no
+checking for xlf... no
+checking for f77... no
+checking for frt... no
+checking for pgf77... no
+checking for cf77... no
+checking for fort77... no
+checking for fl32... no
+checking for af77... no
+checking for xlf90... no
+checking for f90... no
+checking for pgf90... no
+checking for pghpf... no
+checking for epcf90... no
+checking for gfortran... gfortran
+checking whether we are using the GNU Fortran 77 compiler... yes
+checking whether gfortran accepts -g... yes
+checking the maximum length of command line arguments... 32768
+checking command to parse nm output from /opt/toolchains/uclibc-crosstools-gcc-4.2.3-3/usr/bin/mips-linux-uclibc-gcc object... ok
+checking for objdir... .libs
+checking for mips-ar... no
+checking for ar... ar
+checking for mips-ranlib... no
+checking for ranlib... ranlib
+checking for mips-strip... strip
+checking if /opt/toolchains/uclibc-crosstools-gcc-4.2.3-3/usr/bin/mips-linux-uclibc-gcc supports -fno-rtti -fno-exceptions... no
+checking for /opt/toolchains/uclibc-crosstools-gcc-4.2.3-3/usr/bin/mips-linux-uclibc-gcc option to produce PIC... -fPIC
+checking if /opt/toolchains/uclibc-crosstools-gcc-4.2.3-3/usr/bin/mips-linux-uclibc-gcc PIC flag -fPIC works... yes
+checking if /opt/toolchains/uclibc-crosstools-gcc-4.2.3-3/usr/bin/mips-linux-uclibc-gcc static flag -static works... yes
+checking if /opt/toolchains/uclibc-crosstools-gcc-4.2.3-3/usr/bin/mips-linux-uclibc-gcc supports -c -o file.o... yes
+checking whether the /opt/toolchains/uclibc-crosstools-gcc-4.2.3-3/usr/bin/mips-linux-uclibc-gcc linker (/opt/toolchains/uclibc-crosstools-gcc-4.2.3-3/usr/mips-linux-uclibc/bin/ld) supports shared libraries... yes
+checking whether -lc should be explicitly linked in... no
+checking dynamic linker characteristics... no
+checking how to hardcode library paths into programs... immediate
+checking whether stripping libraries is possible... yes
+checking if libtool supports shared libraries... no
+checking whether to build shared libraries... no
+checking whether to build static libraries... yes
+configure: creating libtool
+appending configuration tag "CXX" to libtool
+checking for ld used by g++... /opt/toolchains/uclibc-crosstools-gcc-4.2.3-3/usr/mips-linux-uclibc/bin/ld
+checking if the linker (/opt/toolchains/uclibc-crosstools-gcc-4.2.3-3/usr/mips-linux-uclibc/bin/ld) is GNU ld... yes
+checking whether the g++ linker (/opt/toolchains/uclibc-crosstools-gcc-4.2.3-3/usr/mips-linux-uclibc/bin/ld) supports shared libraries... no
+checking for g++ option to produce PIC... -fPIC
+checking if g++ PIC flag -fPIC works... yes
+checking if g++ static flag -static works... yes
+checking if g++ supports -c -o file.o... yes
+checking whether the g++ linker (/opt/toolchains/uclibc-crosstools-gcc-4.2.3-3/usr/mips-linux-uclibc/bin/ld) supports shared libraries... no
+checking dynamic linker characteristics... no
+checking how to hardcode library paths into programs... immediate
+appending configuration tag "F77" to libtool
+checking if libtool supports shared libraries... no
+checking whether to build shared libraries... no
+checking whether to build static libraries... yes
+checking for gfortran option to produce PIC... -fPIC
+checking if gfortran PIC flag -fPIC works... yes
+checking if gfortran static flag -static works... yes
+checking if gfortran supports -c -o file.o... yes
+checking whether the gfortran linker (/opt/toolchains/uclibc-crosstools-gcc-4.2.3-3/usr/mips-linux-uclibc/bin/ld) supports shared libraries... yes
+checking dynamic linker characteristics... no
+checking how to hardcode library paths into programs... immediate
+checking for mv... /bin/mv
+checking for rm... /bin/rm
+checking for sed... /bin/sed
+checking for ldconfig... /sbin/ldconfig
+checking Windows OS... no
+checking fuse compatibility... internal
+checking for pthread_create in -lpthread... yes
+checking for ANSI C header files... (cached) yes
+checking ctype.h usability... yes
+checking ctype.h presence... yes
+checking for ctype.h... yes
+checking fcntl.h usability... yes
+checking fcntl.h presence... yes
+checking for fcntl.h... yes
+checking libgen.h usability... yes
+checking libgen.h presence... yes
+checking for libgen.h... yes
+checking libintl.h usability... no
+checking libintl.h presence... no
+checking for libintl.h... no
+checking limits.h usability... yes
+checking limits.h presence... yes
+checking for limits.h... yes
+checking locale.h usability... yes
+checking locale.h presence... yes
+checking for locale.h... yes
+checking mntent.h usability... yes
+checking mntent.h presence... yes
+checking for mntent.h... yes
+checking stddef.h usability... yes
+checking stddef.h presence... yes
+checking for stddef.h... yes
+checking for stdint.h... (cached) yes
+checking for stdlib.h... (cached) yes
+checking stdio.h usability... yes
+checking stdio.h presence... yes
+checking for stdio.h... yes
+checking stdarg.h usability... yes
+checking stdarg.h presence... yes
+checking for stdarg.h... yes
+checking for string.h... (cached) yes
+checking for strings.h... (cached) yes
+checking errno.h usability... yes
+checking errno.h presence... yes
+checking for errno.h... yes
+checking time.h usability... yes
+checking time.h presence... yes
+checking for time.h... yes
+checking for unistd.h... (cached) yes
+checking utime.h usability... yes
+checking utime.h presence... yes
+checking for utime.h... yes
+checking wchar.h usability... no
+checking wchar.h presence... no
+checking for wchar.h... no
+checking getopt.h usability... yes
+checking getopt.h presence... yes
+checking for getopt.h... yes
+checking features.h usability... yes
+checking features.h presence... yes
+checking for features.h... yes
+checking endian.h usability... yes
+checking endian.h presence... yes
+checking for endian.h... yes
+checking byteswap.h usability... yes
+checking byteswap.h presence... yes
+checking for byteswap.h... yes
+checking sys/byteorder.h usability... no
+checking sys/byteorder.h presence... no
+checking for sys/byteorder.h... no
+checking sys/endian.h usability... no
+checking sys/endian.h presence... no
+checking for sys/endian.h... no
+checking sys/param.h usability... yes
+checking sys/param.h presence... yes
+checking for sys/param.h... yes
+checking sys/ioctl.h usability... yes
+checking sys/ioctl.h presence... yes
+checking for sys/ioctl.h... yes
+checking sys/mkdev.h usability... no
+checking sys/mkdev.h presence... no
+checking for sys/mkdev.h... no
+checking sys/mount.h usability... yes
+checking sys/mount.h presence... yes
+checking for sys/mount.h... yes
+checking for sys/stat.h... (cached) yes
+checking for sys/types.h... (cached) yes
+checking sys/vfs.h usability... yes
+checking sys/vfs.h presence... yes
+checking for sys/vfs.h... yes
+checking sys/statvfs.h usability... yes
+checking sys/statvfs.h presence... yes
+checking for sys/statvfs.h... yes
+checking sys/sysmacros.h usability... yes
+checking sys/sysmacros.h presence... yes
+checking for sys/sysmacros.h... yes
+checking linux/major.h usability... yes
+checking linux/major.h presence... yes
+checking for linux/major.h... yes
+checking linux/fd.h usability... yes
+checking linux/fd.h presence... yes
+checking for linux/fd.h... yes
+checking linux/hdreg.h usability... yes
+checking linux/hdreg.h presence... yes
+checking for linux/hdreg.h... yes
+checking machine/endian.h usability... no
+checking machine/endian.h presence... no
+checking for machine/endian.h... no
+checking windows.h usability... no
+checking windows.h presence... no
+checking for windows.h... no
+checking syslog.h usability... yes
+checking syslog.h presence... yes
+checking for syslog.h... yes
+checking for stdbool.h that conforms to C99... yes
+checking for _Bool... yes
+checking whether byte ordering is bigendian... yes
+checking for an ANSI C-conforming const... yes
+checking for inline... inline
+checking for off_t... yes
+checking for size_t... yes
+checking for struct stat.st_blocks... yes
+checking for struct stat.st_rdev... yes
+checking for struct stat.st_atim... no
+checking for struct stat.st_atimespec... no
+checking for library containing getmntent... none required
+checking whether mbrtowc and mbstate_t are properly declared... no
+checking for working memcmp... no
+checking whether lstat dereferences a symlink specified with a trailing slash... no
+checking whether stat accepts an empty string... yes
+checking for strftime... yes
+checking for utime.h... (cached) yes
+checking whether utime accepts a null argument... no
+checking for vprintf... yes
+checking for _doprnt... no
+checking for atexit... yes
+checking for basename... yes
+checking for daemon... yes
+checking for dup2... yes
+checking for fdatasync... yes
+checking for ffs... yes
+checking for getopt_long... yes
+checking for hasmntopt... yes
+checking for mbsinit... no
+checking for memmove... yes
+checking for memset... yes
+checking for realpath... yes
+checking for regcomp... yes
+checking for setlocale... yes
+checking for setxattr... yes
+checking for strcasecmp... yes
+checking for strchr... yes
+checking for strdup... yes
+checking for strerror... yes
+checking for strnlen... yes
+checking for strsep... yes
+checking for strtol... yes
+checking for strtoul... yes
+checking for sysconf... yes
+checking for utime... yes
+checking for fork... yes
+checking for special C compiler options needed for large files... no
+checking for _FILE_OFFSET_BITS value needed for large files... unknown
+checking for _LARGE_FILES value needed for large files... unknown
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: creating include/Makefile
+config.status: creating include/fuse-lite/Makefile
+config.status: creating include/ntfs-3g/Makefile
+config.status: creating libfuse-lite/Makefile
+config.status: creating libntfs-3g/Makefile
+config.status: creating libntfs-3g/libntfs-3g.pc
+config.status: creating libntfs-3g/libntfs-3g.script.so
+config.status: creating src/Makefile
+config.status: creating src/ntfs-3g.8
+config.status: creating src/ntfs-3g.probe.8
+config.status: creating config.h
+config.status: executing depfiles commands
+You can type now 'make' to build ntfs-3g.

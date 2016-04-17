@@ -1,0 +1,61 @@
+# /etc/profile: system-wide .profile file for the Bourne shells
+PATH=/bin:/sbin:/usr/bin:/usr/sbin
+export LD_LIBRARY_PATH=/lib:/lib/public:/lib/private
+KERNELVER=2.6.21.5
+export PATH
+# if you don't want the shell to timeout (e.g. if you are running some kind
+# of monitor app in an infinite loop), then set TMOUT to 0
+# export TMOUT=0
+
+echo
+firsttime=`echo /var/udhcpd/udhcpd.lease*`
+if [ "$firsttime" = "/var/udhcpd/udhcpd.lease*" ]; then
+ echo "Loading drivers and kernel modules... "
+ echo
+# no-op
+# create directory in /var mounted for TMPFS
+ mkdir -p /var/log /var/run /var/state/dhcp /var/ppp /var/udhcpd /var/zebra /var/siproxd /var/cache
+ echo > /var/udhcpd/udhcpd.leases
+ ifconfig lo 127.0.0.1 netmask 255.0.0.0 broadcast 127.255.255.255 up
+# /etc/modules_install /lib/modules/$KERNELVER/extra
+ test -e /lib/modules/$KERNELVER/extra/pktflow.ko && insmod /lib/modules/$KERNELVER/extra/pktflow.ko
+ test -e /lib/modules/$KERNELVER/extra/pktcmf.ko && insmod /lib/modules/$KERNELVER/extra/pktcmf.ko
+ test -e /lib/modules/$KERNELVER/extra/profdrvdd.ko && insmod /lib/modules/$KERNELVER/extra/profdrvdd.ko
+ test -e /lib/modules/$KERNELVER/extra/bcmxtmcfg.ko && insmod /lib/modules/$KERNELVER/extra/bcmxtmcfg.ko
+ test -e /lib/modules/$KERNELVER/extra/atmapi.ko && insmod /lib/modules/$KERNELVER/extra/atmapi.ko
+ test -e /lib/modules/$KERNELVER/extra/atmbonding.ko && insmod /lib/modules/$KERNELVER/extra/atmbonding.ko
+ test -e /lib/modules/$KERNELVER/extra/atmbondingeth.ko && insmod /lib/modules/$KERNELVER/extra/atmbondingeth.ko
+ test -e /lib/modules/$KERNELVER/extra/adsldd.ko && insmod /lib/modules/$KERNELVER/extra/adsldd.ko
+ test -e /lib/modules/$KERNELVER/extra/blaa_dd.ko && insmod /lib/modules/$KERNELVER/extra/blaa_dd.ko
+ test -e /lib/modules/$KERNELVER/extra/bcmprocfs.ko && insmod /lib/modules/$KERNELVER/extra/bcmprocfs.ko
+# test -e /lib/modules/$KERNELVER/kernel/net/ipv6/ipv6.ko && insmod /lib/modules/$KERNELVER/kernel/net/ipv6/ipv6.ko
+ test -e /lib/modules/$KERNELVER/kernel/net/atm/br2684.ko && insmod /lib/modules/$KERNELVER/kernel/net/atm/br2684.ko
+ test -e /lib/modules/$KERNELVER/extra/bcm_enet.ko && insmod /lib/modules/$KERNELVER/extra/bcm_enet.ko
+ test -e /lib/modules/$KERNELVER/extra/bcmsw.ko && insmod /lib/modules/$KERNELVER/extra/bcmsw.ko && ifconfig bcmsw up
+ test -e /lib/modules/$KERNELVER/extra/bcm_usb.ko && insmod /lib/modules/$KERNELVER/extra/bcm_usb.ko
+
+#WLAN Module
+ test -e /lib/modules/$KERNELVER/extra/wl.ko && insmod /lib/modules/$KERNELVER/extra/wl.ko
+ test -e /etc/wlan/rtecdc.trx && mount -t usbfs none /proc/bus/usb && /bin/bcmdl /etc/wlan/rtecdc.trx && sleep 2 && insmod /lib/modules/$KERNELVER/extra/wl-usb.ko
+ 
+ test -e /lib/modules/$KERNELVER/extra/dspdd.ko && insmod /lib/modules/$KERNELVER/extra/dspdd.ko
+ test -e /lib/modules/$KERNELVER/extra/endpointdd.ko && insmod /lib/modules/$KERNELVER/extra/endpointdd.ko
+ test -e /lib/modules/$KERNELVER/extra/p8021ag.ko && insmod /lib/modules/$KERNELVER/extra/p8021ag.ko
+
+# other modules
+ test -e /lib/modules/$KERNELVER/extra/isdn.ko && insmod /lib/modules/$KERNELVER/extra/isdn.ko
+ test -e /lib/modules/$KERNELVER/kernel/drivers/isdn/capi/capi.ko && insmod /lib/modules/$KERNELVER/kernel/drivers/isdn/capi/capi.ko 
+ test -e /lib/modules/$KERNELVER/extra/bcmgpon.ko && insmod /lib/modules/$KERNELVER/extra/bcmgpon.ko RESETONLOS=1 omciGemPortMap=1
+ test -e /lib/modules/$KERNELVER/extra/bcmgpon.ko && insmod /etc/gpon/modules/gpio.ko
+ test -e /lib/modules/$KERNELVER/extra/pwrmngtd.ko && insmod /lib/modules/$KERNELVER/extra/pwrmngtd.ko
+ #smd
+# Foxconn Add : Steve Hsieh : ADSL_porting 
+ insmod /lib/modules/$KERNELVER/extra/acos_nat.ko
+ insmod /lib/modules/2.6.21.5/kernel/net/ipv4/ubd/ubdPktPrcs.ko
+# Foxconn Add : Steve Hsieh : ADSL_porting  
+# cfm
+param init
+acos_init
+acos_service start 
+fi
+

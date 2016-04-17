@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<% meta_get(); %>
+<title>router form</title> 
+<link rel="stylesheet" href="form.css">
+<% script_get(); %>
+<script language="javascript" type="text/javascript">
+<!-- 
+//-->
+</script> 
+</head>
+<body bgcolor="#ffffff" onload="document.forms[0].elements[0].focus()">
+<form method="POST" action="backup.cgi">
+<table border="0" cellpadding="0" cellspacing="3" width="100%">
+<tr>
+ <td colspan="2">
+	<h1>Backup Settings</h1> 
+	</td>
+</tr>
+<tr> <!-- RULE -->
+ <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+<tr>
+	<td colspan="2"><b>Loading the Factory Default Settings will erase all the current settings.</b></td>
+</tr>
+<tr>
+	<td colspan="2"><BR><b>Are you sure you want to do this ?</b></td>
+</tr>
+
+<tr> <!-- RULE -->
+ <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+
+<tr>
+	<td colspan="2" align="center">
+	<input type="submit" name="ROMReset" value="Yes">
+	<input type="BUTTON" name="no" value=" No " onclick="window.location.href='BAK_backup.htm'"></td>
+</tr>
+</table>
+</form>
+<p>
+</p>
+</body>
+</html>
+

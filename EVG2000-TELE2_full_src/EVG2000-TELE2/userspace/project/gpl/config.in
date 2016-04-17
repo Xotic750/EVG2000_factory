@@ -1,0 +1,85 @@
+#
+# Top-level configure file
+#
+#***************************************************************************
+#***
+#***    Copyright 2005  Hon Hai Precision Ind. Co. Ltd.
+#***    All Rights Reserved.
+#***    No portions of this material shall be reproduced in any form without the
+#***    written permission of Hon Hai Precision Ind. Co. Ltd.
+#***
+#***    All information contained in this document is Hon Hai Precision Ind.  
+#***    Co. Ltd. company private, proprietary, and trade secret property and 
+#***    are protected by international intellectual property laws and treaties.
+#***
+#****************************************************************************
+#
+# Environment
+#
+# HOMEDIR = userapps in adsl router case
+ifndef HOMEDIR
+CURRDIR = $(shell pwd)
+export HOMEDIR := $(CURRDIR)/..
+endif
+
+ifndef KERNELVERSION 
+LSDK_KERNELVERSION := 2.6.13.2
+endif
+
+ifndef GPLTOPDIR
+export GPLTOPDIR := $(HOMEDIR)/gpl
+endif
+
+# Set the toolchain path
+# Foxconn Add : Steve Hsieh : @ADSL_porting , 03/08/2006
+# @ use the toolchain export from top level Makefile 
+# TOOLPATH := $(HOMEDIR)/tools/buildroot/build_armeb
+TOOLPATH := $(TOOLCHAIN)
+
+
+# Set the toolchain prefix
+# Foxconn Add Start : Steve Hsieh : @ADSL_porting , 03/08/2006
+# TOOLPREFIX=armeb-linux-
+#TOOLPREFIX=mips-linux-
+
+# Set the kernel path which is used by several build scripts
+# Foxconn Add Start : Steve Hsieh : @ADSL_porting , 03/08/2006
+# KERNELPATH=$(HOMEDIR)/src/kernels/linux-$(LSDK_KERNELVERSION)
+KERNELPATH=$(KERNEL_DIR)
+
+export TOOLPATH
+#export TOOLPREFIX
+export KERNELPATH
+export INSTALLPATH
+
+INSTMOD = $(strip $(shell head -n 1 $(KERNELPATH)/Makefile | cut -f 2 -d'=')).$(strip $(shell head -n 2 $(KERNELPATH)/Makefile | tail -1 | cut -f 2 -d'=')).$(strip $(shell head -n 3 $(KERNELPATH)/Makefile | tail -1 | cut -f 2 -d'='))/
+INSTNET = ${INSMOD}net/
+
+TOPDIR	:= $(shell /bin/pwd)
+
+#CROSS_COMPILE := $(TOOLPATH)/bin/$(TOOLPREFIX)
+# Foxconn Add Start : Steve Hsieh : @ADSL_porting , 03/08/2006
+# customize of ADSL router
+# INSTALLLIB_DIR := $(HOMEDIR)/src/target/ap71-rootdir
+# INSTALLDIR := $(HOMEDIR)/src/target/ap71-rootdir
+INSTALLLIB_DIR := $(INSTALL_DIR)
+INSTALLDIR := $(INSTALL_DIR)
+# Foxconn Add End : Steve Hsieh : @ADSL_porting , 03/08/2006
+
+TARGETDIR := $(INSTALLLIB_DIR)
+
+export INSTALLLIB_DIR
+export INSTALLDIR
+#export CROSS_COMPILE
+
+
+# @acosInit
+export BRCMDRIVERS_DIR
+export USERAPPS_DIR
+export BUILD_DIR
+
+export TARGETDIR
+
+#
+# Internal Options
+#

@@ -1,0 +1,194 @@
+<html>
+<head>
+<% meta_get(); %>
+<title>UPnP</title> 
+<link rel="stylesheet" href="form.css">
+<% script_get(); %>		
+<script language="javascript" type="text/javascript">
+<!--
+function trim(vString)
+{ 
+	var tString = vString;
+
+	//trim left spaces
+	if (tString.charAt(0) == " ")
+		tString = trim(tString.substring(1, tString.length));
+
+	//trim right spaces
+	if (tString.charAt(tString.length-1) == " ")
+		tString = trim(tString.substring(0, tString.length-1))
+
+	return(tString);
+}
+function isNumOnly(vString)
+{
+	var NUMBERS = "0123456789";
+	var valid = true;
+	for(var i=0;i<vString.length;i++)
+		if(NUMBERS.indexOf(vString.charAt(i))<0)
+			valid = false;
+			
+	return(valid);
+}
+function isNull(vField) {
+	var ret = false
+	vField.value = trim(vField.value)
+	
+	if (vField.value.length == 0)
+		ret = true
+	return(ret)
+}
+function CheckAdverTimeVal(vField)
+{
+	if(isNull(vField)){
+		alert(vField.name + " cannot be empty!")
+		vField.value = vField.form.hiddenAdverTime.value
+		vField.focus()
+		return false
+	}
+	if(!isNumOnly(vField.value)){
+		alert(vField.name + " must be numeric!")
+		vField.value = vField.form.hiddenAdverTime.value
+		vField.focus()
+		return false	
+	}
+	if((vField.value >1440 )||(vField.value <= 0 )){
+		alert(vField.name + " must be greater than 0 and less than or equal to 1440 minutes! ")
+		vField.value = vField.form.hiddenAdverTime.value
+		vField.focus()
+		return false 
+	}	
+	return true
+}
+function CheckTimeToLiveVal(vField)
+{
+	if(isNull(vField)){
+		alert(vField.name + " cannot be empty!")
+		vField.value = vField.form.hiddenTimeToLive.value
+		vField.focus()
+		return false
+	}
+	if(!isNumOnly(vField.value)){
+		alert(vField.name + " must be numeric!")
+		vField.value = vField.form.hiddenTimeToLive.value
+		vField.focus()
+		return false	
+	}
+	if((vField.value > 255 )||(vField.value <= 0 )){
+		alert(vField.name + " must be greater than 0 and less than or equal to 255 ")
+		vField.value = vField.form.hiddenTimeToLive.value
+		vField.focus()
+		return false 
+	}
+	return true
+}
+
+function finishchech()
+{
+    var cf = document.forms[0];
+
+	if(!CheckAdverTimeVal(document.formname.AdverTime))
+		return false;
+	else if(!CheckTimeToLiveVal(document.formname.TimeToLive))
+		return false;
+	else
+	{
+	    //document.formname.submit();
+	    if (cf.UPnP.checked)
+	        cf.hiddenTurnUPnPOn.value = 1;
+	    else
+	        cf.hiddenTurnUPnPOn.value = 0;
+	    return true
+	}
+}
+
+function fresh()
+{
+window.location.href="UPNP_upnp.htm";
+}
+
+function init()
+{
+    var cf = document.forms[0];
+
+    if (cf.hiddenTurnUPnPOn.value == 1)
+        cf.UPnP.checked = true;
+    else
+        cf.UPnP.checked = false;
+}
+//-->
+</script>
+</head>
+<body bgcolor="#ffffff" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" onload="loadhelp('UPNP_upnp'); init();">
+<form name="formname" method="POST" action="upnp.cgi">
+ 
+<table border="0" cellpadding="0" cellspacing="3" width="100%">
+		<tr>
+			<td colspan="2" align='left'>
+				<h1>UPnP</h1> 
+			</td>
+		</tr>
+	
+<tr><!-- RULE -->
+ <td colspan="2" background="liteblue.gif" height="12">&nbsp; </td>
+</tr>
+
+
+<tr><td nowrap width="46%"><input type="checkbox" name="UPnP" value="UPnP"><B><a href="javascript:loadhelp('UPNP_upnp','turnon')" tabindex="-1">Turn UPnP On</a></B></td>
+<td nowrap width="54%"></td></tr>
+ 
+<tr><td nowrap width="46%"><B><a href="javascript:loadhelp('UPNP_upnp','adv')" tabindex="-1">Advertisement Period</a> </B>(in minutes)</td>
+<td nowrap width="54%" align="right"><input type="text" class="num" name="AdverTime" size="5" maxlength="4" value="<% upnp_cgi_get_param("advertisementPeriod"); %>" onFocus="this.select();" ></td>
+</tr>
+
+<tr>
+ <td nowrap width="46%"><B><a href="javascript:loadhelp('UPNP_upnp','live')" tabindex="-1">Advertisement Time To Live</a></b> (in hops)</td>
+	<td nowrap width="54%" align="right"><input type="text" class="num" name="TimeToLive" size="4" maxlength="3" value="<% upnp_cgi_get_param("advertisementTTL"); %>" onFocus="this.select();" ></td>
+</tr>
+<tr><!-- RULE -->
+ <td colspan="2" background="liteblue.gif" height="12">&nbsp; </td>
+</tr>
+
+<tr>
+ <td colspan="2"><b><a href="javascript:loadhelp('UPNP_upnp','table')" tabindex="-1">UPnP Portmap Table</a></b></td>
+</tr>
+
+<tr>
+<td colspan="2">
+
+<table border ="1" cellpadding ="0" cellspacing ="0" width="100%">
+ <TR><TD width="10%" align="center"><span class="thead">Active</span></TD>
+ 	<TD width="15%" align="center"><span class="thead">Protocol</span></TD>
+ 	
+	 <TD width="15%" align="center"><span class="thead">Int. Port</span></TD>
+	 <TD width="15%" align="center"><span class="thead">Ext. Port</span></TD>
+	 <TD width="25%" align="center"><span class="thead">IP Address</span></TD>
+	</TR> 
+	<!><% upnp_cgi_get_param("portmapTable"); %><!>
+</table>
+</td>
+</tr>
+
+<tr><!-- RULE -->
+ <td colspan="2" background="liteblue.gif" height="12">&nbsp; </td>
+</tr>
+
+<tr>
+ <td colspan="2" align="center">
+<input type="submit" name="apply" value="Apply" onClick="return finishchech()">
+<input type="button" name="cancel" value="Cancel" onClick="location.href='UPNP_upnp.htm'">
+<input type="button" name="refresh" value="Refresh" OnClick="fresh();">
+</td>
+</tr>
+
+</TABLE> 
+
+<input type="hidden" value="<% upnp_cgi_get_param("turnUPnPOn"); %>" name="hiddenTurnUPnPOn">
+<input type="hidden" value="<% upnp_cgi_get_param("advertisementPeriod"); %>" name="hiddenAdverTime">
+<input type="hidden" value="<% upnp_cgi_get_param("advertisementTTL"); %>" name="hiddenTimeToLive">
+
+</form>
+</body>
+</html>
+
+

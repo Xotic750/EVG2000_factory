@@ -1,0 +1,107 @@
+<html>
+<head>
+<% meta_get(); %>
+<title> Help </title>
+<link rel="stylesheet" href="help.css">
+</head>
+<body>
+<h1> Port Forwarding / Port Triggering Help </h1>
+<p>
+Port Triggering is an advanced feature that can be used for gaming and other internet applications. Port Forwarding can typically be used to enable similar functionality, but it is static and has some limitations. 
+</p>
+<p>
+Port Triggering opens an incoming port temporarily and can does not require the server on the internet to track your IP address if it is changed by DHCP, for example. 
+</p>
+<p>
+Port Triggering monitors outbound traffic. When the router detects traffic on the specified outbound port, it remembers the IP address of the computer that sent the data and "triggers" the incoming port. Incoming traffic on the triggered port is then forwarded to the triggering computer.
+</p>
+
+<p>
+Using the <i>Port Forwarding / Port Triggering</i> page, you can make local computers or servers available to the Internet for different services (for example, FTP or HTTP), to play Internet games (like Quake III), or to use Internet applications (like CUseeMe).
+</p>
+
+<p>
+Port Forwarding is designed for FTP, Web Server or other server based services. Once port forwarding is set up, request from Internet will be forwarded to the proper server. On the contrary, port triggering will only allow request from Internet after a designated port is 'triggered'. Port triggering applies to chat and Internet games.
+</p>
+<hr>
+
+<p><b>Port Triggering</b></p>
+<p>
+Note: If <b>Disable Port Triggering box</b> is checked, <b>all</b> port triggering function will be disabled but the configuration information will remain in the router.
+</p>
+
+<p><a name="pt_timeout"></b><b>Port Triggering Timeout</b></p>
+<p>
+Enter a value up to 9999 minutes. The Port Triggering Timeout value controls the inactivity timer for the designated inbound port(s). The inbound port(s) will be closed when the inactivity timer expires.
+</p>
+
+<p><b> For Internet Games or Applications </b></p>
+<p>
+Before starting, you'll need to know which service, application or game you'll be configuring. Also, you'll need to have the outbound port ( triggering port )  address for this game or application.
+</p>
+
+<p>
+To setup a computer to play Internet games or use Internet applications: 
+
+<ol>
+	<li>
+	Click <b>Add Service</b> button.
+	</li>
+
+	<li>
+	Enter a service name in the <b>Service Name</b> box. 
+	</li>
+
+	<li>
+	Under <b>Service User</b>,  select <b>Any</b> (default) will allow this service to be used by everyone in your network. Otherwise, select <b>Single address</b> and enter the PC's IP address to restrict the service to a particular PC.
+	</li>
+
+	<li>
+	Select <b>Service Type</b>.
+	</li>
+
+	<li>
+	Enter the outbound port number in <b>Triggering Port</b> box.
+	</li>
+
+	<li>
+	Enter the inbound connection port information such as <b>Connection Type</b>, <b>Starting Port</b> and <b>Ending Port</b> boxes. These information can be obtained from the game or applications manual or support website. 
+	</li>
+
+	<li>
+	Click <b>Apply</b> button. 
+	</li>
+</ol>
+
+<p>To modify a service entry:
+<ol>
+	<li>
+	Select the entry's radio button of the table.
+	</li>
+
+	<li>
+	Click <b>Edit Service</b>.
+	</li>
+
+	<li>
+	Modify the service.
+	</li>
+
+	<li>
+		Click <b> Apply</b> button.
+	</li>
+</ol>
+
+<p>To delete a service entry:
+<ol>
+	<li>
+		Select the entry's radio button of the table.
+	</li>
+	<li>
+		Click <b> Delete Service</b> button.
+	</li>
+</ol>
+
+</body>
+</html>
+

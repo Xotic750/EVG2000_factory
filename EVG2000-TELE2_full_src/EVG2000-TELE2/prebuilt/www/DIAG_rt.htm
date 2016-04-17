@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Pragma" CONTENT="no-cache">
+<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">	
+<meta HTTP-EQUIV="Expires" CONTENT="Mon, 06 Jan 1990 00:00:01 GMT"> 
+
+
+<meta name="description" content="DG834GT 1049">
+<meta http-equiv="content-type" content="text/html;charset=ISO-8859-1">
+
+
+<title>Diagnostics - Routing Table</title> 
+
+<link rel="stylesheet" href="form.css">
+<STYLE TYPE="text/javascript">
+	classes.num.all.fontFamily = "Courier";
+	classes.num.all.fontSize = "10pt" ;
+</style>
+
+<script language="javascript" type="text/javascript" src="func.js"></script>
+<script language="javascript" type="text/javascript" src="utility.js"></script>
+<script language="javascript" type="text/javascript" src="linux.js"></script>
+<script language="javascript" type="text/javascript">
+<!-- hide script from old browsers
+
+//-->
+</script> 
+</head>
+<body bgcolor="#ffffff" onload="loadhelp('DIAG_diag','rtable');document.forms[0].elements[0].focus();">
+<form name="diag_routing" method="POST" action="getroute.cgi">
+<table border="0" cellpadding="0" cellspacing="3" width="100%">
+<tr>
+	<td colspan="2"><h1>Diagnostics - Routing Table</h1>	</td>
+</tr>
+<tr>  <!-- RULE -->
+  <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+<tr>
+ <td colspan="2">
+	<table border="1" cellpadding="0" cellspacing="3" width="100%">
+	<tr>
+		<td nowrap width="25%" align="center"><b>Destination</b></td>
+		<td nowrap width="25%" align="center"><b>Mask</b></td>
+		<td nowrap width="25%" align="center"><b>Gateway</b></td>
+		<td nowrap width="10%" align="center"><b>Metric</b></td>
+		<td nowrap width="15%" align="center"><b>Active</b></td>
+	</tr>
+	<% diag_get_route_table(); %>
+	</table>
+ </td>
+ </tr>
+ <tr>
+  <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+ <tr>
+	<td colspan="2" align="center">
+		<input type="button" name="back" value="Back" onClick="location.href='./DIAG_diag.htm'">
+	</td>
+</tr>	
+</table>
+
+</form>
+<p>
+</p>
+</body>
+</html>

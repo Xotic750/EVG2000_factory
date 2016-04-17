@@ -1,0 +1,99 @@
+1:::Already logged in to Telstra Big Pond    	
+2:::BPA fail to log in
+3:::BPA have already logged in
+4:::BPA have not logged in
+5:::BPA is logging in
+6:::BPA is logging out
+7:::Cannot connect to Netgear server\n
+8:::Default service cannot be deleted.
+9:::Default service type/port is not changeable.
+10:::DHCP Server Starting,Ending IP address can't include Lan IP address.
+11:::DMZ Server is not a valid IP address.
+12:::DMZ Server is not on the LAN subnet.
+13:::Error: Gateway Address %s is a broadcast address in subnet %s
+14:::Error: Gateway Address %s is a network address in subnet %s
+15:::Error: Invalid IP Subnet Mask %s
+16:::Error: IP Address %s is a broadcast address in subnet %s
+17:::Error: IP Address %s is in a different subnet as the gateway address %s
+18:::Error: IP Address %s is a network address in subnet %s
+19:::Error: IP address must not be the same as the gateway address
+20:::Failure
+21:::Failed to add / modify port trigger record! - %s
+22:::Failed to update Firmware\n
+23:::Fail to login to Netgear server\n
+24:::Firmware is abort\n
+25:::Firmware is invalid\n
+26:::Firmware size specified in latest version information is incorrect\n
+27:::Firmware unavailable\n
+28:::Firmware upgrade failed. Please check your file.
+29:::Firmware Version Check
+30:::Have not logged in to Telstra Big Pond
+31:::Inbound connection port range overlap with other services.
+32:::Inbound connection start or end port must not be %d
+33:::Invalid Idletime. Should be less than 99 minutes.
+34:::Invalid IP Subnet Mask.
+35:::Invalid LAN IP subnet mask.
+36:::Invalid MAC address '%s'.
+37:::Invalid service name, should only contain alphabets, digits, '_' and '-'
+38:::IP Address should be in range [%s , %s].
+39:::Reserved IP cannot be the same as Router's LAN IP.
+40:::Logging in to Telstra Big Pond
+41:::Logging out of Telstra Big Pond
+42:::Maximum Number of Reserved Address Reached.
+43:::Memory allocation failed. Suggest re-upgrade after reboot or revert to factory default settings.
+44:::No Internet Connection Available
+45:::No more space to add port triggering service.
+46:::No more space to add static routes.
+47:::No space to add new keywords
+48:::No New Firmware Version Available.
+49:::Not enough memory for firmware upgrade\n
+50:::Not enough memory to perform version check\n
+51:::Only %d addresses are allowed for the DHCP pool.
+52:::Please choose a reserve address to delete.
+53:::Please choose a reserve address to edit.
+54:::Please Connect Internet Port and Retry
+55:::Please select an item for editing.
+56:::Please select an item for deletion.
+57:::Please select correct configuration file.
+58:::Please select a custom service to delete.
+59:::Please select a service to edit.
+60:::Please select a service to delete.
+61:::Port conflict with other service.
+62:::Reach maximum table size 20.
+63:::Some settings are wrong, please double check it!
+64:::Send Failed\n
+65:::Server IP address cannot be router's LAN IP address.
+66:::Server IP address must be a LAN IP address.
+67:::Service name already in use.
+68:::Service name already in use, and cannot be used twice.
+69:::Service name cannot be changed.
+70:::Service port is already used by another service.
+71:::Service user must be a LAN IP address.
+72:::Session is connected.
+73:::Session is not connected.
+74:::Telstra Big Pond login failed
+75:::The old password is wrong!
+76:::The specified port(s) are being used by other configurations.\nPlease check your configurations of Remote Management,\nPort forwarding, Port Triggering, UPnP Port Mapping table,\nRIP, and Internet connection type
+77:::The specified port(s) are being used by the system.\nThe configuration will not take effect until the router restarts.\nPlease power off the router and then power it up to restart the router.
+78:::Triggering internal error!
+79:::Triggering port must not be %d
+80:::Triggering port is already used by another service.
+81:::Unable to download firmware from Netgear server\n
+82:::Unable to get latest version information\n
+83:::Unknown Error: [%d]
+84:::IP address cannot be on LAN subnet
+85:::Invalid port number
+86:::please select a firewall rule
+87:::service[%s] is in used
+88:::Authenication Fail!
+89:::Authenication OK!
+90:::QoS table is full
+91:::QoS rule already exist
+92:::Invalid port settings
+93:::QoS policy for %s already exist
+94:::QoS rule for %s already exist
+95:::Port conflicts with another rule.
+96:::filter rule table is full
+97:::filter rule duplicate
+98:::can not find selected service
+99:::

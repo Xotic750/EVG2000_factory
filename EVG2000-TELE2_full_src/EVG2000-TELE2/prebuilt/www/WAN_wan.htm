@@ -1,0 +1,359 @@
+<html>
+<head>
+<% meta_get(); %>
+<title>WAN Setup</title> 
+<link rel="stylesheet" href="form.css">
+<STYLE TYPE="text/javascript">
+	classes.num.all.fontFamily = "Courier";
+	classes.num.all.fontSize = "10pt" ;
+</style>
+<% script_get(); %>
+<script language="javascript" type="text/javascript">
+<!-- hide script from old browsers
+var all_wan_proto      = new Array(8);
+var all_wan_mtu      = new Array(8);
+var all_rsp_ping      = new Array(8);
+var all_spi_enable      = new Array(8);
+var all_pppoe_idletime = new Array(8);
+var all_pppoa_idletime = new Array(8);
+var all_ppp_dod = new Array(8);
+
+function loadMultiWanInfo()
+{    
+    var cf = document.forms[0];    
+    cf.wan_num.value = cf.nowchoice.value;
+    
+    all_wan_proto[0] = "<% nvram_get("wan0_proto"); %>";
+    all_wan_proto[1] = "<% nvram_get("wan1_proto"); %>";
+    all_wan_proto[2] = "<% nvram_get("wan2_proto"); %>";
+    all_wan_proto[3] = "<% nvram_get("wan3_proto"); %>";
+    all_wan_proto[4] = "<% nvram_get("wan4_proto"); %>";
+    all_wan_proto[5] = "<% nvram_get("wan5_proto"); %>";
+    all_wan_proto[6] = "<% nvram_get("wan6_proto"); %>";
+    all_wan_proto[7] = "<% nvram_get("wan7_proto"); %>";
+    
+    all_wan_mtu[0] = "<% nvram_get("wan0_mtu"); %>";
+    all_wan_mtu[1] = "<% nvram_get("wan1_mtu"); %>";
+    all_wan_mtu[2] = "<% nvram_get("wan2_mtu"); %>";
+    all_wan_mtu[3] = "<% nvram_get("wan3_mtu"); %>";
+    all_wan_mtu[4] = "<% nvram_get("wan4_mtu"); %>";
+    all_wan_mtu[5] = "<% nvram_get("wan5_mtu"); %>";
+    all_wan_mtu[6] = "<% nvram_get("wan6_mtu"); %>";
+    all_wan_mtu[7] = "<% nvram_get("wan7_mtu"); %>";
+    
+    all_rsp_ping[0] = "<% nvram_get("fw0_rsp_ping"); %>";
+    all_rsp_ping[1] = "<% nvram_get("fw1_rsp_ping"); %>";
+    all_rsp_ping[2] = "<% nvram_get("fw2_rsp_ping"); %>";
+    all_rsp_ping[3] = "<% nvram_get("fw3_rsp_ping"); %>";
+    all_rsp_ping[4] = "<% nvram_get("fw4_rsp_ping"); %>";
+    all_rsp_ping[5] = "<% nvram_get("fw5_rsp_ping"); %>";
+    all_rsp_ping[6] = "<% nvram_get("fw6_rsp_ping"); %>";
+    all_rsp_ping[7] = "<% nvram_get("fw7_rsp_ping"); %>";
+    
+    all_spi_enable[0] = "<% nvram_get("fw0_spi_enab"); %>";
+    all_spi_enable[1] = "<% nvram_get("fw1_spi_enab"); %>";
+    all_spi_enable[2] = "<% nvram_get("fw2_spi_enab"); %>";
+    all_spi_enable[3] = "<% nvram_get("fw3_spi_enab"); %>";
+    all_spi_enable[4] = "<% nvram_get("fw4_spi_enab"); %>";
+    all_spi_enable[5] = "<% nvram_get("fw5_spi_enab"); %>";
+    all_spi_enable[6] = "<% nvram_get("fw6_spi_enab"); %>";
+    all_spi_enable[7] = "<% nvram_get("fw7_spi_enab"); %>";
+    
+    all_pppoe_idletime[0] = <% nvram_get("ppp0_idle_timeout"); %> / 60;
+    all_pppoe_idletime[1] = <% nvram_get("ppp1_idle_timeout"); %> / 60;
+    all_pppoe_idletime[2] = <% nvram_get("ppp2_idle_timeout"); %> / 60;
+    all_pppoe_idletime[3] = <% nvram_get("ppp3_idle_timeout"); %> / 60;
+    all_pppoe_idletime[4] = <% nvram_get("ppp4_idle_timeout"); %> / 60;
+    all_pppoe_idletime[5] = <% nvram_get("ppp5_idle_timeout"); %> / 60;
+    all_pppoe_idletime[6] = <% nvram_get("ppp6_idle_timeout"); %> / 60;
+    all_pppoe_idletime[7] = <% nvram_get("ppp7_idle_timeout"); %> / 60;
+    
+    all_pppoa_idletime[0] = <% nvram_get("ppa0_idle_timeout"); %> / 60;
+    all_pppoa_idletime[1] = <% nvram_get("ppa1_idle_timeout"); %> / 60;
+    all_pppoa_idletime[2] = <% nvram_get("ppa2_idle_timeout"); %> / 60;
+    all_pppoa_idletime[3] = <% nvram_get("ppa3_idle_timeout"); %> / 60;
+    all_pppoa_idletime[4] = <% nvram_get("ppa4_idle_timeout"); %> / 60;
+    all_pppoa_idletime[5] = <% nvram_get("ppa5_idle_timeout"); %> / 60;
+    all_pppoa_idletime[6] = <% nvram_get("ppa6_idle_timeout"); %> / 60;
+    all_pppoa_idletime[7] = <% nvram_get("ppa7_idle_timeout"); %> / 60;
+    
+    all_ppp_dod[0] = "<% nvram_get("ppp0_dod"); %>";
+    all_ppp_dod[1] = "<% nvram_get("ppp1_dod"); %>";
+    all_ppp_dod[2] = "<% nvram_get("ppp2_dod"); %>";
+    all_ppp_dod[3] = "<% nvram_get("ppp3_dod"); %>";
+    all_ppp_dod[4] = "<% nvram_get("ppp4_dod"); %>";
+    all_ppp_dod[5] = "<% nvram_get("ppp5_dod"); %>";
+    all_ppp_dod[6] = "<% nvram_get("ppp6_dod"); %>";
+    all_ppp_dod[7] = "<% nvram_get("ppp7_dod"); %>";
+}
+
+function frmLoad() 
+{
+    var cf = document.forms[0];
+    var index;
+    
+	if(cf.selNum.value == "0")
+	{
+		alert("You need to config wan at first at basic settings!!");
+		cf.wan_num.disabled=true;
+		cf.protocol.disabled=true;
+		cf.dod.disabled=true;
+		cf.disable_spi.disabled=true;
+		cf.rspToPing.disabled=true;
+		cf.wan_mtu.disabled=true;
+		cf.apply.disabled=true;
+		cf.Cancel.disabled=true;
+		return;
+	}
+	
+	loadSettings(100);
+}
+
+function loadSettings(index)
+{
+    var wan_proto;
+    var cf = document.forms[0];
+    var wan_mtu;
+    var rsp_ping;
+    var spi_enable;
+    var pppoe_idletime;
+    var pppoa_idletime;
+    var ppp_dod;
+    var vlan_enable;
+    var igmp_enable;
+    
+    if (index == 100)
+        index = eval(cf.nowchoice.value);
+
+    wan_proto = all_wan_proto[index];
+    wan_mtu = all_wan_mtu[index];
+    rsp_ping = all_rsp_ping[index];
+    spi_enable = "<% nvram_get("fw_spi_enab"); %>";
+    pppoe_idletime = all_pppoe_idletime[index];
+    pppoa_idletime = all_pppoa_idletime[index];
+    ppp_dod = all_ppp_dod[index];
+    vlan_enable=cf.wan_vlan_enable.value;
+    igmp_enable=cf.wan_igmp_enable.value;
+    
+    if ( ((wan_proto == "pppoe")&&(pppoe_idletime != "0"))
+        || ((wan_proto == "pppoa")&&(pppoa_idletime != "0")) )
+    {
+        if (ppp_dod == "2")
+            cf.dod.checked = false;
+        else
+            cf.dod.checked = true;
+        cf.dod.disabled = false;
+    }
+    else
+    {
+        cf.dod.checked = true;
+        cf.dod.disabled = true;
+        cf.idletimeiszero.value = "1";
+    }
+
+    if (wan_proto == "pppoe")
+        cf.protocol.value = "PPPOE";
+    else if (wan_proto == "mer")
+        cf.protocol.value = "MER";
+
+    cf.wan_mtu.value = wan_mtu;
+    if (wan_proto == "pppoe")
+    {
+        if ( wan_mtu > 1492 )
+            cf.wan_mtu.value = 1492;
+    }
+    else if (wan_proto == "mer")
+    {
+        if ( wan_mtu > 1500 )
+            cf.wan_mtu.value = 1500;
+    }
+
+    if (rsp_ping == "1")
+        cf.rspToPing.checked = true;
+    else
+        cf.rspToPing.checked = false;
+    
+    if (spi_enable == "1")
+        cf.disable_spi.checked = false;
+    else
+        cf.disable_spi.checked = true;
+
+    if (igmp_enable == "1")
+        cf.igmpEnable.checked = true;
+    else
+        cf.igmpEnable.checked = false;
+
+    if (cf.wan_sip_alg.value == 0)
+        cf.sip_alg_cfg.checked = true;
+        
+        
+}
+
+function check_data()
+{
+    var cf = document.forms[0];
+    var msg = "";
+	
+	msg+= checkInt(cf.wan_mtu, "MTU value", 616, 1500, true);
+
+	if (msg.length > 1)
+	{
+		alert(msg);
+		return false;
+	}
+	return true;
+}
+
+function selectWAN()
+{
+	var cf = document.forms[0];
+	var selectWanId = eval(cf.wan_num.value);
+		
+    loadSettings(selectWanId);
+}
+
+//-->
+</script> 
+</head>
+<body bgcolor="#ffffff" onload="loadhelp('WAN_wan');loadMultiWanInfo();frmLoad();">
+<form name="formname" method="post" action="wan.cgi">
+<table border="0" cellpadding="0" cellspacing="3" width="100%">
+<tr>
+	<td colspan="2"><h1>WAN Setup</h1></td>
+</tr>
+
+<tr>
+  <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+
+<tr>
+<td colspan="2"><input type="checkbox" name="igmpEnable" value="igmpEnable"> <b>Enable IGMP Proxy</b></td>
+</tr>
+
+<tr>
+  <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+
+<% vlan_cgi_show_item_begin("start"); %>
+<tr>
+  <td nowrap align="left">
+  <select name="wan_num" size="1" onChange="selectWAN();">
+   <% wan_cgi_get_wan_sel(1); %>
+  </select>
+   </td>
+</tr>
+
+
+<tr>
+  <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+<% vlan_cgi_show_item_begin("end"); %>
+<TR>
+  <td nowrap width="50%"><b>The current active protocol is :</b></td>
+  <td nowrap width="50%" align="right"><input type="text" name="protocol" disabled value="" size="5" maxlength="5"></td>
+</tr>
+
+<tr>
+  <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+
+<tr>
+ <td colspan="2"><input type="checkbox" name="dod" value="dod" > <b><a href="javascript:loadhelp('WAN_wan','dod')" tabindex="-1">Connect Automatically, as Required</a></b></td>
+</tr>
+
+<tr>
+  <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+
+
+<tr>
+ <td colspan="2"><input type="checkbox" name="disable_spi" value="disable_spi"> <b><a href="javascript:loadhelp('WAN_wan','spi')" tabindex="-1">Disable Port Scan and DoS Protection</a></b></td>
+</tr>
+
+<tr>
+<td colspan="2"><input type="checkbox" name="sip_alg_cfg" value="sip_alg_cfg"><a href="javascript:loadhelp('WAN_wan','disSipAlg')" tabindex="-1"> <b>Disable SIP ALG</b></a></td>
+</tr>
+
+<tr>
+  <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+
+<tr>
+<td colspan="2"><input type="checkbox" name="rspToPing" value="rspToPing"> <b><a href="javascript:loadhelp('WAN_wan','ping')" tabindex="-1">Respond to Ping on Internet WAN Port</a></b></td>
+</tr>
+
+
+<tr>
+  <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+
+	<tr>
+		<td>&nbsp;<b><a href="javascript:loadhelp('WAN_wan','mtu')" tabindex="-1">MTU Size</a></b> (in bytes)</td>
+		<td align="right" class="num"><input type="text" name="wan_mtu" size="5" maxlength="4" ></td>
+	</tr>
+    
+
+<tr>  
+  <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+
+<tr>
+ <td colspan="2" align="center">
+  <input type="submit" name="apply" value="Apply" onClick="return check_data();">
+  <input type="button" name="Cancel" value="Cancel" onClick="location.href='WAN_wan.htm'"> 
+</tr>
+</table>
+<INPUT name=selNum type=hidden value= "<% wan_cgi_get_wan_sel(0); %>">
+<INPUT name=nowchoice type=hidden value= "<% wan_cgi_get_wan_sel("nowchoice"); %>">
+<INPUT name=idletimeiszero type=hidden value= "">
+
+<INPUT name=atm0_vpi type=hidden value= "<% nvram_get("atmVcc0_vpi"); %>">
+<INPUT name=atm0_vci type=hidden value= "<% nvram_get("atmVcc0_vci"); %>">
+<INPUT name=atm0_multiplex type=hidden value= "<% nvram_get("atmVcc0_multiplex"); %>">
+<INPUT name=atm0_encap type=hidden value= "<% nvram_get("atmVcc0_encap"); %>">
+
+<INPUT name=atm1_vpi type=hidden value= "<% nvram_get("atmVcc1_vpi"); %>">
+<INPUT name=atm1_vci type=hidden value= "<% nvram_get("atmVcc1_vci"); %>">
+<INPUT name=atm1_multiplex type=hidden value= "<% nvram_get("atmVcc1_multiplex"); %>">
+<INPUT name=atm1_encap type=hidden value= "<% nvram_get("atmVcc1_encap"); %>"> 
+
+<INPUT name=atm2_vpi type=hidden value= "<% nvram_get("atmVcc2_vpi"); %>">
+<INPUT name=atm2_vci type=hidden value= "<% nvram_get("atmVcc2_vci"); %>">
+<INPUT name=atm2_multiplex type=hidden value= "<% nvram_get("atmVcc2_multiplex"); %>">
+<INPUT name=atm2_encap type=hidden value= "<% nvram_get("atmVcc2_encap"); %>">  
+
+<INPUT name=atm3_vpi type=hidden value= "<% nvram_get("atmVcc3_vpi"); %>">
+<INPUT name=atm3_vci type=hidden value= "<% nvram_get("atmVcc3_vci"); %>">
+<INPUT name=atm3_multiplex type=hidden value= "<% nvram_get("atmVcc3_multiplex"); %>">
+<INPUT name=atm3_encap type=hidden value= "<% nvram_get("atmVcc3_encap"); %>">
+
+<INPUT name=atm4_vpi type=hidden value= "<% nvram_get("atmVcc4_vpi"); %>">
+<INPUT name=atm4_vci type=hidden value= "<% nvram_get("atmVcc4_vci"); %>">
+<INPUT name=atm4_multiplex type=hidden value= "<% nvram_get("atmVcc4_multiplex"); %>">
+<INPUT name=atm4_encap type=hidden value= "<% nvram_get("atmVcc4_encap"); %>">  
+
+<INPUT name=atm5_vpi type=hidden value= "<% nvram_get("atmVcc5_vpi"); %>">
+<INPUT name=atm5_vci type=hidden value= "<% nvram_get("atmVcc5_vci"); %>">
+<INPUT name=atm5_multiplex type=hidden value= "<% nvram_get("atmVcc5_multiplex"); %>">
+<INPUT name=atm5_encap type=hidden value= "<% nvram_get("atmVcc5_encap"); %>"> 
+
+<INPUT name=atm6_vpi type=hidden value= "<% nvram_get("atmVcc6_vpi"); %>">
+<INPUT name=atm6_vci type=hidden value= "<% nvram_get("atmVcc6_vci"); %>">
+<INPUT name=atm6_multiplex type=hidden value= "<% nvram_get("atmVcc6_multiplex"); %>">
+<INPUT name=atm6_encap type=hidden value= "<% nvram_get("atmVcc6_encap"); %>"> 
+
+<INPUT name=atm7_vpi type=hidden value= "<% nvram_get("atmVcc7_vpi"); %>">
+<INPUT name=atm7_vci type=hidden value= "<% nvram_get("atmVcc7_vci"); %>">
+<INPUT name=atm7_multiplex type=hidden value= "<% nvram_get("atmVcc7_multiplex"); %>">
+<INPUT name=atm7_encap type=hidden value= "<% nvram_get("atmVcc7_encap"); %>">
+  
+<% vlan_cgi_show_item_begin("markstart"); %>
+<INPUT name=wan_num type=hidden value= "">
+<% vlan_cgi_show_item_begin("markend"); %>
+
+<INPUT name=wan_vlan_enable type=hidden value= "<% nvram_get("wan_vlan_enable"); %>">
+<INPUT name=wan_igmp_enable type=hidden value= "<% nvram_get("wan0_igmp_proxy_enable"); %>">
+<INPUT name=wan_sip_alg     type=hidden value= "<% nvram_get("sip_alg_cfg"); %>">
+</form>
+</body>
+</html>

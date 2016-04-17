@@ -1,0 +1,225 @@
+<html>
+<head>
+<% meta_get(); %>
+<title>Access Point Configuration</title> 
+<link rel="stylesheet" href="form.css">
+<STYLE TYPE="text/javascript">
+	classes.num.all.fontFamily = "Courier";
+	classes.num.all.fontSize = "10pt" ;
+</style>
+
+
+<script language="javascript" type="text/javascript">
+<!--
+function loadhelp(fname,anchname)
+{
+    if ((loadhelp.arguments.length == 1 ) || (anchname == "" ))
+        top.helpframe.location.href=fname+"_h"+".htm";
+    else
+        top.helpframe.location.href=fname+"_h"+".htm#" + anchname;
+}
+
+function init_data()
+{
+ document.forms[0].addmacaddr.value =""
+ document.forms[0].adddevicename.value =""
+ document.forms[0].delmacaddr.value =""
+ document.forms[0].deldevicename.value =""
+ 
+}
+function valid_add()
+{
+ if(document.forms[0].MacSelect && parseInt(document.forms[0].MacSelect.length)==32)
+ {
+   alert("Max number of access list item reached.");
+   return false;
+ }
+ return true;
+}
+
+function valid_edit(type)
+//type:1: delete 2:add
+{
+    var cf = document.forms[0];
+    
+    if(type == 1)  
+    {
+        if(cf.delmacaddr.value.length == 0)//not select
+        {
+            alert("Please select an item to delete.");
+            return false;
+        }
+    }  
+    else if(type == 2)
+    {
+        if(cf.addmacaddr.value.length == 0)//not select
+        {
+             alert("Please select an item to add."); 
+             return false;
+        }    
+    }
+    
+    return true;
+}
+
+function checkmac(F)
+{
+    var temp;
+    F.adr.value = F.adr.value.toLowerCase();
+    temp=F.adr.value;
+    if(F.adr.value=="")
+    {
+        alert("Please select a Wireless PC from the list or manually enter the Wireless PC Card Information");
+        return false;
+    }
+    else
+    {
+        if((F.device.value == "UNKNOWN")||(F.device.value == "UNKNOWN NAME")||(""==F.device.value))
+        {
+            alert("Please enter a name for selected Wireless PC Card.");
+            return false;
+        }
+        if (F.device.value.match(/[\"\']/g))
+        {
+            alert("Invalid device name.");
+            return false;
+        }
+        //if (F.adr.value.indexOf(':')!=-1)
+        //{
+            if(MACAddressBlur(F.adr))
+            {
+                return true;
+	        } 
+	        else 
+	        {
+                F.adr.value=temp;
+	 		    return false;
+	        }
+		//}
+		//else
+		//{
+            if (chkMacLen(F.adr)) 
+            {
+		        return true;
+            } 
+            else
+                return false;
+        //}
+    }
+}
+function MACAddressBlur(address)
+{
+	var myRE = /[0-9a-fA-F]{12}/;
+	var MAC = address.value;
+	MAC = MAC.replace(/:/g,"");
+	address.value = MAC;
+	if ((MAC.length != 12) || (MAC=="000000000000")||(myRE.test(MAC)!=true)) {
+		alert("Invalid MAC Address");
+		return false;
+	} else {
+        return true;
+    }
+}
+
+function seladdmac(v)
+{
+//alert(v);
+ document.forms[0].addmacaddr.value = v;
+}
+function seladddev(v)
+{
+//alert(v);
+ document.forms[0].adddevicename.value = v;
+}
+function seldelmac(v)
+{
+//alert(v);
+ document.forms[0].delmacaddr.value = v;
+}
+function seldeldev(v)
+{
+//alert(v);
+ document.forms[0].deldevicename.value = v;
+}
+//-->
+</SCRIPT>
+
+</HEAD>
+<BODY bgcolor="#ffffff" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" onload="init_data();loadhelp('WLG_acl')">
+<FORM action="wlan_acl.cgi" method="post" name="formname">
+  <table border="0" cellpadding="0" cellspacing="3" width="100%">
+    <TR>
+      <td align="left" nowrap><h1>Wireless Station Access List</h1></td></tr>
+    <tr> <!-- RULE -->
+      <td background="liteblue.gif" height="12">&nbsp; </td></tr>
+    <TR>
+      <td align="left" nowrap><input type="checkbox" name="accessLimit" value="on" <%wlg_cgi_get_acl_status(); %> ><a href="javascript:loadhelp('WLG_acl','control')" tabindex="-1"><b>Turn Access Control On</b></a></td></tr>
+    <tr> <!-- RULE -->
+      <td background="liteblue.gif" height="12">&nbsp; </td></tr>
+    <tr>
+      <td align="left" nowrap><b>Trusted Wireless Stations</b></td></tr>
+    <tr> <!-- RULE -->
+      <td align="center">
+        <!--trusted table //-->
+        <table border="1" cellpadding="0" cellspacing="0" width="100%">
+          <tr>
+            <td nowrap width="10%" align="center"><span class="thead">&nbsp;</span></td>
+            <td nowrap width="45%" align="center"><span class="thead">Device Name</span></td>
+            <td nowrap width="45%" align="center"><span class="thead">Mac Address</span></td></tr>
+            <% wlg_cgi_get_acl_table(); %>
+        </table></td></tr>
+        <!--trusted table //-->
+    <TR>
+      <TD nowrap align=center>
+        <input type="submit" name="delete" value="Delete" onclick="return(valid_edit(1));"></td></tr> 
+    <tr> <!-- RULE -->
+      <td colspan="2" background="liteblue.gif" height="12">&nbsp; </td></tr>
+    <tr>
+      <!-- <td colspan="2" align="left"><a href="javascript:loadhelp('WLG_acl_add','card')" tabindex="-1"><b>Available Wireless Cards</b></a></td></tr> -->
+      <td colspan="2" align="left"><b>Available Wireless Cards</b></td></tr>
+    <tr>
+      <td colspan="2">
+       <!--available table //-->
+        <table border="1" cellpadding="0" cellspacing="0" width="100%">
+          <tr>
+            <td width="10%" align="center"><span class="thead">&nbsp;</span></td>
+	        <td width="45%" align="center"><span class="thead">Device Name</span></td>
+	        <td width="45%" align="center"><span class="thead">MAC Address</span></td></tr>
+	       <% wlg_cgi_get_device_table(); %>
+	   </table></td></tr>
+	   <!--available table //-->
+	<tr>
+      <td colspan="2" align="center">
+        <input type="submit" name="addAvail" value=" Add " onclick="return(valid_edit(2));">
+      </td></tr>
+    <tr><!-- RULE -->
+      <td colspan="2" background="liteblue.gif" height="12">&nbsp; </td></tr>
+    <tr>
+      <td align="left" colspan="2"><b>Add New Station Manually</b></td></tr>
+    <tr>
+      <td colspan="2"><!-- mac add //-->
+        <table border=0 width="100%" align="left">
+          <tr>
+            <td nowrap> Device Name:</td>
+            <td align="right"><input type="text" name="device" maxLength=20 value=""></TD></TR>
+          <tr>
+            <td nowrap> MAC Address:</td>
+            <td align="right"><input type="text" name="adr" maxLength=17 value=""></TD></TR></table></td></tr>
+           <tr>
+      <td colspan="2" align="center">
+        <input type="submit" name="addManual" value=" Add " onclick="return checkmac(this.form)">
+      </td></tr>     
+
+    <tr> <!-- RULE -->
+      <td background="liteblue.gif" height="12">&nbsp; </td></tr>
+    <tr>
+      <td align="center"> 
+        <input type="submit" name="apply" value="Apply">
+        <input type="button" name="cancel" value="Cancel" onClick="location.href='WLG_acl.htm'"></TD></TR></TABLE>
+    <input type="hidden" name="addmacaddr" value="">
+    <input type="hidden" name="adddevicename" value="">
+    <input type="hidden" name="delmacaddr" value="">
+    <input type="hidden" name="deldevicename" value="">
+</form>
+</BODY>
+</HTML>

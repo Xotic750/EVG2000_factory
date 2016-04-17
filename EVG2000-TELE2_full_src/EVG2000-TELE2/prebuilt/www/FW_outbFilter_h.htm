@@ -1,0 +1,72 @@
+<html>
+<head>
+<% meta_get(); %>
+<title>NETGEAR Help</title>
+<link rel="stylesheet" href="help.css">
+</head>
+<body>
+<h1 class="helpfile">Outbound Service Help</h1> 
+<p>You can use this screen to define a new Outbound Firewall rule, or edit an existing rule.
+Outbound Firewall rules are used to block or allow access by computers on your network 
+to services or applications on the Internet.
+</p>
+<a name="serv"> </a>
+<p><b>Service</b>
+<br>Select the desired Service or application to be covered by this rule. 
+If the desired service or application does not appear in the list, you must define it using 
+the Services menu.
+<a name="action"> </a>
+<p><b>Action</b>
+<br>Select the desired action for packets covered by this rule:
+<ul>
+<li>BLOCK always
+<li>BLOCK by schedule, otherwise Allow
+<li>ALLOW always
+<li>ALLOW by schedule, otherwise Block
+</ul>
+Note:
+<ul>
+ <li>Any outbound traffic which is not blocked by rules you create will be allowed by the Default rule.
+ <li>ALLOW rules are only useful if the traffic is already covered by a BLOCK rule. 
+(That is, you wish to allow a subset of traffic which is currently blocked by another rule.)
+ <li>To define the Schedule used in these selections, use the "Schedule" screen.
+</ul>
+
+<a name="source"></a>
+<p><B>LAN users</b>
+<BR>These settings determine which computers on your network are affected by this rule, 
+based on their source (LAN) IP address. Select the desired option:
+<ul>
+	<li>Any - All local IP addresses are covered by this rule.
+	<li>Address range - If this option is selected, you must enter the "Start" and "Finish" fields.
+	<li>Single address - Enter the required address in the "Start" fields.
+</ul>
+
+<a name="dest"></a>
+<p><b>WAN Servers</b>
+<BR>These settings determine which Internet locations are covered by the rule, based on their d
+estination (WAN) IP address. Select the desired option:
+<ul>
+	<li>Any - All Internet IP address are covered by this rule.
+	<li>Address range - If this option is selected, you must enter the "Start" and "Finish" fields.
+	<li>Single address - Enter the required address in the "Start" fields.
+</ul>
+
+<a name="log"></a>
+<p><b>Log</b>
+<br>This determines whether packets covered by this rule are logged. Select the desired action:
+<ul>
+<li>Always - always log traffic considered by this rule, whether it matches or not. (This is useful when debugging your rules.)
+<li>Never - never log traffic considered by this rule, whether it matches or not.
+<li>Match - Log traffic only it matches this rule. (The action is determined by this rule.)
+<li>Not Match - Log traffic which is considered by this rule, but does not match (The action is NOT determined by this rule.)
+</ul>
+
+<pre>
+</pre>
+
+<p>Click <b>Apply</b> to have your changes take effect.
+<p>Click <b>Back</b> to return to the previous screen.
+
+</body>
+</html>

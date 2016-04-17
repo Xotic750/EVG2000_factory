@@ -1,0 +1,2 @@
+/System/Library/Frameworks/CoreServices.framework/Versions/A/Headers/CoreServices.h
+/System/Library/Frameworks/ApplicationServices.framework/Versions/A/Headers/ApplicationServices.h

@@ -1,0 +1,91 @@
+<html>
+<head>
+<% meta_get(); %>
+<title>Configuration Assistant</title>
+<link rel="stylesheet" type="text/css" href="style.css">
+<% script_get(); %>
+<script type="text/javascript">
+<!--
+function checkData()
+{
+	var cf = document.forms[0];
+	var msg = "";
+	if(cf.sysNewPasswd.value.length >= 1 || cf.sysConfirmPasswd.value.length >= 1)
+	{
+		if (cf.sysNewPasswd.value.length == 31 || cf.sysConfirmPasswd.value.length == 31)
+		{
+			alert("Maximum password length is 30 characters!");
+			return false;
+		}
+		if(cf.sysNewPasswd.value != cf.sysConfirmPasswd.value)
+		{
+			msg+= "The password you typed does not match, please enter it again:"
+			cf.sysConfirmPasswd.focus();
+		}
+	}
+	if (msg.length > 1)
+	{
+		alert(msg);
+		return false;
+	}
+	return true;
+}
+//-->
+</script>
+</head>
+
+<body bgcolor="#ffffff" leftmargin="0" marginwidth="0" topmargin="0" marginheight="0">
+<form name="blk_passwd_edit" action="blk_passwd_edit.cgi" method="post">
+<p>
+<div align="center">
+
+<table border="0" cellpadding="0" cellspacing="3" width="100%">
+
+  <tr>
+   <td valign="top" align="center">
+     <h1><br>Change the Administrator Password</h1>
+   </td>
+  </tr>
+  <tr>
+    <td>
+     <p><ul>Your NETGEAR router uses an administrator password. It is printed on the bottom label of the router. The default password is "password". The password is case sentive. For example, <strong>PASSWORD</strong> is not the same as <strong>passWORD</strong>. </ul></p>
+     <p><ul>You can change the password to restrict access to the configuration options of the router.</ul></p>
+     <p><ul>Enter a new password or click Next to keep the default password.</ul></p>
+  </td>
+  </tr>
+<tr>  <!-- RULE -->
+  <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>  
+  <tr>
+    <td>     
+     <table border="0">
+       <tr>
+         <td><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Password:</strong></td>
+         <td><input type="password" name="sysNewPasswd" size="18" maxlength="31"></td>
+        </tr>
+       <tr>
+         <td><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Repeat Password:</strong> </td>
+         <td><input type="password" name="sysConfirmPasswd" size="18" maxlength="31"></td>
+        </tr>
+     </table>
+     <p>&nbsp;</p>
+   </td>
+   <td><img src="spacer.gif" width="1" height="18" border="0" alt="" /></td>
+  </tr>
+<tr>  <!-- RULE -->
+  <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+ <tr>
+    <td align="center">&nbsp;&nbsp;
+    <input type="button" name="Back" value="&nbsp;&nbsp;Back&nbsp;&nbsp;" onclick="location.href='WIZ_sel.htm'">
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="submit" name="Next>" value="&nbsp;&nbsp;Next&nbsp;&nbsp;" onclick="return checkData()">
+	<br><br>
+	</td>
+ </tr>
+</table>
+</div>
+</form>
+</BODY>
+</HTML>
+

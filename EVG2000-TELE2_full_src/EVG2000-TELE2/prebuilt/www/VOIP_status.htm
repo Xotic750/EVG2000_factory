@@ -1,0 +1,117 @@
+<html>
+<head>
+<% meta_get(); %>
+<title>VoIP Status</title> 
+<link rel="stylesheet" href="form.css">
+
+<script language="javascript" type="text/javascript" src="msg.js"></script>		
+<script language="javascript" type="text/javascript" src="func.js"></script>
+
+<script language="javascript" type="text/javascript">
+
+var enable_Line1 = "<% nvram_get("voip_user_user0_enable"); %>";
+var register_Line1 = "<% nvram_get("voip_status_user0_register"); %>";
+    
+var enable_Line2 = "<% nvram_get("voip_user_user1_enable"); %>";
+var register_Line2 = "<% nvram_get("voip_status_user1_register"); %>";
+    
+</script>
+</head>
+<body bgcolor="#ffffff" onload="loadhelp('VOIP_status');">
+<form name="formname" method="POST" action="st_voip.cgi">
+<table border="0" cellpadding="0" cellspacing="3" width="100%">
+
+<tr><td colspan="2"><h1>VoIP Status</h1></td></tr>
+
+<tr><td colspan="2" background="liteblue.gif" height="12">&nbsp;</td></tr>
+
+<tr><td colspan="2"><b><a href="javascript:loadhelp('VOIP_status','line')" tabindex="-1">Line 1</a></b></td></tr>
+
+<tr>
+<td width="50%" align="left" nowrap>Display Name</td>
+<td width="50%" align="left"><% nvram_get("voip_user_user0_displayname"); %></td>
+</tr>
+<tr>
+<td width="50%" align="left" nowrap>Telephone Number</td>
+<td width="50%" align="left"><% nvram_get("voip_user_user0_username"); %></td>
+</tr>
+
+<tr>
+<td colspan="2" align="left"><b><a href="javascript:loadhelp('VOIP_status','status')" tabindex="-1">Line 1 Status</a></b></td>
+</tr>
+
+<tr>
+<td align="left">Hook State:</td>
+<td align="left"><% nvram_match("voip_status_user0_offhook","1","OFFHOOK"); %>
+<% nvram_match("voip_status_user0_offhook","0","ONHOOK"); %></td>
+</tr>
+
+<tr>	
+<td align="left">Registration State:</td>
+<td align="left">
+    <SCRIPT language="JavaScript">
+    <!--
+    if ((register_Line1 == '1')&&(enable_Line1 == '1'))
+    document.write('Registered');
+    else
+    document.write('Not-Registered');
+    //-->
+    </SCRIPT>
+</td>
+</tr>
+<tr>	
+<td align="left">Message Waiting:</td>
+<td align="left"></td>
+</tr>
+
+<tr><td colspan="2" background="liteblue.gif" height="12">&nbsp;</td></tr>
+
+<tr><td colspan="2"><b><a href="javascript:loadhelp('VOIP_status','line')" tabindex="-1">Line 2</a></b></td></tr>
+
+<tr>
+<td width="50%" align="left" nowrap>Display Name</td>
+<td width="50%" align="left"><% nvram_get("voip_user_user1_displayname"); %></td>
+</tr>
+<tr>
+<td width="50%" align="left" nowrap>Telephone Number</td>
+<td width="50%" align="left"><% nvram_get("voip_user_user1_username"); %></td>
+</tr>
+
+<tr>
+<td colspan="2" align="left"><b><a href="javascript:loadhelp('VOIP_status','status')" tabindex="-1">Line 2 Status</a></b></td>
+</tr>
+
+<tr>
+<td align="left">Hook State:</td>
+<td align="left"><% nvram_match("voip_status_user1_offhook","1","OFFHOOK"); %>
+<% nvram_match("voip_status_user1_offhook","0","ONHOOK"); %></td>
+</tr>
+
+<tr>	
+<td align="left">Registration State</td>
+<td align="left">
+    <script language="JavaScript">
+    if ((register_Line2 == '1')&&(enable_Line2 == '1'))
+    document.write('Registered');
+    else
+    document.write('Not-Registered');
+    </script>
+</td>
+</tr>
+<tr>	
+	<td align="left">Message Waiting:</td>
+ <td align="left"></td>
+</tr>
+
+<tr><td colspan="2" background="liteblue.gif" height="12">&nbsp;</td></tr>
+<tr>
+<td nowrap colspan="2" align="center">
+<input type="button" name="refresh" value="Refresh" onclick="location.href='VOIP_status.htm'">
+</td>
+</tr>
+</table>
+<input type="hidden" name="showvoip" value="yes">
+<input type="hidden" name="message" value="">
+</form>
+</body>
+</html>

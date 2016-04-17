@@ -1,0 +1,554 @@
+<html>
+<head>
+<% meta_get(); %>
+
+<title>Call Feature Settings</title> 
+<link rel="stylesheet" href="form.css">
+
+<script language="javascript" type="text/javascript" src="utility1.js"></script>	
+<script language="javascript" type="text/javascript" src="linux.js"></script>
+<script language="javascript" type="text/javascript" src="func.js"></script>
+
+<script language="javascript" type="text/javascript">
+<!-- hide script from old browsers
+
+function frmLoad() 
+{
+	var cf = document.forms[0];	
+
+/*
+	if ( cf.hd_immediate_call_enable.value == 0)
+      	cf.immediate_call_enable.checked = false;
+    else
+        cf.immediate_call_enable.checked = true;
+            
+    if ( cf.hd_call_hold_timer.value == 0)
+      	cf.call_hold_timer.checked = false;
+    else
+       	cf.call_hold_timer.checked = true;
+*/
+
+	cf.line1_call_waiting_enable.value = "<% call_line1_get_params("call_waiting_enable"); %>";
+	cf.line1_anonymous_c_rej_enable.value = "<% call_line1_get_params("anonymous_c_rej_enable"); %>";
+	cf.line1_do_not_disturb_enable.value = "<% call_line1_get_params("do_not_disturb"); %>";
+    cf.line1_call_rtn_num.value = "<% call_line1_get_params("call_return_enable"); %>";
+	cf.line1_clir_enable.value = "<% call_line1_get_params("clir_enable"); %>";
+	cf.line1_call_forwarding_enable.value = "<% call_line1_get_params("call_forwarding_enable"); %>";
+	cf.line1_call_forward_type.value = "<% call_line1_get_params("call_forward_type"); %>";
+	cf.line1_call_forward_to.value = "<% call_line1_get_params("call_forward_to"); %>";
+
+<% mnu_dect_status("3"); %>
+	cf.line2_call_waiting_enable.value = "<% call_line2_get_params("call_waiting_enable"); %>";
+	cf.line2_anonymous_c_rej_enable.value = "<% call_line2_get_params("anonymous_c_rej_enable"); %>";
+	cf.line2_do_not_disturb_enable.value = "<% call_line2_get_params("do_not_disturb"); %>";
+    cf.line2_call_rtn_num.value = "<% call_line2_get_params("call_return_enable"); %>";
+	cf.line2_clir_enable.value = "<% call_line2_get_params("clir_enable"); %>";
+	cf.line2_call_forwarding_enable.value = "<% call_line2_get_params("call_forwarding_enable"); %>";
+	cf.line2_call_forward_type.value = "<% call_line2_get_params("call_forward_type"); %>";
+	cf.line2_call_forward_to.value = "<% call_line2_get_params("call_forward_to"); %>";
+
+	cf.line3_call_waiting_enable.value = "<% call_line3_get_params("call_waiting_enable"); %>";
+	cf.line3_anonymous_c_rej_enable.value = "<% call_line3_get_params("anonymous_c_rej_enable"); %>";
+	cf.line3_do_not_disturb_enable.value = "<% call_line3_get_params("do_not_disturb"); %>";
+    cf.line3_call_rtn_num.value = "<% call_line3_get_params("call_return_enable"); %>";
+	cf.line3_clir_enable.value = "<% call_line3_get_params("clir_enable"); %>";
+	cf.line3_call_forwarding_enable.value = "<% call_line3_get_params("call_forwarding_enable"); %>";
+	cf.line3_call_forward_type.value = "<% call_line3_get_params("call_forward_type"); %>";
+	cf.line3_call_forward_to.value = "<% call_line3_get_params("call_forward_to"); %>";	
+<% mnu_dect_status("4"); %>
+}
+
+function chk() 
+{
+	var cf = document.forms[0];
+	
+	if (cf.line1_call_forwarding_enable.value == "0")
+	{
+		cf.line1_call_forward_type.disabled = true;
+		cf.line1_call_forward_type.style.backgroudColor = "#D4D0C8";
+		cf.line1_call_forward_to.disabled = true;
+		cf.line1_call_forward_to.style.backgroudColor = "#D4D0C8";
+	}
+	else
+	{
+		cf.line1_call_forward_type.disabled = false;
+		cf.line1_call_forward_type.style.backgroudColor = "#FFFFFF";
+		cf.line1_call_forward_to.disabled = false;
+		cf.line1_call_forward_to.style.backgroudColor = "#FFFFFF"; 
+	}
+
+<% mnu_dect_status("3"); %>
+	if (cf.line2_call_forwarding_enable.value == "0")
+	{
+		cf.line2_call_forward_type.disabled = true;
+		cf.line2_call_forward_type.style.backgroudColor = "#D4D0C8";
+		cf.line2_call_forward_to.disabled = true;
+		cf.line2_call_forward_to.style.backgroudColor = "#D4D0C8";
+	}
+	else
+	{
+		cf.line2_call_forward_type.disabled = false;
+		cf.line2_call_forward_type.style.backgroudColor = "#FFFFFF";
+		cf.line2_call_forward_to.disabled = false;
+		cf.line2_call_forward_to.style.backgroudColor = "#FFFFFF"; 
+	}
+
+	if (cf.line3_call_forwarding_enable.value == "0")
+	{
+		cf.line3_call_forward_type.disabled = true;
+		cf.line3_call_forward_type.style.backgroudColor = "#D4D0C8";
+		cf.line3_call_forward_to.disabled = true;
+		cf.line3_call_forward_to.style.backgroudColor = "#D4D0C8";
+	}
+	else
+	{
+		cf.line3_call_forward_type.disabled = false;
+		cf.line3_call_forward_type.style.backgroudColor = "#FFFFFF";
+		cf.line3_call_forward_to.disabled = false;
+		cf.line3_call_forward_to.style.backgroudColor = "#FFFFFF"; 
+	}
+<% mnu_dect_status("4"); %>
+}
+
+
+function init()
+{
+	chk();
+}
+
+
+function  forward_enable()
+{
+    var cf = document.forms[0];
+	
+	if (cf.line1_call_forwarding_enable.selectedIndex == "1")
+	{
+		cf.line1_call_forward_type.disabled = true;
+		cf.line1_call_forward_type.style.backgroudColor = "#D4D0C8";
+		cf.line1_call_forward_to.disabled = true;
+		cf.line1_call_forward_to.style.backgroudColor = "#D4D0C8";
+	}
+	else
+	{
+		cf.line1_call_forward_type.disabled = false;
+		cf.line1_call_forward_type.style.backgroudColor = "#FFFFFF";
+		cf.line1_call_forward_to.disabled = false;
+		cf.line1_call_forward_to.style.backgroudColor = "#FFFFFF"; 
+	}
+
+<% mnu_dect_status("3"); %>
+	if (cf.line2_call_forwarding_enable.selectedIndex == "1")
+	{
+		cf.line2_call_forward_type.disabled = true;
+		cf.line2_call_forward_type.style.backgroudColor = "#D4D0C8";
+		cf.line2_call_forward_to.disabled = true;
+		cf.line2_call_forward_to.style.backgroudColor = "#D4D0C8";
+	}
+	else
+	{
+		cf.line2_call_forward_type.disabled = false;
+		cf.line2_call_forward_type.style.backgroudColor = "#FFFFFF";
+		cf.line2_call_forward_to.disabled = false;
+		cf.line2_call_forward_to.style.backgroudColor = "#FFFFFF"; 
+	}
+
+	if (cf.line3_call_forwarding_enable.selectedIndex == "1")
+	{
+		cf.line3_call_forward_type.disabled = true;
+		cf.line3_call_forward_type.style.backgroudColor = "#D4D0C8";
+		cf.line3_call_forward_to.disabled = true;
+		cf.line3_call_forward_to.style.backgroudColor = "#D4D0C8";
+	}
+	else
+	{
+		cf.line3_call_forward_type.disabled = false;
+		cf.line3_call_forward_type.style.backgroudColor = "#FFFFFF";
+		cf.line3_call_forward_to.disabled = false;
+		cf.line3_call_forward_to.style.backgroudColor = "#FFFFFF"; 
+	}
+<% mnu_dect_status("4"); %>
+}
+
+
+
+function btsave()
+{
+	var cf = document.forms[0];	
+	
+	if( cf.immediate_call_enable.checked )
+	   cf.hd_immediate_call_enable.value = 1;
+	else
+	   cf.hd_immediate_call_enable.value = 0;	
+	
+	if( cf.call_hold_timer.checked )
+	   cf.hd_call_hold_timer.value = 1;
+	else
+	   cf.hd_call_hold_timer.value = 0;	
+	
+}
+
+// note: return true means input includes illegal char.
+function chkNumber(input)
+{
+    var ret = false;
+    var i = 0;
+    for (i=0;i<input.length;i++)
+    {
+        if (input.charAt(i) < '0' || input.charAt(i) > '9')
+        {
+            ret = true;
+            break;
+        }
+    }
+    return ret;
+}
+
+function checkdata()
+{
+    var cf = document.forms[0];
+    if (cf.line1_call_forwarding_enable.selectedIndex == "0")
+	{
+         if(cf.line1_call_forward_type.value == "")
+		 {
+		   alert("Please select a forward type on Line 1.");
+           return;
+		 }
+		 
+		 if(cf.line1_call_forward_to.value == "")
+		 {
+		 	alert("Forword Tel Number on Line 1 should not be NULL.");
+			return;
+		 }
+		 else
+		 {
+		 	if (chkNumber(cf.line1_call_forward_to.value) == true)
+			{
+		   		alert("Illegal forword Tel Num on Line 1.");
+				return;
+			}
+		 }
+    }
+<% mnu_dect_status("3"); %>
+	if (cf.line2_call_forwarding_enable.selectedIndex == "0")
+	{
+         if(cf.line2_call_forward_type.value == "")
+		 {
+		   alert("Please select a forward type on Line 2.");
+           return;
+		 }
+		 
+		 if(cf.line2_call_forward_to.value == "")
+		 {
+		 	alert("Forword Tel Number on Line 2 should not be NULL.");
+			return;
+		 }
+		 else
+		 {
+		 	if (chkNumber(cf.line2_call_forward_to.value) == true)
+			{
+		   		alert("Illegal forword Tel Num on Line 2.");
+				return;
+			}
+		 }
+    }
+
+	if (cf.line3_call_forwarding_enable.selectedIndex == "0")
+	{
+         if(cf.line3_call_forward_type.value == "")
+		 {
+		   alert("Please select a forward type on Line 3.");
+           return;
+		 }
+		 
+		 if(cf.line3_call_forward_to.value == "")
+		 {
+		 	alert("Forword Tel Number on Line 3 should not be NULL.");
+			return;
+		 }
+		 else
+		 {
+		 	if (chkNumber(cf.line3_call_forward_to.value) == true)
+			{
+		   		alert("Illegal forword Tel Num on Line 3.");
+				return;
+			}
+		 }
+    }
+<% mnu_dect_status("4"); %>
+
+ 	cf.apply.style.visibility='hidden';
+	cf.Cancel.style.visibility='hidden';	
+
+}
+
+//-->
+</script>
+</head>
+<body bgcolor="#ffffff" onLoad="frmLoad();dataToVisible(document.forms[0]);init();loadhelp('CALL_feature');">
+<form name="formname" method="POST" action="callFeature.cgi">
+<table border="0" cellpadding="0" cellspacing="3" width="100%">
+<tr><td colspan="2"><h1>Call Feature  Settings</h1></td></tr>
+<tr> <td colspan="2" background="liteblue.gif" height="12">&nbsp;</td></tr>
+
+<!-- Not support yet ..
+<tr>
+<td colspan="2"><b><a href="javascript:loadhelp('CALL_feature','rollover')" tabindex="-1">Immediate Call</a></b></td>
+</tr>
+
+<tr>
+<td colspan="2" nowrap>
+<input type="checkbox" name="immediate_call_enable" >&nbsp;Immediate Call (Call number end up with # will be delivered immediately)
+</td>
+</tr>
+
+<tr></tr>
+
+<tr>
+<td colspan="2"><b><a href="javascript:loadhelp('CALL_feature','rollover')" tabindex="-1">Call Hold Timer</a></b></td>
+</tr>
+
+<tr>
+<td colspan="2" nowrap>
+<input type="checkbox" name="call_hold_timer" >&nbsp;Call Hold Timer (A 90 seconds timer will be started after the call held)
+</td>
+</tr>
+
+<tr><td colspan="2" background="liteblue.gif" height="12">&nbsp; </td></tr>
+-->
+
+<tr><td colspan="2"><b><a href="javascript:loadhelp('CALL_feature','line')" tabindex="-1">Line 1</a></b></td></tr>
+
+<tr>
+	<td width="50%" align="left" nowrap>Call Waiting Enable</td>
+	<td width="50%" align="right">
+	<select name="line1_call_waiting_enable" size="1" id="line1_call_waiting_enable">
+		<option value="1" selected>yes</option>
+		<option value="0">no</option>
+	</select>	</td>
+</tr>
+
+<tr>
+	<td width="50%" align="left" nowrap>Anonymous Call Rejection Enable </td>
+ <td width="50%" align="right"><label>
+   <select name="line1_anonymous_c_rej_enable" size="1" id="line1_anonymous_c_rej_enable">
+     <option value="1" selected>yes</option>
+     <option value="0">no</option>
+   </select>
+ </label></td>
+</tr>
+
+<tr>
+	<td width="50%" align="left" nowrap>Do Not Disturb Enable </td>
+ <td width="50%" align="right"><label>
+   <select name="line1_do_not_disturb_enable" size="1" id="line1_do_not_disturb_enable">
+     <option value="1" selected>yes</option>
+     <option value="0">no</option>
+   </select>
+ </label></td>
+</tr>
+
+<tr>
+	<td width="50%" align="left" nowrap>Call Return Enable </td>
+ <td width="50%" align="right"><label>
+ <input name="line1_call_rtn_num" type="text" id="line1_call_rtn_num" size="24" maxlength="32">
+ </label></td>
+</tr>
+<tr>
+	<td width="50%" align="left" nowrap>CLIR (Caller Line Identification Restriction) Enable </td>
+    <td width="50%" align="right"><label>
+   <select name="line1_clir_enable" size="1" id="line1_clir_enable">
+     <option value="1" selected>yes</option>
+     <option value="0">no</option>
+   </select>
+ </label></td>
+</tr>
+
+<tr>
+	<td align="left" nowrap>Call Forwarding Enable </td>
+    <td align="right"><label>
+      <select name="line1_call_forwarding_enable" size="1" id="line1_call_forwarding_enable" onChange="forward_enable()">
+        <option value="1" selected>yes</option>
+        <option value="0">no</option>
+      </select>
+    </label></td>
+</tr>
+
+<tr>
+	<td width="50%" align="left" nowrap>Call Forward Type </td>
+ <td width="50%" align="right"><label>
+   <select name="line1_call_forward_type" size="1" id="line1_call_forward_type">
+     <option value="1" selected>Forward All</option>
+     <option value="2">Forward on no answer</option>
+     <option value="3">Forward on busy</option>
+     <option value="4">Forward on no answer and busy</option>
+   </select>
+ </label></td>
+</tr>
+
+<tr>
+	<td width="50%" align="left" nowrap>Call Forward To </td>
+ <td width="50%" align="right"><label>
+   <input name="line1_call_forward_to" type="text" id="line1_call_forward_to" size="24" maxlength="32">
+ </label></td>
+</tr>
+
+<tr><td colspan="2" background="liteblue.gif" height="12">&nbsp;</td></tr>
+
+<% mnu_dect_status("0"); %>
+<tr><td colspan="2"><b><a href="javascript:loadhelp('CALL_feature','line')" tabindex="-1">Line 2</a></b></td></tr>
+			
+<tr>
+  <td align="left" nowrap>Call Waiting Enable</td>
+  <td align="right">
+  <select name="line2_call_waiting_enable" size="1" id="line2_call_waiting_enable">
+      <option value="1" selected>yes</option>
+      <option value="0">no</option>
+  </select></td>
+</tr>
+
+<tr>
+  <td align="left" nowrap>Anonymous Call Rejection Enable </td>
+  <td align="right"><label>
+    <select name="line2_anonymous_c_rej_enable" size="1" id="line2_anonymous_c_rej_enable">
+      <option value="1" selected>yes</option>
+      <option value="0">no</option>
+    </select></label></td>
+</tr>
+
+<tr>
+  <td align="left" nowrap>Do Not Disturb Enable </td>
+  <td align="right"><label>
+    <select name="line2_do_not_disturb_enable" size="1" id="line2_do_not_disturb_enable">
+      <option value="1" selected>yes</option>
+      <option value="0">no</option>
+  </select></label></td>
+</tr>
+    
+<tr>
+  <td align="left" nowrap>Call Return Enable </td>
+  <td align="right"><label>
+  <input name="line2_call_rtn_num" type="text" id="line2_call_rtn_num" size="24" maxlength="32">
+  </label></td>
+</tr>
+    
+<tr>
+  <td align="left" nowrap>CLIR (Caller Line Identification Restriction) Enable </td>
+  <td align="right"><label>
+    <select name="line2_clir_enable" size="1" id="line2_clir_enable">
+      <option value="1" selected>yes</option>
+      <option value="0">no</option>
+    </select></label></td>
+</tr>
+    
+<tr>
+  <td align="left" nowrap>Call Forwarding Enable </td>
+  <td align="right"><label>
+    <select name="line2_call_forwarding_enable" size="1" id="line2_call_forwarding_enable" onChange="forward_enable()">
+      <option value="1" selected>yes</option>
+      <option value="0">no</option>
+    </select></label></td>
+</tr>
+
+<tr>
+  <td align="left" nowrap>Call Forward Type </td>
+  <td align="right"><label>
+    <select name="line2_call_forward_type" size="1" id="line2_call_forward_type">
+      <option value="1" selected>Forward All</option>
+      <option value="2">Forward on no answer</option>
+      <option value="3">Forward on busy</option>
+      <option value="4">Forward on no answer and busy</option>
+    </select></label></td>
+</tr>
+    
+<tr>
+  <td align="left" nowrap>Call Forward To </td>
+  <td align="right"><label>
+    <input name="line2_call_forward_to" type="text" id="line2_call_forward_to" size="24" maxlength="32">
+  </label></td>
+</tr>
+
+<tr><td colspan="2" background="liteblue.gif" height="12">&nbsp;</td></tr>
+
+
+<tr><td colspan="2"><b><a href="javascript:loadhelp('CALL_feature','line')" tabindex="-1">Line 3</a></b></td></tr>
+<tr>
+  <td align="left" nowrap>Call Waiting Enable</td>
+  <td align="right"><select name="line3_call_waiting_enable" size="1" id="line3_call_waiting_enable">
+      <option value="1" selected>yes</option>
+      <option value="0">no</option>
+  </select></td>
+</tr>
+
+<tr>
+  <td align="left" nowrap>Anonymous Call Rejection Enable </td>
+  <td align="right"><label>
+    <select name="line3_anonymous_c_rej_enable" size="1" id="line3_anonymous_c_rej_enable">
+      <option value="1" selected>yes</option>
+      <option value="0">no</option>
+    </select></label></td>
+</tr>
+    
+<tr>
+  <td align="left" nowrap>Do Not Disturb Enable </td>
+  <td align="right"><label>
+    <select name="line3_do_not_disturb_enable" size="1" id="line3_do_not_disturb_enable">
+      <option value="1" selected>yes</option>
+      <option value="0">no</option>
+    </select></label></td>
+</tr>
+    
+<tr>
+  <td align="left" nowrap>Call Return Enable </td>
+  <td align="right"><label>
+  <input name="line3_call_rtn_num" type="text" id="line3_call_rtn_num" size="24" maxlength="32">
+  </label></td>
+</tr>
+    
+<tr>
+  <td align="left" nowrap>CLIR (Caller Line Identification Restriction) Enable </td>
+  <td align="right"><label>
+    <select name="line3_clir_enable" size="1" id="line3_clir_enable">
+      <option value="1" selected>yes</option>
+      <option value="0">no</option>
+    </select></label></td>
+</tr>
+    
+<tr>
+  <td align="left" nowrap>Call Forwarding Enable </td>
+  <td align="right"><label>
+    <select name="line3_call_forwarding_enable" size="1" id="line3_call_forwarding_enable" onChange="forward_enable()">
+      <option value="1" selected>yes</option>
+      <option value="0">no</option>
+    </select></label></td>
+</tr>
+    
+<tr>
+  <td align="left" nowrap>Call Forward Type </td>
+  <td align="right"><label>
+    <select name="line3_call_forward_type" size="1" id="line3_call_forward_type">
+      <option value="1" selected>Forward All</option>
+      <option value="2">Forward on no answer</option>
+      <option value="3">Forward on busy</option>
+      <option value="4">Forward on no answer and busy</option>
+    </select></label></td>
+</tr>
+    
+<tr>
+  <td align="left" nowrap>Call Forward To </td>
+  <td align="right"><label>
+    <input name="line3_call_forward_to" type="text" id="line3_call_forward_to" size="24" maxlength="32">
+  </label></td>
+</tr>
+
+<tr><td colspan="2" background="liteblue.gif" height="12">&nbsp;</td></tr>
+
+<% mnu_dect_status("1"); %>
+
+<tr><td colspan="2" align="center">
+  	<input type="SUBMIT" name="apply" value=" Apply " onClick="return checkdata();">
+	<input type="button" name="Cancel" value="Cancel" onclick="location.href='CALL_feature.htm'"></td>
+</tr>
+</table>
+</form>
+</body>
+</html>

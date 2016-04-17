@@ -1,0 +1,333 @@
+<html>
+<head>
+<% meta_get(); %>
+<title>Inbound Services </title> 
+<link rel="stylesheet" href="form.css">
+<STYLE TYPE="text/javascript">
+	classes.num.all.fontFamily = "Courier";
+	classes.num.all.fontSize = "10pt" ;
+</style>
+<% script_get(); %>
+<script language="javascript" type="text/javascript">
+
+var isIE = document.all;
+var disable = false;
+var serv_array=[["0","","","","0"],<%fw_cgi_get_service_array(); %>
+                ["0","5190","5190","AIM(TCP:5190)","1"],
+                ["0","179","179","BGP(TCP:179)","1"],
+                ["1","68","68","BOOTP_CLIENT(UDP:68)","1"],
+                ["1","67","67","BOOTP_SERVER(UDP:67)","1"],
+                ["2","7648","24032","CU-SEEME(TCP/UDP:7648,24032)","1"],
+                ["2","53","53","DNS(TCP/UDP:53)","1"],
+                ["0","79","79","FINGER(TCP:79)","1"],
+                ["0","20","21","FTP(TCP:20,21)","1"],
+                ["0","1720","1720","H.323(TCP:1720)","1"],
+                ["0","80","80","HTTP(TCP:80)","1"],
+                ["0","443","443","HTTPS(TCP:443)","1"],
+                ["0","113","113","IDENT(TCP:113)","1"],
+                ["2","6667","6667","IRC(TCP/UDP:6667)","1"],
+                ["0","144","144","NEWS(TCP:144)","1"],
+                ["1","2049","2049","NFS(UDP:2049)","1"],
+                ["0","119","119","NNTP(TCP:119)","1"],
+                ["0","512","512","RCMD(TCP:512)","1"],
+                ["0","7070","7070","REAL-AUDIO(TCP:7070)","1"],
+                ["0","514","514","REXEC(TCP:514)","1"],
+                ["0","513","513","RLOGIN(TCP:513)","1"],
+                ["0","107","107","RTELNET(TCP:107)","1"],
+                ["2","554","554","RTSP(TCP/UDP:554)","1"],
+                ["0","115","115","SFTP(TCP:115)","1"],
+                ["0","25","25","SMTP(TCP:25)","1"],
+                ["2","161","161","SNMP(TCP/UDP:161)","1"],
+                ["2","162","162","SNMP-TRAPS(TCP/UDP:162)","1"],
+                ["0","1521","1521","SQL-NET(TCP:1521)","1"],
+                ["2","22","22","SSH(TCP/UDP:22)","1"],
+                ["1","1558","1558","STRMWORKS(UDP:1558)","1"],
+                ["1","49","49","TACACS(UDP:49)","1"],
+                ["0","23","23","TELNET(TCP:23)","1"],
+                ["1","69","69","TFTP(UDP:69)","1"],
+                ["0","7000","7000","VDOLIVE(TCP:7000)","1"],
+                ["1","500","500","VPN-IPSEC(UDP:500)","1"],
+                ["1","1701","1701","VPN-L2TP(UDP:1701)","1"],
+                ["0","1723","1723","VPN-PPTP(TCP:1723)","1"]];
+
+function checkData()
+{
+    var cf = document.forms[0];
+ 	var msg = "";
+ 	
+	if( checkIP(cf.lan_start_ip1,cf.lan_start_ip2,cf.lan_start_ip3,cf.lan_start_ip4,254) 
+		|| parseInt(cf.lan_start_ip4.value,10) == 0)
+		    msg+= "Invalid LAN start ip, please enter again\n";
+
+	if(((document.all)&&(! cf.wan_start_ip1.disabled))||((document.layers)&&(!wan_start_disabled)))
+	{
+    	if( checkIP(cf.wan_start_ip1,cf.wan_start_ip2,cf.wan_start_ip3,cf.wan_start_ip4,254) 
+    		|| parseInt(cf.wan_start_ip4.value,10) == 0)
+			msg+= "Invalid destination start ip, please enter again\n";
+	}
+
+	if(((document.all)&&(! cf.wan_finish_ip1.disabled))||((document.layers)&&(!wan_finish_disabled)))
+	{
+    	if( checkIP(cf.wan_finish_ip1,cf.wan_finish_ip2,cf.wan_finish_ip3,cf.wan_finish_ip4,254) 
+    		|| parseInt(cf.wan_finish_ip4.value,10) == 0)
+			msg+= "Invalid finish ip, please enter again\n";
+
+        if(cp_ip(cf.wan_start_ip1,cf.wan_start_ip2,cf.wan_start_ip3,cf.wan_start_ip4,cf.wan_finish_ip1,cf.wan_finish_ip2,cf.wan_finish_ip3,cf.wan_finish_ip4))    
+	        msg+= "WAN start ip must less than finish ip!\n";
+	}
+
+	if(cf.service_list.selectedIndex <= 0)
+	{
+		msg+= "please select a valid service!\n";
+	}
+	
+	if (msg.length > 1)
+	{
+		alert(msg);
+		return false;
+	}
+
+	return true;	
+}
+
+var	scr_start_disabled = false;
+var scr_finish_disabled = false;
+var wan_start_disabled = false;
+var wan_finish_disabled = false;
+
+function setip(func_index,disable)
+{
+    var cf = document.forms[0];
+    var str;	
+    var ipAddr;
+	
+    if(func_index == 0)
+    {   
+		str = "<% fw_cgi_get_ibfilter_param("lan_ip1"); %>";
+		ipAddr = str.split(".");
+		cf.lan_start_ip1.disabled = disable;
+		cf.lan_start_ip2.disabled = disable;
+		cf.lan_start_ip3.disabled = disable;
+		cf.lan_start_ip4.disabled = disable;
+		scr_start_disabled = disable;
+
+		cf.lan_start_ip1.value=ipAddr[0];
+		cf.lan_start_ip2.value=ipAddr[1];
+		cf.lan_start_ip3.value=ipAddr[2];
+		cf.lan_start_ip4.value=ipAddr[3];
+	}
+    if(func_index == 2)
+    {   
+    		str = "<% fw_cgi_get_ibfilter_param("wan_ip1"); %>";
+    		ipAddr = str.split(".");
+    		cf.wan_start_ip1.disabled = disable;
+		cf.wan_start_ip2.disabled = disable;
+		cf.wan_start_ip3.disabled = disable;
+		cf.wan_start_ip4.disabled = disable;
+		wan_start_disabled = disable;
+
+		cf.wan_start_ip1.value=ipAddr[0];
+		cf.wan_start_ip2.value=ipAddr[1];
+		cf.wan_start_ip3.value=ipAddr[2];
+		cf.wan_start_ip4.value=ipAddr[3];		
+	}
+	if(func_index == 3)
+    {   
+    		str = "<% fw_cgi_get_ibfilter_param("wan_ip2"); %>";
+    		ipAddr = str.split(".");
+    		cf.wan_finish_ip1.disabled = disable;
+		cf.wan_finish_ip2.disabled = disable;
+		cf.wan_finish_ip3.disabled = disable;
+		cf.wan_finish_ip4.disabled = disable;
+		wan_finish_disabled = disable;
+
+		cf.wan_finish_ip1.value=ipAddr[0];
+		cf.wan_finish_ip2.value=ipAddr[1];
+		cf.wan_finish_ip3.value=ipAddr[2];
+		cf.wan_finish_ip4.value=ipAddr[3];				
+	}
+}
+
+function setLanIp()
+{
+    setip(0,false);
+}
+
+function setdst()
+{
+    var cf = document.forms[0];
+    var dst_index = cf.fwin_waniptype.selectedIndex;
+
+    if (dst_index == 0)//any
+    {
+        setip(2,true);
+        setip(3,true);
+    }
+    if (dst_index == 1)//single
+    {
+        setip(2,false);
+        setip(3,true);
+    }
+    if (dst_index == 2)//range
+    {
+        setip(2,false);
+        setip(3,false);
+    }
+}
+
+
+function chg_by_service(is_load)
+{
+	var cf = document.forms[0];
+ 	var s = cf.service_list.selectedIndex;
+ 	var len = cf.service_list.options.length;
+ 	if(s<0)
+ 	{
+ 		s = cf.service_type.selectedIndex = 0;
+ 	}
+ 	if((s==len-1)&&(is_load == 1))//user defined
+ 		return;
+}
+
+function load_setting()
+{
+	var cf = document.forms[0];
+
+	cf.service_list.selectedIndex=cf.h_service_list.value;
+	if ( cf.service_list.selectedIndex > 3 )
+	    cf.service_list.selectedIndex = cf.service_list.selectedIndex-3;
+	cf.fwin_action.selectedIndex=cf.h_sche_info.value;
+	//cf.fwin_laniptype.selectedIndex=cf.h_lan_type.value; //@filterBug
+	cf.fwin_waniptype.selectedIndex=cf.h_wan_type.value;	
+	cf.fwin_logging.selectedIndex=cf.h_log_info.value;
+}
+
+//-->
+</script> 
+</head>
+<body bgcolor="#ffffff" onload="load_setting();setLanIp();setdst();document.forms[0].elements[0].focus();loadhelp('FW_inbFilter');">
+<form method="POST" action="fw_rule_inb.cgi">
+<table border="0" cellpadding="0" cellspacing="3" width="100%">
+<tr>
+	<td colspan="2"><h1>Inbound Services</h1></td>
+</tr>
+<tr>  <!-- RULE -->
+  <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+
+<tr>
+ <td width="50%">Service Type</td>
+						
+ <td width="50%"> 
+ <select NAME="service_list" size="1" onchange="chg_by_service(0);">
+
+<option selected>User Defined</option>
+ <% fw_cgi_get_service_list(); %>
+<option>AIM(TCP:5190)
+<option>BGP(TCP:179)
+<option>BOOTP_CLIENT(UDP:68)
+<option>BOOTP_SERVER(UDP:67)
+<option>CU-SEEME(TCP/UDP:7648,24032)
+<option>DNS(TCP/UDP:53)
+<option>FINGER(TCP:79)
+<option>FTP(TCP:20,21)
+<option>H.323(TCP:1720)
+<option>HTTP(TCP:80)
+<option>HTTPS(TCP:443)
+<option>IDENT(TCP:113)
+<option>IRC(TCP/UDP:6667)
+<option>NEWS(TCP:144)
+<option>NFS(UDP:2049)
+<option>NNTP(TCP:119)
+<option>POP3(TCP/UDP:110)
+<option>RCMD(TCP:512)
+<option>REAL-AUDIO(TCP:7070)
+<option>REXEC(TCP:514)
+<option>RLOGIN(TCP:513)
+<option>RTELNET(TCP:107)
+<option>RTSP(TCP/UDP:554)
+<option>SFTP(TCP:115)
+<option>SMTP(TCP:25)
+<option>SNMP(TCP/UDP:161)
+<option>SNMP-TRAPS(TCP/UDP:162)
+<option>SQL-NET(TCP:1521)
+<option>SSH(TCP/UDP:22)
+<option>STRMWORKS(UDP:1558)
+<option>TACACS(UDP:49)
+<option>TELNET(TCP:23)
+<option>TFTP(UDP:69)
+<option>VDOLIVE(TCP:7000)
+<option>VPN-IPSEC(UDP:500)
+<option>VPN-L2TP(UDP:1701)
+<option>VPN-PPTP(TCP:1723)
+</SELECT></td>
+</tr>
+
+<tr>
+	<td>Action</td>
+	<td nowrap align="right">
+	<select name="fwin_action">
+	<option value="0">BLOCK always
+	<option value="1">BLOCK by schedule, otherwise Allow
+	<option value="2">ALLOW always
+	<option value="3">ALLOW by schedule, otherwise Block
+	</select>
+	</td>
+</tr>
+
+<tr>
+<td nowrap><BR>Send to LAN Server</td>
+ <td nowrap align="right" class="num"><input type="text" class="num" size="4" name="lan_start_ip1" value="192" maxlength="3" onFocus="if (this.disabled) this.blur()">.<input type="text" class="num" size="4" maxlength="3" name="lan_start_ip2" value="168" onFocus="if (this.disabled) this.blur()">.<input type="text" class="num" size="4" maxlength="3" name="lan_start_ip3" value="1" onFocus="if (this.disabled) this.blur()">.<input type="text" class="num" size="4" maxlength="3" name="lan_start_ip4" value="1" onFocus="if (this.disabled) this.blur()"></td>
+</tr>
+
+<tr>
+	<td nowrap><BR>WAN Users</td>
+	<td nowrap align="right"><BR>
+	<select name="fwin_waniptype" onChange="setdst()">
+	<option value="anyip">Any
+	<option value="singleip">Single address
+	<option value="rangeip">Address Range
+	</select>
+	</td>
+</tr>
+
+<tr>
+  <td nowrap colspan="2" align="right">start: <span class="num"><input type="text" class="num" size="4" maxlength="3" name="wan_start_ip1" value="192" onFocus="if (wan_start_disabled) this.blur()">.<input type="text" class="num" size="4" maxlength="3" name="wan_start_ip2" value="168" onFocus="if (wan_start_disabled) this.blur()">.<input type="text" class="num" size="4" maxlength="3" name="wan_start_ip3" value="0" onFocus="if (wan_start_disabled) this.blur()">.<input type="text" class="num" size="4" maxlength="3" name="wan_start_ip4" value="1" onFocus="if (wan_start_disabled) this.blur()"></span></td>
+</tr>
+<tr>
+  <td nowrap colspan="2" align="right">finish: <span class="num"><input type="text" class="num" size="4" maxlength="3" name="wan_finish_ip1" value="192" onFocus="if (wan_finish_disabled) this.blur()">.<input type="text" class="num" size="4" maxlength="3" name="wan_finish_ip2" value="168" onFocus="if (wan_finish_disabled) this.blur()">.<input type="text" class="num" size="4" maxlength="3" name="wan_finish_ip3" value="0" onFocus="if (wan_finish_disabled) this.blur()">.<input type="text" class="num" size="4" maxlength="3" name="wan_finish_ip4" value="1" onFocus="if (wan_finish_disabled) this.blur()"></span></td>
+</tr>
+
+<tr>
+	<td nowrap><BR>Log</td>
+	<td nowrap align="right"><BR>
+	 <select name="fwin_logging">
+	 <option value="0">Never
+	 <option value="1">Always
+	 </select></td>
+</tr>
+
+<tr>  <!-- RULE -->
+  <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+<tr>
+	<td colspan="2" align="center">
+	<input type="Submit" name="apply" value="Apply" onClick="return checkData();">
+	<input type="reset" name="cancel" value="Cancel" onClick="location.href='FW_filter.htm'">
+	</td>
+</tr>
+</table>
+
+<input type="hidden" name="h_service_list" value="<% fw_cgi_get_ibfilter_param("serv_list"); %>"> 
+<input type="hidden" name="h_sche_info" value="<% fw_cgi_get_ibfilter_param("sche_info"); %>">
+<input type="hidden" name="h_log_info" value="<% fw_cgi_get_ibfilter_param("log_info"); %>">
+<input type="hidden" name="h_wan_type" value="<% fw_cgi_get_ibfilter_param("wan_type"); %>">
+<input type="hidden" name="h_lan_type" value="<% fw_cgi_get_ibfilter_param("lan_type"); %>">
+<input type="hidden" name="h_ruleSelect" value="0">
+<input type="hidden" name="edit" value="0">
+<input type="hidden" name="todo" value="save">
+<input type="hidden" name="this_file" value="rule_out.htm">
+<input type="hidden" name="next_file" value="fw_rules.htm">
+</form>
+</body>
+</html>

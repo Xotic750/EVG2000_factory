@@ -1,0 +1,190 @@
+<html>
+<head>
+<% meta_get(); %>
+<title>QoS Setup</title> 
+<link rel="stylesheet" href="form.css">
+<STYLE TYPE="text/javascript">
+classes.num.all.fontFamily = "Courier";
+classes.num.all.fontSize = "10pt" ;
+</style>
+<% script_get(); %>
+<script language="javascript" type="text/javascript">
+<!--
+function loadSettings()
+{
+	var cf = document.forms[0];
+
+	if(cf.WMM_value.value == "1")
+		cf.wmm_enable.checked = true;
+	else
+		cf.wmm_enable.checked = false;
+
+	if (cf.qos_enable.value == "1")
+		cf.qosEnable.checked = true;
+	else
+		cf.qosEnable.checked = false;
+
+	if (cf.qos_bw_enable.value == "1")
+		cf.bwEnable.checked = true;
+	else
+		cf.bwEnable.checked = false;
+
+	var bw = cf.uplink_bw.value.split(" ");
+	cf.bandwidth.value = bw[0];
+	if (bw[1] == "kbps")
+		cf.rate.selectedIndex = 0;
+	else if (bw[1] == "Mbps")
+		cf.rate.selectedIndex = 1;
+
+	if (cf.repeater.value == "1") {
+		cf.qosEnable.disabled = true;
+		cf.bwEnable.disabled = true;
+		cf.bandwidth.disabled = true;
+		cf.rate.disabled = true;
+		cf.setup_qos_rule.disabled = true;
+	}
+
+	qos_change();
+}
+
+function qos_change()
+{
+	var cf = document.forms[0];
+	if (cf.qosEnable.checked)
+	{
+		cf.bwEnable.disabled = false;
+		cf.setup_qos_rule.disabled = false;
+		bw_change();
+	}
+	else
+	{
+		cf.bwEnable.disabled = true;
+		cf.bandwidth.disabled = true;
+		cf.rate.disabled = true;
+		cf.setup_qos_rule.disabled = true;
+	}
+}
+
+function bw_change()
+{
+	var cf = document.forms[0];
+	if (cf.bwEnable.checked)
+	{
+		cf.bandwidth.disabled = false;
+		cf.rate.disabled = false;
+	}
+	else
+	{
+		cf.bandwidth.disabled = true;
+		cf.rate.disabled = true;
+	}
+}
+
+function checkData()
+{
+	var cf = document.forms[0];
+	interval = parseInt(cf.bandwidth.value);
+	if ( isNaN(interval) || interval <= 0 ||
+		(cf.rate.selectedIndex == 0 && (interval < 64 || interval > 99999999)) ||
+		(cf.rate.selectedIndex == 1 && interval > 1000) ||
+		cf.bandwidth.value.match(/[^0-9]/g) ||
+		cf.bandwidth.value.match(/^0/))
+	{
+		if (cf.bwEnable.checked)
+		{
+			alert("Invalid Uplink Bandwidth");
+			return false;
+		}
+	}
+	return true;
+}
+
+//-->
+</script> 
+</head>
+<body bgcolor="#ffffff" onload="loadSettings();loadhelp('QOS_main');">
+<form name="frmRules" method="POST" action="qos_main.cgi" onSubmit="return checkData();">
+<table border="0" cellpadding="0" cellspacing="3" width="100%">
+<tr>
+<td colspan="2"><h1>QoS Setup</h1></td>
+</tr>
+
+<tr> <!-- RULE -->
+<td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+
+<tr>
+<td colspan="2"><input type="checkbox" name="wmm_enable" value="1"><a href="javascript:loadhelp('QOS_main','wmm')" tabindex="-1"> <b>Enable WMM (Wi-Fi multi-media) Settings</b></a></td>
+</tr>
+
+<tr> <!-- RULE -->
+<td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+
+<tr>
+<td colspan="2"><input type="checkbox" name="qosEnable" value="1" onClick="qos_change();" checked><a href="javascript:loadhelp('QOS_main','qos')" tabindex="-1"> <b>Turn Internet Access QoS On</b></a></td>
+</tr>
+
+<tr> <!-- RULE -->
+<td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+
+<tr>
+<td colspan="2"><input type="checkbox" name="bwEnable" value="1" onClick="bw_change();"><a href="javascript:loadhelp('QOS_main','Bandwidth')" tabindex="-1"> <b>Turn Bandwidth Control On</b></a></td>
+</tr>
+
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Uplink bandwidth:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Maximum
+<input type="text" name="bandwidth" size="6" maxlength="4" value="">
+<select name="rate" size=1>
+<option value="1000">Kbps</option>
+<option value="1000000">Mbps</option>
+</select>
+</td>
+</tr>
+
+<!--
+<tr>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Check for current Internet Uplink bandwidth&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<input type="button" name="check_bw" size="6" maxlength="4" value="Check" disabled=true>
+</td>
+</tr>
+-->
+
+<tr> <!-- RULE -->
+<td colspan="2" background="liteblue.gif" height="12">&nbsp; </td>
+</tr>
+<tr>
+<td colspan="2">
+<tr>
+<td><b>Qos Priority Rule List</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<input type="submit" name="setup_qos_rule" value=" Setup QoS Rule ">
+</td>
+</tr>
+
+<tr> <!-- RULE -->
+<td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+
+<tr>
+<td colspan="2" align="center">
+<input type="submit" name="apply" value="Apply">
+<input type="button" name="cancel" value="Cancel" onclick="loadSettings();"></td>
+</tr>
+<tr>
+<input type="hidden" name="select" value="-1">
+<input type="hidden" name="priority_sel" value="-1">
+<INPUT type="hidden" name=WMM_value value="<% qos_cgi_param_get("wla_wme"); %>">
+<input type="hidden" name="qos_enable" value="<% qos_cgi_param_get("qos_enable"); %>">
+<input type="hidden" name="qos_bw_enable" value="<% qos_cgi_param_get("qos_bw_enable"); %>">
+<input type="hidden" name="uplink_bw" value="<% qos_cgi_param_get("qos_bw_uplink"); %>">
+<input type="hidden" name="repeater" value="<% nvram_get("wla_repeater"); %>">
+<input type="hidden" name="qos_temp_settings" value="<% qos_cgi_param_get("qos_temp_settings"); %>">
+</tr>
+</table>
+
+</form>
+</body>
+</html>
+
+

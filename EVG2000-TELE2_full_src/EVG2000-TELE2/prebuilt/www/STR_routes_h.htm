@@ -1,0 +1,83 @@
+<html>
+<head>
+<% meta_get(); %>
+<title>Help</title> 
+<link rel="stylesheet" href="help.css">
+</head>
+<body>
+<h1>Static Routes Help</h1> 
+<p>
+	Static routes give the router information that it cannot learn automatically through other means. This can happen when RIP is disabled on the LAN. (See the <i>LAN IP Setup</i> page.) All defined static routes appear in the table. To add or delete a route, work in the area under the Static Routes table. 
+</p>
+<hr>
+<p>
+	<b>To Set Up A Static Route:</b> 
+</p>
+<ol>
+	<li>
+		Click the <b>Add</b> button. 
+	</li>
+
+	<li>
+		Type a route name for this static route in the <b>Route Name</b> box under the table.
+		<br>
+		(This is for identification purposes only.) 
+	</li>
+<li>
+		Select <b>Private</b> if you want to limit access to the LAN only. 
+	</li>
+
+
+	<li>
+		Select <b>Active</b> to make this route effective. 
+	</li>
+	<li>
+		Type the <b>Destination IP Address</b> of the final destination. 
+	</li>
+	<li>
+		Type the <b>IP Subnet Mask</b> for this destination. 
+		<br>
+		If this is for a single host, type 255.255.255.255. 
+	</li>
+	<li>
+		Type the <b>Gateway IP Address</b>, which must be a router on the same segment. 
+	</li>
+	<li>
+		Type a number between 2 and 15 as the <b>Metric</b> value. 
+		<br>
+		This represents the number of other routers on your network. Usually, setting this to 2 or 3 works the best, but if this is a direct connection, set it to 2. 
+	</li>
+	
+	<li>
+		Click <b>Apply</b> to have the static route entered into the table. 
+	</li>
+</ol>
+<p>
+	<b>To Edit A Static Route:</b> 
+
+<ol>
+	<li>
+		Click the radio button next to route you want to edit. 
+	</li>
+	<li> Update the information.
+	<li>Click <b>Apply</b> when finished.
+</ol>
+
+<p>
+	<b>To Delete A Static Route:</b> 
+
+<ol>
+	<li>
+		Click the radio button next to route you want to delete. 
+	</li>
+	<!--
+	<li>Click <b>Delete</b>.
+	</li>
+	-->
+		<li>
+		Click <b>Delete</b> to have the static route deleted from the table. 
+	</li>
+</ol>
+</body>
+</html>
+

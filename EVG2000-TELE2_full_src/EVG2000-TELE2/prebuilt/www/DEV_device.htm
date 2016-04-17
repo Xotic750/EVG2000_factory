@@ -1,0 +1,58 @@
+<html>
+<head>
+<% meta_get(); %>
+<meta HTTP-EQUIV="Expires" CONTENT="Mon, 06 Jan 1990 00:00:01 GMT"> 
+<title>Attached Devices</title> 
+<link rel="stylesheet" href="form.css">
+<% script_get(); %>
+<script language="javascript" type="text/javascript">
+<!--
+//-->
+</script> 
+</head>
+<body bgcolor="#ffffff" onload="loadhelp('DEV_device');">
+<form method="post" action="devices.cgi">
+<table border="0" cellpadding="0" cellspacing="3" width="100%">
+<tr>
+	<td colspan="2">
+	<h1>Attached Devices</h1> 
+	</td>
+</tr>
+<tr> <!-- RULE -->
+ <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+
+<tr>
+	<td colspan="2">
+	<table border="1" cellpadding="0" cellspacing="0" width="100%">
+ <tr>
+		<td nowrap width="10%" align="center">
+	 <span class="thead">#</span> 
+		</td>
+		<td nowrap width="20%" align="center">
+		<span class="thead">IP Address</span>
+		</td>
+		<td nowrap width="40%" align="center">
+		<span class="thead">Device Name </span>
+		</td>
+		<td nowrap width="30%" align="center">
+		<span class="thead">MAC Address</span></td></tr>
+        <% devices_cgi_get_device_table(); %>		
+	</table>
+	</td>
+</tr>
+<tr> <!-- RULE -->
+ <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+<tr>
+	<td colspan="2" align="center">
+	<input type="SUBMIT" name="refresh" value="Refresh">
+	</td>
+</tr>
+</table>
+</form>
+<p>
+</p>
+</body>
+</html>
+

@@ -1,0 +1,40 @@
+<html>
+<head>
+<% meta_get(); %>
+<title>
+Help
+</title>
+<link rel="stylesheet" href="help.css">
+</head>
+<body>
+<h1>
+ UPnP Help
+</h1>
+
+<p>Universal Plug and Play (UPnP) helps devices, such as Internet appliances and computers, access the network and connect to other devices as needed. UPnP devices can automatically discover the services from other registered UPnP devices on the network. </p>
+
+<a name="turnon"></a>
+	<p><b>Turn UPnP On</b></p>
+
+<p>UPnP can be enabled or disabled for automatic device configuration. The default setting for UPnP is enabled. If disabled, the router will not allow any device to automatically control the resources, such as port forwarding (mapping), of the router.
+	</p>
+<a name="adv"></a>	
+	<p><b>Advertisement Period</b></p>
+
+<p>The Advertisement Period is how often the router will advertise (broadcast) its UPnP information. This value can range from 1 to 1440 minutes. The default period is for 30 minutes. Shorter durations will ensure that control points have current device status at the expense of additional network traffic. Longer durations may compromise the freshness of the device status but can significantly reduce network traffic.</p>
+<a name="live"></a>
+	 <p><b>Advertisement Time To Live</b></p>
+<p>The time to live for the advertisement is measured in hops (steps) for each UPnP packet sent. A hop is the number of steps allowed to propagate for each UPnP advertisement before it disappears. The number of hops can range from 1 to 255. The default value for the advertisement time to live is 4 hops, which should be fine for most home networks. If you notice that some devices are not being updated or reached correctly, then it may be necessary to increase this value a little.</p>
+<a name="table"></a>
+<p><b>UPnP Portmap Table</b></p>
+<p>The UPnP Portmap Table displays the IP address of each UPnP device that is currently accessing the router and which ports (Internal and External) that device has opened. The UPnP Portmap Table also displays what type of port is opened and if that port is still active for each IP address.
+
+<p><b>To Save, Cancel or Refresh the Table</b></p>
+<p>
+Click <b>Apply</b> to save the new settings to the router. <br>
+
+Click <b>Cancel</b> to discard any unsaved changes. <br>
+
+Click <b>Refresh</b> to update the portmap table and to show the active ports that are currently opened by UPnP devices. 
+	</body>
+

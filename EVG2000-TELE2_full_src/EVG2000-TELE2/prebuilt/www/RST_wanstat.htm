@@ -1,0 +1,31 @@
+<html><head>
+<meta name="description" content="NG 2002">
+<title> </title></head>
+<link rel="stylesheet" href="form.css">
+<STYLE TYPE="text/javascript">
+	classes.num.all.fontFamily = "Courier";
+	classes.num.all.fontSize = "10pt" ;
+</style>
+<% script_get(); %>
+<script language="javascript" type="text/javascript">
+<!--
+function loadpage()
+{
+    var wanproto="<% rst_cgi_get_wan_proto("wan_proto"); %>";
+    var wanIpStatic="<% rst_cgi_get_wan_proto("wan_ipstatic"); %>";
+    if(wanproto == "mer"&& wanIpStatic != "1")
+        window.location.href = "RST_st_dhcp.htm";
+    else if( wanproto == "mer"&& wanIpStatic == "1")
+        window.location.href = "RST_st_fix.htm";
+    else if( wanproto == "pppoe")
+        window.location.href = "RST_st_poe.htm";
+    else if( wanproto == "pppoa")
+        window.location.href = "RST_st_ppa.htm";
+    else if( wanproto == "ipoa")
+        window.location.href = "RST_st_ipoa.htm";
+}
+//-->    
+</script>
+</head>
+<BODY bgcolor="#CCCCCC" onload="loadpage();">
+</body></html>

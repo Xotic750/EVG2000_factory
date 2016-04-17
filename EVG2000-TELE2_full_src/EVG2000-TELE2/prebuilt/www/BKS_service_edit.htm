@@ -1,0 +1,144 @@
+<html>
+<head>
+<% meta_get(); %>
+<link rel="stylesheet" href="form.css">
+<title>Block Services Setup</title>
+<STYLE TYPE="text/javascript">
+	classes.num.all.fontFamily = "Courier";
+	classes.num.all.fontSize = "10pt" ;
+</style>
+<% script_get(); %>
+<script language="javascript" type="text/javascript">
+<!--
+var isIE = document.all;
+var disable = false;
+var serv_array=[<%fw_cgi_get_service_array(); %>];
+function init_data()
+{
+    var cf = document.forms[0];
+    cf.apply.value = (pi(cf.which_mode.value) == 1)?"Accept":"Add";
+}
+
+function chg_by_service(is_load)
+{
+    var cf = document.forms[0];
+   
+    for(var i = 0 ; i<serv_array.length ; i++)
+    {
+        if(cf.selectServName.value == serv_array[i][3])
+            break;
+    }
+
+    disable = (pi(serv_array[i][4])==1)?true:false;
+    cf.protocol.selectedIndex = pi(serv_array[i][0]);
+    cf.portstart.value = serv_array[i][1];
+    cf.portend.value = serv_array[i][2];
+    cf.userdefined.value = serv_array[i][3];
+
+    if(isIE)
+    {
+        cf.protocol.disabled = disable; 
+        cf.portstart.disabled = disable;
+        cf.portend.disabled = disable;
+        cf.userdefined.disabled = disable;
+    }
+}
+
+function valid(obj1,v)
+{
+    if(document.forms[0].iptype[pi(v)].checked==false)
+    {
+        obj1.blur();
+    }
+}
+
+
+function check_data()
+{
+ var cf = document.forms[0];
+ var txt,i,c;
+ if(cf.portstart.value==""||cf.portend.value=="")
+   return alertR("Invalid Starting/Ending Port vlaue.");
+ txt=cf.portstart.value;
+ for(i=0;i<txt.length;i++)
+ {
+   c=txt.charAt(i);
+   if("0123456789".indexOf(c,0)<0)
+     return alertR("Invalid Starting Port value");
+ }
+ txt=cf.portend.value;
+ for(i=0;i<txt.length;i++)
+ {
+   c=txt.charAt(i);
+   if("0123456789".indexOf(c,0)<0)
+     return alertR("Invalid Ending Port value");
+ }
+ if(parseInt(cf.portstart.value)<1||parseInt(cf.portstart.value)>65534)
+   return alertR("Invalid Starting Port value.");
+ if(parseInt(cf.portend.value)<1||parseInt(cf.portend.value)>65534)
+   return alertR("Invalid Ending Port value.");
+ if(parseInt(cf.portend.value)<parseInt(cf.portstart.value))
+   return alertR("Ending Port value should be greater or equal to Starting Port value.");
+ txt=cf.userdefined.value;
+ if(txt==""||txt.match( /[^\x20-\x7E]/ ))
+   return alertR("Invalid User Defined service type.");
+
+ return true;
+}
+//-->
+</script> 	
+</head>
+<body bgcolor="#ffffff" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" onload="init_data();loadhelp('BKS_service_add');chg_by_service(0);">
+	<form name="formname" method="POST" action="fw_serv_edit.cgi">
+		<div align="center">
+			<center>
+<table border="0" cellpadding="0" cellspacing="3" width="100%">
+		<tr>
+			<td colspan="2">
+				<h1>Edit Services</h1>
+			</td>
+		</tr>
+		
+<tr> <!-- RULE -->
+ <td colspan="2" background="liteblue.gif" height="12">&nbsp; </td>
+</tr>
+</table>
+<table border ="0" cellpadding ="0" cellspacing ="0" width="100%">
+<tr>
+ <td width="50%" nowrap>Name:&nbsp;</td>
+ <td width="50%"> 
+ <input type="text" name="userdefined" size="20" maxlength="30" value="" onfocus="if(disable) this.blur();">
+ </td>
+</tr>
+<tr>
+ <td width="50%">Type:</td>
+ <td width="50%"> 
+ <select name="protocol" size="1" onfocus="if(disable) this.blur();"><option selected value="TCP">TCP</option><option value="UDP">UDP</option><option value="TCP/UDP">TCP/UDP</option></select>
+	</td>
+</tr>
+<tr>
+ <td width="50%">Start Port</td>
+ <td width="50%"> 
+ <input type="text" name="portstart" size="7" maxlength="5" value="1" onfocus="if(disable) this.blur();">(1~65534)
+	</td>
+</tr>
+<tr>
+ <td width="50%">Finish Port</td>
+ <td width="50%"> 
+ <input type="text" name="portend" size="7" maxlength="5" value="300" onfocus="if(disable) this.blur();">(1~65534)
+	</td>
+</tr>
+<tr> 
+ <td colspan="2" background="liteblue.gif" height="12">&nbsp; </td>
+</tr>
+</table>
+
+<input type="submit" name="apply" value=" Add " onclick="return check_data();">
+<input type="button" name="cancel" value="Cancel" onClick="location.href='BKS_service.htm'">
+<input type="hidden" name="which_mode" value="1">
+<input type="hidden" name="selectServName" value="<% fw_cgi_get_selected_service(); %>">
+</center>
+</div>
+</form>
+</body>
+</html>

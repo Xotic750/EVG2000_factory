@@ -1,0 +1,99 @@
+<html><head>
+<% meta_get(); %>
+<title>USB Drive Approved Devices</title> 
+<link rel="stylesheet" href="form.css">
+<style type="text/javascript">
+    classes.num.all.fontFamily = "Courier";
+    classes.num.all.fontSize = "10pt" ;
+</style>
+<% script_get(); %>
+<script language="javascript" type="text/javascript">
+<!--
+function loadSettings()
+{
+    var cf = document.forms[0];
+    var enable_all_usb = "<% nvram_get("enable_any_usb_dev"); %>";
+    var added_before = <% usb_cgi_get_dev_table("added_before"); %>;
+    if (enable_all_usb == 0)
+        cf.approved_usb_only.checked = true;
+    else
+        cf.approved_usb_only.checked = false;
+    top.helpframe.location.href='Adv_USB_h.htm';
+    if (added_before == "1")
+        alert("Approved Devices!");
+}
+//-->
+</script></head>
+<body onload="loadSettings();" bgcolor="#ffffff">
+<form name="adv_usb" method="post" action="usb_approve.cgi">
+<table border="0" cellpadding="0" cellspacing="3" width="100%">
+<tr>
+   <td><h1>  USB Drive Approved Devices</h1></td>
+</tr>
+<tr>
+ <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+<tr>
+<td><input type="checkbox" name="approved_usb_only" value="1">&nbsp;Allow only approved devices</td>
+</tr>
+<tr><td>&nbsp;&nbsp;</td></tr>
+<tr>
+<td><span style="background-color: #FFFFFF; background-position: 0% 0%"><b>&nbsp;Approved USB Devices</b></span></td>
+</tr>
+<tr>
+<td colspan="2">
+<table border="1" cellpadding="2" cellspacing="0" width="100%">
+<tr>
+<td nowrap align="center" width="6%"><span class="thead"> &nbsp;</span></td>
+<td align="center" nowrap="nowrap" width="35%"><span class="thead">Volume Name</span></td>
+<td align="center" nowrap="nowrap" width="35%"><span class="thead">Device Name</span></td>
+<td align="center" nowrap="nowrap" width="24%"><span class="thead">Capacity</span></td>
+</tr>
+<% usb_cgi_get_dev_table("Approve"); %>
+</table>
+</td>
+</tr>
+<tr><td></td></tr><tr><td></td></tr>
+<tr>
+<td>
+<p align="center">
+<input name="Delete" value="Delete" type="submit" style="float: left"></td>
+</tr>
+<tr><td>&nbsp;&nbsp;</td></tr>
+<tr><td></td></tr><tr><td></td></tr>
+
+<tr>
+<td><span style="background-color: #FFFFFF; background-position: 0% 0%"><b>&nbsp;Available USB Devices</b></span></td>
+</tr>
+<tr>
+<td colspan="2">
+<table border="1" cellpadding="2" cellspacing="0" width="100%">
+<tr>
+<td nowrap align="center" width="6%"><span class="thead"> &nbsp;</span></td>
+<td align="center" nowrap="nowrap" width="35%"><span class="thead">Volume Name</span></td>
+<td align="center" nowrap="nowrap" width="35%"><span class="thead">Device Name</span></td>
+<td align="center" nowrap="nowrap" width="24%"><span class="thead">Capacity</span></td>
+</tr>
+<% usb_cgi_get_dev_table("Available"); %>
+</table>
+</td>
+</tr>
+<tr><td></td></tr><tr><td></td></tr>
+<tr>
+<td>
+<p align="center">
+<input name="Add" value=" Add " type="submit" style="float: left">
+</td>
+</tr>
+<tr><td></td></tr><tr><td></td></tr>
+<tr>
+ <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+<tr><td></td></tr><tr><td></td></tr>
+<tr><td><input name="Apply" value="Apply" type="submit" style="float: left" >
+<input name="Refresh" value="Refresh" onclick="location.href='Adv_USB.htm'" type="button" style="float: left" >
+</td>
+</tr>
+</table>
+</form>
+</body></html>

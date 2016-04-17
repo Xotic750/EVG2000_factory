@@ -1,0 +1,63 @@
+<html>
+<head>
+<% meta_get(); %>
+<title>NETGEAR Help</title>
+<link rel="stylesheet" href="help.css">
+</head>
+<body>
+<h1 class="helpfile">Inbound Service Help</h1> 
+<p>You can use this screen to define a new Inbound Firewall rule, or edit an existing rule.
+Firewall rules can be used to block or allow specific traffic. <B>This feature is for Advanced Administrators only!</b> Incorrect configuration will cause serious problems.
+</p>
+<a name="serv"> </a>
+<p><b>Service</b>
+<br>Select the desired Service. This determines which packets are covered by this rule. If necessary, you can define a new Service on the "Services" screen, by defining the protocols and port numbers used by the Service.
+<a name="action"> </a>
+<p><b>Action</b>
+<br>Select the desired action for packets covered by this rule:
+<ul>
+<li>ALLOW always
+<li>ALLOW by schedule, otherwise Block
+<li>BLOCK always
+<li>BLOCK by schedule, otherwise Allow
+</ul>
+Note:
+<ul>
+ <li>Any inbound traffic which is not allowed by rules you create will be blocked by the Default rule.
+ <li>BLOCK rules are only useful if the traffic is already covered by an ALLOW rule. (That is, you wish to block a sub-set of traffic which is currently allowed by another rule.)
+<li>To define the Schedule used in these selections, use the "Schedule" screen.
+</ul>
+
+<a name="dest"></a>
+<p><B>LAN Server</b>
+<BR>Enter the IP address of the PC or Server on your LAN which will receive the inbound traffic covered by this rule.
+
+
+<a name="source"></a>
+<p><b>WAN Users</b>
+<BR>These settings determine which packets are covered by the rule, based on their source (WAN) IP address. 
+Select the desired option:
+<ul>
+	<li>Any &nbsp; &nbsp; All IP addresses are covered by this rule.
+	<li>Address range &nbsp; &nbsp; If this option is selected, you must enter the "Start" and "Finish" fields.
+	<li>Single address &nbsp; &nbsp; Enter the required address in the "Start" fields.
+</ul>
+
+<a name="log"></a>
+<p><b>Log</b>
+<br>This determines whether packets covered by this rule are logged. Select the desired action.
+<ul>
+<li>Always - always log traffic considered by this rule, whether it matches or not. (This is useful when debugging your rules.)
+<li>Never - never log traffic considered by this rule, whether it matches or not.
+<li>Match - Log traffic only it matches this rule. (The action is determined by this rule.)
+<li>Not Match - Log traffic which is considered by this rule, but does not match (The action is NOT determined by this rule.)
+</ul>
+
+<pre>
+</pre>
+
+<p>Click <b>Apply</b> to have your changes take effect.
+<p>Click <b>Back</b> to return to the previous screen.
+
+</body>
+</html>

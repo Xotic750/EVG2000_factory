@@ -1,0 +1,46 @@
+<html>
+<head>
+<% meta_get(); %>
+<title>PPPoE</title>
+<link rel="stylesheet" href="form.css">
+<STYLE TYPE="text/javascript">
+	classes.num.all.fontFamily = "Courier";
+	classes.num.all.fontSize = "10pt" ;
+</style>
+<% script_get(); %>
+<script language="javascript" type="text/javascript">
+<!--
+var all_wan_proto      = new Array(8);
+var nowchoice;
+function loadpage()
+{
+    nowchoice = "<% nvram_get("nowchoice"); %>";
+    all_wan_proto[0] = "<% nvram_get("wan0_proto"); %>";
+    all_wan_proto[1] = "<% nvram_get("wan1_proto"); %>";
+    all_wan_proto[2] = "<% nvram_get("wan2_proto"); %>";
+    all_wan_proto[3] = "<% nvram_get("wan3_proto"); %>";
+    all_wan_proto[4] = "<% nvram_get("wan4_proto"); %>";
+    all_wan_proto[5] = "<% nvram_get("wan5_proto"); %>";
+    all_wan_proto[6] = "<% nvram_get("wan6_proto"); %>";
+    all_wan_proto[7] = "<% nvram_get("wan7_proto"); %>";
+    var tmpvarhave = "<% basic_cgi_get_param("set_havetmpvar_0"); %>";
+    
+    var wan0_proto= all_wan_proto[nowchoice];
+    
+	if (wan0_proto == "dhcp" || wan0_proto == "static" || wan0_proto == "ipoa" 
+        || wan0_proto == "bridge" || wan0_proto == "mer")
+		location.href = "BAS_mether.htm";
+	else if (wan0_proto == "pppoa")
+        location.href = "BAS_mpppoa.htm";
+    else
+        location.href = "BAS_mpppoe.htm";
+}
+
+//-->
+</script>
+
+</head>
+
+<body bgcolor="#ffffff" onload="loadpage();">
+</body>
+</html>

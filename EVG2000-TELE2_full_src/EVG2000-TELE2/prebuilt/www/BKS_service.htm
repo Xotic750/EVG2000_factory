@@ -1,0 +1,59 @@
+<html>
+<head>
+<% meta_get(); %>
+<title>Block Services</title> 
+<link rel="stylesheet" href="form.css">
+<% script_get(); %>
+<script language="javascript" type="text/javascript">
+<!--
+function chgSel(index)
+{
+ document.forms[0].select.value = index;
+ return true;
+}
+//-->
+</script> 
+</head>
+<body bgcolor="#ffffff" onload="loadhelp('BKS_service');document.forms[0].elements[0].focus();chgSel(0);">
+<form name="frmService" method="POST" action="fw_serv.cgi">
+	<table border="0" cellpadding="0" cellspacing="3" width="100%">
+	<tr>
+		<td colspan="2"><h1>Services</h1></td>
+	</tr>
+<tr> <!-- RULE -->
+ <td colspan="2" background="liteblue.gif" height="12">&nbsp; </td>
+</tr>
+<tr>
+	<td colspan="2">
+		<a href="javascript:loadhelp('BKS_service','table')" tabindex="-1"><b>Service Table</b></a></td>
+</tr>
+	<tr>
+	<td colspan="2">
+		<table border="1" cellpadding="2" cellspacing="0" width="100%">
+		<tr>
+			<td nowrap align="center" width="6%">&nbsp;	 	</td>
+			<td nowrap align="center" width="6%"><span class="thead"># </span>	</td>
+			<td nowrap align="center"><span class="thead">Service Type</span></td>
+			<td nowrap align="center"><span class="thead">Port</span></td>
+		</tr>
+		<% fw_cgi_get_bks_table(); %>
+        </table>
+	</td>
+</tr>
+<tr> <!-- RULE -->
+ <td colspan="2" background="liteblue.gif" height="12">&nbsp; </td>
+</tr>
+<tr>
+<td colspan="2" align="center">
+	<input type="Submit" name="Add" value="Add Custom Service">
+	<input type="Submit" name="Edit" value="Edit Service">
+	<input type="Submit" name="Delete" value="Delete Service"></td>
+</tr>
+</table>
+
+	<input type="hidden" name="select" value="-1">
+
+</form>
+</body>
+</html>
+

@@ -1,0 +1,10 @@
+#! /bin/sh
+
+PATH=/sbin:/bin
+export PATH
+
+mount -t proc proc /proc
+mount -t ramfs ramfs /var
+/bin/mount -a
+ln -s /var /tmp
+#/sbin/inetd

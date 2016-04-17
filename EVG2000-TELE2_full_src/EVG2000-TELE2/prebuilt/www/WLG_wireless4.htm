@@ -1,0 +1,362 @@
+<html>
+<head>
+<% meta_get(); %>
+<title>Wireless</title>
+<link rel="stylesheet" href="form.css">
+<STYLE TYPE="text/javascript">
+    classes.num.all.fontFamily = "Courier";
+    classes.num.all.fontSize = "10pt" ;
+</style>
+<script language="javascript" type="text/javascript" src="func.js"></script>
+<script language="javascript" type="text/javascript" src="msg.js"></script>
+<script language="javascript" type="text/javascript" src="utility.js"></script>
+<script language="javascript" type="text/javascript" src="browser.js"></script>
+<script language="javascript" type="text/javascript" src="md5.js"></script>
+<script language="javascript" type="text/javascript">
+<!-- hide script from old browsers
+
+// "--",Africa,Asia,Australia,Canada,Europe,France,Israel,Japan,Mexico,New Zealand,South America,USA
+var StartChannel = new Array(0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+var FinishChannel = new Array(11,13,13,13,11,13,13, 13,13,13,13,13,11);
+var initRegion;
+var changeMsg = "WARNING: Selecting the incorrect region may result in a violation of applicable law. \nDo you agree to act in accordance with these settings?";
+var notShown = true; // only shown region change message once
+var initialized = false;
+var franceWarnMsg="WARNING: In France, it is illegal to use channel 8~13 in outdoor. Do you agree to act in accordance with the applicable law?";
+function initScrn()
+{
+    var defaultKey;
+    var fm=document.forms[0];
+    var i;
+
+    if(fm.tempSetting.value == 1)
+    {
+        fm.WRegion.selectedIndex=parseInt(fm.tempRegion.value);
+    }
+    
+    initRegion = fm.WRegion.selectedIndex;
+    setOpMode();
+    defaultopmode();
+    setChannel();
+    for (i=0; i<fm.w_channel.options.length; i++)
+    {
+        if (fm.w_channel.options[i].value == fm.initChannel.value)
+        {
+            fm.w_channel[i].selected = true;
+            break;
+        }
+    }
+    
+    if (fm.enable_ap.value == 1)
+	fm.enable_ap_en.checked = true;
+    else
+	fm.enable_ap_en.checked = false;
+    if (fm.ssid_bc.value == 1)
+	fm.ssid_bc_en.checked = true;
+    else
+	fm.ssid_bc_en.checked = false;
+    if (fm.isolation.value == 1)
+	fm.isolation_en.checked = true;
+    else
+	fm.isolation_en.checked = false;
+    
+    initRadius();
+    
+    initialized=true;
+}
+function chgCh(from)
+{
+    setOpMode();
+    setChannel();
+}
+function setOpMode()
+{
+    var cf = document.forms[0];
+
+    cf.opmode.options.length = 3;
+    cf.opmode.options[0].text = "Up to 54Mbps";
+    cf.opmode.options[1].text = "Up to 130Mbps";
+    cf.opmode.options[2].text = "Up to 270Mbps";
+    cf.opmode.options[0].value = "bg";
+    cf.opmode.options[1].value = "20n";
+    cf.opmode.options[2].value = "40n";
+
+    return;
+}
+
+function defaultopmode()
+{
+     var cf = document.forms[0];
+     var mode="<%wlg_cgi_get_opmode(); %>";
+    
+    	if(mode=="bg")
+    	cf.opmode.selectedIndex = 0;
+    	else if (mode=="20n")
+    	cf.opmode.selectedIndex = 1;
+    	else if (mode=="40n")
+    	cf.opmode.selectedIndex = 2;    
+}
+
+function setChannel()
+{
+    var cf = document.forms[0];
+    var index = cf.WRegion.selectedIndex;
+    var chIndex = cf.w_channel.selectedIndex;
+    var currentCh = ( chIndex >= 0) ? parseInt(cf.w_channel.options[chIndex].text,10) : 0;
+  
+    if (index == 0)
+    {
+        cf.w_channel.options.length = 1;
+        cf.w_channel.options[0].text = FinishChannel[0] ;
+    }
+    else
+    {
+        cf.w_channel.options.length = FinishChannel[index] - StartChannel[index] + 2;
+        cf.w_channel.options[0].text = "Auto";
+        cf.w_channel.options[0].value = 0;
+        for (var i = StartChannel[index]; i <= FinishChannel[index]; i++)
+        {
+            cf.w_channel.options[i - StartChannel[index] + 1].value = i;
+            cf.w_channel.options[i - StartChannel[index] + 1].text = (i < 10)? "0" + i : i;
+        }    
+    }
+    cf.w_channel.selectedIndex = ((chIndex > -1) && (chIndex < cf.w_channel.options.length)) ? chIndex : 0 ;
+}
+function loadhelp(fname,anchname)
+{
+    if ((loadhelp.arguments.length == 1 ) || (anchname == "" ))
+        top.helpframe.location.href=fname+"_h.htm";
+    else
+        top.helpframe.location.href=fname+"_h.htm#" + anchname;
+}
+function checkRegion()
+{
+    var cf = document.forms[0];
+    if(cf.WRegion.selectedIndex == 0)
+    {
+        cf.WRegion.focus();
+        return alertR("Please select the correct region for your location");
+    }
+    if (notShown && cf.WRegion.selectedIndex == 6 && cf.w_channel.selectedIndex > 6)
+    {
+        if(!confirm(franceWarnMsg))
+            return false;
+        else notShown = false;
+    }
+    else if(cf.WRegion.selectedIndex != initRegion && notShown)
+    {
+        if(!confirm(changeMsg))
+            return false;
+        else notShown = false;
+    }
+    return true;
+}
+
+function initPassphrase()
+{
+    var cf = document.forms[0];
+      
+    cf.passphrase.value="<%wlg_cgi_get_passphrase();%>";
+}
+
+function initRadius()
+{
+    var cf = document.forms[0];
+      
+    cf.radius_server.value="<%wlg_cgi_get_radius("server");%>";
+    cf.radius_port.value="<%wlg_cgi_get_radius("port");%>";
+    cf.login_key.value="<%wlg_cgi_get_radius("key");%>";
+}
+
+function checkData()
+{
+    var cf = document.forms[0];
+    if(!checkRegion()) return false;
+
+    if (cf.ssid.value == "")
+    {
+        alert("SSID cannot be empty");
+        return false;
+    }
+
+    if (cf.ssid.value.match( /[^\x20-\x7E]/ ))
+    {
+        alert("Character is not allowed in SSID.");
+        cf.ssid.focus();
+        return false;
+    }
+
+    if(cf.enable_ap_en.checked)
+	cf.enable_ap.value = 1;
+    else
+	cf.enable_ap.value = 0;
+    if(cf.ssid_bc_en.checked)
+	cf.ssid_bc.value = 1;
+    else
+	cf.ssid_bc.value = 0;
+    if(cf.isolation_en.checked)
+	cf.isolation.value = 1;
+    else
+	cf.isolation.value = 0;
+
+	if(isNaN(cf.radius_port.value) ||
+	   parseInt(cf.radius_port.value) < 1 ||
+	   parseInt(cf.radius_port.value) > 65535 ||
+	   cf.radius_port.value.indexOf(".") != -1 ||
+	   isBlank(cf.radius_port))
+	{
+	    alert("Invalid port number");
+	    cf.radius_port.focus();
+	    return false;
+    }
+    
+    if (cf.login_key.value.match( /[^\x20-\x7E]/ ))
+    {
+		alert("Character is not allowed in shared key.");
+		cf.login_key.focus();
+		return false;
+	}
+	if( confirm('WPA-802.1x authentication cannot work with WPS. WPS is going to become inaccessible. Do you want to continue?') )
+		return true;
+	else
+		return false;
+    return true;
+}
+// -->
+</script>
+</head>
+<body bgcolor="#ffffff" onload="initScrn();defaultopmode();loadhelp('WLG_wireless');top.contents.location.href='MNU_menu.htm';document.forms[0].elements[0].focus();">
+<form method="POST" action="wireless.cgi">
+  <table border="0" cellpadding="0" cellspacing="3" width="100%">
+    <tr>
+      <td colspan="2"><h1>Wireless Settings</h1></td></tr>
+    <tr>
+      <!-- RULE -->
+      <td colspan="2" background="liteblue.gif" height="12">&nbsp; </td></tr>
+    <tr>
+      <td colspan="2"><a href="javascript:loadhelp('WLG_wireless','network')" tabindex="-1"><b>Wireless Network</b> </a></td></tr>
+    <tr>
+      <td width="50%" align="left">Name (SSID):</td>
+      <td width="50%">
+        <input type="text" name="ssid" value="<%wlg_cgi_get_ssid();%>" size="20" maxlength="32"></td></tr>
+    <tr>
+      <td nowrap>Region:</td>
+      <td align="left">
+      <% wlg_cgi_get_param("WW_start"); %>
+        <select name="WRegion" size="1" onchange="chgCh(1)">
+         <option <% nvram_match("wla_region","0","selected"); %> value="0">--- Select Region ---</option>   
+         <option <% nvram_match("wla_region","1","selected"); %> value="1">Africa</option>
+         <option <% nvram_match("wla_region","2","selected"); %> value="2">Asia</option>
+         <option <% nvram_match("wla_region","3","selected"); %> value="3">Australia</option>
+         <option <% nvram_match("wla_region","4","selected"); %> value="4">Canada</option>
+         <option <% nvram_match("wla_region","5","selected"); %> value="5">Europe</option>
+         <option <% nvram_match("wla_region","6","selected"); %> value="6">France</option>
+         <option <% nvram_match("wla_region","7","selected"); %> value="7">Israel</option>
+         <option <% nvram_match("wla_region","8","selected"); %> value="8">Japan</option>
+         <option <% nvram_match("wla_region","9","selected"); %> value="9">Mexico</option>
+         <option <% nvram_match("wla_region","10","selected"); %> value="10">New Zealand</option>
+         <option <% nvram_match("wla_region","11","selected"); %> value="11">South America</option>
+         <option <% nvram_match("wla_region","12","selected"); %> value="12">USA</option>
+        </select></td></tr>
+      <% wlg_cgi_get_param("WW_end"); %>
+      <% wlg_cgi_get_param("NA_start"); %>
+        <select name="WRegion" size="1" onchange="chgCh(1)" disabled >
+         <option value="0">--- Select Region ---</option>
+         <option value="1">Africa</option>
+         <option value="2">Asia</option>
+         <option value="3">Australia</option>
+         <option value="4">Canada</option>
+         <option value="5">Europe</option>
+         <option value="6">France</option>
+         <option value="7">Israel</option>
+         <option value="8">Japan</option>
+         <option value="9">Mexico</option>
+         <option value="10">New Zealand</option>
+         <option value="11">South America</option>
+         <option selected value="12">USA</option>
+        </select></td></tr>
+      <% wlg_cgi_get_param("NA_end"); %>
+    <tr>
+      <td nowrap>Channel:</td>
+      <td nowrap>
+        <select name="w_channel" size=1><option>01</option><option>02</option><option>03</option><option>04</option><option>05</option><option selected>06</option><option>07</option><option>08</option><option>09</option><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option></select></td></tr>
+    <tr>
+      <td nowrap>Mode:</td>
+      <td nowrap><select name="opmode" onchange="chgCh(2);"></select></td></tr>
+    <tr>
+      <!-- RULE -->
+      <td colspan="2" background="liteblue.gif" height="12">&nbsp; </td></tr>
+      
+    <tr>
+        <td nowrap colspan="2"><a href="javascript:loadhelp('WLG_wireless','broadcast')" tabindex="-1"><b>Wireless Access Point</b></a></td></tr>
+  <tr>
+  <td colspan="2">
+    <input type="checkbox"  name="enable_ap_en" value="enable_ap"> Enable Wireless Router Radio </td></tr>
+  <tr>
+        <td nowrap colspan="2">
+            <input type="checkbox"  name="ssid_bc_en" value="ssid_bc"> Enable SSID Broadcast </td></tr>
+  <tr>
+        <td nowrap colspan="2">
+            <input type="checkbox"  name="isolation_en" value="isolation"> Wireless Isolation  </td></tr>
+    <tr>
+        <!-- RULE -->
+        <td colspan="2" background="liteblue.gif" height="12">&nbsp; </td></tr>
+    <tr>
+        <td nowrap><a href="javascript:loadhelp('WLG_wireless','access')" tabindex="-1"><b>Wireless Station Access List</b></a></td>
+        <td align="left">
+            <input type="button" name="access" value="Setup Access List" onClick="self.location.href='WLG_acl.htm'"></td></tr>
+    <tr>
+        <td colspan="2" background="liteblue.gif" height="12">&nbsp; </td></tr>
+      
+    <tr>
+      <td colspan="2"><a href="javascript:loadhelp('WLG_wireless','security')" tabindex="-1"><b>Security Options</b></a></td></tr>
+      <tr><td colspan="2">
+      <table border="0" cellpadding="0" cellspacing="3" width="100%">
+    <tr>
+      <td colspan="2"><input type="radio" name="security_type" value="Disable" onClick="this.form.submit();">Disable</td></tr>
+    <tr>
+      <td colspan="2"><input type="radio" name="security_type" value="WEP" onClick="this.form.submit();" >WEP</td></tr>
+    <tr>
+      <td colspan="2"><input type="radio" name="security_type" value="WPA-PSK" onClick="this.form.submit();">WPA-PSK [TKIP]</td></tr>
+    <tr>
+      <td colspan="2"><input type="radio" name="security_type" value="WPA2-PSK" <% nvram_match("wla_wds_enable","1","disabled"); %> onClick="this.form.submit();">WPA2-PSK [AES]</td></tr>
+    <tr>
+      <td colspan="2"><input type="radio" name="security_type" value="AUTO-PSK" <% nvram_match("wla_wds_enable","1","disabled"); %> onClick="this.form.submit();">WPA-PSK [TKIP] + WPA2-PSK [AES]</td></tr>
+    </table>
+    <tr>
+      <td colspan="2" background="liteblue.gif" height="12">&nbsp; </td></tr>
+    <tr>
+        <td colspan="2"><a href="javascript:loadhelp('WLG_wireless','wpa8021')" tabindex="-1"><b>WPA-802.1x</b></a></td></tr>
+    <tr>
+	  <td nowrap>Radius Server Name/IP Address</td>
+	  <td nowrap><input type="text" name="radius_server" size="24" maxlength="64" value="<% nvram_get("wla_radius_server"); %>"></td>
+    </tr>
+    <tr>
+	  <td nowrap>Radius Port</td>  
+	  <td nowrap><input type="text" class="num" name="radius_port" size="5" maxlength="5" value="<% nvram_get("wla_radius_port"); %>"></td>
+    </tr>
+
+    <tr>
+     <td nowrap>Shared Key</td>
+     <td nowrap><input type="password" name="login_key" size="24" maxlength="64" value="<% nvram_get("wla_radius_shkey"); %>"></td>
+    </tr>
+
+    <tr>
+      <td colspan="2" background="liteblue.gif" height="12">&nbsp; </td></tr>
+    <tr>
+      <td colspan="2" align="center">
+      <input type="SUBMIT" name="Apply" value="Apply" onclick="return checkData();">
+      <input type="SUBMIT" name="Cancel" value="Cancel"></td></tr>
+  </table>
+  <input type="hidden" name="initChannel" value="<% wlg_cgi_get_channel(); %>">
+  <INPUT name=enable_ap type=hidden value= "<%wlg_cgi_get_wlanstate_status(); %>">
+  <INPUT name=ssid_bc type=hidden value= "<% wlg_cgi_get_broadcast_status(); %>">
+  <INPUT name=isolation type=hidden value= "<% wlg_cgi_get_isolation_status(); %>">
+  <input type="hidden" name="tempSetting" value="<% wlg_cgi_get_temp_setting("wla_temp_setting"); %>">
+  <input type="hidden" name="tempRegion" value="<% wlg_cgi_get_temp_setting("wla_temp_region"); %>">
+</form>
+<p>
+</p>
+</body>
+</html>
+

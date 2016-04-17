@@ -1,0 +1,17 @@
+/*====== These strings are CASE SENSITIVE ========*/
+
+/* these strings are matched in this order
+- print server
+- printer type
+- service name
+at least one of these must match or the PDE will not load*/
+
+/*if the print server matches the first string then the use the second string as the service name*/
+/*"print.ncsu.edu" = "lpr/print.ncsu.edu@EOS.NCSU.EDU";*/
+
+/*if the printer type matches the first string then use the second string as the service name*/
+"klpr" = "lpr/print.ncsu.edu@EOS.NCSU.EDU";
+
+/*use this by default
+ eg. lpr/print.ncsu.edu@EOS.NCSU.EDU */
+/*"Service Name" = "lpr/print.ncsu.edu@EOS.NCSU.EDU";*/

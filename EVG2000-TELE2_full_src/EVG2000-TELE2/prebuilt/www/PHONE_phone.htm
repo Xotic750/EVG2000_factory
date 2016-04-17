@@ -1,0 +1,454 @@
+<html>
+<head>
+<% meta_get(); %>
+
+<title>Phone Mapping Setting</title> 
+<link rel="stylesheet" href="form.css">
+<STYLE TYPE="text/javascript">
+	classes.num.all.fontFamily = "Courier";
+	classes.num.all.fontSize = "10pt" ;
+</style>
+<script language="javascript" type="text/javascript" src="utility1.js"></script>
+<script language="javascript" type="text/javascript" src="linux.js"></script>
+<script language="javascript" type="text/javascript" src="func.js"></script>
+<script language="javascript" type="text/javascript">
+<!-- hide script from old browsers
+var DectRegState = '2';
+//var DectRegState = 31;
+
+var PSTNOutgoing = '1111111';
+var PSTNIncoming = '1111111';
+
+var OutgoingMap = new Array(7);
+var IncomingMap = new Array(4);
+
+OutgoingMap[0] = '0010';
+OutgoingMap[1] = '0010';
+OutgoingMap[2] = '0010';
+OutgoingMap[3] = '0010';
+OutgoingMap[4] = '0010';
+OutgoingMap[5] = '0010';
+OutgoingMap[6] = '0000';
+
+IncomingMap[0] = '1000000';
+IncomingMap[1] = '0100000';
+IncomingMap[2] = '0010000';
+IncomingMap[3] = '0001000';
+
+/*
+OutgoingMap[0] = '1000';
+OutgoingMap[1] = '0100';
+OutgoingMap[2] = '0010';
+OutgoingMap[3] = '0001';
+OutgoingMap[4] = '0000';
+OutgoingMap[5] = '0000';
+OutgoingMap[6] = '0000';
+
+IncomingMap[0] = '1000000';
+IncomingMap[1] = '0100000';
+IncomingMap[2] = '0010000';
+IncomingMap[3] = '0001000';
+*/
+
+
+var disabled;
+if(DectRegState == 1)
+	disabled = new initArray("","","","disabled=true ","disabled=true ","disabled=true ","disabled=true ");
+else if(DectRegState == 3)
+	disabled = new initArray("","","","","disabled=true ","disabled=true ","disabled=true ");
+else if(DectRegState == 7)
+	disabled = new initArray("","","","","","disabled=true ","disabled=true ");
+else if(DectRegState == 15)
+	disabled = new initArray("","","","","","","disabled=true ");
+else if(DectRegState == 31)
+	disabled = new initArray("","","","","","","");
+else 
+    disabled = new initArray("disabled=true ","disabled=true","disabled=true ","disabled=true ","disabled=true ","disabled=true ","disabled=true ");
+	//disabled = new initArray("","","disabled=true ","disabled=true ","disabled=true ","disabled=true ","disabled=true ");
+
+/*var for upload*/	
+
+var OutgoingMapping = new Array(["0","0","0","0"],["0","0","0","0"],["0","0","0","0"],["0","0","0","0"],["0","0","0","0"],["0","0","0","0"],["0","0","0","0"]);
+var IncomingMapping = new Array(["0","0","0","0","0","0","0"],["0","0","0","0","0","0","0"],["0","0","0","0","0","0","0"],["0","0","0","0","0","0","0"]);
+var PSTNOutgoingMapping = new initArray("0","0","0","0","0","0","0");
+var PSTNIncomingMapping = new initArray("0","0","0","0","0","0","0");
+
+function initArray() 
+{
+      this.length = initArray.arguments.length
+      for (var i = 0; i < this.length; i++)
+      this[i] = initArray.arguments[i]
+}
+
+function isIntStrN(str,length) {
+    var i;
+    for(i = 0; i<length; i++) {
+        var c = str.substring(i, i+1);
+        if("0" <= c && c <= "9") {
+            continue;
+        }
+        return false;
+    }
+    return true;
+}
+
+function show_first_row()
+{
+	var tmp = "";
+	tmp += '<td align="center"><span class="thead">PSTN</span></td>';
+    for(var i = 1; i <= 4; i++)
+    {            
+        tmp += '<td align="center"><span class="thead">VOIP '+i+' </span></td>';
+    }
+
+    document.write(tmp);
+}
+
+function set_outgoing_mapping(selectedVOIP, selectedPhone){
+	var cf = document.forms[0];
+	var temp_map;
+
+	OutgoingMapping[selectedPhone] = Array("0","0","0","0");
+	OutgoingMapping[selectedPhone][selectedVOIP] = '1';
+	temp_map = OutgoingMapping[selectedPhone].join("");
+
+	//alert(temp_map);
+}
+
+function set_PSTN_outgoing_mapping(selectedPhone){
+	var cf = document.forms[0];
+	var temp_map = 'PSTNOutgoingMapping = ';
+
+	if(PSTNOutgoingMapping[selectedPhone] == '1')
+	{
+		PSTNOutgoingMapping[selectedPhone] = '0';
+		eval('cf.PSTNOutgoingCell'+selectedPhone+'.checked =0;');
+	}
+	else
+    {
+		PSTNOutgoingMapping[selectedPhone] = '1';
+	}
+	for(var i=0; i<7; i++)
+		temp_map += PSTNOutgoingMapping[i];
+	//alert(temp_map);
+}
+function set_PSTN_incoming_mapping(selectedPhone){
+	var cf = document.forms[0];
+	var temp_map = 'PSTNIncomingMapping = ';
+
+	if(PSTNIncomingMapping[selectedPhone] == '1')
+		{
+			PSTNIncomingMapping[selectedPhone] = '0';
+			eval('cf.PSTNIncomingCell'+selectedPhone+'.checked =0;');
+		}
+	else
+	    {
+			PSTNIncomingMapping[selectedPhone] = '1';
+		}
+	for(var i=0; i<7; i++)
+		temp_map += PSTNIncomingMapping[i];
+	//alert(temp_map);
+}
+
+function set_incoming_mapping(selectedVOIP, selectedPhone){
+	var cf = document.forms[0];
+	var temp_map;
+	if(IncomingMapping[selectedVOIP][selectedPhone] == '1')
+		{
+			IncomingMapping[selectedVOIP][selectedPhone] = '0';
+			eval('cf.IncomingCell'+selectedPhone+selectedVOIP+'.checked =0;');
+
+		}
+	else
+	    IncomingMapping[selectedVOIP][selectedPhone] = '1';
+
+	temp_map = IncomingMapping[selectedVOIP].join("");
+
+	//alert(temp_map);
+
+}
+function show_incoming_mapping()
+{
+	var tmp = "";
+	var phonename = new initArray("Phone1","Phone2","DECT1","DECT2","DECT3","DECT4","DECT5");
+
+    for(var j = 0; j < 7; j++)
+    {
+        tmp += '<tr><td align="center"><span class="thead">'+phonename[j]+'</span></td>';
+        //tmp += '<td align="center"><input type="radio" '+disabled[j]+'name="PSTNIncomingCell'+j+'" value="'+j+'" onClick="set_PSTN_incoming_mapping(' + j + ')"></td>';
+        tmp += '<td align="center"><input type="radio" '+disabled[j]+'name="PSTNIncomingCell'+j+'" value="'+j+'" onClick="set_PSTN_incoming_mapping(' + j + ')" checked></td>';         
+        for(var i = 0; i <4; i++)    
+        {
+            //tmp += '<td align="center"><input type="radio" '+disabled[j]+'name="IncomingCell'+j+i+'" value="'+j+'"  onClick="set_incoming_mapping('  + i +   ', ' + j + ')"></td>'
+        
+            if (j==0 && i ==0)
+                tmp += '<td align="center"><input type="radio" '+disabled[j]+'name="IncomingCell'+j+i+'" value="'+j+'"  onClick="set_incoming_mapping('  + i +   ', ' + j + ')" checked></td>'
+            else if (j==1 && i ==1)
+                tmp += '<td align="center"><input type="radio" '+disabled[j]+'name="IncomingCell'+j+i+'" value="'+j+'"  onClick="set_incoming_mapping('  + i +   ', ' + j + ')" checked></td>'
+            else if (j==2 && i ==2)
+                tmp += '<td align="center"><input type="radio" '+disabled[j]+'name="IncomingCell'+j+i+'" value="'+j+'"  onClick="set_incoming_mapping('  + i +   ', ' + j + ')" checked></td>'
+            else if (j==3 && i ==3)
+                tmp += '<td align="center"><input type="radio" '+disabled[j]+'name="IncomingCell'+j+i+'" value="'+j+'"  onClick="set_incoming_mapping('  + i +   ', ' + j + ')" checked></td>'
+            else
+                tmp += '<td align="center"><input type="radio" '+disabled[j]+'name="IncomingCell'+j+i+'" value="'+j+'"  onClick="set_incoming_mapping('  + i +   ', ' + j + ')"></td>'
+        }
+        
+        tmp += '</tr>';   
+    }  
+
+    document.write(tmp);
+}
+
+function show_outgoing_mapping()
+{
+	var tmp = "";
+	var phonename = new initArray("Phone1","Phone2","DECT1","DECT2","DECT3","DECT4","DECT5","PSTN");
+
+    for(var j = 0; j < 7; j++)
+    {
+        tmp += '<tr><td align="center"><span class="thead">'+phonename[j]+'</span></td>';
+        //tmp += '<td align="center"><input type="radio" '+disabled[j]+'name="PSTNOutgoingCell'+j+'" value="'+j+'" onClick="set_PSTN_outgoing_mapping(' + j + ')"></td>';
+        tmp += '<td align="center"><input type="radio" '+disabled[j]+'name="PSTNOutgoingCell'+j+'" value="'+j+'" onClick="set_PSTN_outgoing_mapping(' + j + ')" checked></td>';
+        for(var i = 0; i <4; i++)    
+        {
+            // tmp += '<td align="center"><input type="radio" '+disabled[j]+'name="OutgoingCell'+j+'" value="'+j+'" onClick="set_outgoing_mapping('  + i +   ', ' + j + ')"></td>';
+            if (j==0 && i==0)
+                tmp += '<td align="center"><input type="radio" '+ disabled[j] +' name="OutgoingCell'+j+'" value="'+j+'" onClick="set_outgoing_mapping('  + i +   ', ' + j + ')" checked></td>';
+            else if (j==1 && i==1)
+                tmp += '<td align="center"><input type="radio" '+ disabled[j] +' name="OutgoingCell'+j+'" value="'+j+'" onClick="set_outgoing_mapping('  + i +   ', ' + j + ')" checked></td>';
+            else if (j==2 && i==2)
+                tmp += '<td align="center"><input type="radio" '+ disabled[j] +' name="OutgoingCell'+j+'" value="'+j+'" onClick="set_outgoing_mapping('  + i +   ', ' + j + ')" checked></td>';
+            else if (j==3 && i==3)
+                tmp += '<td align="center"><input type="radio" '+ disabled[j] +' name="OutgoingCell'+j+'" value="'+j+'" onClick="set_outgoing_mapping('  + i +   ', ' + j + ')" checked></td>';
+            else
+                tmp += '<td align="center"><input type="radio" '+ disabled[j] +' name="OutgoingCell'+j+'" value="'+j+'" onClick="set_outgoing_mapping('  + i +   ', ' + j + ')"></td>';
+        }
+        
+        tmp += '</tr>';   
+   }  
+
+    document.write(tmp);
+}
+
+function frmLoad()
+{
+	var cf = document.forms[0];
+    
+	cf.Phone_1.value = "<% nvram_get("phone1_ext"); %>";
+	cf.Phone_2.value = "<% nvram_get("phone2_ext"); %>";
+
+
+/*
+	var cf = document.forms[0];
+    var DectRegState = "<% phone_get_extension("DectRegState"); %>";
+    
+	cf.Phone_1.value = "<% nvram_get("phone1_ext"); %>";
+	cf.Phone_2.value = "<% nvram_get("phone2_ext"); %>";
+	cf.Phone_3.value = "<% nvram_get("phone3_ext"); %>";
+	cf.Phone_4.value = "<% nvram_get("phone4_ext"); %>";
+	cf.Phone_5.value = "<% nvram_get("phone5_ext"); %>";
+	cf.Phone_6.value = "<% nvram_get("phone6_ext"); %>";
+	cf.Phone_7.value = "<% nvram_get("phone7_ext"); %>";
+
+	if(DectRegState == 1)
+	  {
+	  	cf.Phone_4.disabled = true;
+	  	cf.Phone_5.disabled = true;
+	  	cf.Phone_6.disabled = true;	
+	  	cf.Phone_7.disabled = true;  
+	  }
+	 else if(DectRegState == 3)
+	 {	  	
+	 	cf.Phone_5.disabled = true;
+	  	cf.Phone_6.disabled = true;	
+	  	cf.Phone_7.disabled = true;  
+	 }
+	 else if(DectRegState == 7)
+	 {	  	
+	  	cf.Phone_6.disabled = true;	
+	  	cf.Phone_7.disabled = true;  
+	 }
+	 else if(DectRegState == 15)
+	 {	  	
+	  	cf.Phone_7.disabled = true;  
+	 }
+	 else if(DectRegState == 31)
+	 {	  	
+		// all handset registered
+	 }
+	 else 
+	 {  
+	 	cf.Phone_3.disabled = true;
+		cf.Phone_4.disabled = true;
+	  	cf.Phone_5.disabled = true;
+	  	cf.Phone_6.disabled = true;	
+	  	cf.Phone_7.disabled = true; 
+	}
+*/
+}
+
+function checkdata()
+{
+
+	var cf = document.forms[0];
+	var msg ="";
+	
+	if (cf.Phone_1.value.length != 3)
+		msg+= "Phone 1 extension's length is invalid, extension should be 3 characters. \n";
+	else if(cf.Phone_1.value.charAt(2) != "*"||(!isIntStrN(cf.Phone_1.value,2)))
+		msg+= "Phone 1 extension is invalid, the first two characters should be digits and the last one must be '*'.";
+	if (cf.Phone_2.value.length != 3)
+		msg+= "Phone 2 extension's length is invalid, extension should be 3 characters. \n";
+	else if(cf.Phone_2.value.charAt(2) != "*"||(!isIntStrN(cf.Phone_2.value,2)))
+		msg+= "Phone 2 extension is invalid, the first two characters should be digits and the last one must be '*'.";
+
+	if(cf.Phone_1.value == cf.Phone_2.value)
+		msg+= "Different Phone's extension can not be same.";	
+		
+	if (msg.length > 1)
+	{
+	    alert(msg);
+	    return false;
+	}
+
+
+/*
+		if (cf.Phone_3.value.length != 3)
+			msg+= "Phone 3 extension's length is invalid, extension should be 3 characters. \n";
+		else if(cf.Phone_3.value.charAt(2) != "*"||(!isIntStrN(cf.Phone_3.value,2)))
+			msg+= "Phone 3 extension is invalid, the first two characters should be digits and the last one must be '*'.";
+		if (cf.Phone_4.value.length != 3)
+			msg+= "Phone 4 extension's length is invalid, extension should be 3 characters. \n";
+		else if(cf.Phone_4.value.charAt(2) != "*"||(!isIntStrN(cf.Phone_4.value,2)))
+			msg+= "Phone 4 extension is invalid, the first two characters should be digits and the last one must be '*'.";
+		if (cf.Phone_5.value.length != 3)
+			msg+= "Phone 5 extension's length is invalid, extension should be 3 characters. \n";
+		else if(cf.Phone_5.value.charAt(2) != "*"||(!isIntStrN(cf.Phone_5.value,2)))
+			msg+= "Phone 5 extension is invalid, the first two characters should be digits and the last one must be '*'.";
+		if (cf.Phone_6.value.length != 3)
+			msg+= "Phone 6 extension's length is invalid, extension should be 3 characters. \n";
+		else if(cf.Phone_6.value.charAt(2) != "*"||(!isIntStrN(cf.Phone_6.value,2)))
+			msg+= "Phone 6 extension is invalid, the first two characters should be digits and the last one must be '*'.";
+		if (cf.Phone_7.value.length != 3)
+			msg+= "Phone 7 extension's length is invalid, extension should be 3 characters. \n";
+		else if(cf.Phone_7.value.charAt(2) != "*"||(!isIntStrN(cf.Phone_7.value,2)))
+			msg+= "Phone 7 extension is invalid, the first two characters should be digits and the last one must be '*'.";
+
+		if(cf.Phone_1.value == cf.Phone_2.value||cf.Phone_1.value == cf.Phone_3.value||cf.Phone_1.value == cf.Phone_4.value||
+			cf.Phone_1.value == cf.Phone_5.value||cf.Phone_1.value == cf.Phone_6.value||cf.Phone_1.value == cf.Phone_7.value||
+			cf.Phone_2.value == cf.Phone_3.value||cf.Phone_2.value == cf.Phone_4.value||cf.Phone_2.value == cf.Phone_5.value||
+			cf.Phone_2.value == cf.Phone_6.value||cf.Phone_2.value == cf.Phone_7.value||cf.Phone_3.value == cf.Phone_4.value||
+			cf.Phone_3.value == cf.Phone_5.value||cf.Phone_3.value == cf.Phone_6.value||cf.Phone_3.value == cf.Phone_7.value||
+			cf.Phone_4.value == cf.Phone_5.value||cf.Phone_4.value == cf.Phone_6.value||cf.Phone_4.value == cf.Phone_7.value||
+			cf.Phone_5.value == cf.Phone_6.value||cf.Phone_5.value == cf.Phone_7.value||cf.Phone_6.value == cf.Phone_7.value)
+			msg+= "Different Phone's extension can not be same.";	
+			
+		if (msg.length > 1)
+    	{
+		    alert(msg);
+		    return false;
+    	}
+
+*/
+    	return true;		
+}
+// -->
+</script> 
+</head>
+<body bgcolor="#ffffff" onload="loadhelp('PHONE_phone'); frmLoad();">
+<form name="formname" method="POST" action="phoneMapping.cgi">
+<table border="0" cellpadding="0" cellspacing="3" width="100%">
+
+<tr><td colspan="3"><h1>Phone Mapping  Settings</h1></td></tr>
+
+<table width="100%">
+<tr><td colspan="3" background="liteblue.gif" height="12">&nbsp; </td></tr>
+
+<tr><td><b><a href="javascript:loadhelp('PHONE_phone','OutgoingMapping')" tabindex="-1">Outgoing Call Mapping</a></b></td></tr>
+<tr> 
+<td nowrap colspan="">
+<table border="1" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+  <td align="center"><span class="thead">Endpoint/VOIP Account</span></td>
+  <script>show_first_row();</script>
+</tr>
+<script>show_outgoing_mapping();</script>
+<!--
+  <td nowrap colspan="2"><% phone_show_outgoing_mapping(); %></td>
+-->
+</table>
+</td>
+</tr>
+<tr><td>&nbsp;</td></tr>
+
+<tr><td colspan="3" background="liteblue.gif" height="12">&nbsp; </td></tr>
+<tr><td><b><a href="javascript:loadhelp('PHONE_phone','IncomingMapping')" tabindex="-1">Incoming Call Mapping</a></b></td></tr>
+<tr> 
+<td nowrap colspan="">
+<table border="1" cellpadding="0" cellspacing="0" width="100%">
+<tr>
+  <td align="center"><span class="thead">Endpoint/VOIP Account</span></td>
+  <script>show_first_row();</script>
+</tr>
+<script>show_incoming_mapping();</script>
+<!--
+<td nowrap colspan="2"><% phone_show_incoming_mapping(); %></td>
+-->
+
+</table>
+
+</td>
+</tr>
+<tr><td>&nbsp;</td></tr>
+<tr><td colspan="" background="liteblue.gif" height="">&nbsp;</td></tr>
+</table>
+	 
+
+<table width="100%">
+<tr><td><b><a href="javascript:loadhelp('PHONE_phone','Extension')" tabindex="-1">Extension Table</a></b></a></td></tr>
+<tr>
+<td>Phone 1</td>
+<td align="right"><input type="text" name="Phone_1" class="num" size="5" maxlength="3" ></td>
+</tr>	
+<tr>
+<td>Phone 2</td>
+<td align="right"><input type="text" name="Phone_2" class="num" size="5" maxlength="3" ></td>
+</tr>
+<!--
+<tr>
+<td>DECT Handset 1</td>
+<td align="right"><input type="text" name="Phone_3" class="num" size="5" maxlength="3" ></td>
+</tr>	
+<tr>
+<td>DECT Handset 2</td>
+<td align="right"><input type="text" name="Phone_4" class="num" size="5" maxlength="3" ></td>
+</tr>	
+<tr>
+<td>DECT Handset 3</td>
+<td align="right"><input type="text" name="Phone_5" class="num" size="5" maxlength="3" ></td>
+</tr>	
+<tr>
+<td>DECT Handset 4</td>
+ <td align="right"><input type="text" name="Phone_6" class="num" size="5" maxlength="3" ></td>
+</tr>	
+<tr>
+<td>DECT Handset 5</td>
+<td align="right"><input type="text" name="Phone_7" class="num" size="5" maxlength="3" ></td>
+</tr>	
+-->
+<tr><td colspan="2" background="liteblue.gif" height="12">&nbsp; </td></tr> 
+</table>
+
+
+<table width="100%">
+<tr> 
+  <td colspan="3" align="center"> 
+  <input type="SUBMIT" name="apply" value="Apply" onClick=" checkdata(); ">
+  <input type="RESET" name="Cancel" value="Cancel" onClick="location.href='PHONE_phone.htm'">
+</tr>
+</table>
+
+</table>
+</form>
+</body>
+</html>

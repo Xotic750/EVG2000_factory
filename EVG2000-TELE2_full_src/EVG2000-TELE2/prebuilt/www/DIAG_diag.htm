@@ -1,0 +1,142 @@
+<html>
+<head>
+<% meta_get(); %> 
+<title>Diagnostics</title> 
+<link rel="stylesheet" href="form.css">
+<STYLE TYPE="text/javascript">
+	classes.num.all.fontFamily = "Courier";
+	classes.num.all.fontSize = "10pt" ;
+</style>
+<% script_get(); %> 
+<script language="javascript" type="text/javascript">
+<!-- hide script from old browsers
+
+function ping_ck()
+{
+    var cf = document.forms['ping'];
+    if(checkIP(cf.IPAddr1,cf.IPAddr2,cf.IPAddr3,cf.IPAddr4,254))
+    {
+        alert("Invalid IP address, please enter again!\n");
+        return false;
+    }
+    cf.ping_IPAddr.value = cf.IPAddr1.value+'.'+cf.IPAddr2.value+'.'+cf.IPAddr3.value+'.'+cf.IPAddr4.value;
+    return ;
+}
+
+function lookup_ck()
+{
+    var cf = document.forms['dnslookup'];
+    if(isBlank(cf.host_name))
+    {
+        alert("Internet name can not be blank!\n");
+        return false;
+    }
+    
+	if(cf.host_name.value.indexOf(".") == -1)
+    {
+        alert("Invalid Internet name, please enter again.\n");
+        return false;
+    }
+	
+    return true;
+}
+
+var msg_restart = "Warning! Restarting will break any existing connections either to the Router (such as this one) or through the Router (for example, LAN users accessing the Internet)";
+
+//-->
+</script>
+</head>
+<body bgcolor="#ffffff" onload="loadhelp('DIAG_diag');document.forms[0].elements[0].focus();">
+<form name="ping" method="POST" action="ping.cgi" onSubmit="return ping_ck();">
+<table border="0" cellpadding="0" cellspacing="3" width="100%">
+<tr>
+	<td colspan="3"><h1>Diagnostics</h1></td>
+</tr>
+<tr>
+  	<td colspan="3" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+<tr>
+	<td colspan="3" nowrap><a href="javascript:loadhelp('DIAG_diag','ping')" tabindex="-1"><b>Ping an IP address</b></a></td>
+</tr>
+<tr>
+  <td nowrap>IP Address:</td>
+  <td align="right" nowrap class="num">
+  	<input type="text" name="IPAddr1" class="num" size="4" maxlength="3" value="">.
+  	<input type="text" name="IPAddr2" class="num" size="4" maxlength="3" value="">.
+  	<input type="text" name="IPAddr3" class="num" size="4" maxlength="3" value="">.
+  	<input type="text" name="IPAddr4" class="num" size="4" maxlength="3" value="">
+  </td>
+  <td nowrap align="right">&nbsp;<input type="submit" name="ping" value="Ping"></td>
+</tr>
+</table>
+<input type="hidden" name="ping_IPAddr" value="">
+</form>
+
+<form name="dnslookup" method="POST" action="dnslookup.cgi" class="compressed" onSubmit="return lookup_ck();">
+<table border="0" cellpadding="0" cellspacing="3" width="100%">
+<tr>
+  	<td colspan="3" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+<tr>
+	<td colspan="3" nowrap><a href="javascript:loadhelp('DIAG_diag','dnslookup')" tabindex="-1" ><b>Perform a DNS Lookup</b></a></td>
+</tr>
+<tr>
+	<td nowrap>Internet Name:</td>
+	<td nowrap align="right"><input type="text" name="host_name" value="<%diag_get_dns_result("host_name");%>" size="24" maxlength="128"></td>
+	<td nowrap align="right">&nbsp;<input type="submit" name="lookup" value="Lookup"></td>
+</tr>
+<tr>
+ 	<td nowrap>IP Address:</td>
+ 	<td nowrap align="right"><b><%diag_get_dns_result("host_ip");%></b></td>
+ 	<td> &nbsp; </td>
+</tr> 
+<tr>
+ 	<td nowrap>DNS Server:</td>
+    <td nowrap align="right"><b><%diag_get_dns_result("lookup_server");%></b></td>
+    <td> &nbsp; </td>
+</tr>
+</table>
+</form>
+
+<form name="rtable" method="POST" action="rt.cgi" class="compressed">
+<table border="0" cellpadding="0" cellspacing="3" width="100%">
+<tr>
+  <td background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+<tr>
+	<td nowrap><a href="javascript:loadhelp('DIAG_diag','rtable')" tabindex="-1"><b>Display the Routing Table</b></a></td>
+</tr>
+<tr>
+	<td colspan="3" align="right"><input type="submit" name="display" value="Display"></td>
+</tr>
+
+<tr>
+  <td nowrap height="12"> &nbsp;</td>
+</tr>
+<tr>
+  <td nowrap background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+</table>
+
+</form>
+
+
+<form name="reboot" method="POST" action="reboot.cgi" class="compressed">
+<table border="0" cellpadding="0" cellspacing="3" width="100%">
+<tr>
+<tr>
+	<td nowrap><a href="javascript:loadhelp('DIAG_diag','reboot')" tabindex="-1"><b>Reboot the Router</b></a></td>
+</tr>
+
+<tr>
+	<td nowrap align="right"><input type="submit" name="Reboot" value="Reboot" ></td>
+</tr>
+</table>
+
+</form>
+
+
+<p>
+</p>
+</body>
+</html>

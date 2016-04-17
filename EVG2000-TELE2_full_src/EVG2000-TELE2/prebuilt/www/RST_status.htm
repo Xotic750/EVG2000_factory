@@ -1,0 +1,311 @@
+<html>
+<head>
+<% meta_get(); %>
+<title>Router Status</title> 
+<link rel="stylesheet" href="form.css">
+<% script_get(); %>
+<script language="javascript" type="text/javascript">
+
+function openStatWindow() {
+ window.open(this.form.stat_page.value, '','width=380,height=350,status=yes');
+ return ture;
+}
+function openStatusWindow()
+{
+	var conn = document.forms[0].wantype.value;
+	var winoptions;
+	if (conn == "mer" || conn == "pppoe")
+		winoptions = "width=400,height=400,status=yes,resizable=yes";
+	else
+		winoptions = "width=400,height=360,status=yes,resizable=yes";
+	openDataSubWin('RST_wanstat.htm',winoptions);
+}
+function frmload() 
+{
+    var cf = document.forms[0];
+    var tmp = "";
+
+    var lan_select = "<% nvram_get("dhcp_now_reserve_no"); %>";
+    var ssid_select = "<% rst_cgi_get_ssid_select(); %>";
+    var wan_proto = "";
+    var lan_proto = ""; 
+    var wanIpStatic = "<% rst_cgi_get_wan_proto("wan_ipstatic"); %>";
+
+  
+    cf.wan_num.value = "<% nvram_get("nowchoice"); %>";
+    
+    cf.AdslMAC.value = "<% rst_cgi_get_mac_addr("wan_hwaddr"); %>" ;
+    cf.IPAdr1.value = "<% rst_cgi_get_wan_param("wan_ipaddr"); %>" ; 
+    wan_proto = cf.wantype.value;
+    
+    
+    if (wan_proto == "pppoa")
+        cf.NetType1.value = "PPPoA";
+    else if (wan_proto == "ipoa")
+        cf.NetType1.value = "IPOA";
+    else if (wan_proto == "mer"&& wanIpStatic != "1")
+        cf.NetType1.value = "DHCP Client";
+    else if (wan_proto == "mer"&& wanIpStatic == "1")
+        cf.NetType1.value = "Static IP";
+    else if (wan_proto == "pppoe")
+        cf.NetType1.value = "PPPoE";
+    else
+        cf.NetType1.value = "NONE";
+
+    cf.Mask1.value = "<% rst_cgi_get_wan_param("wan_netmask"); %>" ;
+    cf.Gateway1.value = "<% rst_cgi_get_wan_param("wan_gateway"); %>" ;    
+
+    cf.Lan_num.value = lan_select;
+    cf.LanMAC.value = "<% rst_cgi_get_lan_param("lan_hwaddr"); %>" ;
+    cf.LanIPAdr.value = "<% rst_cgi_get_lan_param("lan_ipaddr"); %>" ;
+    cf.LanMask.value = "<% rst_cgi_get_lan_param("lan_netmask"); %>" ;
+
+    lan_proto = "<% rst_cgi_get_lan_param("lan_proto"); %>" ; 
+    if (lan_proto == "dhcp")   
+       cf.DHCP.value = "ON";
+    if (lan_proto == "static")   
+       cf.DHCP.value = "OFF";
+
+    cf.mssid.selectedIndex = ssid_select;
+    //cf.SSIDName.value = "<% wlg_cgi_get_ssid(ssid_select);%>" ;
+    cf.Region.value = "<% wlg_cgi_get_country(ssid_select);%>" ;   
+    cf.Channel.value = "<% wlg_cgi_get_chstr(ssid_select);%>" ;
+    cf.WirelessAP.value = "<% wlg_cgi_get_apstate(ssid_select);%>" ;
+    cf.Broadcast.value = "<% wlg_cgi_get_bcaststate(ssid_select);%>" ;   
+    
+    cf.systemName.value = "<% nvram_get("system_name"); %>" ;
+    cf.fwVersion.value = "<% rst_cgi_get_fw_version(); %> " ;
+    //cf.version.value = "<% rst_cgi_get_adsl_stats("Version"); %>" ;
+    //cf.connection.value = "<% rst_cgi_get_adsl_stats("Connection"); %>" ;
+    //cf.downRate.value = "<% rst_cgi_get_adsl_stats("LineRate","down"); %>" ;
+    //cf.upRate.value = "<% rst_cgi_get_adsl_stats("LineRate","up"); %>" ;
+    //cf.vpi.value = "<% rst_cgi_get_adsl_stats("vpi"); %>" ;
+    //cf.vci.value = "<% rst_cgi_get_adsl_stats("vci"); %>" ;
+}
+
+function selectWan() 
+{    
+    document.forms[0].submit();
+}
+
+</script> 
+</head>
+<body bgcolor="#ffffff" onload="frmload();loadhelp('RST_status');" onUnload="closeWin(datSubWinVar);">
+<form method="POST" action="s_status.cgi">
+<table border="0" cellpadding="0" cellspacing="3" width="100%">
+<tr>
+	<td colspan="2"><h1>Router Status</h1></td>
+</tr>
+
+<tr> 
+	<td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+
+<tr>
+	<td width="50%"><b>Account Name</b></td>
+	<td width="50%"><input accesskey name="systemName" size="40" readonly="true" style="font-size:13px;border:0px" ></td>
+</tr>
+
+<tr>
+	<td width="50%"><b>Firmware Version </b></td>
+	<td width="50%"><input accesskey name="fwVersion" size="40" readonly="true" style="font-size:13px;border:0px" ></td>
+</tr>
+
+<tr> 
+	<td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+
+<tr>
+	<td width="50%"><a href="javascript:loadhelp('RST_status','wan_port')" tabindex="-1">
+<span class="subhead">WAN Port </span> </a></td>
+<% vlan_cgi_show_item_begin("start"); %>
+	<td  width="50%" align="left">
+  		<select type="SUBMIT" name="wan_num" size="1" onChange= "document.forms[0].submit();" >
+    		<option value="0">WAN1</option>
+    		<option value="1">WAN2</option>
+    		<option value="2">WAN3</option>
+            <option value="3">WAN4</option>
+    		<option value="4">WAN5</option>
+    		<option value="5">WAN6</option>
+    		<option value="6">WAN7</option>
+    		<option value="7">WAN8</option>
+ 	    </select>
+</td>
+<% vlan_cgi_show_item_begin("end"); %>
+</tr>
+
+<tr>
+	<td width="50%"><b>MAC Address </b></td>
+        <td width="50%"><input accesskey name="AdslMAC" size="40" readonly="true" style="font-size:13px;border:0px" ></td>
+</tr>
+
+<tr>
+	<td width="50%"><b>IP Address </b></td>
+	<td width="50%"><input accesskey name="IPAdr1" size="40" readonly="true" style="font-size:13px;border:0px" ></td>
+</tr>
+
+<tr>
+	<td width="50%"><b>Network Type </b></td>
+	<td width="50%"><input accesskey name="NetType1" size="40" readonly="true" style="font-size:13px;border:0px" ></td>
+</tr>
+
+<tr>
+	<td width="50%"><b>IP Subnet Mask </b></td>
+	<td width="50%"><input accesskey  name="Mask1" size="40" readonly="true" style="font-size:13px;border:0px" ></td>
+</tr>
+
+<tr>
+	<td width="50%"><b>Gateway IP Address</b></td>
+	<td width="50%"><input accesskey name="Gateway1" size="40" readonly="true" style="font-size:13px;border:0px" ></td>
+</tr>
+
+<tr>
+	<td nowrap width="50%"><b>Domain Name Server <!><br></b></td>
+	<td nowrap width="50%"><font style="font-size:13px;FONT-FAMILY: Arial";><% rst_cgi_get_wan_dns(); %></font></td>
+</tr>
+
+<tr> 
+ <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+
+<tr>
+	<td width="50%"><a href="javascript:loadhelp('RST_status','lan_port')" tabindex="-1"><span class="subhead">LAN Port</span></a></td>
+			<td  width="50%" align="left">
+  			<select name="Lan_num" size="1" onChange= "document.forms[0].submit();" >
+            <option value="0">LAN1</option>
+            <option value="1">LAN2</option>
+            <option value="2">LAN3</option>
+            <option value="3">LAN4</option>
+ 			</select>
+ 			</td>
+</tr>
+
+<tr>
+	<td width="50%"><b>MAC Address </b></td>
+	<td width="50%"><input accesskey name="LanMAC" size="40" readonly="true" style="font-size:13px;border:0px" ></td>
+</tr>
+
+<tr>
+	<td width="50%"><b>IP Address </b></td>
+	<td width="50%"><input accesskey name="LanIPAdr" size="40" readonly="true" style="font-size:13px;border:0px" ></td>
+</tr>
+
+<tr>
+	<td width="50%"><b>Network Type </b></td>
+	<td width="50%"><input accesskey name="DHCP" size="40" readonly="true" style="font-size:13px;border:0px" ></td>
+</tr>
+
+<tr>
+	<td width="50%"><b>IP Subnet Mask </b></td>
+	<td width="50%"><input accesskey name="LanMask" size="40" readonly="true" style="font-size:13px;border:0px" ></td>
+</tr>
+
+<tr> 
+	<td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+
+<tr>
+	<td width="50%"><a href="javascript:loadhelp('RST_status','wireless_port')" tabindex="-1">
+<span class="subhead">Wireless Port </span> </a></td>
+			<td  width="50%" align="left">
+  			<select name="mssid" size="1" onChange= "document.forms[0].submit();">
+	  		<option value="0"> SSID1</option>
+	  		<option value="1"> SSID2</option>
+	  		<option value="2"> SSID3</option>
+	  		<option value="3"> SSID4</option>
+ 			</select>
+</td>
+</tr>
+<tr>
+	<td width="50%"><b>Name (SSID)</b></td>
+	<td width="50%"><input accesskey name="SSIDName" size="40" readonly="true" style="font-size:13px;border:0px" value="<% wlg_cgi_get_ssid(ssid_select);%>" ></td>
+</tr>
+<tr>
+	<td width="50%"><b>Region</b></td>
+	<td width="50%"><input accesskey name="Region" size="40" readonly="true" style="font-size:13px;border:0px" ></td>
+</tr>
+<tr>
+	<td width="50%"><b>Channel</b></td>
+	<td width="50%"><input accesskey name="Channel" size="40" readonly="true" style="font-size:13px;border:0px" ></td>
+</tr>
+<tr>
+	<td width="50%"><b>Wireless AP</b></td>
+	<td width="50%"><input accesskey name="WirelessAP" size="40" readonly="true" style="font-size:13px;border:0px" ></td>
+</tr>
+<tr>
+	<td width="50%"><b>Broadcast Name</b></td>
+	<td width="50%"><input accesskey name="Broadcast" size="40" readonly="true" style="font-size:13px;border:0px" ></td>
+</tr>
+
+<% nvram_match("wla_wds_enable","0","<!--"); %>
+<tr>
+	<td colspan="2" tabindex="-1"><span class="subhead">Wireless Repeating</span></td>
+</tr>
+<% nvram_match("wla_wds_enable","0","-->"); %>
+
+<% nvram_invmatch("wla_repeater","1","<!--"); %>
+<tr>
+	<td width="50%"><b>Link Rate</b></td>
+    <td width="50%"><% wds_cgi_get_param("link_rate"); %></td>
+</tr>
+<tr>
+	<td width="50%"><b>Signal Strength</b></td>
+    <td width="50%"><% wds_cgi_get_param("signal_strength"); %></td>
+</tr>
+<% nvram_invmatch("wla_repeater","1","-->"); %>
+
+<% nvram_invmatch("wla_wds_mode","2","<!--"); %>
+<tr>
+	<td width="50%"><b>Repeater1 Address</b></td>
+    <td width="50%"><% wds_cgi_get_param("repeater1_addr"); %></td>
+</tr>
+<tr>
+	<td width="50%"><b>Link Status</b></td>
+    <td width="50%"><% wds_cgi_get_param("link1_rate"); %></td>
+</tr>
+
+<tr>
+	<td width="50%"><b>Repeater2 Address</b></td>
+    <td width="50%"><% wds_cgi_get_param("repeater2_addr"); %></td>
+</tr>
+<tr>
+	<td width="50%"><b>Link Status</b></td>
+    <td width="50%"><% wds_cgi_get_param("link2_rate"); %></td>
+</tr>
+<tr>
+	<td width="50%"><b>Repeater3 Address</b></td>
+    <td width="50%"><% wds_cgi_get_param("repeater3_addr"); %></td>
+</tr>
+<tr>
+	<td width="50%"><b>Link Status</b></td>
+    <td width="50%"><% wds_cgi_get_param("link3_rate"); %></td>
+</tr>
+<tr>
+	<td width="50%"><b>Repeater4 Address</b></td>
+    <td width="50%"><% wds_cgi_get_param("repeater4_addr"); %></td>
+</tr>
+<tr>
+	<td width="50%"><b>Link Status</b></td>
+    <td width="50%"><% wds_cgi_get_param("link4_rate"); %></td>
+</tr>
+
+<% nvram_invmatch("wla_wds_mode","2","-->"); %>
+
+
+<tr> 
+	<td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+<tr>
+	<td nowrap colspan="2" align="center"><input type="BUTTON" name="system" value="Show Statistics" onclick="openDataSubWin('RST_statistics.htm','width=560,height=275,status=yes,resizable=yes');">
+<INPUT type="button" name="StPoE" value="Connection Status" onclick="openStatusWindow()"></TD>
+</tr>
+</table>
+
+<input type="hidden" name="wantype" value="<% rst_cgi_get_wan_param("wan_proto"); %>">
+<% vlan_cgi_show_item_begin("markstart"); %>
+<input type="hidden" name="wan_num" value="">
+<% vlan_cgi_show_item_begin("markend"); %>
+</form>
+</body>
+</html>
+

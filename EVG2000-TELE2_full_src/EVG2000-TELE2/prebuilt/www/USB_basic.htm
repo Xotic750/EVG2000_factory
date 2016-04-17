@@ -1,0 +1,138 @@
+<html><head>
+<% meta_get(); %>
+<title>Block Services</title> 
+<link rel="stylesheet" href="form.css">
+<style type="text/javascript">
+    classes.num.all.fontFamily = "Courier";
+    classes.num.all.fontSize = "10pt" ;
+</style>
+<% script_get(); %>
+<script language="javascript" type="text/javascript">
+<!--
+function remove_disk()
+{
+    var msg = ""
+	cf=document.forms[0];
+	
+	if(cf.usb_num.value == 0)
+	{
+         msg+= "No Disk.\n";
+    }
+    if (msg.length > 1)
+	{
+		alert(msg);
+		return false;
+    }
+    return true;
+}
+
+function loadSettings()
+{
+    var cf=document.forms[0];
+	if (cf.no_usb_device.value == 1)
+        cf.Remove.disabled = true;    
+    if (cf.umountsucc.value == "1")
+    {
+        //openWarnWindow();
+          alert("Now you can remove this device.\n");
+    }
+    else if (cf.umountsucc.value == "2")
+    {
+        openWarnWindow();
+    }
+}
+var trWarnWinVar = null;
+
+function openTrWarnWin(filename,win_type)
+{
+    trWarnWinVar = window.open(filename,'trwarn_win',win_type); 
+}
+
+function openWarnWindow()
+{
+	var winoptions;
+
+    winoptions = "width=400,height=360,status=yes,resizable=yes";
+    openTrWarnWin('USB_umount.htm',winoptions);
+}
+//-->
+</script></head>
+<body onload="loadhelp('USB_basic');loadSettings();" bgcolor="#ffffff">
+<form name="frmService" method="post" action="usb_adv.cgi">
+    <table border="0" cellpadding="0" cellspacing="3" width="100%">
+    <tr>
+        <td><h1>USB Storage (Advanced Settings)</h1></td>
+    </tr>
+<tr>
+ <td>
+ <img src="liteblue.gif" height="12" width="100%">
+ </td>
+</tr>
+<tr><td></td></tr><tr><td></td></tr>
+<tr>
+<td><a href="javascript:loadhelp('USB_basic','network')" 
+tabindex="-1"><b>Network/Device Name:</b></a>&nbsp;&nbsp;&nbsp;&nbsp; <% usb_cgi_get_url("smb_lan"); %></td>
+</tr>
+<tr><td></td></tr><tr><td></td></tr>
+<tr>
+ <td>
+ <img src="liteblue.gif" height="12" width="100%">
+ </td>
+</tr>
+<tr><td></td></tr><tr><td></td></tr>
+<tr>
+<td><a href="javascript:loadhelp('USB_basic','Folders_tab')" tabindex="-1"><b>Available Network Folders</b></a></td>
+</tr>
+<tr>
+<td>
+<table border="1" cellpadding="2" cellspacing="0" width="100%">
+
+<tr>
+<td align="center" nowrap="nowrap" width="20%"><span class="thead">Share Name</span></td>
+<td align="center" nowrap="nowrap" width="20%"><span class="thead">Read Access</span></td>
+<td align="center" nowrap="nowrap" width="7%"><span class="thead">Write Access</span></td>
+<td align="center" nowrap="nowrap" width="19%"><span class="thead">Folder Name</span></td>
+<td align="center" nowrap="nowrap" width="20%"><span class="thead">Volume Name</span></td>
+<td align="center" nowrap="nowrap" width="7%"><span class="thead">Total Space</span></td>
+<td align="center" nowrap="nowrap" width="7%"><span class="thead">Free Space</span></td>
+</tr>
+
+<% usb_cgi_get_table("basic_usb_table"); %>
+</table>
+</td>
+</tr>
+<tr><td></td></tr><tr><td></td></tr><tr><td></td></tr>
+<tr>
+<td>
+<input name="Edit" value="Edit" onclick="location.href='USB_adv.htm'" type="button" style="float: left"></td>
+</tr>
+<tr><td></td></tr><tr><td></td></tr>
+<tr>
+ <td>
+ <img src="liteblue.gif" height="12" width="100%">
+ </td>
+</tr>
+<tr><td></td></tr><tr><td></td></tr>
+<tr>
+<td>
+<input name="Remove" value="Safely Remove USB Device" onclick="return remove_disk();" type="submit">
+</td>
+</tr>
+<tr><td></td></tr><tr><td></td></tr>
+<tr>
+ <td>
+ <img src="liteblue.gif" height="12" width="100%">
+ </td>
+</tr>
+<tr><td></td></tr><tr><td></td></tr>
+<tr>
+<td>
+<input name="Refresh" value="Refresh" onclick="location.href='USB_basic.htm'" type="button" style="float: left">
+</td>
+</tr>
+</table>
+<input type="hidden" name="usb_num" value="<% usb_cgi_get_param("dev_num"); %>">
+<input type="hidden" name="action" value="basic">
+<INPUT name=umountsucc type=hidden value="<% nvram_get("usb_umount") %>">
+</form>
+</body></html>

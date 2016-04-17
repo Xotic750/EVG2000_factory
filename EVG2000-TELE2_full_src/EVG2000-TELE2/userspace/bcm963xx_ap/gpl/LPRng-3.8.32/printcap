@@ -1,0 +1,2 @@
+#USBPrn:direct:lp=/dev/usb/lp0
+USBPrn:lp=/dev/usb/lp0:sd=/var/spool/lpd/%P

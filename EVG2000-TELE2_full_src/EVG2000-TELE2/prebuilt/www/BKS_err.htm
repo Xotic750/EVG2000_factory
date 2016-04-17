@@ -1,0 +1,53 @@
+<html>
+<head>
+<meta name="description" content="WGR614_2022">
+<link rel="stylesheet" href="form.css">
+<title>Error Message</title>
+<script type="text/javascript">
+function delayedLoad()
+{
+	var nextF = document.forms[0].next_file.value;
+	setTimeout("location.replace('" + nextF + "')", 6000);
+}
+</script>
+</head>
+<body bgcolor="#ffffff" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" onLoad="delayedLoad()">
+<form name="msg" action="message.cgi" method="post" onSubmit="return false">
+
+<table WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="4">
+<tr>
+	<td align="left"><h1>Failure</h1></td>
+</tr>
+</table>
+
+<table WIDTH="100%" BORDER="0" CELLSPACING="3" CELLPADDING="0">
+<tr> <!-- RULE -->
+ <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+</table>
+
+<table WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="4">
+	
+<tr>
+ <td align=center><b><% fw_cgi_get_err_reason(); %>
+</b></TD>
+</TR>
+</table>
+
+<table WIDTH="100%" BORDER="0" CELLSPACING="3" CELLPADDING="0">
+<tr> <!-- RULE -->
+ <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+</table>
+
+<table WIDTH="100%" BORDER="0" CELLSPACING="0" CELLPADDING="4">
+
+<tr>
+ <td align=center>This page will automatically return to the previous page in a few seconds...</TD>
+</TR>		
+</TABLE>
+<input type="hidden" name="next_file" value="<% fw_cgi_get_return_page(); %>"> 
+</form>
+</BODY>
+</HTML>
+

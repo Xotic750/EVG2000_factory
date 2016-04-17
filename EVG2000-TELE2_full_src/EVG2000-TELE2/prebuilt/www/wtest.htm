@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<% meta_get(); %>
+<title>WAN Test</title>
+<link rel="stylesheet" href="form.css">
+<% script_get(); %>
+<script language=JavaScript type="text/javascript">
+
+function changepage()
+{
+	var cf = document.forms[0];
+	//var url;
+	//url = "http://"+location.host+"/"+"<% nvram_get("http_lang"); %>"+"/wtest.htm";
+	
+	if (cf.testOK.value == "ON")
+		setTimeout("window.location.replace('http://www.netgear.com')",2000);
+	else
+		setTimeout("window.location.replace('wtest.htm')",3500);
+}
+
+</script>
+</head>
+
+<body  bgcolor="#ffffff" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" onLoad="self.focus();changepage()">
+<form method="post" action="wtest_l">
+<div align="center">
+<br>
+<table border="0" cellpadding="0" cellspacing="3" width="100%">
+<tr>
+	<td colspan="2" align="center"><b>Testing Internet Connection</b></td>
+</tr>
+
+<tr>  <!-- RULE -->
+  <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+
+
+
+<tr>
+<td colspan="2" align="left">
+  This Page will Automatically Display the NETGEAR Website if a Successful Internet Connection is Detected.
+ </td></tr>
+ </table>
+ <br>
+
+<table width="100%" border=1 cellspacing=1 cellpadding=4>
+<tr>
+	<TD NOWRAP width="50%"><B>Connection Time</B></td>
+	<TD NOWRAP width="50%"><% rst_cgi_get_pppoe_connect_time(); %></td>
+</tr>
+<tr>
+	<TD NOWRAP><B>Connecting to Server</B></td>
+	<TD NOWRAP><% rst_cgi_get_pppoe_status("Connect"); %></td>
+</tr>
+<tr>
+	<TD NOWRAP><B>Negotiation</B></td>
+	<TD NOWRAP><% rst_cgi_get_pppoe_status("LCP"); %></td>
+</tr>
+<tr>
+	<TD NOWRAP><B>Authentication</B></td>
+	<TD NOWRAP><% rst_cgi_get_pppoe_status("Authentication"); %></td>
+</tr>
+<tr>
+	<TD NOWRAP><B>Getting IP Addresses</B></td>
+	<TD NOWRAP><% rst_cgi_get_pppoe_status("IP"); %></td>
+</tr>
+<tr>
+	<TD NOWRAP><B>Getting Network Mask</B></td>
+        <TD NOWRAP><% rst_cgi_get_pppoe_status("Netmask"); %></td>
+</tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="3" width="100%">
+<tr>
+<td colspan="2" align="left">If connnection fails, check your Login, Password, and other data.</td>
+</tr>
+
+<tr>  <!-- RULE -->
+  <td colspan="2" background="liteblue.gif" height="12"> &nbsp;</td>
+</tr>
+
+
+ <tr>
+ <td colspan="2" align="center">
+ <input type=button name="close" value="Close Window" onclick="self.close()"></td>
+</tr>
+</table>
+ 
+</div>
+
+
+<input type="hidden" name="testOK" value="<% rst_cgi_get_pppoe_status("Connect"); %>">
+
+</form>
+
+</body>
+</html>

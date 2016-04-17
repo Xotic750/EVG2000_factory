@@ -1,0 +1,37 @@
+<html>
+<head>
+<% meta_get(); %>
+<title>Wireless Repeating Function Settings Help</title>
+<link rel="stylesheet" href="help.css">
+</head>
+<body>
+  <h1 class="helpfile">Wireless Repeating Function Settings Help</h1>
+  <a name="wds"></a>
+<h2 class="helpfile">Enable Wireless Repeating</h2>
+<p>Enable this if you wish to use either Bridge mode or Repeater mode, and then select the desired  mode for your environment: 
+    </p>
+  <ul>
+    <li>
+    <a name="ptp"></a>
+		<strong>Wireless Repeater</strong>
+  <BR>In this mode, the EVG2000 will communicate ONLY with another Base Station-mode
+  Wireless Station. You must enter the MAC address (physical address) of the
+  other Base Station-mode Wireless Station in the field provided. WEP can (and should)
+  be used to protect this communication. 
+  
+  </li>
+   <a name="ptmp"></a>
+   <li><strong>Wireless Base Station</strong>
+	<BR>Select this only if this EVG2000 is the &quot;Master&quot; for a group of
+    Repeater-mode Wireless Stations. The other Repeater-mode Wireless Stations must be
+  set to <strong>Wireless Repeater</strong> mode, using this EVG2000's MAC
+  address. They then send all traffic to this &quot;Master&quot;, rather than
+  communicate directly with each other. WEP can (and should) be used to protect
+  this traffic. 
+  <BR>If selected, you must enter the MAC addresses of the other Access Points in the fields provided.
+  
+  </li>
+  </ul>
+<p>&nbsp; </p>
+</body>
+</html>

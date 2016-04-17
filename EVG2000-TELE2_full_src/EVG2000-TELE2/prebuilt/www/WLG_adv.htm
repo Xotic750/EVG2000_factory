@@ -1,0 +1,75 @@
+<html>
+<head>
+<% meta_get(); %>
+
+<title>Advanced Wireless Settings</title>
+<link rel="stylesheet" href="form.css">
+<STYLE TYPE="text/javascript">
+	classes.num.all.fontFamily = "Courier";
+	classes.num.all.fontSize = "10pt" ;
+</style>
+<script language="javascript" type="text/javascript" src="utility.js"></script>
+<script language="javascript" type="text/javascript" src="func.js"></script>
+<script language="javascript" type="text/javascript">
+<!-- hide script from old browsers
+
+function loadSettings()
+{
+	var cf = document.forms[0];
+	if (cf.wps_enable.value == "disabled")
+	{
+		//cf.pin_disable.disabled = true;
+		cf.wsc_config.disabled = true;
+	}
+}
+
+//-->
+</script>
+</head>
+<body bgcolor="#ffffff" onload="loadSettings();loadhelp('WLG_adv');">
+<form name="formname" method="POST" action="wlg_adv.cgi">
+<table border="0" cellpadding="0" cellspacing="3" width="100%">
+<tr>
+  <td colspan="2"><h1>Advanced Wireless Settings</h1></td></tr>
+<tr>
+  <td colspan="2" background="liteblue.gif" height="12">&nbsp; </td></tr>
+
+
+
+ <tr>
+  <td width="60%"><b><a href="javascript:loadhelp('WLG_adv','wps_settings')" tabindex="-1">WPS Settings</a></b></td>
+ </tr>
+
+ <tr>
+
+  <% wps_cgi_get_param("ap_unlock_start"); %>
+  <td width="60%">&nbsp;&nbsp;Router's PIN:</td>
+  <td width="40%"><b><font size=4><% nvram_get("wps_device_pin"); %></font></b></td>
+  <% wps_cgi_get_param("ap_unlock_end"); %>
+  <% wps_cgi_get_param("ap_lock_start"); %>
+  <td width="60%"><font color=gray>&nbsp;&nbsp;Router's PIN:</font></td>
+  <td width="40%"><b><font size=4 color=gray><% nvram_get("wps_device_pin"); %></font></b></td>
+  <% wps_cgi_get_param("ap_lock_end"); %>
+  
+ </tr>
+
+ <tr>
+  <td colspan=2>
+  <INPUT TYPE="checkbox" NAME="wsc_config" <% nvram_match("wl_wps_config_state", "1", "checked"); %>>
+  <font size=2 <% nvram_match("wsc_mode", "disabled", "color=gray"); %>> Keep Existing Wireless Settings </font>
+  </td>
+ </tr>
+
+<tr>
+  <td colspan="2" background="liteblue.gif" height="12">&nbsp; </td></tr>
+<tr>
+
+<tr>
+  <td colspan="2" align="center" height="35" valign="bottom">
+	<input type="submit" name="Apply" value="Apply">
+	<input type="button" name="Cancel" value="Cancel" onclick="reset();loadSettings();"></td></tr>
+</table>
+<input type="hidden" name="wps_enable" value="<% nvram_get("wsc_mode"); %>">
+</form>
+</body>
+</html>

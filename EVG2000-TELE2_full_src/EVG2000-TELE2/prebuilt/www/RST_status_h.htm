@@ -1,0 +1,51 @@
+<html>
+<head>
+<% meta_get(); %>
+<title>Help</title>
+<link rel="stylesheet" href="help.css">
+</head>
+<body>
+<h1>Router Status Help</h1>
+		
+<p>You can use the <i>Router Status</i> page to check the current settings and statistics for your router. This page shows you the current settings. 
+		If something needs to be changed, you'll have to change it on the relevant page.
+		
+ 
+ <p><b>Account Name</b>: This is the Account Name that you entered in the <i>Setup Wizard</i> or <i>Basic Settings</i>.</p>
+ <p><b>Firmware Version</b>: This is the current software the router is using. This will change if you upgrade your router.
+
+<a name="wan_port"></a>
+<p><b>WAN Port</b>: These are the current settings that you set in the <i>Setup Wizard</i> or <i>Basic Settings</i> pages.
+<ul>
+<li>MAC Address - the physical address of the Router, as seen from the Internet.
+<li>IP Address - current Internet IP address. If assigned dynamically, and no Internet connection exists, this will be blank or 0.0.0.0
+<li>DHCP - indicates either <i>Client</i> (IP address is obtained dynamically) or <i>None</i>.
+<li>IP Subnet Mask - the subnet mask associated with the Internet IP address
+<ii>Domain Name Server - displayes the address of the current DNS.
+</ul>
+
+<a name="lan_port"></a>
+ <p><b>LAN Port</b>: These are the current settings, as set in the <i>LAN IP Setup</i> page.
+ <ul>
+ <li>MAC Address - the physical address of the Router, as seen from the local LAN.
+ <li>IP Address - LAN IP address of the Router.
+ <li>DHCP - indicates if the Router is acting as a DHCP Server for devices on your LAN.
+ <li>IP Subnet Mask - subnet mask associated with the LAN IP address. 
+</ul>
+
+<a name="wireless_port"></a>
+<p><b>Wireless Port</b>: These are the current settings, as set in the <i>Wireless Settings</i> page.
+<ul>
+    <li>Name (SSID) - SSID of the Router.
+<li>Region - the location (country).
+<li>Channel - the current channel in use.
+<li>Wireless AP - indicates if the Access Point feature of the Router is enabled or not. If not enabled, the Wireless LED on the front panel will be off.
+
+<li>Broadcast Name - indicates if the Router is broadcasting its SSID.
+</ul>
+
+<p>Click <b>Show Statistics</b> to see router performance statistics such as the number of packets sent and number of packets received for each port.
+<p>Click <b>Connection Status</b> to see information about your current connection.</p>
+
+</body>
+</html>

@@ -1,0 +1,166 @@
+<html><head>
+<% meta_get(); %>
+<title>Edit Network Folder</title> 
+<link rel="stylesheet" href="form.css">
+<style type="text/javascript">
+    classes.num.all.fontFamily = "Courier";
+    classes.num.all.fontSize = "10pt" ;
+</style>
+<% script_get(); %>
+<script language="javascript" type="text/javascript">
+<!--
+function Browse_folder()
+{
+    document.forms[0].mode.value = "browse";
+    document.forms[0].submit();
+    window.open('USB_folderBrowse.htm','_blank','resizable=0,scrollbars=yes,width=400,height=400,left=400,top=300').focus();
+}
+function checkData()
+{
+    var cf = document.forms[0];
+	var msg = "";
+	var r, re, fail;
+	var usb_folder_string = cf.usb_folder.value;
+	fail = 1;
+	<% usb_cgi_get_info("usb_edit_folder_string") %>
+	if(fail == 1)
+	    msg+= "This folder not exist,please input correct folder path.\n";
+	
+	if (cf.usb_folder.value == "")
+		 msg+= "Folder can not be NULL!\n";
+	
+	if (cf.share_name.value == "")
+		msg+= "Share Name can not be NULL!\n";
+	
+	if (cf.share_name.value.match( /[^\x20-\x7E]/ ))
+	{
+		cf.share_name.focus();
+		msg+= "Share Name can not contain  &quot; : < > ' |\/ ] \n";
+	}
+	<% usb_cgi_get_option("existedSharedName") %>
+	if (msg.length > 1)
+	{
+		alert(msg);
+		return false;
+	}
+	if( (cf.read_access.selectedIndex == 1) && (cf.write_access.selectedIndex == 0) )
+	    cf.write_access.selectedIndex = 1;
+	pageRefresh();
+	return true;
+}
+function pageRefresh()
+{
+    document.forms[0].submit();
+    //window.close();
+    //opener.document.location.href = "USB_adv.htm";
+}
+
+function chgRd()
+{
+    var cf = document.forms[0];
+    if (cf.read_access.selectedIndex == 1)
+	    cf.write_access.selectedIndex = 1;
+}
+function chgWt()
+{
+    var cf = document.forms[0];
+    if (cf.write_access.selectedIndex == 0)
+	    cf.read_access.selectedIndex = 0;
+}
+//-->
+</script></head>
+<body bgcolor="#ffffff">
+<form name="frmService" method="post" action="usb_device.cgi">
+<script language="javascript" type="text/javascript">
+var NotExistFolder = "<% usb_cgi_get_option("NotExistFolder") %>";
+if (NotExistFolder == "1")
+{
+    opener.document.location.href = "USB_adv.htm";
+    window.close();
+}
+else if (NotExistFolder == "2")
+    alert("This folder not exist,please input correct folder path.\n");
+</script>
+<table border="0" cellpadding="0" cellspacing="3" width="100%">
+<tr>
+    <td><h1>Edit Network Folder</h1></td>
+</tr>
+<tr>
+ <td>
+ <img src="liteblue.gif" height="12" width="100%">
+ </td>
+</tr>
+
+<table border="1" cellpadding="2" cellspacing="0" width="100%">
+<tr>
+<td align="center" nowrap="nowrap" width="40%">
+<p align="left"><span class="thead">USB Device</span></td>
+<td align="center" nowrap="nowrap" width="60%">
+<p align="left"><% usb_cgi_get_info("usb_device") %></td>
+</tr>
+<tr>
+<td align="center" nowrap="nowrap" width="40%">
+<p align="left"><span class="thead">File System</span></td>
+<td align="center" nowrap="nowrap" width="60%"> 
+<p align="left"><% usb_cgi_get_info("file_system") %></td>
+</tr>
+<tr>
+<td align="center" nowrap="nowrap" width="40%">
+<p align="left"><span class="thead">Folder</span></td>
+<td align="center" nowrap="nowrap" width="60%"> 
+<input name="usb_folder" value="<% usb_cgi_get_info("folder_name") %>" style="float: left">
+<input type="button" name="Browse" value="Browse" onClick='Browse_folder();' style="float: left"></td>
+</tr>
+<tr>
+<td align="center" nowrap="nowrap" width="40%">
+<p align="left"><span class="thead">Share Name</span></td>
+<td align="left" nowrap="nowrap" width="60%"> 
+<input name="share_name" value="<% usb_cgi_get_info("share_name") %>" size="21" maxlength="20" style="float: left"></td>
+</tr>
+<tr>
+<td align="center" nowrap="nowrap" width="40%">
+<p align="left"><span class="thead">Read Access</span></td>
+<td align="center" nowrap="nowrap" width="60%">
+<p align="left"><select name="read_access" onchange="chgRd()" size="1">
+        <option value=0>All - no password</option>
+        <option value=1 <% usb_cgi_get_option("read_access_select") %> >admin</option>
+    </select></td>
+</tr>
+<td align="center" nowrap="nowrap" width="40%">
+<p align="left"><span class="thead">Write Access</span></td>
+<td align="center" nowrap="nowrap" width="60%">
+<p align="left"><select name="write_access" onchange="chgWt()" size="1">
+        <option value=0>All - no password</option>
+        <option value=1 <% usb_cgi_get_option("write_access_select") %> >admin</option>
+    </select></td>
+</tr>
+</table>
+
+	<table border="0" cellpadding="0" cellspacing="3" width="100%">
+		<tr>
+			<td>&nbsp;&nbsp;</td>
+		</tr>
+	</table>
+ <table border="0" cellpadding="0" cellspacing="3" width="100%">
+<tr><td><input name="Apply" value="Apply" onclick="return checkData();" type="button" >
+</td>
+</tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="3" width="100%">
+<tr>
+ <td>
+ <img src="liteblue.gif" height="12" width="100%">
+ </td>
+</tr>
+</table>  
+ <table border="0" cellpadding="0" cellspacing="3" width="100%">
+<tr><td><input name="Close" value="Close Window" onclick="window.close();" type="button" >
+</td>
+</tr>
+</table>
+</table>
+<INPUT name=mode type=hidden value="edit">
+<INPUT name=fromPage type=hidden value="2">
+
+</form>
+</body></html>
