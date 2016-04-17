@@ -62,18 +62,18 @@
 #define DHCP_VENDOR		0x3c
 #define DHCP_CLIENT_ID		0x3d
 #if defined(TI_ALICE) || defined(SingTel)
-#define DHCP_HOST_TYPE    0x7d /* Foxconn added , Lewis, 2008/9/19, @Lan host identification */
+#define DHCP_HOST_TYPE    0x7d /* Fiji added , Lewis, 2008/9/19, @Lan host identification */
 #endif
-/* Foxconn added Start, Silver, 2008/1/21, @TR111 */
+/* Fiji added Start, Silver, 2008/1/21, @TR111 */
 #if (defined SUPPORT_TR111)
 #define DHCP_TR111		0x7D
 #endif
-/* Foxconn added End, Silver, 2008/1/21, @TR111 */
-/* Foxconn added Start, Silver, 2009/3/24, @OPT43 */
+/* Fiji added End, Silver, 2008/1/21, @TR111 */
+/* Fiji added Start, Silver, 2009/3/24, @OPT43 */
 #if (defined TELE2)
 #define DHCP_TR069_URL		0x2b
 #endif
-/* Foxconn added End, Silver, 2009/3/24, @OPT43 */
+/* Fiji added End, Silver, 2009/3/24, @OPT43 */
 
 
 
@@ -106,9 +106,9 @@
 #define OPT_CODE 0
 #define OPT_LEN 1
 #define OPT_DATA 2
-/* Foxconn added start, Lewis, 2008/9/19, @Lan host identification */
+/* Fiji added start, Lewis, 2008/9/19, @Lan host identification */
 #ifdef TI_ALICE
-#define STB_STRING    "stb" /* Foxconn added end, Lewis, 2008/9/19, @Lan host identification */
+#define STB_STRING    "stb" /* Fiji added end, Lewis, 2008/9/19, @Lan host identification */
 typedef enum {
     MANAGED_HOST=1,
     DATA_HOST,
@@ -123,20 +123,20 @@ typedef enum {
     IPTV_Static_Portmapping,
 } IT_IPTVService_type_t;
 #endif
-/* Foxconn added end, Lewis, 2008/9/19, @Lan host identification */
+/* Fiji added end, Lewis, 2008/9/19, @Lan host identification */
 
-    /* Foxconn added start , 08/05/2009 */
+    /* Fiji added start , 08/05/2009 */
 #if defined(SingTel)
 #define IP_DECT_HOST    1
 #define STB_HOST        2
 #define XBOX360_HOST    3
 #define DATA_HOST       4
 #endif
-    /* Foxconn added end , 08/05/2009 */
+    /* Fiji added end , 08/05/2009 */
 
 #define MAX_TOKEN_SIZE    100
-#define MAX_RESERVED_IP    64   /* Foxconn modified pling 10/04/2007, 30->64 */
-#define MAX_RESERVED_MAC   64   /* Foxconn modified pling 10/04/2007, 30->64 */
+#define MAX_RESERVED_IP    64   /* Fiji modified pling 10/04/2007, 30->64 */
+#define MAX_RESERVED_MAC   64   /* Fiji modified pling 10/04/2007, 30->64 */
 
 struct option_set {
 	unsigned char *data;
@@ -168,12 +168,12 @@ struct server_config_t {
 	u_int32_t siaddr;		/* next server bootp option */
 	char *sname;			/* bootp server name */
 	char *boot_file;		/* bootp boot file option */
-/* Foxconn added start, Lewis, 2008/9/19, @Lan host identification */
+/* Fiji added start, Lewis, 2008/9/19, @Lan host identification */
 #if defined(TI_ALICE)
     char hostname[64];     /* Host name that add to boot option */
     char *IPTV_service;/* IPTV service get from NVRAM */
 #endif
-/* Foxconn added end, Lewis, 2008/9/19, @Lan host identification */       
+/* Fiji added end, Lewis, 2008/9/19, @Lan host identification */       
     /* pling added start 11/13/2008, for TR111 */
 #if (defined SUPPORT_TR111)
     char oui[6+1];
@@ -181,7 +181,7 @@ struct server_config_t {
     char product_class[64+1];
 #endif
     /* pling added end 11/13/2008 */
-    /* Foxconn added start , 08/05/2009 */
+    /* Fiji added start , 08/05/2009 */
 #if defined(SingTel)
     u_int32_t other_start;
     u_int32_t other_end;
@@ -192,7 +192,7 @@ struct server_config_t {
     u_int32_t xbox_start;
     u_int32_t xbox_end;
 #endif
-    /* Foxconn added end , 08/05/2009 */
+    /* Fiji added end , 08/05/2009 */
 };
 
 extern struct server_config_t server_config;
@@ -200,20 +200,20 @@ extern struct dhcpOfferedAddr *leases;
 extern char resrvMacAddr[MAX_RESERVED_MAC][MAX_TOKEN_SIZE];
 extern char resrvIpAddr[MAX_RESERVED_IP][MAX_TOKEN_SIZE];
 extern int num_of_reservedIP;
-/*foxconn modified start, water, 06/25/2008, @mlan on dvg834noud*/
+/*fiji modified start, water, 06/25/2008, @mlan on dvg834noud*/
 //extern int getReservedAddr(char reservedMacAddr[][MAX_TOKEN_SIZE], char reservedIpAddr[][MAX_TOKEN_SIZE]);
 extern int getReservedAddr(char reservedMacAddr[][MAX_TOKEN_SIZE], char reservedIpAddr[][MAX_TOKEN_SIZE], int whichlan);
-/*foxconn modified end, water, 06/25/2008, @mlan on dvg834noud*/
+/*fiji modified end, water, 06/25/2008, @mlan on dvg834noud*/
 extern int check_reserved_ip(u_int32_t req_ip, u_int8_t *chaddr);
 extern u_int32_t find_reserved_ip(u_int8_t *chaddr);
 #if (defined TELE2)
 extern void set_STB_reserved_ip(u_int8_t *chaddr);
 #endif
-/* Foxconn added Start, Silver, 2007/5/7, @TR111 */
+/* Fiji added Start, Silver, 2007/5/7, @TR111 */
 #if (defined SUPPORT_TR111)
 extern int initTR111();
 extern int getTR111Param(unsigned char *tr111);
 #endif
-/* Foxconn added End, Silver, 2007/5/7, @TR111 */
+/* Fiji added End, Silver, 2007/5/7, @TR111 */
 
 #endif

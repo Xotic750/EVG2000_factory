@@ -15,7 +15,7 @@
 #***********************************************************************
 include ../../config.in
 include ../../config.mk 
-#Foxconn add Zz Shan 12/28/2007
+#Fiji add Zz Shan 12/28/2007
 
 # Version is set ONLY IN THE MAKEFILE!  Don't delete this!
 VERSION=3.5

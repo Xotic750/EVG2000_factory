@@ -130,12 +130,12 @@ static int u32_classify(struct sk_buff *skb, struct tcf_proto *tp, struct tcf_re
 #endif
 	int i, r;
 
-    /* Foxconn added start , 09/02/2009 */
+    /* Fiji added start , 09/02/2009 */
 	if (skb->protocol == htons(ETH_P_8021Q)) 
 	{
 		ptr += VLAN_HLEN;
 	}
-	/* Foxconn added end , 09/02/2009 */
+	/* Fiji added end , 09/02/2009 */
 
 next_ht:
 	n = ht->ht[sel];

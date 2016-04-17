@@ -22,25 +22,55 @@
 #if defined(CONFIG_MIPS_BRCM)
 #include <linux/blog.h>
 #endif
+#if defined(CONFIG_MIPS_BRCM)
+#include <linux/ip.h>
+#include <linux/igmp.h>
+#endif /* for IGMP */
 
 /* Don't forward packets to originating port or forwarding diasabled */
 static inline int should_deliver(const struct net_bridge_port *p,
 				 const struct sk_buff *skb)
 {
 #if defined(CONFIG_MIPS_BRCM)
-	if (skb->dev == p->dev || p->state != BR_STATE_FORWARDING)
-            return 0;
+	const struct iphdr *pip = skb->nh.iph;
+	unsigned char igmp_type = 0;
+	const unsigned char *dest = eth_hdr(skb)->h_dest;
 
-	/*
-	 * Do not forward any packets received from one WAN interface 
-	 * to other WAN interfaces in multiple PVC case
-	 */
-        if( (skb->dev->priv_flags & p->dev->priv_flags) & IFF_WANDEV )
-           return 0;
+   if (skb->dev == p->dev || p->state != BR_STATE_FORWARDING)
+      return 0;
 
-        if ((skb->pkt_type == PACKET_BROADCAST) || (skb->pkt_type == PACKET_MULTICAST))
-        {
-            /* If source and destination interfaces belong to the switch, don't forward packet */
+   /*
+    * Do not forward any packets received from one WAN interface 
+    * to other WAN interfaces in multiple PVC case
+    */
+   if( (skb->dev->priv_flags & p->dev->priv_flags) & IFF_WANDEV )
+      return 0;
+
+   if ((skb->pkt_type == PACKET_BROADCAST) || (skb->pkt_type == PACKET_MULTICAST))
+   {
+      if (skb->pkt_type == PACKET_MULTICAST)
+      {
+	     if((eth_hdr(skb)->h_proto == ETH_P_IP) &&
+	        (pip && pip->protocol == IPPROTO_IGMP)) {
+
+		    if(pip->ihl == 5) {
+			   igmp_type = skb->data[20];
+		    } else {
+			   igmp_type = skb->data[24];
+		    }
+
+		    if((p->dev->priv_flags & IFF_WANDEV)) {
+			   if (igmp_type == IGMP_HOST_MEMBERSHIP_QUERY) 
+				  return 0;
+		    }
+		    else {
+			   if (igmp_type != IGMP_HOST_MEMBERSHIP_QUERY)
+				  return 0;
+		    }
+         }
+      }
+      
+      /* If source and destination interfaces belong to the switch, don't forward packet */
 
             /* When the 5325 switch is used, multicast and broadcast must be forwarded by the MIPS.
                However, the IFF_HW_SWITCH flag is not set in the 6358 Ethernet driver, so there

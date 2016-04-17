@@ -66,13 +66,13 @@ EXEEXT =
 OBJEXT = o
 PATH_SEPARATOR = :
 AMTAR = ${SHELL} /home/fred/0117/ap61/gpl/zebra-0.93a/missing --run tar
-#Foxconn start mark by fred 20060221
+#Fiji start mark by fred 20060221
 #AR = ar
 #AWK = gawk
 BGPD = 
 #CC = gcc
 #CPP = gcc -E
-#Foxconn end
+#Fiji end
 CURSES = 
 DEPDIR = .deps
 IF_METHOD = if_netlink.o
@@ -90,13 +90,13 @@ OSPF6D =
 OSPFD = 
 OTHER_METHOD = 
 PACKAGE = zebra
-#Foxconn mark by fred 20060221
+#Fiji mark by fred 20060221
 #RANLIB = ranlib
 RIPD = ripd
 RIPNGD = 
 RTREAD_METHOD = rtread_netlink.o
 RT_METHOD = rt_netlink.o
-#Foxconn mark by fred 20060221
+#Fiji mark by fred 20060221
 #STRIP = 
 VERSION = 0.93a
 VTYSH = 
@@ -110,14 +110,14 @@ INSTALL_SDATA = /usr/bin/install -c -m 600
 noinst_LIBRARIES = librip.a
 sbin_PROGRAMS = ripd
 
-#Foxconn start modify by fred 20060221
+#Fiji start modify by fred 20060221
 #librip_a_SOURCES = \
 #	ripd.c rip_zebra.c rip_interface.c rip_debug.c rip_snmp.c \
 #	rip_routemap.c rip_peer.c rip_offset.c
 librip_a_SOURCES = \
 	ripd.c rip_zebra.c rip_interface.c rip_debug.c rip_snmp.c \
 	rip_peer.c
-#Foxconn end
+#Fiji end
 
 
 noinst_HEADERS = \
@@ -172,10 +172,10 @@ COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-#Foxconn modify by fred 20060221
+#Fiji modify by fred 20060221
 #CFLAGS = -g -O2 -Wall
 #CFLAGS= -s -Os -fomit-frame-pointer
-#Foxconn modify by EricHuang 20071107
+#Fiji modify by EricHuang 20071107
 CFLAGS += -s -Os -fomit-frame-pointer
 DIST_SOURCES = $(librip_a_SOURCES) $(ripd_SOURCES)
 DATA = $(sysconf_DATA)
@@ -190,13 +190,13 @@ dynamic: $(sbin_PROGRAMS) install
 
 .SUFFIXES:
 .SUFFIXES: .c .o .obj
-# Foxconn removed start pling 04/20/2006 
+# Fiji removed start pling 04/20/2006 
 #$(srcdir)/Makefile.in:  Makefile.am  $(top_srcdir)/configure.in $(ACLOCAL_M4)
 #	cd $(top_srcdir) && \
 #	  $(AUTOMAKE) --foreign  ripd/Makefile
 #Makefile:  $(srcdir)/Makefile.in  $(top_builddir)/config.status
 #	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)
-# Foxconn removed end pling 04/20/2006 
+# Fiji removed end pling 04/20/2006 
 
 clean-noinstLIBRARIES:
 	-test -z "$(noinst_LIBRARIES)" || rm -f $(noinst_LIBRARIES)
@@ -344,14 +344,14 @@ all-am: Makefile $(LIBRARIES) $(PROGRAMS) $(DATA) $(HEADERS)
 installdirs:
 	$(mkinstalldirs) $(DESTDIR)$(sbindir) $(DESTDIR)$(sysconfdir)
 
-#Foxconn start modify by fred 20060221
+#Fiji start modify by fred 20060221
 #install: install-am
 all-fred: ripd
 
 install: all-fred
 	install -m 755 $(sbin_PROGRAMS) $(INSTALL_DIR)/bin
 	$(STRIP) $(INSTALL_DIR)/bin/$(sbin_PROGRAMS)
-#Foxconn end
+#Fiji end
 install-exec: install-exec-am
 install-data: install-data-am
 uninstall: uninstall-am

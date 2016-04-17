@@ -192,7 +192,7 @@ static const char *unpriv_fuseblk_msg =
 "http://ntfs-3g.org/support.html#unprivileged\n";
 #endif	
 
-#define USB_VOL_NAME_FILE   "/tmp/usb_vol_name/%s"  /* Foxconn added pling 05/05/2009 */
+#define USB_VOL_NAME_FILE   "/tmp/usb_vol_name/%s"  /* Fiji added pling 05/05/2009 */
 
 /**
  * ntfs_fuse_is_named_data_stream - check path to be to named data stream
@@ -1648,7 +1648,7 @@ static void ntfs_close(void)
 	
 	if (ntfs_umount(ctx->vol, FALSE))
 		ntfs_log_perror("Failed to close volume %s", opts.device);
-    /* Foxconn added start pling 05/05/2009 */
+    /* Fiji added start pling 05/05/2009 */
     /* Remove file that stores the volname */
     else {
         char *devname;
@@ -1660,7 +1660,7 @@ static void ntfs_close(void)
             unlink(filename);
         }
     }
-    /* Foxconn added end pling 05/05/2009 */
+    /* Fiji added end pling 05/05/2009 */
 	
 	ctx->vol = NULL;
 }
@@ -2262,11 +2262,11 @@ static struct fuse *mount_fuse(char *parsed_options)
 	
 	if (fuse_opt_add_arg(&args, "") == -1)
 		goto err;
-    /* Foxconn modified start pling 12/23/2009 */
+    /* Fiji modified start pling 12/23/2009 */
     /* Use direct_io to improve NTFS write performance */
 	//if (fuse_opt_add_arg(&args, "-ouse_ino,kernel_cache,attr_timeout=0") == -1)
 	if (fuse_opt_add_arg(&args, "-ouse_ino,kernel_cache,attr_timeout=0,direct_io") == -1)
-    /* Foxconn modified end pling 12/23/2009 */
+    /* Fiji modified end pling 12/23/2009 */
 		goto err;
 	if (ctx->debug)
 		if (fuse_opt_add_arg(&args, "-odebug") == -1)
@@ -2311,7 +2311,7 @@ static void setup_logging(char *parsed_options)
 	ntfs_log_info("Cmdline options: %s\n", opts.options ? opts.options : "");
 	ntfs_log_info("Mount options: %s\n", parsed_options);
 
-    /* Foxconn added start pling 05/05/2009 */
+    /* Fiji added start pling 05/05/2009 */
     /* Store the volume label under /tmp for later use */
     FILE *fp = NULL;
     char *devname;
@@ -2326,7 +2326,7 @@ static void setup_logging(char *parsed_options)
             fclose(fp);
         }
     }
-    /* Foxconn added end pling 05/05/2009 */
+    /* Fiji added end pling 05/05/2009 */
 }
 
 int main(int argc, char *argv[])

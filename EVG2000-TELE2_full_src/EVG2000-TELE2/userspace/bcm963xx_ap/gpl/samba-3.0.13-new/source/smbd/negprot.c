@@ -267,10 +267,10 @@ static int reply_nt1(char *inbuf, char *outbuf)
 	if (SMB_OFF_T_BITS == 64)
 		capabilities |= CAP_LARGE_FILES;
 
-    /* Foxconn modified start pling 11/24/2009 */
+    /* Fiji modified start pling 11/24/2009 */
     /* Support large file any way */
 	capabilities |= CAP_LARGE_FILES|CAP_LARGE_READX|CAP_LARGE_WRITEX;
-    /* Foxconn modified end pling 11/24/2009 */
+    /* Fiji modified end pling 11/24/2009 */
 
 	if (lp_readraw() && lp_writeraw())
 		capabilities |= CAP_RAW_MODE;

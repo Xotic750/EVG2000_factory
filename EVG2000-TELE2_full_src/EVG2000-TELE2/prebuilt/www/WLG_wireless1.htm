@@ -401,15 +401,10 @@ function PassPhrase104(F)
     F.wep_key_no[0].checked = true;
     //F.KEY2.disabled = F.KEY3.disabled = F.KEY4.disabled = true;
 }
-function menu_check(reload)
-{
-	if (reload == "1")
-		top.contents.location.href='MNU_menu.htm';
-}
 // -->
 </script>
 </head>
-<body bgcolor="#ffffff" onload="initScrn();defaultopmode();setKeys();loadhelp('WLG_wireless');menu_check(<% wlg_cgi_get_param("wps_changed"); %>);document.forms[0].elements[0].focus();">
+<body bgcolor="#ffffff" onload="initScrn();defaultopmode();setKeys();loadhelp('WLG_wireless');document.forms[0].elements[0].focus();">
 <form method="POST" action="wireless.cgi">
   <table border="0" cellpadding="0" cellspacing="3" width="100%">
     <tr>

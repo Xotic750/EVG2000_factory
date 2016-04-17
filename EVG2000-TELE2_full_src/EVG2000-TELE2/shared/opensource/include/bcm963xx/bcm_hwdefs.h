@@ -72,25 +72,25 @@ extern "C" {
 #define ONEK                            1024
 #define FLASH_LENGTH_BOOT_ROM           0x20000 //(64*ONEK)
 #define FLASH_RESERVED_AT_END           (64*ONEK) /*reserved for PSI, scratch pad*/
-/* Foxconn modify start by Jenny Zhao, 07/07/2008*/
+/* Fiji modify start by Jenny Zhao, 07/07/2008*/
 
 #define BOARD_IMAGE_DOWNLOAD_ADDRESS    \
     ((cfe_sdramsize >= 0x00800000) ? 0x80800000 : 0x80000000) 
 #define BOARD_IMAGE_DOWNLOAD_SIZE       \
     ((cfe_sdramsize >= 0x00800000) ? 0x00800000 : 0x00400000) 
 
-#define PROJECT_ID_LEN          7 /* Foxconn added by zacker, 02/29/2008, strlen("U12H094") */
+#define PROJECT_ID_LEN          7 /* Fiji added by zacker, 02/29/2008, strlen("U12H094") */
 #ifdef _CFE_
 #define FLASH_SIZE              16 * 1024 * 1024
 #endif
 #define BOARD_DATA_ADDR         (FLASH_BASE + FLASH_SIZE - 0x40000)
-/* Foxconn add start, Silver Shih, 2008/10/13 */
+/* Fiji add start, Silver Shih, 2008/10/13 */
 #define BOARD_FOXNVRAM_ADDR     (FLASH_BASE + FLASH_SIZE - 0x20000)
 #define FOX_BOARD_ID_MAX_LEN    64
 #define BOARD_ID                "U12H130"
 #define BOARD_ID2               "U12H154"
-/* Foxconn add end, Silver Shih, 2008/10/13 */
-/* Foxconn modify end by Jenny Zhao, 07/07/2008*/
+/* Fiji add end, Silver Shih, 2008/10/13 */
+/* Fiji modify end by Jenny Zhao, 07/07/2008*/
 /*****************************************************************************/
 /*       NVRAM Offset and definition                                         */
 /*****************************************************************************/

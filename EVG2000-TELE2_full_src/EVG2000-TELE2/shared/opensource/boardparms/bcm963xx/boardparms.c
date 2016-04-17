@@ -1620,16 +1620,16 @@ static BOARD_PARAMETERS g_bcm96369pvg =
       BP_NOT_DEFINED,                       /* usGpioVoip1Led */ /* OK */
       BP_NOT_DEFINED,                       /* usGpioVoip1LedFail */ /* OK */
       BP_GPIO_3_AH,                         /* usGpioSlic0Relay */ /* OK */
-      BP_GPIO_11_AL, /* foxconn modified */ /* usGpioSlic0Reset */ /* OK */
+      BP_GPIO_11_AL, /* fiji modified */ /* usGpioSlic0Reset */ /* OK */
       BP_NOT_DEFINED,                       /* usGpioVoip2Led */ /* OK */
       BP_NOT_DEFINED,                       /* usGpioVoip2LedFail */ /* OK */
       BP_GPIO_3_AH,                         /* usGpioSlic1Relay */ /* OK */
-      BP_GPIO_10_AL, /* foxconn modified */ /* usGpioSlic1Reset */ /* OK */
+      BP_GPIO_10_AL, /* fiji modified */ /* usGpioSlic1Reset */ /* OK */
       BP_NOT_DEFINED,                       /* usGpioPotsLed */ /* OK */
       BP_NOT_DEFINED, /*BP_NOT_DEFINED,*/                       /* usGpioPotsReset */ /* OK */
       BP_NOT_DEFINED},                      /* usGpioDectLed */
      {BP_VOIP_NO_DSP}},                     /* ucDspType */
-  Silicon_Labs_3215, /* foxconn modified */ /* SLIC type */
+  Silicon_Labs_3215, /* fiji modified */ /* SLIC type */
   DAA_Not_Defined,                         /* DAA type */
     BP_NOT_DEFINED,                         /* usGpioWirelessPowerDown */
     {BP_AFE_DEFAULT, BP_AFE_DEFAULT},       /* ulAfeIds */

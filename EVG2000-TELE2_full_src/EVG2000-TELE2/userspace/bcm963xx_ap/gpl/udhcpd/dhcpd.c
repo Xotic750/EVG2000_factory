@@ -74,7 +74,7 @@ static void signal_handler(int sig)
 	}
 }
 
-/* Foxconn added Start, Silver, 2009/3/26, @STB */
+/* Fiji added Start, Silver, 2009/3/26, @STB */
 #ifdef TELE2
 int check_STB_vender(unsigned char *dhcpvendor)
 {
@@ -102,7 +102,7 @@ int check_STB_vender(unsigned char *dhcpvendor)
     return match;
 }
 #endif
-/* Foxconn added End, Silver, 2009/3/26, @STB */
+/* Fiji added End, Silver, 2009/3/26, @STB */
 
 #ifdef COMBINED_BINARY	
 int udhcpd_main(int argc, char *argv[])
@@ -121,15 +121,15 @@ int main(int argc, char *argv[])
 #endif	
 #if defined(TI_ALICE) || defined(SingTel)
     unsigned char *server_id, *requested;
-    unsigned char  *oldhostname, *hosttype,*dhcpvendor,newhostname[64];    /* Foxconn added Start, Lewis, 2008/9/19, @Lan host identification */
+    unsigned char  *oldhostname, *hosttype,*dhcpvendor,newhostname[64];    /* Fiji added Start, Lewis, 2008/9/19, @Lan host identification */
 #else
 	unsigned char *server_id, *requested, *hostname;
 #endif
-    /* Foxconn added Start, Silver, 2008/1/21, @TR111 */
+    /* Fiji added Start, Silver, 2008/1/21, @TR111 */
 #if (defined SUPPORT_TR111)
     unsigned char *tr111;
 #endif
-    /* Foxconn added End, Silver, 2008/1/21, @TR111 */
+    /* Fiji added End, Silver, 2008/1/21, @TR111 */
 	u_int32_t server_id_align, requested_align;
 	unsigned long timeout_end;
 	struct option_set *option;
@@ -147,7 +147,7 @@ int main(int argc, char *argv[])
 		read_config(DHCPD_CONF_FILE);
 	else read_config(argv[1]);
 
-    /*foxconn add start, water, 06/25/2008, @mlan on dvg834noud*/
+    /*fiji add start, water, 06/25/2008, @mlan on dvg834noud*/
     int whichlan = -1;
     if (strstr(argv[1], "udhcpd.conf") != NULL)
         whichlan = 0;
@@ -157,22 +157,22 @@ int main(int argc, char *argv[])
         whichlan = 2;
     else if (strstr(argv[1], "udhcpd_br3.conf") != NULL)
         whichlan = 3;
-    /*foxconn add end, water, 06/25/2008, @mlan on dvg834noud*/
+    /*fiji add end, water, 06/25/2008, @mlan on dvg834noud*/
     
-    /* Foxconn added Start, Silver, 2007/5/7, @TR111 */
+    /* Fiji added Start, Silver, 2007/5/7, @TR111 */
 #if (defined SUPPORT_TR111)
     initTR111();
     //acosNvramConfig_set ("TR111_num", "0");
     //acosNvramConfig_set ("TR111_tab", "");
     //acosNvramConfig_set ("TR111_notify_limit", "");
 #endif /* SUPPORT_TR111 */
-    /* Foxconn added End, Silver, 2007/5/7, @TR111 */
+    /* Fiji added End, Silver, 2007/5/7, @TR111 */
 
     /*get reserved ip from configuration file*/
-    /*foxconn modified start, water, 06/25/2008, @mlan on dvg834noud*/
+    /*fiji modified start, water, 06/25/2008, @mlan on dvg834noud*/
     //num_of_reservedIP = getReservedAddr(resrvMacAddr, resrvIpAddr);
     num_of_reservedIP = getReservedAddr(resrvMacAddr, resrvIpAddr, whichlan);
-    /*foxconn modified end, water, 06/25/2008, @mlan on dvg834noud*/
+    /*fiji modified end, water, 06/25/2008, @mlan on dvg834noud*/
 
 	pid_fd = pidfile_acquire(server_config.pidfile);
 	pidfile_write_release(pid_fd);
@@ -187,7 +187,7 @@ int main(int argc, char *argv[])
 	memset(leases, 0, sizeof(struct dhcpOfferedAddr) * server_config.max_leases);
 	read_leases(server_config.lease_file);
 #if defined(TI_ALICE) || defined(SingTel)
-    create_que_id(); /* Foxconn added Start, Lewis, 2008/9/19, @Lan host identification */
+    create_que_id(); /* Fiji added Start, Lewis, 2008/9/19, @Lan host identification */
 #endif
 	if (read_interface(server_config.interface, &server_config.ifindex,
 			   &server_config.server, server_config.arp) < 0)
@@ -274,12 +274,12 @@ int main(int argc, char *argv[])
 		case DHCPDISCOVER:
 			DEBUG(LOG_INFO,"received DISCOVER");
 			
-            /* Foxconn added Start, Silver, 2008/1/21, @TR111 */
+            /* Fiji added Start, Silver, 2008/1/21, @TR111 */
 #if (defined SUPPORT_TR111)
             tr111 = get_option(&packet, DHCP_TR111);
             if (tr111) getTR111Param(tr111);
 #endif
-            /* Foxconn added End, Silver, 2008/1/21, @TR111 */
+            /* Fiji added End, Silver, 2008/1/21, @TR111 */
 
 #if defined(SingTel)
 
@@ -319,7 +319,7 @@ int main(int argc, char *argv[])
 
 			requested = get_option(&packet, DHCP_REQUESTED_IP);
 			server_id = get_option(&packet, DHCP_SERVER_ID);
-            /* Foxconn added Start, Lewis, 2008/9/19, @Lan host identification */
+            /* Fiji added Start, Lewis, 2008/9/19, @Lan host identification */
 #if defined(TI_ALICE)
             
             oldhostname = get_option(&packet, DHCP_HOST_NAME);
@@ -381,9 +381,9 @@ int main(int argc, char *argv[])
 #else
 			hostname = get_option(&packet, DHCP_HOST_NAME);
 #endif
-            /* Foxconn added end, Lewis, 2008/9/19, @Lan host identification */
+            /* Fiji added end, Lewis, 2008/9/19, @Lan host identification */
 
-            /* Foxconn added Start, Silver, 2009/3/26, @STB */
+            /* Fiji added Start, Silver, 2009/3/26, @STB */
 #ifdef TELE2
             
             dhcpvendor = get_option(&packet, DHCP_VENDOR);
@@ -404,13 +404,13 @@ int main(int argc, char *argv[])
             }
             //check_STB_vender(dhcpvendor);
 #endif
-            /* Foxconn added End, Silver, 2009/3/26, @STB */
-            /* Foxconn added Start, Silver, 2008/1/21, @TR111 */
+            /* Fiji added End, Silver, 2009/3/26, @STB */
+            /* Fiji added Start, Silver, 2008/1/21, @TR111 */
 #if (defined SUPPORT_TR111)
             tr111 = get_option(&packet, DHCP_TR111);
             if (tr111) getTR111Param(tr111);
 #endif
-            /* Foxconn added End, Silver, 2008/1/21, @TR111 */
+            /* Fiji added End, Silver, 2008/1/21, @TR111 */
 
 			if (requested) memcpy(&requested_align, requested, 4);
 			if (server_id) memcpy(&server_id_align, server_id, 4);
@@ -455,7 +455,7 @@ int main(int argc, char *argv[])
 					}						
 				}
                            
-                /* Foxconn added start, Lewis, 2008/9/19, @Lan host identification */
+                /* Fiji added start, Lewis, 2008/9/19, @Lan host identification */
 #if defined(TI_ALICE) || defined(SingTel)
                 
                 LOG(LOG_INFO,"rewrite leass table, newhostname: %s\n", newhostname);
@@ -486,13 +486,13 @@ int main(int argc, char *argv[])
 					strncpy(lease->hostname, hostname, bytes);
 					lease->hostname[bytes] = '\0';
                     DEBUG(LOG_INFO,"rewrite leass table, hostname: %s\n", lease->hostname);
-                    /* foxconn wklin removed, 05/07/2007 */
+                    /* fiji wklin removed, 05/07/2007 */
                     /* write_leases(); */ /*Rewrite lease table into file.*/
 				} else
 					lease->hostname[0] = '\0';
-                /* foxconn wklin added, 05/07/2007 */
+                /* fiji wklin added, 05/07/2007 */
 #endif
-                /* Foxconn added end, Lewis, 2008/9/19, @Lan host identification */
+                /* Fiji added end, Lewis, 2008/9/19, @Lan host identification */
                 write_leases(); /*Rewrite lease table into file.*/
 			
 			/* what to do if we have no record of the client */
@@ -532,18 +532,18 @@ int main(int argc, char *argv[])
 		case DHCPRELEASE:
 			DEBUG(LOG_INFO,"received RELEASE");
 
-    /* Foxconn added start , 08/08/2009 */
+    /* Fiji added start , 08/08/2009 */
     /* by request, it needs to release all binding ... */	
 #if defined(SingTel)
             //dhcp_releaseall();
 #endif
-    /* Foxconn added end , 08/08/2009 */	
+    /* Fiji added end , 08/08/2009 */	
 			
 			if (lease) 
             {    
                 lease->expires = time(0);
 #if defined(TI_ALICE) || defined(SingTel)
-                host_delete(lease->yiaddr);/* Foxconn added start, Lewis, 2008/9/19, @Lan host identification */
+                host_delete(lease->yiaddr);/* Fiji added start, Lewis, 2008/9/19, @Lan host identification */
 #endif
                 write_leases(); /*Rewrite lease table into file.*/
             }

@@ -1606,14 +1606,14 @@ static void fuse_lib_read(fuse_req_t req, fuse_ino_t ino, size_t size,
     path = get_path(f, ino);
     if (path != NULL) {
         struct fuse_intr_data d;
-        /* Foxconn removed start pling 06/19/2009 */
+        /* Fiji removed start pling 06/19/2009 */
 #if 0
         if (f->conf.debug)
             fprintf(stderr, "READ[%llu] %lu bytes from %llu\n",
                     (unsigned long long) fi->fh, (unsigned long) size,
                     (unsigned long long) off);
 #endif
-        /* Foxconn removed end pling 06/19/2009 */
+        /* Fiji removed end pling 06/19/2009 */
 
         fuse_prepare_interrupt(f, req, &d);
         res = fuse_fs_read(f->fs, path, buf, size, off, fi);
@@ -1623,13 +1623,13 @@ static void fuse_lib_read(fuse_req_t req, fuse_ino_t ino, size_t size,
     pthread_rwlock_unlock(&f->tree_lock);
 
     if (res >= 0) {
-        /* Foxconn removed start pling 06/19/2009 */
+        /* Fiji removed start pling 06/19/2009 */
 #if 0
         if (f->conf.debug)
             fprintf(stderr, "   READ[%llu] %u bytes\n",
                     (unsigned long long)fi->fh, res);
 #endif
-        /* Foxconn removed end pling 06/19/2009 */
+        /* Fiji removed end pling 06/19/2009 */
         if ((size_t) res > size)
             fprintf(stderr, "fuse: read too many bytes");
         fuse_reply_buf(req, buf, res);
@@ -1652,14 +1652,14 @@ static void fuse_lib_write(fuse_req_t req, fuse_ino_t ino, const char *buf,
     if (path != NULL) {
         struct fuse_intr_data d;
 
-        /* Foxconn removed start pling 06/19/2009 */
+        /* Fiji removed start pling 06/19/2009 */
 #if 0
         if (f->conf.debug)
             fprintf(stderr, "WRITE%s[%llu] %lu bytes to %llu\n",
                     fi->writepage ? "PAGE" : "", (unsigned long long) fi->fh,
                     (unsigned long) size, (unsigned long long) off);
 #endif
-        /* Foxconn removed end pling 06/19/2009 */
+        /* Fiji removed end pling 06/19/2009 */
 
         fuse_prepare_interrupt(f, req, &d);
         res = fuse_fs_write(f->fs, path, buf, size, off, fi);
@@ -1669,14 +1669,14 @@ static void fuse_lib_write(fuse_req_t req, fuse_ino_t ino, const char *buf,
     pthread_rwlock_unlock(&f->tree_lock);
 
     if (res >= 0) {
-        /* Foxconn removed start pling 06/19/2009 */
+        /* Fiji removed start pling 06/19/2009 */
 #if 0
         if (f->conf.debug)
             fprintf(stderr, "   WRITE%s[%llu] %u bytes\n",
                     fi->writepage ? "PAGE" : "", (unsigned long long) fi->fh,
                     res);
 #endif
-        /* Foxconn removed end pling 06/19/2009 */
+        /* Fiji removed end pling 06/19/2009 */
         if ((size_t) res > size)
             fprintf(stderr, "fuse: wrote too many bytes");
         fuse_reply_write(req, res);

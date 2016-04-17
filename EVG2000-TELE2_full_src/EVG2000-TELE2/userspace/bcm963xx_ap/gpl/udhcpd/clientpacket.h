@@ -7,7 +7,7 @@ int send_selecting(unsigned long xid, unsigned long server, unsigned long reques
 int send_renew(unsigned long xid, unsigned long server, unsigned long ciaddr);
 int send_renew(unsigned long xid, unsigned long server, unsigned long ciaddr);
 int send_release(unsigned long server, unsigned long ciaddr);
-int send_decline(unsigned long xid, unsigned long server, unsigned long ciaddr);/*foxconn wklin added, 08/07/2007 */
+int send_decline(unsigned long xid, unsigned long server, unsigned long ciaddr);/*fiji wklin added, 08/07/2007 */
 int get_raw_packet(struct dhcpMessage *payload, int fd);
 
 #endif

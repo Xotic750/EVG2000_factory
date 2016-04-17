@@ -1,7 +1,7 @@
 #ifndef __LINUX_ACOSNATFW_H
 #define __LINUX_ACOSNATFW_H
 
-/****** Foxconn Add, Tim Liu, 10/24/2005 *******/
+/****** Fiji Add, Tim Liu, 10/24/2005 *******/
 #ifdef __KERNEL__
 #include <linux/init.h>
 #include <linux/types.h>

@@ -26,10 +26,10 @@
 #if defined(CONFIG_MIPS_BRCM)
 #include <linux/blog.h>
 #endif
-/* Foxconn added start pling 07/02/2007 */
+/* Fiji added start pling 07/02/2007 */
 #define MAX_MAC_CNT     1024
 static int mac_cnt = 0; 
-/* Foxconn added end pling 07/02/2007 */
+/* Fiji added end pling 07/02/2007 */
 
 static struct kmem_cache *br_fdb_cache __read_mostly;
 static int fdb_insert(struct net_bridge *br, struct net_bridge_port *source,
@@ -227,7 +227,7 @@ static void fdb_rcu_free(struct rcu_head *head)
 	struct net_bridge_fdb_entry *ent
 		= container_of(head, struct net_bridge_fdb_entry, rcu);
 	kmem_cache_free(br_fdb_cache, ent);
-	mac_cnt--; /* foxconn wklin added , 06/18/2008 */
+	mac_cnt--; /* fiji wklin added , 06/18/2008 */
 }
 
 /* Set entry up for deletion with RCU  */
@@ -339,15 +339,15 @@ static int fdb_insert(struct net_bridge *br, struct net_bridge_port *source,
 		fdb_delete(fdb);
 			}
     
-    /* foxconn wklin added start, 06/18/2008 */
+    /* fiji wklin added start, 06/18/2008 */
     if (mac_cnt > MAX_MAC_CNT)
         return 0;
-    /* foxconn wklin added end, 06/18/2008 */
+    /* fiji wklin added end, 06/18/2008 */
 
 	if (!fdb_create(head, source, addr, 1))
 		return -ENOMEM;
 		
-	mac_cnt++; /* foxconn wklin added , 06/18/2008 */	
+	mac_cnt++; /* fiji wklin added , 06/18/2008 */	
 
 	return 0;
 }

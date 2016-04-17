@@ -204,7 +204,7 @@ int main (int argc, char **argv)
     int i = 1, port;
     int retval;
     socklen_t my_length;
-    FILE *pid_fp;/* Foxconn add, Jasmine Yang, 09/13/2007 */
+    FILE *pid_fp;/* Fiji add, Jasmine Yang, 09/13/2007 */
     my_argv_list = argv;
     signal (SIGHUP, handler_sighup);
 
@@ -249,7 +249,7 @@ int main (int argc, char **argv)
             setsid ();
             if (fork ())
                 return 0;
-/* Foxconn add start, Jasmine Yang, 09/13/2007 */
+/* Fiji add start, Jasmine Yang, 09/13/2007 */
             if (!(pid_fp = fopen ("/var/run/bftpd.pid", "w")))
             {
                 perror ("/var/run/bftpd.pid");
@@ -257,7 +257,7 @@ int main (int argc, char **argv)
             }
             fprintf (pid_fp, "%d", getpid ());
             fclose (pid_fp);
-/* Foxconn add end, Jasmine Yang, 09/13/2007 */    
+/* Fiji add end, Jasmine Yang, 09/13/2007 */    
         }
         signal (SIGCHLD, handler_sigchld);
         

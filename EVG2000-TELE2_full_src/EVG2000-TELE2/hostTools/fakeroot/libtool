@@ -129,7 +129,7 @@ old_postuninstall_cmds=""
 LTCC="gcc"
 
 # LTCC compiler flags.
-LTCFLAGS="  -O2 -DGNU -I/home/eric/U12H154_Tele2/Tele2_phase2/GPL/EVG2000-V2.2.0.32/EVG2000-53115/bcmdrivers/opensource/include/bcm963xx -I/home/eric/U12H154_Tele2/Tele2_phase2/GPL/EVG2000-V2.2.0.32/EVG2000-53115/shared/opensource/include/bcm963xx -I."
+LTCFLAGS="  -O2 -DGNU -I/home/eric/U12H154_Tele2/EVG2000-53115/bcmdrivers/opensource/include/bcm963xx -I/home/eric/U12H154_Tele2/EVG2000-53115/shared/opensource/include/bcm963xx -I."
 
 # Take the output of nm and produce a listing of raw symbols and C names.
 global_symbol_pipe="sed -n -e 's/^.*[	 ]\\([ABCDGIRSTW][ABCDGIRSTW]*\\)[	 ][	 ]*\\([_A-Za-z][_A-Za-z0-9]*\\)\$/\\1 \\2 \\2/p'"
@@ -216,7 +216,7 @@ hardcode_into_libs=yes
 sys_lib_search_path_spec="/usr/lib/gcc/i386-redhat-linux/4.3.2 /usr/lib /lib"
 
 # Run-time system search path for libraries.
-sys_lib_dlsearch_path_spec="/lib /usr/lib hwcap 0 nosegneg /usr/lib/mysql /usr/lib/qt-3.3/lib /usr/lib/xulrunner-1.9 "
+sys_lib_dlsearch_path_spec="/lib /usr/lib hwcap 0 nosegneg hwcap 0 nosegneg /usr/lib/qt-3.3/lib /usr/lib/xulrunner-1.9 "
 
 # Whether dlopen is supported.
 dlopen_support=unknown

@@ -48,7 +48,7 @@ void wps_user_reset_wlan(void)
     sleep(1); /* wait for CGI ... */
     system("killall -SIGUSR2 wlanconfigd");
     
-#if 0    /* foxconn removed , 05/01/2009 */
+#if 0    /* fiji removed , 05/01/2009 */
    static void *msgHandle = NULL;
    static char buf[sizeof(CmsMsgHeader) + 32]={0};
    CmsMsgHeader *msg=(CmsMsgHeader *) buf;

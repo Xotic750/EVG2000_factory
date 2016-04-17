@@ -142,7 +142,7 @@ static int cp_old_stat(struct kstat *stat, struct __old_kernel_stat __user * sta
 	SET_UID(tmp.st_uid, stat->uid);
 	SET_GID(tmp.st_gid, stat->gid);
 	tmp.st_rdev = old_encode_dev(stat->rdev);
-    /* Foxconn removed start pling 12/04/2009 */
+    /* Fiji removed start pling 12/04/2009 */
     /* Remove large file size limitation */
 #if 0
 #if BITS_PER_LONG == 32
@@ -150,7 +150,7 @@ static int cp_old_stat(struct kstat *stat, struct __old_kernel_stat __user * sta
 		return -EOVERFLOW;
 #endif	
 #endif
-    /* Foxconn removed end pling 12/04/2009 */
+    /* Fiji removed end pling 12/04/2009 */
 	tmp.st_size = stat->size;
 	tmp.st_atime = stat->atime.tv_sec;
 	tmp.st_mtime = stat->mtime.tv_sec;
@@ -192,7 +192,7 @@ asmlinkage long sys_fstat(unsigned int fd, struct __old_kernel_stat __user * sta
 #endif /* __ARCH_WANT_OLD_STAT */
 
 
-#undef BITS_PER_LONG /* Foxconn undefine Bob 06/25/2009, for large file limitation */
+#undef BITS_PER_LONG /* Fiji undefine Bob 06/25/2009, for large file limitation */
 
 static int cp_new_stat(struct kstat *stat, struct stat __user *statbuf)
 {
@@ -226,7 +226,7 @@ static int cp_new_stat(struct kstat *stat, struct stat __user *statbuf)
 #else
 	tmp.st_rdev = new_encode_dev(stat->rdev);
 #endif
-    /* Foxconn removed start pling 12/04/2009 */
+    /* Fiji removed start pling 12/04/2009 */
     /* Remove large file size limitation */
 #if 0
 #if BITS_PER_LONG == 32
@@ -234,7 +234,7 @@ static int cp_new_stat(struct kstat *stat, struct stat __user *statbuf)
 		return -EOVERFLOW;
 #endif	
 #endif
-    /* Foxconn removed end pling 12/04/2009 */
+    /* Fiji removed end pling 12/04/2009 */
 	tmp.st_size = stat->size;
 	tmp.st_atime = stat->atime.tv_sec;
 	tmp.st_mtime = stat->mtime.tv_sec;
@@ -249,7 +249,7 @@ static int cp_new_stat(struct kstat *stat, struct stat __user *statbuf)
 	return copy_to_user(statbuf,&tmp,sizeof(tmp)) ? -EFAULT : 0;
 }
 
-#define BITS_PER_LONG 32    /* Foxconn define Bob 06/25/2009, for large file limitation */
+#define BITS_PER_LONG 32    /* Fiji define Bob 06/25/2009, for large file limitation */
 
 asmlinkage long sys_newstat(char __user *filename, struct stat __user *statbuf)
 {

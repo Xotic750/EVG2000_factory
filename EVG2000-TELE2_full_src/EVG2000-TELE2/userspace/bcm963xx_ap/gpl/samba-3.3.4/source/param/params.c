@@ -279,11 +279,11 @@ static bool Section( DATA_BLOB *buf, myFILE *InFile, bool (*sfunc)(const char *,
 				break;
 
 			default: /* All else are a valid name chars.   */
-                /* Foxconn modified start pling 10/19/2009 */
+                /* Fiji modified start pling 10/19/2009 */
                 /* Don't eat space inside a share name */
 				//if(isspace( c )) {
 				if (0) {
-                /* Foxconn modified end pling 10/19/2009 */
+                /* Fiji modified end pling 10/19/2009 */
 					/* One space per whitespace region. */
 					buf->data[end] = ' ';
 					i = end + 1;

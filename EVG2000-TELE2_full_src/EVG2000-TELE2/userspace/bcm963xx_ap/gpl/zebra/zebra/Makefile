@@ -66,13 +66,13 @@ EXEEXT =
 OBJEXT = o
 PATH_SEPARATOR = :
 AMTAR = ${SHELL} /home/fred/0117/ap61/gpl/zebra-0.93a/missing --run tar
-#Foxconn start mark by fred 20060221
+#Fiji start mark by fred 20060221
 #AR = ar
 #AWK = gawk
 BGPD = 
 #CC = gcc
 #CPP = gcc -E
-#Foxconn end
+#Fiji end
 CURSES = 
 DEPDIR = .deps
 IF_METHOD = if_netlink.o
@@ -91,13 +91,13 @@ OSPF6D =
 OSPFD = 
 OTHER_METHOD = 
 PACKAGE = zebra
-#Foxconn mark by fred 20060221
+#Fiji mark by fred 20060221
 #RANLIB = ranlib
 RIPD = ripd
 RIPNGD = 
 RTREAD_METHOD = rtread_netlink.o
 RT_METHOD = rt_netlink.o
-#Foxconn mark by fred 20060221
+#Fiji mark by fred 20060221
 #STRIP = 
 VERSION = 0.93a
 VTYSH = 
@@ -174,7 +174,7 @@ COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-#Foxconn modify by fred 20060221
+#Fiji modify by fred 20060221
 #CFLAGS = -g -O2 -Wall
 CFLAGS= -s -Os -fomit-frame-pointer
 DIST_SOURCES = $(zebra_SOURCES)
@@ -190,13 +190,13 @@ all: all-am
 dynamic: $(sbin_PROGRAMS) install
 .SUFFIXES:
 .SUFFIXES: .c .o .obj
-# Foxconn removed start pling 04/20/2006 
+# Fiji removed start pling 04/20/2006 
 #$(srcdir)/Makefile.in:  Makefile.am  $(top_srcdir)/configure.in $(ACLOCAL_M4)
 #	cd $(top_srcdir) && \
 #	  $(AUTOMAKE) --foreign  zebra/Makefile
 #Makefile:  $(srcdir)/Makefile.in  $(top_builddir)/config.status
 #	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)
-# Foxconn removed end pling 04/20/2006 
+# Fiji removed end pling 04/20/2006 
 sbinPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 install-sbinPROGRAMS: $(sbin_PROGRAMS)
 	@$(NORMAL_INSTALL)
@@ -338,7 +338,7 @@ all-am: Makefile $(PROGRAMS) $(DATA) $(HEADERS)
 installdirs:
 	$(mkinstalldirs) $(DESTDIR)$(sbindir) $(DESTDIR)$(sysconfdir)
 
-#Foxconn start modify by fred 20060221
+#Fiji start modify by fred 20060221
 #install: install-am
 all-fred: zebra
 
@@ -347,7 +347,7 @@ install: all-fred
 	$(STRIP) $(INSTALL_DIR)/bin/$(sbin_PROGRAMS)
 #	cp $(TOOLPATH)/lib/libm-0.9.28.so $(INSTALLDIR)/lib
 #	cd $(INSTALLDIR)/lib && ln -fs libm-0.9.28.so libm.so.0
-#Foxconn end
+#Fiji end
 install-exec: install-exec-am
 install-data: install-data-am
 uninstall: uninstall-am

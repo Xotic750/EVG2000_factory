@@ -32,7 +32,7 @@ struct physmap_flash_info {
 #endif
 };
 
-/* Foxconn added start pling 07/30/2008 */
+/* Fiji added start pling 07/30/2008 */
 #ifdef CONFIG_MTD_PARTITIONS
 static struct mtd_partition bcm_mtd_parts[] = 
 {
@@ -46,7 +46,7 @@ static struct mtd_partition bcm_mtd_parts[] =
     { name: "whole_flash",  offset: 0, size: 0 },
 };
 #endif
-/* Foxconn added end pling 07/30/2008 */
+/* Fiji added end pling 07/30/2008 */
 
 static int physmap_flash_remove(struct platform_device *dev)
 {
@@ -130,10 +130,10 @@ static int physmap_flash_probe(struct platform_device *dev)
 	info->map.bankwidth = physmap_data->width;
 	info->map.set_vpp = physmap_data->set_vpp;
 
-    /* Foxconn modified start pling 07/30/2008 */
+    /* Fiji modified start pling 07/30/2008 */
 	//info->map.virt = ioremap(info->map.phys, info->map.size);
     info->map.virt = info->map.phys;
-    /* Foxconn modified end pling 07/30/2008 */
+    /* Fiji modified end pling 07/30/2008 */
 	if (info->map.virt == NULL) {
 		dev_err(&dev->dev, "Failed to ioremap flash region\n");
 		err = EIO;
@@ -159,7 +159,7 @@ static int physmap_flash_probe(struct platform_device *dev)
 		return 0;
 	}
 
-    /* Foxconn added start pling 07/30/2008 */
+    /* Fiji added start pling 07/30/2008 */
     physmap_data->nr_parts = sizeof(bcm_mtd_parts) / sizeof (bcm_mtd_parts[0]);
     physmap_data->parts = bcm_mtd_parts;
 
@@ -194,7 +194,7 @@ static int physmap_flash_probe(struct platform_device *dev)
     /* Root fs */
     bcm_mtd_parts[0].offset = info->mtd->erasesize + 0x100;
     bcm_mtd_parts[0].size   = bcm_mtd_parts[2].offset - bcm_mtd_parts[0].offset;
-    /* Foxconn added end pling 07/30/2008 */
+    /* Fiji added end pling 07/30/2008 */
     
 	if (physmap_data->nr_parts) {
 		printk(KERN_NOTICE "Using physmap partition information\n");

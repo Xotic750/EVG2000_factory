@@ -67,10 +67,10 @@ extern "C" {
 #define BOARD_IOCTL_SET_CS_PAR          _IOWR(BOARD_IOCTL_MAGIC, 25, BOARD_IOCTL_PARMS)
 #define BOARD_IOCTL_SET_GPIO            _IOWR(BOARD_IOCTL_MAGIC, 26, BOARD_IOCTL_PARMS)
 #define BOARD_IOCTL_FLASH_LIST          _IOWR(BOARD_IOCTL_MAGIC, 27, BOARD_IOCTL_PARMS)
-/* Foxconn Add Start   : Silver : 2006/06/20  @reset {*/
+/* Fiji Add Start   : Silver : 2006/06/20  @reset {*/
 #define BOARD_IOCTL_GET_GPIO	_IOWR(BOARD_IOCTL_MAGIC, 31, BOARD_IOCTL_PARMS)
 #define BOARD_IOCTL_SET_BASE_MAC_ADDRESS _IOWR(BOARD_IOCTL_MAGIC, 32, BOARD_IOCTL_PARMS)
-/* Foxconn Add End   : Silver : 2006/06/20  @reset }*/
+/* Fiji Add End   : Silver : 2006/06/20  @reset }*/
 
     
 // for the action in BOARD_IOCTL_PARMS for flash operation

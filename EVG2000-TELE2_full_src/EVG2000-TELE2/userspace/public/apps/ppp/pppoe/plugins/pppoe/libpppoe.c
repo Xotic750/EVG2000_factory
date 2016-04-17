@@ -613,7 +613,7 @@ int session_connect(struct session *ses)
     }
 #endif
 
-    /* Foxconn added start pling 09/12/2008 */
+    /* Fiji added start pling 09/12/2008 */
     /* Before starting PPPoE discovery, consume all 
      * previous messages in the PPPoE discovery socket.
      * This is because in multiple PPPoE over same PVC case,
@@ -631,7 +631,7 @@ int session_connect(struct session *ses)
                 break;
         }
     }
-    /* Foxconn added end pling 09/12/2008 */
+    /* Fiji added end pling 09/12/2008 */
 
     if(ses->init_disc){
 	ret = (*ses->init_disc)(ses, NULL, &p_out);
